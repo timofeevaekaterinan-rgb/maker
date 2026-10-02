@@ -1,0 +1,5 @@
+.DS_Store
+transcript*.txt
+*.MP4
+*.mp4
+.claude/

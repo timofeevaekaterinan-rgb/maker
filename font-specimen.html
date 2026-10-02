@@ -1,0 +1,211 @@
+<title>Шрифты для Maker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Golos+Text:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700;800&family=Rubik:wght@400;500;600;700;800&family=PT+Root+UI:wght@400;500;700&family=PT+Sans:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Lora:wght@500;600;700&family=Commissioner:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=PT+Mono&display=swap">
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#F5F8FC; --panel:#FFFFFF; --inset:#EEF2F9;
+    --ink:#1A2230; --ink-2:#59627A; --ink-3:#8E97AC;
+    --line:#E3E9F2; --line-2:#D3DCEA;
+    --blue:#2E6BE6; --blue-strong:#1F57C9; --blue-ink:#1B4DB0;
+    --blue-soft:#E4EDFC; --blue-brd:#C6DBF8;
+    --ui:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161F; --panel:#181D28; --inset:#1F2533;
+      --ink:#EEF1F7; --ink-2:#A9B2C6; --ink-3:#717A90;
+      --line:#262D3D; --line-2:#323A4C;
+      --blue:#5C93EC; --blue-strong:#7DA9F2; --blue-ink:#9DC0F2;
+      --blue-soft:#1C2B47; --blue-brd:#2C4468;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161F; --panel:#181D28; --inset:#1F2533;
+    --ink:#EEF1F7; --ink-2:#A9B2C6; --ink-3:#717A90;
+    --line:#262D3D; --line-2:#323A4C;
+    --blue:#5C93EC; --blue-strong:#7DA9F2; --blue-ink:#9DC0F2;
+    --blue-soft:#1C2B47; --blue-brd:#2C4468;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);padding-inline:16px;padding-block:32px}
+  .wrap{max-width:840px;margin:0 auto}
+  .top{margin-bottom:36px}
+  .eyebrow{font-family:var(--ui);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:10px}
+  h1.page-title{font-family:var(--ui);font-size:clamp(24px,4vw,32px);font-weight:800;letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance}
+  .lede{color:var(--ink-2);font-size:15px;line-height:1.6;max-width:60ch;margin:0}
+
+  .list{display:flex;flex-direction:column;gap:16px}
+  .card{background:var(--panel);border:1.5px solid var(--line);border-radius:18px;padding:22px 24px 26px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+  .card:hover{border-color:var(--blue-brd)}
+  .card.picked{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft)}
+
+  .card-hd{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+  .card-hd .num{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-3)}
+  .card-hd .name{font-family:var(--ui);font-weight:700;font-size:15px}
+  .card-hd .tag{font-family:var(--ui);font-size:12.5px;color:var(--ink-2);margin-left:auto}
+  .pickmark{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line-2);flex:none;display:grid;place-items:center}
+  .card.picked .pickmark{background:var(--blue);border-color:var(--blue)}
+  .card.picked .pickmark::after{content:"";width:7px;height:7px;border-radius:50%;background:#fff}
+
+  .spec-eyebrow{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+  .spec-h1{font-size:clamp(24px,3.4vw,32px);line-height:1.06;font-weight:800;letter-spacing:-.02em;margin:0 0 8px}
+  .spec-h1 b{color:var(--blue);font-weight:800}
+  .spec-sub{color:var(--ink-2);font-size:14.5px;line-height:1.5;margin:0 0 16px;max-width:52ch}
+  .spec-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .spec-btn{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;border-radius:11px;padding:10px 18px;font-weight:600;font-size:14px}
+  .spec-price{font-family:var(--mono-face,"JetBrains Mono",monospace);font-size:13px;color:var(--ink-2)}
+  .spec-price b{color:var(--ink);font-weight:600;font-size:15px}
+
+  .why{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:13px;color:var(--ink-2);font-family:var(--ui);line-height:1.55}
+  .why b{color:var(--ink)}
+
+  .foot{margin-top:32px;text-align:center;color:var(--ink-3);font-size:12.5px}
+
+  @media (max-width:520px){.card{padding:18px}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div class="eyebrow">Подбор шрифтов</div>
+    <h1 class="page-title">Какая пара шрифтов для Maker?</h1>
+    <p class="lede">Пять вариантов на реальном куске интерфейса — заголовок, подзаголовок, кнопка и цена. Кликни по карточке, чтобы отметить понравившийся вариант.</p>
+  </div>
+
+  <div class="list" id="list">
+    <div class="card" data-pick="1">
+      <div class="card-hd"><span class="pickmark"></span><span class="num">01</span><span class="name">Onest + JetBrains Mono</span><span class="tag">сейчас в прототипе</span></div>
+      <div style="font-family:'Onest',sans-serif">
+        <div class="spec-eyebrow" style="font-family:'JetBrains Mono',monospace">Создавайте сайты быстрее</div>
+        <h2 class="spec-h1">Новая работа: с чего сайта <b>снять оформление?</b></h2>
+        <p class="spec-sub">Подключите сайт, опишите задачу словами или начните с готового примера — и получите дизайн-код.</p>
+        <div class="spec-row"><span class="spec-btn">Подключить сайт →</span><span class="spec-price" style="font-family:'JetBrains Mono',monospace"><b>150 ₽</b> вместо 214 000 ₽</span></div>
+      </div>
+      <div class="why"><b>Геометричный гротеск, уже используется.</b> Дружелюбный, мягкие формы, хорошая читаемость на кириллице. Нейтральный выбор без сюрпризов — но и без характера.</div>
+    </div>
+
+    <div class="card" data-pick="2">
+      <div class="card-hd"><span class="pickmark"></span><span class="num">02</span><span class="name">Golos Text + JetBrains Mono</span><span class="tag">рус. SaaS/финтех</span></div>
+      <div style="font-family:'Golos Text',sans-serif">
+        <div class="spec-eyebrow" style="font-family:'JetBrains Mono',monospace">Создавайте сайты быстрее</div>
+        <h2 class="spec-h1">Новая работа: с чего сайта <b>снять оформление?</b></h2>
+        <p class="spec-sub">Подключите сайт, опишите задачу словами или начните с готового примера — и получите дизайн-код.</p>
+        <div class="spec-row"><span class="spec-btn">Подключить сайт →</span><span class="spec-price" style="font-family:'JetBrains Mono',monospace"><b>150 ₽</b> вместо 214 000 ₽</span></div>
+      </div>
+      <div class="why"><b>Российский шрифт с отличной кириллицей «из коробки».</b> Тот самый стиль Сбера/Яндекс-экосистемы — плотный, уверенный, чуть теплее Inter. Хорошо сочетается с финтех-темой сервиса (кстати, в референсе на карточке «Атвинта» уже мелькал именно он).</div>
+    </div>
+
+    <div class="card" data-pick="3">
+      <div class="card-hd"><span class="pickmark"></span><span class="num">03</span><span class="name">Inter + IBM Plex Mono</span><span class="tag">международный стандарт</span></div>
+      <div style="font-family:'Inter',sans-serif">
+        <div class="spec-eyebrow" style="font-family:'IBM Plex Mono',monospace">Создавайте сайты быстрее</div>
+        <h2 class="spec-h1">Новая работа: с чего сайта <b>снять оформление?</b></h2>
+        <p class="spec-sub">Подключите сайт, опишите задачу словами или начните с готового примера — и получите дизайн-код.</p>
+        <div class="spec-row"><span class="spec-btn">Подключить сайт →</span><span class="spec-price" style="font-family:'IBM Plex Mono',monospace"><b>150 ₽</b> вместо 214 000 ₽</span></div>
+      </div>
+      <div class="why"><b>Самый проверенный выбор в SaaS-индустрии</b> (Linear, Vercel, Notion). Нейтральный, безупречно читаемый в мелком кегле — идеален для плотных таблиц/дашбордов. Меньше «характера», чем у остальных.</div>
+    </div>
+
+    <div class="card" data-pick="4">
+      <div class="card-hd"><span class="pickmark"></span><span class="num">04</span><span class="name">Manrope + JetBrains Mono</span><span class="tag">дружелюбнее, с характером</span></div>
+      <div style="font-family:'Manrope',sans-serif">
+        <div class="spec-eyebrow" style="font-family:'JetBrains Mono',monospace">Создавайте сайты быстрее</div>
+        <h2 class="spec-h1">Новая работа: с чего сайта <b>снять оформление?</b></h2>
+        <p class="spec-sub">Подключите сайт, опишите задачу словами или начните с готового примера — и получите дизайн-код.</p>
+        <div class="spec-row"><span class="spec-btn">Подключить сайт →</span><span class="spec-price" style="font-family:'JetBrains Mono',monospace"><b>150 ₽</b> вместо 214 000 ₽</span></div>
+      </div>
+      <div class="why"><b>Геометричный, но с более выразительными жирными засечками в заголовках.</b> Чуть более «продуктовый» и живой, чем Inter, при этом строже Golos Text. Хорош, если хочется чуть больше индивидуальности без риска.</div>
+    </div>
+
+    <div class="card" data-pick="5">
+      <div class="card-hd"><span class="pickmark"></span><span class="num">05</span><span class="name">Unbounded (заголовки) + Inter (текст)</span><span class="tag">смелее, крупный акцент</span></div>
+      <div>
+        <div class="spec-eyebrow" style="font-family:'JetBrains Mono',monospace">Создавайте сайты быстрее</div>
+        <h2 class="spec-h1" style="font-family:'Unbounded',sans-serif;font-weight:700">Новая работа: с чего сайта <b>снять оформление?</b></h2>
+        <p class="spec-sub" style="font-family:'Inter',sans-serif">Подключите сайт, опишите задачу словами или начните с готового примера — и получите дизайн-код.</p>
+        <div class="spec-row"><span class="spec-btn" style="font-family:'Inter',sans-serif">Подключить сайт →</span><span class="spec-price" style="font-family:'JetBrains Mono',monospace"><b>150 ₽</b> вместо 214 000 ₽</span></div>
+      </div>
+      <div class="why"><b>Дисплейный шрифт только для заголовков</b> — геометричные, чуть угловатые буквы дают запоминающийся акцент (похоже по духу на growth-стартапы). Рискованнее остальных: в заголовке характера много, поэтому тело текста нарочно оставлено нейтральным (Inter).</div>
+    </div>
+    <div class="card" data-pick="6">
+      <div class="card-hd"><span class="pickmark"></span><span class="num">06</span><span class="name">Rubik + JetBrains Mono</span><span class="tag">округлый, дружелюбный</span></div>
+      <div style="font-family:'Rubik',sans-serif">
+        <div class="spec-eyebrow" style="font-family:'JetBrains Mono',monospace">Создавайте сайты быстрее</div>
+        <h2 class="spec-h1">Новая работа: с чего сайта <b>снять оформление?</b></h2>
+        <p class="spec-sub">Подключите сайт, опишите задачу словами или начните с готового примера — и получите дизайн-код.</p>
+        <div class="spec-row"><span class="spec-btn">Подключить сайт →</span><span class="spec-price" style="font-family:'JetBrains Mono',monospace"><b>150 ₽</b> вместо 214 000 ₽</span></div>
+      </div>
+      <div class="why"><b>Скруглённые углы в буквах, тёплый и располагающий.</b> Снимает часть строгости финтех-темы — хорошо, если Maker хочет казаться проще и доступнее для малого бизнеса без своего маркетолога.</div>
+    </div>
+
+    <div class="card" data-pick="7">
+      <div class="card-hd"><span class="pickmark"></span><span class="num">07</span><span class="name">PT Root UI + PT Mono</span><span class="tag">классика рус. корп-дизайна</span></div>
+      <div style="font-family:'PT Root UI',sans-serif">
+        <div class="spec-eyebrow" style="font-family:'PT Mono',monospace">Создавайте сайты быстрее</div>
+        <h2 class="spec-h1">Новая работа: с чего сайта <b>снять оформление?</b></h2>
+        <p class="spec-sub">Подключите сайт, опишите задачу словами или начните с готового примера — и получите дизайн-код.</p>
+        <div class="spec-row"><span class="spec-btn">Подключить сайт →</span><span class="spec-price" style="font-family:'PT Mono',monospace"><b>150 ₽</b> вместо 214 000 ₽</span></div>
+      </div>
+      <div class="why"><b>Шрифт студии ParaType — эталонная кириллица, спроектированная именно под интерфейсы.</b> Тот самый «официальный» вид крупных российских банков и госсервисов: строго, солидно, максимум доверия. Меньше всего похож на типичный AI-стартап.</div>
+    </div>
+
+    <div class="card" data-pick="8">
+      <div class="card-hd"><span class="pickmark"></span><span class="num">08</span><span class="name">Space Grotesk + JetBrains Mono</span><span class="tag">техно, геометричный</span></div>
+      <div style="font-family:'Space Grotesk',sans-serif">
+        <div class="spec-eyebrow" style="font-family:'JetBrains Mono',monospace">Создавайте сайты быстрее</div>
+        <h2 class="spec-h1">Новая работа: с чего сайта <b>снять оформление?</b></h2>
+        <p class="spec-sub">Подключите сайт, опишите задачу словами или начните с готового примера — и получите дизайн-код.</p>
+        <div class="spec-row"><span class="spec-btn">Подключить сайт →</span><span class="spec-price" style="font-family:'JetBrains Mono',monospace"><b>150 ₽</b> вместо 214 000 ₽</span></div>
+      </div>
+      <div class="why"><b>Угловатые, чуть механические буквы — читается как «сделано нейросетью, а не агентством».</b> Хорошо подчёркивает AI-природу продукта. Из минусов: за пару лет стал очень частым выбором стартапов, риск слиться с толпой.</div>
+    </div>
+
+    <div class="card" data-pick="9">
+      <div class="card-hd"><span class="pickmark"></span><span class="num">09</span><span class="name">Lora (заголовки) + Inter (текст)</span><span class="tag">с засечками, редакционно</span></div>
+      <div>
+        <div class="spec-eyebrow" style="font-family:'JetBrains Mono',monospace">Создавайте сайты быстрее</div>
+        <h2 class="spec-h1" style="font-family:'Lora',serif;font-weight:600">Новая работа: с чего сайта <b>снять оформление?</b></h2>
+        <p class="spec-sub" style="font-family:'Inter',sans-serif">Подключите сайт, опишите задачу словами или начните с готового примера — и получите дизайн-код.</p>
+        <div class="spec-row"><span class="spec-btn" style="font-family:'Inter',sans-serif">Подключить сайт →</span><span class="spec-price" style="font-family:'JetBrains Mono',monospace"><b>150 ₽</b> вместо 214 000 ₽</span></div>
+      </div>
+      <div class="why"><b>Засечки в заголовке — самый нетипичный ход для SaaS.</b> Читается солиднее и «денежнее» (ближе к банковскому отчёту, чем к стартап-лендингу) — работает на тему «деньги считает честно». Рискованно: отличается от всего остального интерфейса, нужен вкус, чтобы не выглядело чужеродно.</div>
+    </div>
+
+    <div class="card" data-pick="10">
+      <div class="card-hd"><span class="pickmark"></span><span class="num">10</span><span class="name">Commissioner + JetBrains Mono</span><span class="tag">универсальный, чуть теплее Inter</span></div>
+      <div style="font-family:'Commissioner',sans-serif">
+        <div class="spec-eyebrow" style="font-family:'JetBrains Mono',monospace">Создавайте сайты быстрее</div>
+        <h2 class="spec-h1">Новая работа: с чего сайта <b>снять оформление?</b></h2>
+        <p class="spec-sub">Подключите сайт, опишите задачу словами или начните с готового примера — и получите дизайн-код.</p>
+        <div class="spec-row"><span class="spec-btn">Подключить сайт →</span><span class="spec-price" style="font-family:'JetBrains Mono',monospace"><b>150 ₽</b> вместо 214 000 ₽</span></div>
+      </div>
+      <div class="why"><b>Широкий диапазон начертаний (100–900), гибче Inter в деталях букв.</b> Хороший баланс между нейтральностью и индивидуальностью — безопасный, но не скучный выбор.</div>
+    </div>
+  </div>
+
+  <p class="foot" id="foot">Выбор сохраняется только в этом браузере — просто для твоего удобства при сравнении.</p>
+</div>
+
+<script>
+  (function(){
+    var list = document.getElementById('list');
+    var foot = document.getElementById('foot');
+    var KEY = 'maker-font-pick';
+    function apply(id){
+      list.querySelectorAll('.card').forEach(function(c){
+        c.classList.toggle('picked', c.dataset.pick === id);
+      });
+    }
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch(e) {}
+    if (saved) apply(saved);
+    list.addEventListener('click', function(e){
+      var card = e.target.closest('.card');
+      if (!card) return;
+      var id = card.dataset.pick;
+      apply(id);
+      try { localStorage.setItem(KEY, id); } catch(e) {}
+    });
+  })();
+</script>

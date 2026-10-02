@@ -1,0 +1,432 @@
+<title>Оболочка Maker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --paper:#EEEBE4; --surface:#F6F4EF; --inset:#E7E3DA;
+    --ink:#1A1712; --ink-2:#57524a; --ink-3:#8b857a;
+    --line:#dcd7cc; --line-2:#c7c1b3;
+    --accent:#A85638; --accent-ink:#7a3a25; --accent-tint:#ecded6;
+    --spec:#1C1A15; --spec-ink:#ECE7DC; --spec-line:#39352b;
+    --good:#5f7a4e; --pending:#948e82;
+    --sans:"Golos Text",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --measure:66ch;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#14120D; --surface:#1D1A14; --inset:#221E17;
+      --ink:#ECE8DF; --ink-2:#a49d8f; --ink-3:#6f6a5d;
+      --line:#2b271f; --line-2:#3a352b;
+      --accent:#CB7E5F; --accent-ink:#e2a888; --accent-tint:#2a211b;
+      --spec:#0F0E0A; --spec-ink:#E4DFD4; --spec-line:#2a271f;
+      --good:#8ea877; --pending:#7d7669;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#14120D; --surface:#1D1A14; --inset:#221E17;
+    --ink:#ECE8DF; --ink-2:#a49d8f; --ink-3:#6f6a5d;
+    --line:#2b271f; --line-2:#3a352b;
+    --accent:#CB7E5F; --accent-ink:#e2a888; --accent-tint:#2a211b;
+    --spec:#0F0E0A; --spec-ink:#E4DFD4; --spec-line:#2a271f;
+    --good:#8ea877; --pending:#7d7669;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--sans); font-size:17px; line-height:1.62;
+    font-weight:400; letter-spacing:-.004em;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:#fff}
+
+  .wrap{max-width:960px;margin:0 auto;padding:0 28px}
+  .rule{height:1px;background:var(--line);border:0;margin:0}
+
+  /* ---- section scaffolding ---- */
+  section{padding:64px 0}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);
+    display:flex;align-items:baseline;gap:12px;margin:0 0 22px;
+  }
+  .eyebrow b{color:var(--ink-3);font-weight:500}
+  .eyebrow .n{color:var(--accent);font-weight:700}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .eyebrow{color:var(--accent)}}
+  :root[data-theme="dark"] .eyebrow{color:var(--accent)}
+
+  h2{
+    font-size:clamp(26px,3.6vw,38px);line-height:1.08;font-weight:700;
+    letter-spacing:-.02em;margin:0 0 20px;max-width:20ch;text-wrap:balance;
+  }
+  h3{font-size:20px;line-height:1.25;font-weight:600;letter-spacing:-.01em;margin:34px 0 10px}
+  p{margin:0 0 16px;max-width:var(--measure)}
+  .lead{font-size:20px;line-height:1.5;color:var(--ink);max-width:60ch}
+  .muted{color:var(--ink-2)}
+  strong{font-weight:600}
+  a{color:var(--accent-ink);text-underline-offset:3px;text-decoration-thickness:1px}
+  :root[data-theme="dark"] a{color:var(--accent-ink)}
+
+  /* ---- cover ---- */
+  .cover{padding:76px 0 56px}
+  .brandline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:64px}
+  .wordmark{font-weight:700;font-size:19px;letter-spacing:-.02em}
+  .wordmark span{color:var(--accent)}
+  .stamp{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);text-align:right;line-height:1.7}
+  .cover h1{
+    font-size:clamp(40px,7.2vw,84px);line-height:.98;font-weight:800;
+    letter-spacing:-.035em;margin:0 0 26px;text-wrap:balance;
+  }
+  .cover h1 .q{color:var(--accent)}
+  .cover .lead{font-size:clamp(19px,2.3vw,23px);max-width:34ch;color:var(--ink-2)}
+  .meta{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);margin-top:52px;
+  }
+  .meta div{background:var(--paper);padding:16px 18px}
+  .meta dt{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+  .meta dd{margin:0;font-size:15px;font-weight:500}
+
+  /* ---- generic pieces ---- */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  @media (max-width:720px){.cols{grid-template-columns:1fr}.meta{grid-template-columns:1fr}}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px}
+  .card h3{margin-top:0}
+  .tag{
+    display:inline-block;font-family:var(--mono);font-size:11px;font-weight:500;
+    letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:6px;
+    background:var(--accent-tint);color:var(--accent-ink);
+  }
+
+  /* diagnosis callout */
+  .diag{border-left:3px solid var(--accent);padding:4px 0 4px 22px;margin:26px 0;max-width:var(--measure)}
+  .diag p{margin:0;color:var(--ink-2)}
+  .diag .k{color:var(--ink);font-weight:600}
+
+  /* two pillars */
+  .pillar{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;height:100%}
+  .pillar .num{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.1em}
+  .pillar h3{margin:12px 0 8px;font-size:22px}
+
+  /* design-code chip strip (Maker brand specimen — stays light) */
+  .specimen{
+    color-scheme:light;background:#FCFBF9;border:1px solid #E4DDCF;border-radius:16px;
+    overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.02);
+  }
+  .win{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#F3EFE7;border-bottom:1px solid #E7E0D2}
+  .win i{width:10px;height:10px;border-radius:50%;background:#D9CDBB;display:inline-block}
+  .win .url{margin-left:10px;font-family:var(--mono);font-size:12px;color:#9A8E79;background:#FBF8F2;border:1px solid #EAE2D2;border-radius:6px;padding:4px 12px}
+  .specimen, .specimen *{--ink:#1F1B16}
+
+  /* code-strip inside home mock */
+  .codestrip{display:flex;flex-wrap:wrap;align-items:center;gap:18px;padding:14px 18px;background:#FBF8F2;border-bottom:1px solid #EDE5D6}
+  .swatches{display:flex;gap:0}
+  .swatches i{width:26px;height:26px;display:block}
+  .swatches i:first-child{border-radius:6px 0 0 6px}
+  .swatches i:last-child{border-radius:0 6px 6px 0}
+  .cs-meta{font-family:var(--mono);font-size:11.5px;color:#8a7f6b;letter-spacing:.02em;line-height:1.5}
+  .cs-meta b{color:#5c5344;font-weight:500}
+  .cs-edit{margin-left:auto;font-family:var(--mono);font-size:11px;color:#A6543A;border:1px solid #E3C9BC;border-radius:6px;padding:4px 10px;white-space:nowrap}
+
+  /* first-screen mock body */
+  .fs-body{padding:64px 40px 56px;text-align:center;background:#FCFBF9}
+  .fs-top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #EEE7D8}
+  .fs-brand{font-weight:700;color:#1F1B16;letter-spacing:-.02em;font-size:15px}
+  .fs-acct{font-family:var(--mono);font-size:11px;color:#9A8E79}
+  .fs-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#A6543A;margin-bottom:18px}
+  .fs-h{font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-.025em;color:#1F1B16;margin:0 0 10px;line-height:1.05}
+  .fs-sub{color:#7d735f;font-size:16px;margin:0 auto 30px;max-width:34ch}
+  .fs-input{display:flex;max-width:440px;margin:0 auto;border:1.5px solid #DCCBB8;border-radius:12px;overflow:hidden;background:#fff}
+  .fs-input input{flex:1;min-width:0;border:0;outline:0;padding:15px 18px;font-family:var(--mono);font-size:14px;color:#1F1B16;background:transparent}
+  .fs-input input::placeholder{color:#B4A68F}
+  .fs-input button{border:0;background:#A6543A;color:#fff;font-family:var(--sans);font-weight:600;font-size:15px;padding:0 22px;cursor:default}
+  .fs-alt{margin-top:18px;font-size:13.5px;color:#9A8E79}
+  .fs-alt u{color:#7a3a25;text-decoration-thickness:1px;text-underline-offset:2px}
+  .fs-foot{margin-top:40px;font-family:var(--mono);font-size:11px;color:#B4A68F;letter-spacing:.02em}
+
+  /* home mock */
+  .specimen.app{overflow-x:auto}
+  .specimen.app>.win,.specimen.app>.codestrip,.specimen.app>.home{min-width:660px}
+  .home{display:grid;grid-template-columns:190px 1fr;min-height:420px;background:#FCFBF9}
+  .rail{background:#F6F1E8;border-right:1px solid #EAE2D2;padding:18px 0}
+  .rail .r-h{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#B0A288;padding:0 18px 12px}
+  .rail a{display:flex;gap:10px;align-items:baseline;padding:9px 18px;font-size:13.5px;color:#5c5344;text-decoration:none;border-left:2px solid transparent}
+  .rail a .rn{font-family:var(--mono);font-size:11px;color:#B4A68F}
+  .rail a.on{background:#FCFBF9;border-left-color:#A6543A;color:#1F1B16;font-weight:600}
+  .rail a.off{color:#B4A68F}
+  .rail a.off .rn{color:#CDBFA6}
+  .home-main{padding:22px 24px}
+  .hm-h{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
+  .hm-h h4{margin:0;font-size:18px;font-weight:700;color:#1F1B16;letter-spacing:-.01em}
+  .hm-h .cnt{font-family:var(--mono);font-size:11px;color:#9A8E79}
+  .mats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .mat{background:#fff;border:1px solid #ECE4D4;border-radius:11px;padding:14px}
+  .mat .mt{font-size:13.5px;font-weight:600;color:#1F1B16;margin-bottom:3px}
+  .mat .md{font-family:var(--mono);font-size:11px;color:#9A8E79;margin-bottom:10px}
+  .mat .price{font-family:var(--mono);font-size:13px;color:#A6543A;font-weight:700}
+  .mat .price s{color:#C3B69E;font-weight:400;margin-left:6px}
+  .mat.ghost{background:#FAF6EE;border-style:dashed;color:#B4A68F}
+  .mat.ghost .mt{color:#9A8E79}
+  .money{display:flex;gap:22px;margin-top:16px;padding:14px 16px;background:#F6F1E8;border-radius:11px;flex-wrap:wrap}
+  .money div{display:flex;flex-direction:column}
+  .money dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#B0A288;margin-bottom:3px}
+  .money dd{margin:0;font-family:var(--mono);font-size:15px;font-weight:700;color:#1F1B16}
+  .money dd.g{color:#5f7a4e}
+
+  .caption{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.02em;margin:12px 0 0;text-transform:uppercase}
+
+  /* flow steps */
+  .flow{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:8px}
+  .step{display:grid;grid-template-columns:52px 1fr;gap:0;border-top:1px solid var(--line);background:var(--surface)}
+  .step:first-child{border-top:0}
+  .step .sn{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);padding:18px 0 0 18px}
+  .step .sc{padding:16px 20px 16px 4px}
+  .step .st{font-weight:600;font-size:16px;margin:0 0 3px}
+  .step .sd{margin:0;color:var(--ink-2);font-size:15px;max-width:60ch}
+  .step .sb{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--accent-ink);background:var(--accent-tint);border-radius:6px;padding:3px 8px;letter-spacing:.03em}
+
+  /* cycle strip */
+  .cycle{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:6px}
+  .cy{background:var(--surface);padding:16px 14px}
+  .cy .cn{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent)}
+  .cy .ct{font-weight:600;font-size:14px;margin:8px 0 4px;line-height:1.2}
+  .cy .cd{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);line-height:1.4;text-transform:uppercase;letter-spacing:.03em}
+  .cy.dim{opacity:.62}
+  .cy.dim .cn{color:var(--pending)}
+  @media (max-width:720px){.cycle{grid-template-columns:1fr 1fr}}
+
+  /* principles */
+  .princ{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .pr{background:var(--surface);padding:24px}
+  .pr .pn{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent)}
+  .pr h3{margin:10px 0 6px;font-size:18px}
+  .pr p{margin:0;color:var(--ink-2);font-size:15px}
+  @media (max-width:720px){.princ{grid-template-columns:1fr}}
+
+  /* next steps */
+  .next{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .nx{display:grid;grid-template-columns:44px 1fr;background:var(--surface);padding:18px 20px;align-items:baseline}
+  .nx .nl{font-family:var(--mono);font-weight:700;color:var(--accent);font-size:14px}
+  .nx b{font-weight:600}
+  .nx span{color:var(--ink-2);display:block;font-size:15px;margin-top:2px}
+
+  footer{padding:40px 0 64px;color:var(--ink-3);font-family:var(--mono);font-size:12px;letter-spacing:.04em}
+  footer .rule{margin-bottom:24px}
+
+  @media (prefers-reduced-motion:no-preference){
+    a,button{transition:color .15s ease}
+  }
+</style>
+
+<div class="wrap">
+
+  <!-- COVER -->
+  <header class="cover">
+    <div class="brandline">
+      <div class="wordmark">maker<span>·</span> оболочка</div>
+      <div class="stamp">UX-видение<br>v0.1 · 10.09.2026</div>
+    </div>
+    <h1>Первый экран<br>и логика <span class="q">сервиса</span></h1>
+    <p class="lead">Не редизайн лендинга — проработка оболочки: как устроен путь пользователя и почему именно так.</p>
+
+    <dl class="meta">
+      <div><dt>Продукт</dt><dd>Maker — маркетолог для малого бизнеса</dd></div>
+      <div><dt>Задача</dt><dd>Логика оболочки и видение первого экрана</dd></div>
+      <div><dt>Источник</dt><dd>trymaker.ru — продуктовая логика лендинга</dd></div>
+    </dl>
+  </header>
+
+  <hr class="rule">
+
+  <!-- 01 -->
+  <section>
+    <div class="eyebrow"><span class="n">01</span> <b>что это и где болит</b></div>
+    <h2>Продукт сильный. Оболочка не должна его прятать.</h2>
+    <p class="lead muted">Maker вытаскивает с сайта дизайн-код — цвета, шрифты, скругления, тон — и в нём сам собирает страницы, кадры и баннеры. Раскладку строит код, нейросеть отвечает только за содержание. Правишь дизайн-код — перекрашивается весь проект, включая опубликованное.</p>
+
+    <div class="diag">
+      <p><span class="k">Почему сейчас «ИИшно».</span> Дело не в цвете и не в шрифте. «ИИшность» — это когда на первый экран вываливают стену виджетов и десять равнозначных кнопок, а продукт при этом обещает «назовите сайт — дальше я сам». Интерфейс должен звучать как сам продукт: коротко, уверенно, по делу — «И не будет».</p>
+    </div>
+
+    <p>Хорошая новость: логику не надо выдумывать — она уже прописана в текстах сайта. Ниже я вытащил её в две несущие идеи, собрал из них путь первого входа и показал двумя макетами, как это выглядит на экране.</p>
+  </section>
+
+  <hr class="rule">
+
+  <!-- 02 -->
+  <section>
+    <div class="eyebrow"><span class="n">02</span> <b>две несущие идеи</b></div>
+    <h2>На них держится вся оболочка</h2>
+    <p class="muted" style="margin-bottom:30px">Если сделать их несущими, интерфейс станет логичным по своей природе — а не потому что мы навесили красивую сетку.</p>
+
+    <div class="cols">
+      <div class="pillar">
+        <div class="num">ИДЕЯ 01</div>
+        <h3>Дизайн-код — объект, а не настройка</h3>
+        <p class="muted">Вся ценность в том, что бренд снимается сам и раскладку держит код. Значит дизайн-код должен быть <strong>видимым живым объектом</strong> на экране, а не пунктом в «Настройках». Правка перекрашивает всё — редкая деталь, которой нет у конструкторов.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">ИДЕЯ 02</div>
+        <h3>Цикл из 5 звеньев — это навигация</h3>
+        <p class="muted">Не выдумываем меню. Берём с лендинга буквально цикл, на котором конкуренты обрываются на третьем звене. У Maker четвёртое и пятое — «не строка в планах, а раздел меню», даже когда честно пустуют.</p>
+      </div>
+    </div>
+
+    <p class="caption">Цикл как левое меню проекта →</p>
+    <div class="cycle">
+      <div class="cy"><div class="cn">1</div><div class="ct">Решить</div><div class="cd">что делать</div></div>
+      <div class="cy"><div class="cn">2</div><div class="ct">Собрать бренд</div><div class="cd">дизайн-код</div></div>
+      <div class="cy"><div class="cn">3</div><div class="ct">Материалы</div><div class="cd">страницы · кадры · баннеры</div></div>
+      <div class="cy dim"><div class="cn">4</div><div class="ct">Реклама</div><div class="cd">кабинеты не подключены</div></div>
+      <div class="cy dim"><div class="cn">5</div><div class="ct">Выручка</div><div class="cd">расход · заявки</div></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- 03 -->
+  <section>
+    <div class="eyebrow"><span class="n">03</span> <b>юзерфлоу первого входа</b></div>
+    <h2>Денежный путь: от инвайта до первой страницы</h2>
+    <p class="muted" style="margin-bottom:24px">Восемь шагов. Каждый выведен из того, что продукт заявляет о себе.</p>
+
+    <div class="flow">
+      <div class="step"><div class="sn">01</div><div class="sc"><p class="st">Вход</p><p class="sd">Почта и пароль или одноразовая инвайт-ссылка. Тон уже задан: «Пароль есть не у всех и не обязан быть».</p></div></div>
+      <div class="step"><div class="sn">02</div><div class="sc"><p class="st">«Назовите свой сайт»</p><p class="sd">Одно поле, как строка поиска. Весь «вау» продукта — здесь.<span class="sb">ветка: сайта нет → рассказ о деле</span></p></div></div>
+      <div class="step"><div class="sn">03</div><div class="sc"><p class="st">Maker снимает дизайн-код</p><p class="sd">Не спиннер «загрузка», а показ работы: снимаю цвета… шрифты… скругления… тон. Момент доверия.</p></div></div>
+      <div class="step"><div class="sn">04</div><div class="sc"><p class="st">«Вот ваш дизайн-код»</p><p class="sd">Показать добытое как объект: палитра, шрифты, радиусы, тон. Подтвердить или поправить — контроль до того, как что-то сделано.</p></div></div>
+      <div class="step"><div class="sn">05</div><div class="sc"><p class="st">«Что сделаем первым?»</p><p class="sd">Цикл предлагает флагман — посадочную из одной строки задачи.</p></div></div>
+      <div class="step"><div class="sn">06</div><div class="sc"><p class="st">Сборка + счётчик цены</p><p class="sd">Пока код раскладывает — на глазах тикает стоимость: 150 ₽ против 214 000 ₽ по рынку. Уникальный элемент UI.</p></div></div>
+      <div class="step"><div class="sn">07</div><div class="sc"><p class="st">Приёмка и публикация</p><p class="sd">Гейт честности как часть UI, а не ошибка: пока не подтвердите утверждения — не опубликуется. Неизвестное = прочерк.</p></div></div>
+      <div class="step"><div class="sn">08</div><div class="sc"><p class="st">Домашний экран проекта</p><p class="sd">Сюда же попадает вернувшийся пользователь — напрямую, минуя онбординг.</p></div></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- 04 -->
+  <section>
+    <div class="eyebrow"><span class="n">04</span> <b>первый экран · видение</b></div>
+    <h2>Это не дашборд. Это одно поле.</h2>
+    <p class="muted" style="margin-bottom:26px">Почти пустой экран, обещание и одно действие. Именно попытка всунуть сюда сетку виджетов и делает сервисы «ИИшными».</p>
+
+    <div class="specimen">
+      <div class="win"><i></i><i></i><i></i><span class="url">trymaker.ru</span></div>
+      <div class="fs-top">
+        <div class="fs-brand">maker</div>
+        <div class="fs-acct">пекарня «тёплый хлеб»</div>
+      </div>
+      <div class="fs-body">
+        <div class="fs-eyebrow">новый проект</div>
+        <h3 class="fs-h">Назовите свой сайт</h3>
+        <p class="fs-sub">Дальше работает Maker: снимет дизайн-код и соберёт страницу в нём.</p>
+        <div class="fs-input">
+          <input value="" placeholder="например, teplyhleb.ru" readonly>
+          <button>Собрать</button>
+        </div>
+        <p class="fs-alt">Сайта нет? <u>Расскажите о деле</u> — дизайн-код соберётся по рассказу.</p>
+        <p class="fs-foot">регистрации нет · вас пригласили · вход по ссылке из письма</p>
+      </div>
+    </div>
+    <p class="caption">Макет в фирменном стиле Maker · состояние «первый вход»</p>
+
+    <h3>Почему так</h3>
+    <p class="muted"><strong>Одно решение на экран.</strong> В начале пути — ни строки лишнего. Поле-обещание работает как строка поиска: пользователь делает ровно один ход, а всю остальную работу продукт берёт на себя. Тихая вторая дверь «Сайта нет» ловит тех, у кого сайта ещё нет, не перетягивая внимание.</p>
+    <p class="muted">Нижняя строка честно объясняет модель входа вместо навязчивой формы регистрации — это тоже часть характера продукта.</p>
+  </section>
+
+  <hr class="rule">
+
+  <!-- 05 -->
+  <section>
+    <div class="eyebrow"><span class="n">05</span> <b>домашний экран · архитектура</b></div>
+    <h2>Дизайн-код сверху, цикл слева, деньги на виду</h2>
+    <p class="muted" style="margin-bottom:26px">Вторая половина оболочки. Сюда пользователь заходит каждый день — и всё, что важно, читается за один взгляд.</p>
+
+    <div class="specimen app">
+      <div class="win"><i></i><i></i><i></i><span class="url">trymaker.ru/проект/тёплый-хлеб</span></div>
+      <div class="codestrip">
+        <div class="swatches">
+          <i style="background:#8C3B2E"></i><i style="background:#D98A3D"></i><i style="background:#F2E4CE"></i><i style="background:#3A2E26"></i><i style="background:#FCFBF9"></i>
+        </div>
+        <div class="cs-meta">дизайн-код · <b>Golos Text / 16</b> · радиус <b>12</b> · тон <b>тёплый, короткий</b></div>
+        <div class="cs-edit">изменить → перекрасит всё</div>
+      </div>
+      <div class="home">
+        <nav class="rail">
+          <div class="r-h">проект</div>
+          <a href="#" onclick="return false"><span class="rn">1</span> Решить, что делать</a>
+          <a href="#" onclick="return false"><span class="rn">2</span> Собрать бренд</a>
+          <a href="#" class="on" onclick="return false"><span class="rn">3</span> Материалы</a>
+          <a href="#" class="off" onclick="return false"><span class="rn">4</span> Реклама · не подключено</a>
+          <a href="#" class="off" onclick="return false"><span class="rn">5</span> Выручка</a>
+        </nav>
+        <div class="home-main">
+          <div class="hm-h"><h4>Материалы</h4><span class="cnt">3 из 6 задач за квартал</span></div>
+          <div class="mats">
+            <div class="mat"><div class="mt">Страница «Осенний завоз»</div><div class="md">опубликована · teplyhleb.ru/osen</div><div class="price">150 ₽ <s>214 000 ₽</s></div></div>
+            <div class="mat"><div class="mt">Кадры для витрины</div><div class="md">8 снимков · приёмка пройдена</div><div class="price">320 ₽ <s>64 000 ₽</s></div></div>
+            <div class="mat"><div class="mt">Баннеры «−20% к выходным»</div><div class="md">10 форматов · Директ и VK</div><div class="price">90 ₽ <s>18 000 ₽</s></div></div>
+            <div class="mat ghost"><div class="mt">+ Новый материал</div><div class="md">страница · кадр · баннер</div></div>
+          </div>
+          <dl class="money">
+            <div><dt>Потрачено</dt><dd>560 ₽</dd></div>
+            <div><dt>По рынку было бы</dt><dd>296 000 ₽</dd></div>
+            <div><dt>Заявки</dt><dd class="g">12</dd></div>
+            <div><dt>Счёт</dt><dd>3 акта</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <p class="caption">Макет в фирменном стиле Maker · вернувшийся пользователь</p>
+
+    <div class="cols" style="margin-top:34px">
+      <div>
+        <h3>Дизайн-код — полоса, а не раздел</h3>
+        <p class="muted">Всегда сверху, всегда виден. Правка здесь перекрашивает весь проект, включая опубликованное, — поэтому место у него постоянное, а не спрятанное в настройках.</p>
+      </div>
+      <div>
+        <h3>Честность как первоклассное состояние</h3>
+        <p class="muted">«Реклама · не подключено» стоит в меню приглушённой, а не спрятана. Каждый материал показывает свою цену рядом с рыночной. Прочерк — там, где число неизвестно.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- 06 -->
+  <section>
+    <div class="eyebrow"><span class="n">06</span> <b>принципы против «ИИшности»</b></div>
+    <h2>Четыре правила, выведенные из голоса продукта</h2>
+    <div class="princ" style="margin-top:8px">
+      <div class="pr"><div class="pn">П1</div><h3>Одно решение на экран</h3><p>В начале пути — никакой стены опций. Один вопрос, один ответ.</p></div>
+      <div class="pr"><div class="pn">П2</div><h3>Дизайн-код — видимый объект</h3><p>Живая полоса на экране, а не пункт настроек. Правка перекрашивает всё.</p></div>
+      <div class="pr"><div class="pn">П3</div><h3>Деньги всегда на виду</h3><p>Бегущий счётчик «стоило / рынок». Цена названа до нажатия.</p></div>
+      <div class="pr"><div class="pn">П4</div><h3>Честность как интерфейс</h3><p>Прочерк вместо выдуманного, явные «не подключено», короткий человеческий копирайт.</p></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- 07 -->
+  <section>
+    <div class="eyebrow"><span class="n">07</span> <b>что дальше</b></div>
+    <h2>Куда двигаем от видения к макетам</h2>
+    <div class="next" style="margin-top:8px">
+      <div class="nx"><div class="nl">A</div><div><b>Экран «снятие дизайн-кода» по шагам</b><span>Как показать магию: снимаю цвета → шрифты → скругления → тон, с живой сборкой палитры.</span></div></div>
+      <div class="nx"><div class="nl">B</div><div><b>Редактор страницы + счётчик цены</b><span>Ключевой рабочий экран: где стоит «стоило/рынок», как устроена приёмка и гейт публикации.</span></div></div>
+      <div class="nx"><div class="nl">C</div><div><b>Кликабельный прототип оболочки</b><span>Собрать первый экран и домашний в живой HTML-прототип без бэкенда — для теста логики.</span></div></div>
+      <div class="nx"><div class="nl">D</div><div><b>UI-кит и токены под дизайн-код</b><span>Формализовать, как код превращает снятые значения в реальную раскладку.</span></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <hr class="rule">
+    Maker · оболочка сервиса — UX-видение · подготовлено по продуктовой логике trymaker.ru
+  </footer>
+
+</div>

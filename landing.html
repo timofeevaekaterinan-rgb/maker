@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maker — контент, который работает</title>
+<meta name="description" content="Посты, видео, баннеры, презентации и лендинги из одной идеи. Быстро, красиво и в вашем стиле.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1230;
+  --ink-2:#4E5B85;
+  --ink-3:#8592B8;
+  --blue:#1F5BFF;
+  --blue-2:#0A44E0;
+  --navy:#040C2E;
+  --bg:#EEF2FB;
+  --line:#E1E7F5;
+  --glass:linear-gradient(160deg,rgba(255,255,255,.8),rgba(255,255,255,.4));
+  --glass-line:rgba(255,255,255,.9);
+  --shadow:0 24px 60px -18px rgba(23,64,190,.28);
+  --r:22px;
+  --wrap:1300px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:Onest,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+img{display:block;max-width:100%}
+.wrap{max-width:calc(var(--wrap) + 48px);margin:0 auto;padding:0 24px;position:relative}
+.logo-svg{width:100%;height:100%;display:block}
+
+/* ---------- кнопки ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;height:66px;padding:0 32px;border-radius:999px;font-weight:600;font-size:17px;white-space:nowrap;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn svg{width:20px;height:20px;flex:none}
+.btn:active{transform:scale(.97)}
+.btn-white{background:#fff;color:var(--ink);box-shadow:0 10px 30px -10px rgba(0,0,0,.35)}
+.btn-white svg{color:var(--blue)}
+.btn-white:hover{box-shadow:0 14px 36px -10px rgba(0,0,0,.45)}
+.btn-ghost{color:#fff;border:1.5px solid rgba(255,255,255,.32);background:rgba(255,255,255,.04)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-ghost .play{width:24px;height:24px;border-radius:50%;background:#fff;color:var(--navy);display:grid;place-items:center}
+.btn-ghost .play svg{width:11px;height:11px;margin-left:2px}
+.btn-blue{background:linear-gradient(180deg,#2A66FF,#0E48E6);color:#fff;box-shadow:0 18px 40px -14px rgba(16,72,230,.7),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn-blue:hover{box-shadow:0 22px 46px -12px rgba(16,72,230,.8),inset 0 1px 0 rgba(255,255,255,.25)}
+
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-2)}
+.h2{font-size:54px;line-height:1.1;font-weight:700;letter-spacing:-.025em;margin-top:18px}
+.lead{font-size:21px;line-height:1.5;color:var(--ink-2);margin-top:16px}
+.note{font-family:Caveat,cursive;font-weight:600;color:var(--blue);font-size:28px;line-height:.95;transform:rotate(-10deg);position:absolute;pointer-events:none}
+.note svg{position:absolute;width:44px;height:70px;color:var(--blue)}
+
+/* ---------- иконки-«леденцы» ---------- */
+.ic{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(160deg,#EAF0FF,#D5E1FF);box-shadow:inset 0 1px 0 #fff,0 8px 20px -10px rgba(31,91,255,.45);position:relative}
+.ic i{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(160deg,#3B7BFF,#0A44E0);box-shadow:0 6px 14px -4px rgba(10,68,224,.6),inset 0 1px 0 rgba(255,255,255,.35);color:#fff}
+.ic i svg{width:26px;height:26px}
+
+/* ================= HERO ================= */
+.top{position:relative;background:var(--bg);overflow:hidden}
+.top::before{content:"";position:absolute;left:0;right:0;top:0;height:900px;
+  background:
+    radial-gradient(45% 60% at 70% 45%,rgba(60,130,255,.85),transparent 70%),radial-gradient(60% 70% at 72% 40%,rgba(30,90,255,.55),transparent 70%),
+    radial-gradient(50% 60% at 10% 10%,rgba(20,50,170,.45),transparent 70%),
+    linear-gradient(180deg,#030A2A 0%,#061551 55%,#0B2C9E 100%)}
+.glow i{position:absolute;border-radius:40px;background:linear-gradient(150deg,#4C86FF,#0E45E0);filter:blur(22px);opacity:.75}
+.glow i.w{background:#fff;opacity:.35;filter:blur(30px)}
+.top .light{position:absolute;left:0;right:0;top:780px;height:260px;color:var(--bg)}
+.top .light svg{width:100%;height:100%;display:block}
+
+.nav{position:relative;z-index:5;display:flex;align-items:center;height:110px;gap:48px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:33px;letter-spacing:-.03em;color:#fff}
+.brand .m{width:50px;height:50px}
+.nav ul{list-style:none;display:flex;gap:32px;margin-left:16px}
+.nav ul a{color:rgba(255,255,255,.86);font-size:17px;font-weight:500}
+.nav ul a:hover{color:#fff}
+.nav .act{margin-left:auto;display:flex;align-items:center;gap:36px}
+.nav .act>a:first-child{color:#fff;font-size:17px;font-weight:500}
+.nav .btn{height:64px;padding:0 28px;font-size:16px}
+.burger{display:none;width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.1);color:#fff;place-items:center}
+.burger svg{width:22px;height:22px}
+
+.hero{position:relative;z-index:4;padding-top:60px;height:690px;color:#fff}
+.hero .eyebrow{color:#fff;letter-spacing:.3em}
+.hero .eyebrow b{color:#3D7BFF;font-weight:600}
+.hero h1{font-size:76px;line-height:.93;letter-spacing:-.035em;font-weight:800;margin-top:28px}
+.hero h1 em{font-style:normal;color:#2F72FF}
+.hero p{font-size:23px;line-height:1.4;color:rgba(255,255,255,.88);margin-top:30px;max-width:575px}
+.hero .cta{display:flex;gap:14px;margin-top:38px}
+.hero .cta .btn-white{width:302px}
+.hero .cta .btn-ghost{width:244px}
+.checks{display:flex;gap:44px;margin-top:34px;list-style:none;font-size:17px;color:rgba(255,255,255,.9)}
+.checks li{display:flex;align-items:center;gap:10px}
+.checks svg{width:20px;height:20px;flex:none}
+
+/* облако карточек справа (общее для героя и «Возможностей») */
+.cloud{position:absolute;z-index:3;left:50%;margin-left:-60px;top:0;width:820px;height:1520px;pointer-events:none}
+.blk{position:absolute;border-radius:28px;background:linear-gradient(150deg,rgba(110,160,255,.85),rgba(18,78,245,.85));border:1px solid rgba(255,255,255,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.blk.w{background:linear-gradient(150deg,rgba(255,255,255,.75),rgba(200,220,255,.35));border-color:rgba(255,255,255,.8)}
+.blk.d{background:linear-gradient(150deg,#3E7CFF,#0B3FD4)}
+.blk.f1{filter:blur(2px)}
+.blk.f2{filter:blur(6px)}
+.blk.f3{filter:blur(14px)}
+
+.gc{position:absolute;border-radius:24px;padding:14px;background:linear-gradient(160deg,rgba(255,255,255,.62),rgba(225,236,255,.32));border:1px solid rgba(255,255,255,.85);box-shadow:0 30px 70px -20px rgba(6,30,140,.55),inset 0 1px 0 #fff;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.tag{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 20px 0 14px;border-radius:16px;background:#fff;font-size:20px;font-weight:600;color:var(--ink);box-shadow:0 8px 20px -10px rgba(10,40,150,.4)}
+.tag .m{width:24px;height:24px}
+.gc .pic{border-radius:16px;overflow:hidden;margin-top:12px;position:relative}
+.gc .pic img{width:100%;height:100%;object-fit:cover}
+
+/* лента карточек героя: шаг вверх → пауза → шаг, по кругу (скрипт внизу) */
+.reel{position:absolute;left:0;top:0;width:820px;height:940px;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 110px,#000 760px,transparent 930px);
+          mask-image:linear-gradient(180deg,transparent 0,#000 110px,#000 760px,transparent 930px)}
+.reel>*{will-change:transform}
+.reel .slab{filter:none}
+.hand{position:absolute;font-family:Caveat,cursive;font-weight:500;color:rgba(255,255,255,.9);font-size:25px;line-height:1.05;transform:rotate(-8deg)}
+
+/* ================= ВОЗМОЖНОСТИ ================= */
+.feat{position:relative;z-index:4;padding-top:60px;padding-bottom:50px}
+.feat .lead{max-width:600px}
+.tiles{display:grid;grid-template-columns:repeat(4,206px);gap:16px 16px;margin-top:44px;position:relative}
+.tiles::before{content:"";position:absolute;inset:-26px -1000px -40px -1000px;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.55) 20%,rgba(255,255,255,.55));z-index:-1;border-radius:0}
+.tile{height:190px;padding:28px 30px;border-radius:var(--r);background:var(--glass);border:1px solid var(--glass-line);box-shadow:0 20px 40px -24px rgba(23,64,190,.25);transition:transform .25s ease,box-shadow .25s ease}
+.tile:hover{transform:translateY(-4px);box-shadow:0 26px 50px -24px rgba(23,64,190,.4)}
+.tile .ic{width:62px;height:62px}
+.tile b{display:block;font-size:18px;font-weight:600;margin-top:16px}
+.tile span{display:block;font-size:16px;color:var(--ink-3);margin-top:4px}
+.feat .try{position:absolute;right:24px;top:auto;bottom:146px;height:84px;padding:0 46px;font-size:21px;gap:16px}
+.feat .try svg{width:24px;height:24px}
+
+/* ================= КАК ЭТО РАБОТАЕТ ================= */
+.how{position:relative;padding:40px 0 100px;overflow-x:clip}
+.how .art{position:absolute;right:-90px;top:90px;width:760px;height:690px;pointer-events:none}
+.how .note{left:735px;top:70px}
+.how .note svg{left:-34px;top:40px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:44px;position:relative;z-index:2}
+.step{height:300px;padding:38px 34px;border-radius:var(--r);background:linear-gradient(160deg,rgba(255,255,255,.86),rgba(255,255,255,.5));border:1px solid #fff;box-shadow:var(--shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.step .n{font-size:16px;font-weight:600;letter-spacing:.12em;color:var(--ink-2)}
+.step .ic{margin-top:22px;width:58px;height:58px;background:none;box-shadow:none}
+.step .ic i{width:50px;height:50px;border-radius:13px}
+.step .ic i svg{width:26px;height:26px}
+.step b{display:block;font-size:22px;line-height:1.2;font-weight:700;margin-top:22px}
+.step p{font-size:15px;line-height:1.5;color:var(--ink-3);margin-top:12px}
+
+/* ================= ПРИМЕР ================= */
+.ex{position:relative;padding:20px 0 70px;z-index:3;min-height:600px}
+.ex .txt{position:relative;z-index:2;padding-top:30px;max-width:600px}
+.ex .lead{font-size:20px;max-width:500px}
+.ex .btn{margin-top:36px;height:68px;width:364px}
+.ex .art{position:absolute;left:50%;margin-left:-112px;top:-30px;width:820px;height:560px}
+.ex .art .blob{position:absolute;inset:0;pointer-events:none}
+.ex .art .blob svg{width:100%;height:100%;display:block}
+.xc{position:absolute;border-radius:20px;padding:12px;background:linear-gradient(160deg,rgba(255,255,255,.92),rgba(235,242,255,.7));border:1px solid #fff;box-shadow:0 26px 50px -18px rgba(8,40,160,.45)}
+.xc .tag{height:36px;font-size:15px;border-radius:12px;padding:0 14px 0 10px;gap:8px;position:absolute;left:14px;top:-20px}
+.xc .tag .m{width:18px;height:18px}
+.mock{border-radius:12px;overflow:hidden;position:relative;height:100%;background:linear-gradient(120deg,#F3F6F2,#DCE5DC)}
+.mock img{position:absolute;right:-6%;top:0;height:100%;width:62%;object-fit:cover;object-position:50% 30%}
+.mock h4{position:absolute;left:18px;top:24px;font-size:21px;line-height:1.12;font-weight:700;color:#121a12;z-index:1}
+.mock .ln{position:absolute;left:18px;bottom:18px;width:60px;height:5px;border-radius:3px;background:rgba(0,0,0,.18);z-index:1}
+.mock .ln::after{content:"";position:absolute;left:0;top:10px;width:40px;height:5px;border-radius:3px;background:rgba(0,0,0,.12)}
+.task{left:4px;top:238px;width:252px;height:242px;padding:26px 30px}
+.task h4{font-size:24px;line-height:1.3;font-weight:700}
+.task h4 em{font-style:normal;color:var(--blue)}
+.task p{font-size:13px;line-height:1.5;color:var(--ink-2);margin-top:12px;max-width:180px}
+.task .go{position:absolute;right:22px;bottom:22px;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;box-shadow:0 8px 18px -6px rgba(31,91,255,.7)}
+.task .go svg{width:18px;height:18px}
+.arr{position:absolute;color:#fff;pointer-events:none}
+
+/* ================= ПОЧЕМУ ================= */
+.why{position:relative;padding:44px 0 30px;background:#F4F7FD;border-radius:36px 36px 0 0;z-index:4;box-shadow:0 -1px 0 rgba(255,255,255,.9)}
+.why .note{right:120px;top:70px}
+.why .note svg{left:-6px;top:52px}
+.why ul{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:62px}
+.why li{display:flex;gap:20px;align-items:flex-start}
+.why .ic{width:80px;height:80px;border-radius:20px;flex:none;background:linear-gradient(160deg,#E6EDFF,#D3DFFF)}
+.why .ic i{width:auto;height:auto;background:none;box-shadow:none;color:var(--blue)}
+.why .ic i svg{width:44px;height:44px}
+.why b{display:block;font-size:18px;font-weight:700;margin-top:8px}
+.why li p{font-size:14px;line-height:1.5;color:var(--ink-3);margin-top:8px}
+
+.brands{padding:76px 0 0;background:#F5F7FD;position:relative;z-index:4}
+.logos{display:flex;justify-content:space-between;align-items:center;margin-top:44px;color:#8C9AC4;padding:0 20px}
+.logos span{display:flex;align-items:center;gap:8px;font-weight:700;font-size:28px;letter-spacing:-.01em;white-space:nowrap}
+.logos svg{height:28px;width:auto}
+
+/* ================= CTA ================= */
+.cta-sec{background:#F5F7FD;padding:40px 0 0;position:relative;z-index:2}
+.cta-box{position:relative;overflow:hidden;border-radius:24px;padding:42px 48px 36px;height:330px;color:#fff;
+  background:radial-gradient(70% 120% at 85% 30%,#2E6BFF,transparent 60%),linear-gradient(110deg,#0A2FB5 0%,#0B3BD9 45%,#1550F0 100%);
+  box-shadow:0 30px 70px -30px rgba(10,50,200,.7)}
+.cta-box .eyebrow{color:#fff}
+.cta-box h2{font-size:48px;font-weight:800;letter-spacing:-.03em;margin-top:16px}
+.cta-box p{font-size:20px;line-height:1.5;opacity:.9;margin-top:14px;max-width:520px}
+.cta-box .row{display:flex;gap:16px;margin-top:28px;position:relative;z-index:2}
+.cta-box .btn-white{width:256px}
+.cta-box .btn-ghost{width:246px;border-color:rgba(255,255,255,.4)}
+.cta-box .art{position:absolute;right:130px;top:24px;width:300px;height:300px}
+.cta-box .art .p{position:absolute;width:148px;height:196px;border-radius:26px;transform:skewY(18deg);background:linear-gradient(160deg,rgba(255,255,255,.95),rgba(200,218,255,.55));border:1px solid rgba(255,255,255,.9);box-shadow:-20px 30px 50px -10px rgba(0,20,120,.5)}
+.cta-box .art .p:nth-child(1){left:144px;top:-10px;opacity:.55}
+.cta-box .art .p:nth-child(2){left:72px;top:30px;opacity:.75}
+.cta-box .art .p:nth-child(3){left:0;top:70px}
+
+/* ================= FAQ ================= */
+.faq{background:#F5F7FD;padding:34px 0 40px;position:relative;z-index:2}
+.faq-head{display:flex;justify-content:space-between;align-items:flex-end}
+.faq h2{font-size:40px;font-weight:700;letter-spacing:-.025em;margin-top:10px}
+.more{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-weight:600;font-size:18px;margin-bottom:6px}
+.more svg{width:18px;height:18px}
+.qa{margin-top:20px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.6);padding:0 26px}
+.qa details{border-bottom:1px solid var(--line)}
+.qa details:last-child{border-bottom:0}
+.qa summary{list-style:none;display:flex;align-items:center;justify-content:space-between;height:44px;font-size:18px;font-weight:600;cursor:pointer}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary i{width:18px;height:18px;position:relative;flex:none;color:var(--blue)}
+.qa summary i::before,.qa summary i::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:2px;margin:-1px 0 0 -8px;background:currentColor;border-radius:2px;transition:transform .25s ease}
+.qa summary i::after{transform:rotate(90deg)}
+.qa details[open] summary i::after{transform:rotate(0)}
+.qa details p{font-size:16px;line-height:1.55;color:var(--ink-2);padding:0 40px 18px 0;max-width:900px}
+
+/* ================= ПОДВАЛ ================= */
+footer{background:linear-gradient(180deg,#EDF1FB,#E8EDF9);padding:44px 0 50px;position:relative;z-index:2}
+.foot{display:grid;grid-template-columns:270px 1px 1fr 1px 340px;gap:0 46px}
+.foot .vr{background:var(--line)}
+.foot .brand{color:var(--ink);font-size:36px}
+.foot .brand .m{width:50px;height:50px}
+.foot .about p{font-size:15px;line-height:1.5;color:var(--ink-3);margin-top:20px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.cols h5{font-size:15px;font-weight:700}
+.cols a{display:block;font-size:15px;color:var(--ink-3);margin-top:12px}
+.cols a:hover{color:var(--blue)}
+.soc{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between}
+.soc div{display:flex;gap:12px}
+.soc a{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:#DCE5FC;color:var(--blue)}
+.soc a:hover{background:#CBD8FA}
+.soc a svg{width:22px;height:22px}
+.soc small{font-size:14px;color:var(--ink-3);margin-bottom:6px}
+
+/* ================= АДАПТИВ ================= */
+@media (max-width:1360px){
+  .cloud{margin-left:-20px;transform:scale(.92);transform-origin:0 0}
+  .tiles{grid-template-columns:repeat(4,minmax(0,190px))}
+  .ex .art{transform:scale(.9);transform-origin:0 0;margin-left:-80px}
+}
+@media (max-width:1200px){
+  .nav ul{gap:22px;margin-left:0}
+  .hero h1{font-size:66px}
+  .cloud{transform:scale(.78);margin-left:20px}
+  .feat .try{position:static;margin-top:36px}
+  .how .note{left:auto;right:60px}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .how .art{opacity:.5}
+  .why ul{grid-template-columns:repeat(2,1fr);row-gap:36px}
+  .ex .art{position:relative;left:0;margin:40px auto 0;top:0;transform:none}
+  .ex .txt{max-width:none}
+  .logos{flex-wrap:wrap;justify-content:center;gap:28px 48px}
+  .cta-box .art{right:30px;opacity:.7}
+}
+@media (max-width:900px){
+  .nav ul,.nav .act>a:first-child{display:none}
+  .burger{display:grid}
+  .nav .act{gap:12px}
+  .nav .btn{height:48px;padding:0 20px;font-size:15px}
+  .top::before{height:1080px}
+  .top .light{top:1040px}
+  .hero{height:auto;padding-bottom:0}
+  .cloud{left:50%;margin-left:-410px;top:640px;transform:scale(.62);transform-origin:50% 0}
+  .feat{padding-top:880px}
+  .ex{overflow:hidden}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .tiles::before{display:none}
+  .foot{grid-template-columns:1fr;row-gap:36px}
+  .foot .vr{display:none}
+  .soc{align-items:flex-start;gap:20px}
+  .faq-head{flex-direction:column;align-items:flex-start;gap:10px}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .nav{height:80px}
+  .brand{font-size:26px}
+  .brand .m{width:40px;height:40px}
+  .nav .btn{display:none}
+  .hero{padding-top:28px}
+  .hero .eyebrow{font-size:11px;letter-spacing:.22em}
+  .hero h1{font-size:44px;margin-top:18px}
+  .hero p{font-size:18px;margin-top:20px}
+  .hero .cta{flex-direction:column;margin-top:28px}
+  .hero .cta .btn{width:100%;height:58px}
+  .checks{flex-direction:column;gap:12px;margin-top:26px;font-size:16px}
+  .cloud{top:720px;transform:scale(.46)}
+  .feat{padding-top:740px}
+  .top::before{height:1130px}
+  .top .light{top:1080px;height:140px}
+  .eyebrow{font-size:12px;letter-spacing:.24em}
+  .h2{font-size:34px}
+  .lead,.ex .lead{font-size:17px}
+  .tiles{gap:12px;margin-top:28px}
+  .tile{height:auto;padding:20px}
+  .tile .ic{width:52px;height:52px}
+  .tile b{font-size:16px}
+  .tile span{font-size:14px}
+  .feat .try,.ex .btn{width:100%;height:60px;font-size:17px;padding:0 20px}
+  .how{padding:30px 0 60px}
+  .how .note,.why .note{display:none}
+  .steps{grid-template-columns:1fr;gap:14px;margin-top:28px}
+  .step{height:auto;padding:24px}
+  .step .ic{margin-top:14px}
+  .step b{margin-top:14px;font-size:20px}
+  .ex .art{width:820px;transform:scale(.42);transform-origin:0 0;margin:28px 0 -310px;left:0}
+  .why{padding-top:36px}
+  .why ul{grid-template-columns:1fr;margin-top:32px;row-gap:24px}
+  .why .ic{width:64px;height:64px}
+  .why .ic i svg{width:34px;height:34px}
+  .brands{padding-top:48px}
+  .logos{gap:22px 30px;margin-top:28px;padding:0}
+  .logos span{font-size:20px}
+  .logos svg{height:20px}
+  .cta-box{height:auto;padding:28px 22px 26px}
+  .cta-box h2{font-size:30px}
+  .cta-box p{font-size:16px}
+  .cta-box .row{flex-direction:column}
+  .cta-box .row .btn{width:100%;height:58px}
+  .cta-box .art{opacity:.28;right:-140px;top:-20px}
+  .faq h2{font-size:30px}
+  .qa{padding:0 16px}
+  .qa summary{height:auto;min-height:52px;padding:12px 0;font-size:16px;gap:16px}
+  .qa details p{font-size:15px;padding-right:0}
+  .cols{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <linearGradient id="mkBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F6FFF"/><stop offset="1" stop-color="#0A55E6"/></linearGradient>
+  <linearGradient id="mkF" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#F4F8FF"/><stop offset="1" stop-color="#BFD3FF"/></linearGradient>
+  <linearGradient id="mkM" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".62"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".34"/></linearGradient>
+  <linearGradient id="mkB" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".46"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".2"/></linearGradient>
+  <symbol id="mk-logo" viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="22" fill="url(#mkBg)"/>
+    <g transform="skewY(18)">
+      <rect x="48" y="-0.6" width="36" height="39" rx="6.5" fill="url(#mkB)"/>
+      <rect x="30.5" y="14" width="36" height="39" rx="6.5" fill="url(#mkM)"/>
+      <rect x="13" y="28.5" width="36" height="39" rx="6.5" fill="url(#mkF)"/>
+    </g>
+  </symbol>
+  <symbol id="i-arr" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 12 12"><path d="M2 1.2v9.6L10.4 6z" fill="currentColor"/></symbol>
+  <symbol id="i-check" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#2F72FF"/><path d="m6 10.2 2.6 2.6L14 7.4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5D93FF"/><stop offset="1" stop-color="#0A44E0"/></linearGradient>
+</defs></svg>
+
+<div class="top">
+  <div class="glow" aria-hidden="true"><i style="left:-120px;top:600px;width:420px;height:260px;transform:rotate(-12deg)"></i><i class="w" style="left:180px;top:730px;width:360px;height:140px;transform:rotate(6deg)"></i></div>
+  <div class="light" aria-hidden="true"><svg viewBox="0 0 1440 260" preserveAspectRatio="none"><path d="M0 30C220 0 420 10 640 40S1100 30 1440 0V260H0Z" fill="currentColor"/></svg></div>
+
+  <!-- облако карточек: герой + «Возможности» -->
+  <div class="cloud" aria-hidden="true">
+    <!-- задний план -->
+    <div class="blk f3" style="left:-40px;top:20px;width:360px;height:320px;transform:rotate(-14deg);opacity:.55"></div>
+    <div class="blk f2" style="left:300px;top:-40px;width:300px;height:220px;transform:rotate(12deg);opacity:.7"></div>
+    <div class="blk f1" style="left:520px;top:40px;width:320px;height:300px;transform:rotate(-6deg)"></div>
+    <div class="blk w f2" style="left:470px;top:-10px;width:200px;height:180px;transform:rotate(18deg);opacity:.35"></div>
+    <div class="blk f1" style="left:640px;top:250px;width:260px;height:360px;transform:rotate(-8deg)"></div>
+    <div class="blk w f2" style="left:600px;top:250px;width:250px;height:330px;transform:rotate(-8deg);opacity:.4"></div>
+    <div class="blk f1" style="left:-60px;top:420px;width:300px;height:320px;transform:rotate(18deg);opacity:.9"></div>
+    <div class="blk w f3" style="left:-200px;top:640px;width:420px;height:300px;transform:rotate(-10deg);opacity:.7"></div>
+    <div class="blk f1" style="left:640px;top:600px;width:240px;height:320px;transform:rotate(14deg)"></div>
+    <div class="blk w f1" style="left:40px;top:700px;width:320px;height:320px;transform:rotate(-14deg);opacity:.85"></div>
+    <div class="blk d" style="left:330px;top:760px;width:300px;height:260px;transform:rotate(10deg);opacity:.9"></div>
+    <div class="blk w" style="left:250px;top:830px;width:330px;height:330px;transform:rotate(-6deg);opacity:.8"></div>
+    <div class="blk f1" style="left:560px;top:820px;width:300px;height:340px;transform:rotate(12deg)"></div>
+    <div class="blk w f1" style="left:640px;top:880px;width:240px;height:320px;transform:rotate(-12deg);opacity:.6"></div>
+    <div class="blk w" style="left:150px;top:1010px;width:280px;height:300px;transform:rotate(12deg);opacity:.75"></div>
+    <div class="blk d f1" style="left:620px;top:1080px;width:260px;height:300px;transform:rotate(-10deg)"></div>
+    <div class="blk f3" style="left:80px;top:1200px;width:320px;height:260px;transform:rotate(16deg);opacity:.5"></div>
+    <div class="blk w f2" style="left:420px;top:1300px;width:340px;height:200px;transform:rotate(-6deg);opacity:.6"></div>
+    <!-- большой знак внизу -->
+    <div style="position:absolute;left:360px;top:960px;width:400px;height:400px;transform:rotate(-2deg);filter:drop-shadow(0 40px 60px rgba(10,40,200,.45))"><svg class="logo-svg" viewBox="0 0 100 100"><use href="#mk-logo"/></svg></div>
+
+    <!-- лента карточек: шагает вверх по кругу, как в референсе Rico Supply — Cards -->
+    <div class="reel">
+    <div class="gc" style="left:120px;top:258px;width:178px;height:290px;transform:rotate(-10deg)">
+      <span class="tag" style="height:44px;font-size:19px;padding:0 18px">Посты</span>
+      <div class="pic" style="height:200px"><img src="img/leaf.jpg" alt=""></div>
+    </div>
+    <div class="gc" style="left:270px;top:150px;width:296px;height:440px;transform:rotate(-2deg)">
+      <span class="tag"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Видео</span>
+      <div class="pic" style="height:340px">
+        <svg viewBox="0 0 260 340" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+          <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0D1B4F"/><stop offset=".55" stop-color="#3D5FB8"/><stop offset="1" stop-color="#0A1840"/></linearGradient>
+          <linearGradient id="mt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9D8FF"/><stop offset=".3" stop-color="#4C6CC8"/><stop offset="1" stop-color="#0E1D52"/></linearGradient></defs>
+          <rect width="260" height="340" fill="url(#sky)"/>
+          <circle cx="200" cy="70" r="40" fill="#8FB0FF" opacity=".25"/>
+          <path d="M0 220 60 150 92 176 140 96 182 160 210 132 260 196V340H0Z" fill="url(#mt)"/>
+          <path d="M140 96 126 124 140 116 150 132 160 120 182 160 150 118Z" fill="#EAF0FF" opacity=".8"/>
+          <path d="M0 260 70 210 130 250 200 214 260 250V340H0Z" fill="#081438" opacity=".9"/>
+          <path d="M0 300c40-10 80 10 130 0s90-12 130 0v40H0Z" fill="#040B26"/>
+          <circle cx="130" cy="186" r="32" fill="rgba(255,255,255,.15)" stroke="#fff" stroke-width="3"/>
+          <path d="M122 170v32l26-16z" fill="#fff"/>
+        </svg>
+      </div>
+    </div>
+    <div class="gc" style="left:580px;top:330px;width:250px;height:300px;transform:rotate(12deg)">
+      <span class="tag" style="font-size:19px"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Лендинги</span>
+      <div class="pic" style="height:205px;background:#fff">
+        <svg viewBox="0 0 220 205" width="100%" height="100%">
+          <rect x="14" y="14" width="80" height="10" rx="5" fill="#2F72FF"/>
+          <rect x="14" y="34" width="150" height="6" rx="3" fill="#D8E1F5"/><rect x="14" y="46" width="120" height="6" rx="3" fill="#D8E1F5"/>
+          <rect x="14" y="58" width="135" height="6" rx="3" fill="#E6ECF9"/>
+          <rect x="14" y="80" width="60" height="5" rx="2.5" fill="#E6ECF9"/><rect x="14" y="92" width="44" height="5" rx="2.5" fill="#E6ECF9"/>
+          <path d="M70 180 100 156 122 164 150 128 172 136 200 90" fill="none" stroke="#2F72FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M70 180 100 156 122 164 150 128 172 136 200 90V200H70Z" fill="#2F72FF" opacity=".12"/>
+          <g fill="#2F72FF" opacity=".75"><rect x="120" y="170" width="12" height="30" rx="2"/><rect x="140" y="160" width="12" height="40" rx="2"/><rect x="160" y="150" width="12" height="50" rx="2"/><rect x="180" y="128" width="12" height="72" rx="2"/></g>
+        </svg>
+      </div>
+    </div>
+    <div class="gc" style="left:220px;top:480px;width:236px;height:280px;transform:rotate(10deg)">
+      <span class="tag" style="font-size:19px"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Баннеры</span>
+      <div class="pic" style="height:186px;background:radial-gradient(70% 60% at 30% 30%,#3E7CFF,#0B2FA8 60%,#061A6B)">
+        <svg viewBox="0 0 200 186" width="100%" height="100%"><path d="M-10 140C40 60 90 160 210 40v160H-10Z" fill="#0A2FB0" opacity=".7"/><path d="M40 0c40 50 20 90 90 110s80 60 80 60" fill="none" stroke="#7FA6FF" stroke-width="18" opacity=".35" stroke-linecap="round"/><circle cx="150" cy="140" r="8" fill="#fff" opacity=".8"/></svg>
+      </div>
+    </div>
+    <div class="gc" style="left:420px;top:560px;width:330px;height:270px;transform:rotate(9deg)">
+      <span class="tag" style="font-size:19px"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Презентации</span>
+      <div class="pic" style="height:178px;background:linear-gradient(150deg,#2A64F5,#0A35C4)">
+        <svg viewBox="0 0 300 178" width="100%" height="100%">
+          <rect x="16" y="16" width="90" height="146" rx="10" fill="#fff" opacity=".9"/>
+          <rect x="26" y="28" width="50" height="7" rx="3.5" fill="#2F72FF"/>
+          <g fill="#C9D6F3"><rect x="26" y="46" width="66" height="5" rx="2.5"/><rect x="26" y="58" width="56" height="5" rx="2.5"/><rect x="26" y="70" width="62" height="5" rx="2.5"/></g>
+          <g fill="#2F72FF" opacity=".5"><circle cx="31" cy="96" r="5"/><circle cx="31" cy="114" r="5"/><circle cx="31" cy="132" r="5"/></g>
+          <g fill="#D8E1F5"><rect x="42" y="94" width="44" height="4" rx="2"/><rect x="42" y="112" width="40" height="4" rx="2"/><rect x="42" y="130" width="46" height="4" rx="2"/></g>
+          <g fill="rgba(255,255,255,.5)"><rect x="124" y="34" width="150" height="6" rx="3"/><rect x="124" y="48" width="120" height="6" rx="3"/><rect x="124" y="70" width="140" height="70" rx="8" fill="rgba(255,255,255,.14)"/></g>
+        </svg>
+      </div>
+    </div>
+      <div class="blk slab" style="left:470px;top:700px;width:260px;height:230px;transform:rotate(-12deg)"></div>
+      <div class="blk w slab" style="left:60px;top:1020px;width:240px;height:200px;transform:rotate(14deg);opacity:.7"></div>
+      <div class="gc" style="left:600px;top:760px;width:190px;height:320px;transform:rotate(-7deg)">
+        <span class="tag" style="font-size:19px"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Сторис</span>
+        <div class="pic" style="height:226px"><img src="img/intro/01-stories.jpg" alt="" style="object-position:50% 50%"></div>
+      </div>
+      <div class="gc" style="left:110px;top:830px;width:300px;height:240px;transform:rotate(-9deg)">
+        <span class="tag" style="font-size:19px"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Карусели</span>
+        <div class="pic" style="height:150px"><img src="img/intro/03-carousel.jpg" alt="" style="object-position:50% 50%"></div>
+      </div>
+      <div class="gc" style="left:380px;top:900px;width:200px;height:320px;transform:rotate(6deg)">
+        <span class="tag" style="font-size:19px"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Клипы</span>
+        <div class="pic" style="height:226px"><img src="img/intro/08-clip.jpg" alt="" style="object-position:50% 30%"></div>
+      </div>
+      <div class="gc" style="left:540px;top:950px;width:260px;height:290px;transform:rotate(12deg)">
+        <span class="tag" style="font-size:19px"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Посты</span>
+        <div class="pic" style="height:196px"><img src="img/intro/02-post.jpg" alt="" style="object-position:50% 50%"></div>
+      </div>
+      <div class="gc" style="left:170px;top:990px;width:290px;height:220px;transform:rotate(-6deg)">
+        <span class="tag" style="font-size:19px"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Баннеры</span>
+        <div class="pic" style="height:128px"><img src="img/intro/04-banner.jpg" alt="" style="object-position:50% 50%"></div>
+      </div>
+    </div>
+    <div class="hand" style="left:590px;top:170px">Одна идея →<br>множество форматов<br><span style="font-size:20px;opacity:.8">в вашем стиле</span></div>
+  </div>
+
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="#"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>maker</a>
+      <ul>
+        <li><a href="#features">Возможности</a></li>
+        <li><a href="#examples">Примеры</a></li>
+        <li><a href="#">Тарифы</a></li>
+        <li><a href="#brands">Отзывы</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="act">
+        <a href="prototype.html?login" data-login>Войти</a>
+        <a class="btn btn-white" href="prototype.html?login" data-login>Попробовать бесплатно<svg><use href="#i-arr"/></svg></a>
+        <button class="burger" aria-label="Меню"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="eyebrow">Одна идея — <b>множество форматов</b></div>
+      <h1>Создавайте<br>контент,<br>который <em>работает</em></h1>
+      <p>Посты, видео, баннеры, презентации и лендинги из одной идеи. Быстро, красиво и в вашем стиле.</p>
+      <div class="cta">
+        <a class="btn btn-white" href="prototype.html?login" data-login>Попробовать бесплатно<svg><use href="#i-arr"/></svg></a>
+        <a class="btn btn-ghost" href="#"><span class="play"><svg><use href="#i-play"/></svg></span>Смотреть видео</a>
+      </div>
+      <ul class="checks">
+        <li><svg><use href="#i-check"/></svg>Экономия времени</li>
+        <li><svg><use href="#i-check"/></svg>Единый стиль</li>
+        <li><svg><use href="#i-check"/></svg>Готово к публикации</li>
+      </ul>
+    </section>
+
+    <section class="feat" id="features">
+      <div class="eyebrow">Возможности</div>
+      <h2 class="h2">Весь контент<br>в одном месте</h2>
+      <p class="lead">Простая и понятная платформа, которая закрывает весь цикл — от идеи до готовых публикаций.</p>
+      <div class="tiles">
+        <a class="tile" href="#"><span class="ic"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 14.3 4l2.7-.2.9 2.6 2.3 1.4-.6 2.7.9 2.6-2 1.8-.3 2.7-2.6.8-1.6 2.2-2.6-.8L9.5 21l-1.6-2.2-2.6-.8-.3-2.7-2-1.8.9-2.6-.6-2.7 2.3-1.4.9-2.6L9.7 4z" opacity=".95"/><circle cx="12" cy="11.5" r="3.6" fill="#1F5BFF"/></svg></i></span><b>Посты</b><span>для соцсетей</span></a>
+        <a class="tile" href="#"><span class="ic"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 8 4.3v9.4L12 21l-8-4.3V7.3z" opacity=".55"/><path d="m12 3 8 4.3-8 4.4-8-4.4z"/><path d="M12 11.7V21l-8-4.3V7.3z" opacity=".8"/></svg></i></span><b>Видео</b><span>и ролики</span></a>
+        <a class="tile" href="#"><span class="ic"><i><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="3" fill="currentColor" opacity=".95"/><path d="m5 17 5-5.5 3.5 3.5 2.5-2.5 3 3V17Z" fill="#1F5BFF"/><circle cx="15.5" cy="9" r="1.8" fill="#1F5BFF"/></svg></i></span><b>Баннеры</b><span>и креативы</span></a>
+        <a class="tile" href="#"><span class="ic"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></i></span><b>Презентации</b><span>и документы</span></a>
+        <a class="tile" href="#"><span class="ic"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3" fill="currentColor"/><rect x="3" y="4" width="18" height="4.5" rx="2" fill="#BCD0FF"/><rect x="6" y="11" width="12" height="2" rx="1" fill="#1F5BFF"/><rect x="6" y="15" width="8" height="2" rx="1" fill="#1F5BFF" opacity=".6"/></svg></i></span><b>Лендинги</b><span>и страницы</span></a>
+        <a class="tile" href="#"><span class="ic"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="m12 3 7.8 4.5v9L12 21l-7.8-4.5v-9z"/></svg></i></span><b>Карусели</b><span>и сторис</span></a>
+        <a class="tile" href="#"><span class="ic"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 3.5c.8 3.6 2.6 5.5 6.4 6.3-3.8.8-5.6 2.7-6.4 6.4-.8-3.7-2.6-5.6-6.4-6.4 3.8-.8 5.6-2.7 6.4-6.3Z"/><path d="M18 14c.4 1.7 1.2 2.5 2.9 2.9-1.7.4-2.5 1.2-2.9 2.9-.4-1.7-1.2-2.5-2.9-2.9 1.7-.4 2.5-1.2 2.9-2.9Z" opacity=".75"/></svg></i></span><b>Рекламные</b><span>креативы</span></a>
+        <a class="tile" href="#"><span class="ic"><i><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="3" fill="currentColor"/><g fill="#1F5BFF"><rect x="7.5" y="7" width="9" height="2" rx="1"/><rect x="7.5" y="11" width="9" height="2" rx="1"/><rect x="7.5" y="15" width="6" height="2" rx="1"/></g></svg></i></span><b>Тексты</b><span>и описания</span></a>
+      </div>
+      <a class="btn btn-blue try" href="prototype.html?login" data-login>Попробовать бесплатно<svg><use href="#i-arr"/></svg></a>
+    </section>
+  </div>
+</div>
+
+<!-- ================= КАК ЭТО РАБОТАЕТ ================= -->
+<section class="how">
+  <svg class="art" viewBox="0 0 620 560" aria-hidden="true">
+    <defs>
+      <linearGradient id="hb1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F86FF"/><stop offset="1" stop-color="#0B3FD4"/></linearGradient>
+      <linearGradient id="hw" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#D6E3FF" stop-opacity=".5"/></linearGradient>
+      <filter id="hbl"><feGaussianBlur stdDeviation="6"/></filter>
+    </defs>
+    <g transform="rotate(-14 300 300)">
+      <rect x="140" y="80" width="260" height="240" rx="40" fill="url(#hb1)" filter="url(#hbl)" opacity=".85"/>
+      <rect x="300" y="120" width="300" height="260" rx="40" fill="url(#hb1)"/>
+      <rect x="220" y="150" width="260" height="230" rx="36" fill="url(#hw)" stroke="#fff" stroke-opacity=".8"/>
+      <rect x="380" y="240" width="240" height="260" rx="40" fill="url(#hb1)" opacity=".9"/>
+      <rect x="250" y="300" width="300" height="220" rx="40" fill="url(#hw)" opacity=".8"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">Как это работает</div>
+    <h2 class="h2">От идеи до результата<br>в несколько шагов</h2>
+    <p class="lead">Минимум действий — максимум готового контента.</p>
+    <div class="note">Просто,<br>&nbsp;&nbsp;как кажется<svg viewBox="0 0 44 70" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M40 4C14 10 2 30 12 64"/><path d="m4 56 8 9 8-8"/></svg></div>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><span class="ic"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c4.97 0 9 3.36 9 7.5S16.97 18 12 18c-.9 0-1.77-.1-2.6-.3L5 20.5l1.1-4C4.2 15.1 3 12.9 3 10.5 3 6.36 7.03 3 12 3Z" opacity=".95"/><path d="m12 7 3.5 2v4L12 15l-3.5-2V9z" fill="#1F5BFF"/></svg></i></span><b>Опишите задачу</b><p>Голосом, текстом, файлами или ссылкой — как вам удобно.</p></div>
+      <div class="step"><div class="n">02</div><span class="ic"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6.5 11 4v16l-7 2.5z" opacity=".7"/><path d="M13 4l7 2.5v16L13 20z"/><path d="M11 4h2v16h-2z" opacity=".9"/></svg></i></span><b>Выберите форматы</b><p>Посты, видео, баннеры, презентации, лендинги и другие.</p></div>
+      <div class="step"><div class="n">03</div><span class="ic"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3" fill="currentColor"/><rect x="5.5" y="7" width="5.5" height="5" rx="1" fill="#1F5BFF"/><rect x="13" y="7" width="5.5" height="5" rx="1" fill="#1F5BFF"/><rect x="5.5" y="14" width="5.5" height="3" rx="1" fill="#1F5BFF" opacity=".6"/><rect x="13" y="14" width="5.5" height="3" rx="1" fill="#1F5BFF" opacity=".6"/></svg></i></span><b>Получите результат</b><p>Готовый контент в вашем стиле — без лишних деталей.</p></div>
+      <div class="step"><div class="n">04</div><span class="ic"><i><svg viewBox="0 0 24 24"><path d="M4 9.5 5.5 4h13L20 9.5V20H4z" fill="currentColor"/><path d="M4 9.5h16" stroke="#1F5BFF" stroke-width="1.5"/><rect x="9" y="13" width="6" height="7" rx="1" fill="#1F5BFF"/></svg></i></span><b>Публикуйте<br>и развивайтесь</b><p>Используйте контент сразу на всех площадках.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ПРИМЕР ================= -->
+<section class="ex" id="examples">
+  <div class="wrap">
+    <div class="txt">
+      <div class="eyebrow">Пример результата</div>
+      <h2 class="h2">Одна идея —<br>множество форматов</h2>
+      <p class="lead">Посмотрите, как из одной задачи рождается готовый набор контента для разных каналов.</p>
+      <a class="btn btn-blue" href="#">Посмотреть больше примеров<svg><use href="#i-arr"/></svg></a>
+    </div>
+    <div class="art" aria-hidden="true">
+      <div class="blob"><svg viewBox="0 0 820 560" preserveAspectRatio="none" style="overflow:visible">
+        <defs><linearGradient id="eb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7AA4FF"/><stop offset=".55" stop-color="#2463FF"/><stop offset="1" stop-color="#0B3FD4"/></linearGradient><filter id="ebl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="14"/></filter></defs>
+        <path d="M90 140C150 20 330 -60 520 -40S860 -20 900 60V560C820 560 760 600 690 620L640 700 600 600C520 600 440 590 360 560S160 480 110 420 30 260 90 140Z" fill="url(#eb)" opacity=".92" filter="url(#ebl)"/>
+        <path d="M200 380c80 120 260 160 420 120" stroke="#fff" stroke-opacity=".3" stroke-width="60" fill="none" filter="url(#ebl)"/>
+      </svg></div>
+      <svg class="arr" style="left:122px;top:70px;width:96px;height:170px" viewBox="0 0 96 170" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 166C4 100 30 40 90 26"/><path d="m72 14 18 12-14 16"/></svg>
+      <svg class="arr" style="left:452px;top:104px;width:56px;height:30px" viewBox="0 0 56 30" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15h46m-12-11 12 11-12 11"/></svg>
+
+      <div class="xc" style="left:220px;top:10px;width:228px;height:190px"><span class="tag"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Пост для соцсетей</span><div class="mock"><img src="img/leaf.jpg" alt=""><h4>Забота<br>в каждой<br>детали</h4><span class="ln"></span></div></div>
+      <div class="xc" style="left:516px;top:10px;width:262px;height:190px"><span class="tag"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Баннер</span><div class="mock"><img src="img/leaf.jpg" alt=""><h4>Забота<br>в каждой<br>детали</h4><span class="ln"></span></div></div>
+      <div class="xc task"><h4>Исходная<br><em>задача</em></h4><p>Запуск новой услуги для клиники. Сделай посты, видео, сторис и лендинг в едином стиле.</p><span class="go"><svg><use href="#i-arr"/></svg></span></div>
+      <div class="xc" style="left:282px;top:220px;width:136px;height:256px"><span class="tag">Сторис</span><div class="mock"><img src="img/leaf.jpg" alt="" style="width:100%;right:0;top:42%;height:58%"><h4 style="font-size:13px;top:16px;left:12px">Ваша<br>новая<br>забота</h4></div></div>
+      <div class="xc" style="left:446px;top:230px;width:324px;height:270px"><span class="tag"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>Лендинг</span>
+        <div class="mock" style="background:linear-gradient(120deg,#F6F8F5,#DDE6DE)">
+          <div style="position:absolute;left:0;right:0;top:0;height:26px;background:rgba(255,255,255,.7);z-index:1"></div>
+          <img src="img/leaf.jpg" alt="" style="top:26px;height:calc(100% - 26px);width:58%;right:-4%">
+          <h4 style="top:52px;font-size:22px">Забота<br>в каждой<br>детали</h4>
+          <span class="ln" style="bottom:24px"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ПОЧЕМУ ================= -->
+<section class="why">
+  <div class="wrap">
+    <div class="eyebrow">Почему Maker</div>
+    <h2 class="h2">Создан для реальных задач</h2>
+    <p class="lead">Всё, что нужно для создания контента — в одном сервисе.</p>
+    <div class="note">Просто,<br>&nbsp;&nbsp;как кажется<svg viewBox="0 0 44 70" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4C-2 24 6 46 30 64"/><path d="m20 64 11 1-1-11"/></svg></div>
+    <ul>
+      <li><span class="ic"><i><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="url(#gBlue)"/><path d="M22 4a18 18 0 0 1 0 36z" fill="#fff" opacity=".22"/><path d="M22 12v10l6 5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span><div><b>Экономит время</b><p>Минуты вместо часов на создание контента.</p></div></li>
+      <li><span class="ic"><i><svg viewBox="0 0 44 44"><path d="m22 4 16 8v20l-16 8-16-8V12z" fill="url(#gBlue)"/><path d="m22 4 16 8-16 8-16-8z" fill="#fff" opacity=".3"/><path d="M22 20v20l-16-8V12z" fill="#0A44E0" opacity=".35"/></svg></i></span><div><b>Единый стиль</b><p>Весь контент в вашем визуальном и тональном стиле.</p></div></li>
+      <li><span class="ic"><i><svg viewBox="0 0 44 44" fill="url(#gBlue)"><rect x="4" y="4" width="16" height="16" rx="5"/><rect x="24" y="4" width="16" height="16" rx="5"/><rect x="4" y="24" width="16" height="16" rx="5"/><rect x="24" y="24" width="16" height="16" rx="5"/></svg></i></span><div><b>Универсальность</b><p>Все форматы и каналы в одном месте.</p></div></li>
+      <li><span class="ic"><i><svg viewBox="0 0 44 44"><path d="M22 3 38 9v12c0 10-7 17-16 20C13 38 6 31 6 21V9z" fill="url(#gBlue)"/><path d="M22 3v38C13 38 6 31 6 21V9z" fill="#fff" opacity=".2"/><path d="m15 22 5 5 9-10" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span><div><b>Простота</b><p>Понятный интерфейс без сложных настроек.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= БРЕНДЫ ================= -->
+<section class="brands" id="brands">
+  <div class="wrap">
+    <div class="eyebrow">Нас выбирают</div>
+    <h2 class="h2">Уже помогают развивать бренды</h2>
+    <p class="lead">Команды, агентства и эксперты создают контент с Maker</p>
+    <!-- ЗАГЛУШКА: логотипы из макета; перед запуском заменить на реальных клиентов с их согласия -->
+    <div class="logos">
+      <span><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="3"><path d="M24 9a11 11 0 1 1-4-4.4"/><path d="m9 13 4 4 11-11"/></svg>СБЕР</span>
+      <span style="font-weight:500;font-size:30px">Яндекс</span>
+      <span style="font-weight:800;letter-spacing:.06em">OZON</span>
+      <span><svg viewBox="0 0 28 28" fill="currentColor"><circle cx="8" cy="9" r="5"/><circle cx="19" cy="7" r="3.5"/><circle cx="9" cy="20" r="3.5"/><circle cx="20" cy="19" r="6"/></svg>Avito</span>
+      <span style="font-weight:600;font-size:23px"><svg viewBox="0 0 28 28"><rect width="28" height="28" rx="8" fill="currentColor"/><path d="M6 9h3.4c.1 5 2.3 7 4.1 7.5V9h3.2v4.3c1.8-.2 3.6-2.2 4.3-4.3h3.2c-.5 2.7-2.6 4.7-4 5.5 1.4.7 3.7 2.5 4.6 5.6h-3.5c-.7-2.1-2.4-3.8-4.6-4V20h-.4C9.5 20 6.2 15.9 6 9Z" fill="#F5F7FD"/></svg>ВКонтакте</span>
+      <span style="font-weight:900;font-size:31px;letter-spacing:-.04em">TELE2</span>
+      <span style="font-weight:600">StartUp</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta-sec">
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="eyebrow">Начните прямо сейчас</div>
+      <h2>Попробуйте Maker бесплатно</h2>
+      <p>Создайте первые материалы и убедитесь, как это просто и удобно.</p>
+      <div class="row">
+        <a class="btn btn-white" href="prototype.html?login" data-login>Начать бесплатно<svg><use href="#i-arr"/></svg></a>
+        <a class="btn btn-ghost" href="#"><span class="play"><svg><use href="#i-play"/></svg></span>Смотреть видео</a>
+      </div>
+      <div class="art" aria-hidden="true"><span class="p"></span><span class="p"></span><span class="p"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="faq-head">
+      <div><div class="eyebrow">FAQ</div><h2>Частые вопросы</h2></div>
+      <a class="more" href="#">Все вопросы<svg><use href="#i-arr"/></svg></a>
+    </div>
+    <div class="qa">
+      <details><summary>Какие форматы контента можно создавать?<i></i></summary><p>Посты, карусели, сторис и клипы для соцсетей, рекламные баннеры, презентации, лендинги и тексты. Всё — из одной задачи и в едином стиле.</p></details>
+      <details><summary>Нужно ли уметь работать с дизайном?<i></i></summary><p>Нет. Опишите задачу словами, голосом или пришлите ссылку — Maker соберёт материалы сам. Правки — тоже словами.</p></details>
+      <details><summary>Можно ли использовать свой бренд-стиль?<i></i></summary><p>Да. Загрузите логотип, цвета и шрифты или дайте ссылку на сайт — Maker запомнит стиль и голос бренда и будет держать их во всех материалах.</p></details>
+      <details><summary>Подходит ли для команды?<i></i></summary><p>Да. В одном кабинете можно вести несколько клиентов и отправлять материалы на согласование одной ссылкой.</p></details>
+      <details><summary>Есть ли бесплатный период?<i></i></summary><p>Да — первые материалы можно создать бесплатно, без привязки карты.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div class="about">
+      <a class="brand" href="#"><svg class="m" viewBox="0 0 100 100"><use href="#mk-logo"/></svg>maker</a>
+      <p>Создавайте контент,<br>который работает.</p>
+    </div>
+    <span class="vr"></span>
+    <div class="cols">
+      <div><h5>Продукт</h5><a href="#features">Возможности</a><a href="#">Тарифы</a><a href="#examples">Примеры</a><a href="#">Интеграции</a></div>
+      <div><h5>Компания</h5><a href="#">О нас</a><a href="#">Блог</a><a href="#">Карьера</a><a href="#">Контакты</a></div>
+      <div><h5>Ресурсы</h5><a href="#">Помощь</a><a href="#faq">FAQ</a><a href="#">Условия</a><a href="#">Конфиденциальность</a></div>
+    </div>
+    <span class="vr"></span>
+    <div class="soc">
+      <div>
+        <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.7 4.3 2.9 11.2c-1.2.5-1.2 1.2-.2 1.5l4.6 1.4 1.8 5.4c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.2c.3-1.2-.5-1.8-1.6-1.3ZM8.6 13.8l9-5.7c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2z"/></svg></a>
+        <a href="#" aria-label="ВКонтакте"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7h3.2c.1 4.6 2.1 6.5 3.7 6.9V7h3v4c1.6-.2 3.3-2 3.9-4h3c-.5 2.5-2.4 4.3-3.6 5 1.3.6 3.4 2.2 4.2 5h-3.3c-.7-1.9-2.2-3.4-4.2-3.6V17h-.4C6.6 17 3.2 13.3 3 7Z"/></svg></a>
+        <a href="#" aria-label="Дзен"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.2 5.6 1.4 9.6 10 10-8.6.4-9.8 4.4-10 10-.2-5.6-1.4-9.6-10-10 8.6-.4 9.8-4.4 10-10Z"/></svg></a>
+      </div>
+      <small>© 2026 Maker. Все права защищены.</small>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Герой: карточки едут вверх шагами (рывок с ease-in-out → пауза), по кругу.
+   Во время рывка каждая чуть доворачивается и сдвигается вбок («jitter»), с небольшим запаздыванием. */
+(()=>{
+  const reel=document.querySelector('.reel'); if(!reel) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const STEP=315, STEPS=4, P=STEP*STEPS;      // путь за цикл = высота петли
+  const MOVE=.8, HOLD=.55, T=MOVE+HOLD;        // секунды на рывок и паузу
+  const TOP=-330;                              // выше этого карточка переезжает вниз
+  const ease=p=>p<.5?8*p**4:1-(-2*p+2)**4/2;  // easeInOutQuart
+  const off=t=>{                               // пройденный путь к моменту t, с паузой в начале
+    if(t<0) return 0;
+    const n=Math.floor(t/T), f=t-n*T;
+    const p=f<HOLD?0:ease((f-HOLD)/MOVE);
+    return (n+p)*STEP;
+  };
+  const items=[...reel.children].map((el,i)=>{
+    const y=parseFloat(el.style.top)||0, x=parseFloat(el.style.left)||0;
+    const r=parseFloat((el.style.transform.match(/-?[\d.]+/)||[0])[0]);
+    return {el,y,r,
+      d:.02+(x/820)*.08+(i%3)*.015,            // запаздывание: правые чуть позже
+      k:(i%2?1:-1)*(2+(i*37%3)),               // куда и насколько доворачиваться
+      sx:(i%2?-1:1)*(4+(i*13%5))};
+  });
+  let t=0, last=0, run=true;
+  const frame=now=>{
+    const dt=Math.min(.05,(now-(last||now))/1000); last=now;
+    if(run) t+=dt;
+    for(const c of items){
+      const o=off(t-c.d), v=(off(t-c.d+.016)-o)/(.016*STEP/MOVE*1.9); // 0…~1 скорость рывка
+      let pos=((c.y-o-TOP)%P+P)%P+TOP;
+      c.el.style.transform=`translate3d(${(v*c.sx).toFixed(2)}px,${(pos-c.y).toFixed(2)}px,0) rotate(${(c.r+v*c.k).toFixed(2)}deg)`;
+    }
+    if(run||freeze===null) requestAnimationFrame(frame);
+  };
+  const freeze=new URLSearchParams(location.search).get('t'); // ?t=1.4 — кадр в момент 1,4 с (для проверки)
+  if(freeze!==null){ t=+freeze; run=false; last=1; frame(1); return; }
+  new IntersectionObserver(e=>{run=e[0].isIntersecting;}).observe(document.querySelector('.hero')||reel);
+  requestAnimationFrame(frame);
+})();
+</script>
+<script>
+/* Кнопки входа ведут в прототип Maker (экран входа) и несут метки рекламы (utm_*, yclid, gclid) — чтобы видеть, с какой кампании пришёл человек. */
+(()=>{
+  const q=new URLSearchParams(location.search), keep=new URLSearchParams();
+  for(const [k,v] of q) if(/^utm_|^(yclid|gclid|ymclid|erid)$/.test(k)) keep.set(k,v);
+  if(![...keep].length) return;
+  document.querySelectorAll('a[data-login]').forEach(a=>{
+    const u=new URL(a.href); keep.forEach((v,k)=>u.searchParams.set(k,v)); a.href=u;
+  });
+})();
+</script>
+</body>
+</html>
