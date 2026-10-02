@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maker — промо-ролик (сцена)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!--
+  Промо-ролик Maker, 20 с, 1920×1080, бит 120 BPM (доля = 0,5 с).
+  Всё нарисовано функцией render(t) — кадр зависит только от времени, поэтому ролик пишется покадрово (promo/render.js).
+  Открыть в браузере — проигрывается по кругу; ?t=12.3 — заморозить кадр.
+-->
+<style>
+:root{--ink:#0B1230;--blue:#1F5BFF;--blue-2:#0A44E0;--sky:#BFD3FF;--navy:#040C2E}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;background:#000;overflow:hidden}
+body{font-family:Onest,system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:grid;place-items:center}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#000;transform-origin:50% 50%;flex:none}
+.sc{position:absolute;inset:0;display:none;overflow:hidden}
+.sc.on{display:block}
+.full{position:absolute;inset:0}
+.center{position:absolute;inset:0;display:grid;place-items:center}
+.word{font-weight:800;letter-spacing:-.04em;line-height:1;white-space:nowrap;color:var(--ink)}
+.light{background:radial-gradient(80% 90% at 50% 35%,#FFFFFF 0%,#EEF2FA 45%,#C9D2E6 100%)}
+.dark{background:#000}
+img{display:block}
+
+/* --- облако карточек --- */
+.c3d{position:absolute;inset:0;perspective:1500px;perspective-origin:50% 50%}
+.c3d .rot{position:absolute;left:50%;top:50%;transform-style:preserve-3d}
+.card{position:absolute;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 30px 60px -20px rgba(10,30,90,.45);backface-visibility:hidden}
+.card img{width:100%;height:100%;object-fit:cover}
+.card.ui{background-repeat:no-repeat}
+.c3d .w3{position:absolute;transform-style:preserve-3d}
+
+/* --- UI-вставки --- */
+.panel{position:absolute;background:#fff;border-radius:34px;box-shadow:0 60px 120px -30px rgba(0,10,60,.55)}
+.chip{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 20px 0 14px;border-radius:14px;background:#fff;font-weight:600;font-size:22px;color:var(--ink);box-shadow:0 10px 24px -12px rgba(0,20,90,.5)}
+.chip svg{width:26px;height:26px}
+.cursor{position:absolute;width:44px;height:44px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35));z-index:20}
+.caret{display:inline-block;width:.08em;height:.9em;background:var(--blue);margin-left:.06em;vertical-align:-.08em}
+.ui-shot{position:absolute;background-size:cover;border-radius:18px}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="mkBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F6FFF"/><stop offset="1" stop-color="#0A55E6"/></linearGradient>
+  <linearGradient id="mkF" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#F4F8FF"/><stop offset="1" stop-color="#BFD3FF"/></linearGradient>
+  <linearGradient id="mkM" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".62"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".34"/></linearGradient>
+  <linearGradient id="mkB" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".46"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".2"/></linearGradient>
+  <symbol id="mk-logo" viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="22" fill="url(#mkBg)"/>
+    <g transform="skewY(18)">
+      <rect x="48" y="-0.6" width="36" height="39" rx="6.5" fill="url(#mkB)"/>
+      <rect x="30.5" y="14" width="36" height="39" rx="6.5" fill="url(#mkM)"/>
+      <rect x="13" y="28.5" width="36" height="39" rx="6.5" fill="url(#mkF)"/>
+    </g>
+  </symbol>
+  <symbol id="cur" viewBox="0 0 24 24"><path d="M4 2.5v17.2l4.6-4.3 3 6.6 2.9-1.3-3-6.5 6.3-.3z" fill="#fff" stroke="#0B1230" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<div id="stage">
+
+  <!-- 1. Облако карточек + слова (0–2 с) и финал (17,5–20 с) -->
+  <section class="sc light" id="s-cloud">
+    <div class="c3d"><div class="rot" id="cloud-rot"></div></div>
+  </section>
+
+  <!-- 2. Одно слово на светлом -->
+  <section class="sc light" id="s-wlight"><div class="center"><div class="word" id="wl" style="font-size:230px"></div></div></section>
+
+  <!-- 3. Набор текста на чёрном -->
+  <section class="sc dark" id="s-type"><div class="center"><div class="word" id="wt" style="font-size:210px;color:#fff"></div></div>
+    <div class="center" style="top:300px"><div id="wt2" style="font-size:58px;font-weight:500;color:#7C88AE;letter-spacing:-.01em"></div></div></section>
+
+  <!-- 4. Синий росчерк -->
+  <section class="sc" id="s-streak"><div class="full" id="streak"></div></section>
+
+  <!-- 5. Стопка форматов -->
+  <section class="sc dark" id="s-stack">
+    <div class="full" style="perspective:1600px"><div id="stack" style="position:absolute;left:50%;top:50%;transform-style:preserve-3d"></div></div>
+    <div class="center"><div class="word" id="stack-w" style="font-size:190px;color:#fff;text-shadow:0 10px 60px rgba(0,0,0,.6)">Все форматы</div></div>
+  </section>
+
+  <!-- 6. Телефон -->
+  <section class="sc" id="s-phone" style="background:radial-gradient(60% 80% at 60% 40%,#2A2F3D,#06070B 70%)">
+    <div class="full" style="perspective:1800px"><div id="phone" style="position:absolute;left:50%;top:50%;width:420px;height:880px;margin:-440px 0 0 -210px;border-radius:66px;background:#0B0C10;padding:16px;box-shadow:0 80px 140px -30px rgba(0,0,0,.9),inset 0 0 0 2px #2E3240">
+      <div style="width:100%;height:100%;border-radius:52px;overflow:hidden;background:#fff url(ui/home-m.jpg) top/cover"></div>
+      <div style="position:absolute;left:50%;top:30px;width:120px;height:34px;margin-left:-60px;border-radius:20px;background:#000"></div>
+    </div></div>
+  </section>
+
+  <!-- 7. Ноутбук -->
+  <section class="sc" id="s-laptop" style="background:linear-gradient(115deg,#1B1E26 0%,#2B2F3A 48%,#101218 49%,#0A0B0F 100%)">
+    <div class="full" style="perspective:2200px"><div id="laptop" style="position:absolute;left:50%;top:50%;width:1300px;height:880px;margin:-470px 0 0 -650px;transform-style:preserve-3d">
+      <div style="position:absolute;left:0;top:0;width:1300px;height:830px;border-radius:34px 34px 10px 10px;background:#0D0E12;padding:26px 26px 40px;box-shadow:0 0 0 2px #3A3E4A">
+        <div style="width:100%;height:100%;border-radius:10px;background:#fff url(ui/home.jpg) top/cover"></div>
+      </div>
+      <div style="position:absolute;left:-70px;top:826px;width:1440px;height:40px;border-radius:0 0 30px 30px;background:linear-gradient(#BFC3CC,#7E838F);box-shadow:0 60px 80px -20px rgba(0,0,0,.8)"></div>
+    </div></div>
+  </section>
+
+  <!-- 8. Палитра стиля -->
+  <section class="sc" id="s-style" style="background:radial-gradient(90% 90% at 30% 20%,#4C86FF,#0A35C4 70%)">
+    <div class="panel" style="left:260px;top:190px;width:1400px;height:700px;padding:56px 64px">
+      <div style="display:flex;align-items:center;gap:16px"><svg width="54" height="54" viewBox="0 0 100 100"><use href="#mk-logo"/></svg><div style="font-size:44px;font-weight:700;color:#0B1230;letter-spacing:-.02em">Стиль · Вита</div></div>
+      <div style="font-size:24px;color:#6A76A0;margin-top:14px">Цвета, шрифты и фото клиента — один раз, для всех материалов</div>
+      <div id="swatches" style="display:flex;gap:30px;margin-top:70px"></div>
+      <div style="display:flex;gap:30px;margin-top:22px;font-size:20px;color:#6A76A0" id="swlab"></div>
+      <div id="sw-prev" style="position:absolute;right:64px;top:150px;width:470px;height:480px;border-radius:26px;overflow:hidden;background:#F3F6F2">
+        <img src="../img/leaf.jpg" style="position:absolute;right:-40px;top:0;height:100%;width:62%;object-fit:cover">
+        <div style="position:absolute;left:34px;top:48px;font-size:44px;line-height:1.08;font-weight:800;color:#111;letter-spacing:-.02em">Забота<br>в каждой<br>детали</div>
+        <div id="sw-btn" style="position:absolute;left:34px;bottom:40px;height:62px;padding:0 30px;border-radius:31px;display:flex;align-items:center;color:#fff;font-weight:700;font-size:22px">Записаться</div>
+      </div>
+    </div>
+    <svg class="cursor" id="cur1" viewBox="0 0 24 24"><use href="#cur"/></svg>
+  </section>
+
+  <!-- 9. Голос: ползунок -->
+  <section class="sc" id="s-voice" style="background:radial-gradient(90% 90% at 70% 20%,#14266E,#040C2E 70%)">
+    <div class="panel" style="left:310px;top:220px;width:1300px;height:640px;padding:60px 70px">
+      <div style="font-size:44px;font-weight:700;color:#0B1230;letter-spacing:-.02em">Голос клиента</div>
+      <div style="display:flex;justify-content:space-between;margin-top:56px;font-size:26px;font-weight:600;color:#4E5B85"><span>Дружелюбно</span><span>Официально</span></div>
+      <div style="position:relative;height:14px;border-radius:7px;background:#E3E9F7;margin-top:22px">
+        <div id="v-fill" style="position:absolute;left:0;top:0;bottom:0;border-radius:7px;background:var(--blue)"></div>
+        <div id="v-th" style="position:absolute;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px var(--blue),0 10px 20px -6px rgba(10,40,160,.6)"></div>
+      </div>
+      <div style="margin-top:64px;border-radius:24px;background:#F3F6FD;padding:34px 40px;height:240px;position:relative">
+        <div style="font-size:20px;font-weight:600;color:#8592B8;letter-spacing:.1em;text-transform:uppercase">Пост · ВКонтакте</div>
+        <div id="v-a" style="position:absolute;left:40px;right:40px;top:84px;font-size:34px;line-height:1.35;color:#0B1230">Привет! Заглядывайте на чекап — это быстро, а мы рядом и всё объясним.</div>
+        <div id="v-b" style="position:absolute;left:40px;right:40px;top:84px;font-size:34px;line-height:1.35;color:#0B1230">Приглашаем на профилактический осмотр. Приём занимает 30 минут.</div>
+      </div>
+    </div>
+    <svg class="cursor" id="cur2" viewBox="0 0 24 24"><use href="#cur"/></svg>
+  </section>
+
+  <!-- 10. Сетка 2×2 -->
+  <section class="sc" id="s-grid" style="background:#000"><div class="full" id="grid"></div></section>
+
+  <!-- 11. Стена карточек -->
+  <section class="sc" id="s-wall" style="background:#05060A">
+    <div class="full" style="perspective:1700px"><div id="wall" style="position:absolute;left:50%;top:50%;transform-style:preserve-3d"></div></div>
+    <div class="full" style="background:radial-gradient(55% 60% at 50% 50%,transparent 20%,rgba(0,0,0,.85) 80%)"></div>
+    <div class="center"><div class="word" id="ww" style="font-size:210px;color:#fff;text-shadow:0 12px 70px rgba(0,0,0,.7)"></div></div>
+  </section>
+
+  <!-- 12. Логотип и адрес -->
+  <section class="sc dark" id="s-logo">
+    <div class="full" id="logo-glow" style="background:radial-gradient(40% 50% at 50% 46%,rgba(31,91,255,.45),transparent 70%)"></div>
+    <svg id="logo-m" viewBox="0 0 100 100" style="position:absolute;left:50%;top:50%;width:240px;height:240px;margin:-120px 0 0 -120px"><use href="#mk-logo"/></svg>
+    <div id="logo-url" class="word" style="position:absolute;left:0;right:0;top:600px;text-align:center;font-size:96px;color:#fff;font-weight:700;letter-spacing:-.03em"></div>
+    <div id="logo-cta" style="position:absolute;left:50%;top:760px;transform:translateX(-50%);height:96px;padding:0 54px;border-radius:48px;background:#fff;color:#0B1230;font-weight:700;font-size:34px;display:flex;align-items:center;gap:18px;white-space:nowrap">Попробовать бесплатно <svg width="34" height="34" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="#1F5BFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </section>
+</div>
+
+<script>
+/* ---------- утилиты ---------- */
+const $=id=>document.getElementById(id);
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,p)=>a+(b-a)*p;
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const eOut=p=>1-Math.pow(1-p,3);
+const eExpo=p=>p>=1?1:1-Math.pow(2,-10*p);
+const eInOut=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+const eBack=p=>{const c=1.7;return 1+(c+1)*Math.pow(p-1,3)+c*Math.pow(p-1,2)};
+let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+const BEAT=.5;
+
+/* ---------- материалы для карточек ---------- */
+const PH=['../img/intro/01-stories.jpg','../img/intro/02-post.jpg','../img/intro/03-carousel.jpg','../img/intro/04-banner.jpg','../img/intro/05-plan.jpg','../img/intro/06-marketer.jpg','../img/intro/07-product.jpg','../img/intro/08-clip.jpg','../img/leaf.jpg','../img/vita.jpg','../img/ex-ritm.jpg','../img/ex-roster.jpg','../img/ex-vector.jpg','../img/ex-vita.jpg','../img/hero-bg.jpg','../img/atvinta.jpg'];
+const UI=['ui/plan.jpg','ui/style.jpg','ui/voice.jpg','ui/banners.jpg','ui/home.jpg'];
+// кусок интерфейса: картинка экрана, увеличенная и сдвинутая
+function uiCard(el,src,zoom,px,py){el.classList.add('ui');el.style.backgroundImage=`url(${src})`;el.style.backgroundSize=`${zoom*100}% auto`;el.style.backgroundPosition=`${px}% ${py}%`;}
+function makeCard(i){
+  const el=document.createElement('div');el.className='card';
+  if(i%4===3){uiCard(el,UI[i%UI.length],2.4+rnd()*1.2,10+rnd()*45,8+rnd()*50);}
+  else{const im=new Image();im.src=PH[i%PH.length];el.appendChild(im);}
+  return el;
+}
+
+/* ---------- 1. облако ---------- */
+const CLOUD=[];
+(function(){
+  const rot=$('cloud-rot');
+  for(let i=0;i<30;i++){
+    const w=150+rnd()*170, h=w*(rnd()<.5?1.25:.8);
+    const wrap=document.createElement('div');wrap.className='w3';
+    const el=makeCard(i);el.style.width=w+'px';el.style.height=h+'px';el.style.left=-w/2+'px';el.style.top=-h/2+'px';
+    wrap.appendChild(el);rot.appendChild(wrap);
+    // точка в «бублике» вокруг центра, чтобы середина оставалась под слово
+    const a=rnd()*Math.PI*2, r=430+rnd()*620;
+    CLOUD.push({wrap,x:Math.cos(a)*r*1.25,y:Math.sin(a)*r*.62,z:-800+rnd()*1050,ry:-30+rnd()*60,rz:-18+rnd()*36,sp:.6+rnd()*.8,ph:rnd()*6});
+  }
+  const word=document.createElement('div');word.className='w3';word.id='cw';
+  word.innerHTML='<div class="word" id="cw-t" style="position:absolute;transform:translate(-50%,-50%)"></div>';
+  rot.appendChild(word);
+})();
+const CW=[['Создавайте',190,'#0B1230'],['контент,',230,'#0B1230'],['который',230,'#0B1230'],['работает',320,'#1F5BFF']];
+function drawCloud(t,mode){
+  // mode 'intro' — слова; mode 'outro' — карточки слетаются к логотипу
+  const g=mode==='intro'?t:t-17.5;
+  const fly=mode==='outro'?1-eExpo(seg(g,0,1.2)):0;          // в финале прилетают из глубины
+  $('cloud-rot').style.transform=`rotateX(${8-2*g}deg) rotateY(${-14+9*g}deg)`;
+  for(const c of CLOUD){
+    const z=c.z+g*90*c.sp-fly*2200;
+    const bob=Math.sin(g*1.4+c.ph)*14;
+    c.wrap.style.transform=`translate3d(${c.x}px,${c.y+bob}px,${z}px) rotateY(${c.ry+g*6*c.sp}deg) rotateZ(${c.rz}deg)`;
+  }
+  const el=$('cw-t');
+  if(mode==='intro'){
+    const k=Math.min(3,Math.floor(t/BEAT)), lt=t-k*BEAT, w=CW[k];
+    el.innerHTML=w[0];el.style.fontSize=w[1]+'px';el.style.color=w[2];
+    el.style.transform=`translate(-50%,-50%) scale(${1.08-.08*eExpo(seg(lt,0,.25))})`;
+    el.style.opacity=1;
+    $('cw').style.transform=`translate3d(0,0,${k===3?160:60}px) rotateY(${14-9*t}deg) rotateX(${-8+2*t}deg)`; // слово смотрит в камеру
+  }else{
+    const p=eBack(seg(g,.5,1.1));
+    el.innerHTML='<span style="display:flex;align-items:center;gap:34px"><svg width="200" height="200" viewBox="0 0 100 100"><use href="#mk-logo"/></svg><span style="font-size:190px">maker</span></span>';
+    el.style.fontSize='190px';el.style.color='#141A2A';
+    el.style.transform=`translate(-50%,-50%) scale(${.6+.4*p})`;el.style.opacity=clamp(seg(g,.5,.8));
+    $('cw').style.transform=`translate3d(0,0,120px) rotateY(${14-9*g}deg) rotateX(${-8+2*g}deg)`;
+  }
+}
+
+/* ---------- 2. слово на светлом ---------- */
+function drawWLight(t,text,a,opt={}){
+  const el=$('wl'),lt=t-a;
+  el.style.fontSize=(opt.size||230)+'px';el.style.color=opt.color||'#0B1230';
+  if(opt.split){ // буквы съезжаются к центру
+    const s=1-eExpo(seg(lt,0,.3));
+    el.innerHTML=[...text].map(ch=>`<span style="display:inline-block;margin:0 ${(s*.35).toFixed(3)}em">${ch}</span>`).join('');
+  }else el.textContent=text;
+  el.style.transform=`scale(${1.06-.06*eExpo(seg(lt,0,.25))+lt*.03})`;
+  $('s-wlight').style.background=opt.dark?'#000':'';
+}
+
+/* ---------- 3. набор текста ---------- */
+function drawType(t,text,a,dur,sub){
+  const lt=t-a,n=Math.round(clamp(lt/dur)*text.length);
+  const blink=(Math.floor(lt/.22)%2===0)||lt<dur;
+  $('wt').innerHTML=text.slice(0,n)+`<span class="caret" style="opacity:${blink?1:0}"></span>`;
+  $('wt2').textContent=sub&&lt>dur+.1?sub:'';
+  $('wt2').style.opacity=sub?clamp((lt-dur-.1)/.2):0;
+}
+
+/* ---------- 4. росчерк ---------- */
+function drawStreak(t){
+  const p=seg(t,4,4.5);
+  $('streak').style.background=`linear-gradient(180deg,#000 ${-60+p*40}%,#0A2FB5 ${-30+p*60}%,#2F72FF ${-10+p*80}%,#BFD3FF ${5+p*90}%,#fff ${12+p*95}%,#2F72FF ${30+p*100}%,#000 ${60+p*110}%)`;
+  $('streak').style.filter=`blur(${10+20*Math.sin(p*Math.PI)}px)`;
+  $('streak').style.transform=`scaleY(1.2) skewY(${-6+12*p}deg)`;
+}
+
+/* ---------- 5. стопка ---------- */
+const STACK=[];
+(function(){
+  const st=$('stack');const src=[['ui',UI[0],1.6,10,8],['ph',PH[1]],['ui',UI[1],1.5,60,30],['ph',PH[3]],['ui',UI[3],1.4,20,10]];
+  src.forEach((s,i)=>{
+    const el=document.createElement('div');el.className='card';el.style.cssText+=';width:820px;height:520px;left:-410px;top:-260px;border-radius:30px';
+    if(s[0]==='ui')uiCard(el,s[1],s[2],s[3],s[4]);else{const im=new Image();im.src=s[1];el.appendChild(im);}
+    st.appendChild(el);STACK.push(el);
+  });
+})();
+function drawStack(t){
+  const lt=t-4.5,p=eOut(seg(lt,0,.7));
+  STACK.forEach((el,i)=>{
+    const k=i-2;
+    el.style.transform=`translate3d(0,${k*(30+170*p)}px,${-k*40}px) rotateX(${58-10*p}deg) rotateZ(${-8+k*3*p}deg)`;el.style.filter='brightness(.62)';
+  });
+  $('stack').style.transform=`rotateY(${-10+lt*12}deg)`;
+  const w=$('stack-w');w.style.opacity=clamp((lt-.25)/.08);w.style.transform=`scale(${1.05-.05*eExpo(seg(lt,.25,.5))})`;
+}
+
+/* ---------- 6–7. телефон, ноутбук ---------- */
+function drawPhone(t){const lt=t-5.5;$('phone').style.transform=`rotateX(${22-6*lt}deg) rotateY(${-28+16*lt}deg) rotateZ(${-16+6*lt}deg) scale(${.95+lt*.1})`;}
+function drawLaptop(t){const lt=t-6;$('laptop').style.transform=`rotateX(${10-3*lt}deg) rotateY(${-22+12*lt}deg) scale(${.9+lt*.1})`;}
+
+/* ---------- 8. палитра ---------- */
+const SW=[['#1F5BFF','Основной'],['#0B1230','Текст'],['#2E9E6B','Акцент'],['#F4F1EA','Фон'],['#E7B85A','Дополнительный']];
+(function(){
+  $('swatches').innerHTML=SW.map((s,i)=>`<div id="sw${i}" style="width:110px;height:110px;border-radius:30px;background:${s[0]};box-shadow:inset 0 0 0 2px rgba(0,0,0,.06)"></div>`).join('');
+  $('swlab').innerHTML=SW.map(s=>`<div style="width:110px">${s[1]}</div>`).join('');
+})();
+function drawStyle(t){
+  const lt=t-10;
+  const pk=eInOut(seg(lt,.05,.42));               // курсор к «Акценту»
+  const cx=lerp(1500,325+2*140+55,pk),cy=lerp(980,330+55,pk);
+  const click=lt>.45&&lt<.58;
+  $('cur1').style.left=cx+'px';$('cur1').style.top=cy+'px';$('cur1').style.transform=`scale(${click?.85:1})`;
+  const on=lt>.5;
+  $('sw2').style.boxShadow=on?'0 0 0 6px #fff,0 0 0 10px #2E9E6B':'inset 0 0 0 2px rgba(0,0,0,.06)';
+  $('sw-btn').style.background=on?'#2E9E6B':'#1F5BFF';
+  $('sw-prev').style.background=on?'#EEF6F0':'#F3F6F2';
+  document.querySelector('#s-style .panel').style.transform=`scale(${1.02-lt*.02})`;
+}
+
+/* ---------- 9. голос ---------- */
+function drawVoice(t){
+  const lt=t-11,p=eInOut(seg(lt,.15,.7)),v=lerp(.22,.82,p);
+  $('v-fill').style.width=v*100+'%';$('v-th').style.left=v*100+'%';
+  const tx=310+70+v*1160, ty=220+60+44+56+26+22+7;
+  $('cur2').style.left=(lt<.15?lerp(1700,tx,eOut(seg(lt,0,.15))):tx)+'px';
+  $('cur2').style.top=(lt<.15?lerp(980,ty,eOut(seg(lt,0,.15))):ty)+'px';
+  const s=clamp((v-.45)/.15);
+  $('v-a').style.opacity=1-s;$('v-b').style.opacity=s;
+  $('v-a').style.transform=`translateY(${-s*14}px)`;$('v-b').style.transform=`translateY(${(1-s)*14}px)`;
+}
+
+/* ---------- 10. сетка ---------- */
+const GRID=[['#1F5BFF','ui/plan.jpg','Контент-план',2.3,30,25],['#E8EEFF','ui/banners.jpg','Баннеры',2.2,55,60],['#0B1F66','ui/style.jpg','Стиль',2.4,70,40],['#BFD3FF','ui/voice.jpg','Голос',2.4,75,30]];
+(function(){
+  $('grid').innerHTML=GRID.map((g,i)=>`<div id="gq${i}" style="position:absolute;width:960px;height:540px;left:${(i%2)*960}px;top:${Math.floor(i/2)*540}px;background:${g[0]};overflow:hidden">
+    <div id="gs${i}" class="ui-shot" style="width:600px;height:400px;left:180px;top:80px;background-image:url(${g[1]});background-size:${g[3]*100}% auto;background-position:${g[4]}% ${g[5]}%;box-shadow:0 40px 80px -20px rgba(0,0,0,.5)"></div>
+    <div class="chip" style="position:absolute;left:120px;top:400px"><svg viewBox="0 0 100 100"><use href="#mk-logo"/></svg>${g[2]}</div></div>`).join('');
+})();
+function drawGrid(t){
+  const lt=t-12;
+  GRID.forEach((g,i)=>{
+    const p=eExpo(seg(lt,i*.08,i*.08+.35));
+    const dx=(i%2?1:-1)*(1-p)*960, dy=(i<2?-1:1)*(1-p)*200;
+    $('gq'+i).style.transform=`translate(${dx}px,${dy}px)`;
+    $('gs'+i).style.transform=`rotate(${(i%2?4:-4)}deg) translate(${lt*20*(i%2?-1:1)}px,${-lt*10}px) scale(${1+lt*.05})`;
+  });
+}
+
+/* ---------- 11. стена ---------- */
+(function(){
+  const w=$('wall');
+  for(let r=0;r<6;r++)for(let c=0;c<8;c++){
+    const i=r*8+c, el=makeCard(i+3);
+    el.style.width='300px';el.style.height='220px';el.style.left=(c-4)*330+'px';el.style.top=(r-3)*250+'px';el.style.borderRadius='22px';
+    w.appendChild(el);
+  }
+})();
+const WW=['Один','кабинет','все клиенты'];
+function drawWall(t){
+  const lt=t-13;
+  $('wall').style.transform=`rotateX(38deg) rotateZ(-24deg) translate(${-140+lt*120}px,${60-lt*90}px)`;
+  const k=Math.min(2,Math.floor(lt/BEAT)),wl=lt-k*BEAT;
+  $('ww').textContent=WW[k];$('ww').style.transform=`scale(${1.08-.08*eExpo(seg(wl,0,.25))})`;
+}
+
+/* ---------- 12. логотип и адрес ---------- */
+function drawLogo(t){
+  const lt=t-14.5;
+  const pop=eBack(seg(lt,0,.4)), up=eInOut(seg(lt,.45,.85));
+  $('logo-m').style.transform=`translateY(${-120*up}px) scale(${pop*(1-.15*up)})`;
+  $('logo-m').style.opacity=clamp(lt/.1);
+  const url='trymaker.ru',n=Math.round(clamp((lt-.6)/.7)*url.length);
+  const blink=Math.floor(lt/.25)%2===0||(lt>.6&&lt<1.3);
+  $('logo-url').innerHTML=lt>.55?url.slice(0,n)+`<span class="caret" style="opacity:${blink?1:0}"></span>`:'';
+  const cp=eExpo(seg(lt,1.5,1.9));
+  $('logo-cta').style.opacity=cp;$('logo-cta').style.transform=`translateX(-50%) translateY(${(1-cp)*40}px)`;
+  $('logo-glow').style.opacity=.6+.4*Math.sin(lt*Math.PI*2*1)**2;
+}
+
+/* ---------- таймлайн ---------- */
+const TL=[
+  [0,   2,   's-cloud', t=>drawCloud(t,'intro')],
+  [2,   2.5, 's-wlight',t=>drawWLight(t,'в вашем',2,{size:250})],
+  [2.5, 3,   's-wlight',t=>drawWLight(t,'стиле',2.5,{size:330})],
+  [3,   4,   's-type',  t=>drawType(t,'Одна идея',3.05,.7)],
+  [4,   4.5, 's-streak',drawStreak],
+  [4.5, 5.5, 's-stack', drawStack],
+  [5.5, 6,   's-phone', drawPhone],
+  [6,   7,   's-laptop',drawLaptop],
+  [7,   7.5, 's-wlight',t=>drawWLight(t,'Опишите',7)],
+  [7.5, 8,   's-wlight',t=>drawWLight(t,'Выберите',7.5)],
+  [8,   8.5, 's-wlight',t=>drawWLight(t,'Получите',8,{split:1,dark:1,color:'#fff'})],
+  [8.5, 9,   's-wlight',t=>drawWLight(t,'Публикуйте',8.5,{size:210})],
+  [9,   10,  's-type',  t=>drawType(t,'Стиль',9.02,.45,'и голос клиента')],
+  [10,  11,  's-style', drawStyle],
+  [11,  12,  's-voice', drawVoice],
+  [12,  13,  's-grid',  drawGrid],
+  [13,  14.5,'s-wall',  drawWall],
+  [14.5,17.5,'s-logo',  drawLogo],
+  [17.5,20,  's-cloud', t=>drawCloud(t,'outro')],
+];
+const DUR=20;
+let cur=null;
+window.render=function(t){
+  t=Math.max(0,Math.min(DUR-1e-6,t));
+  const sc=TL.find(s=>t>=s[0]&&t<s[1]);
+  if(cur!==sc[2]){document.querySelectorAll('.sc.on').forEach(e=>e.classList.remove('on'));$(sc[2]).classList.add('on');cur=sc[2];}
+  // слово на светлом и чёрном фоне используют один слой — сбрасываем фон
+  sc[3](t);
+};
+window.ready=async function(){
+  await document.fonts.ready;
+  const srcs=[...new Set([...document.querySelectorAll('img')].map(i=>i.src).concat([...document.querySelectorAll('[style*="url("]')].map(e=>(e.style.backgroundImage.match(/url\("?(.*?)"?\)/)||[])[1]).filter(Boolean)))];
+  await Promise.all(srcs.map(s=>new Promise(r=>{const i=new Image();i.onload=i.onerror=r;i.src=s;})));
+  return srcs.length;
+};
+
+/* ---------- просмотр в браузере ---------- */
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);$('stage').style.transform=`scale(${s})`;}
+addEventListener('resize',fit);fit();
+const q=new URLSearchParams(location.search);
+if(q.has('capture')){document.body.style.display='block';$('stage').style.transform='none';render(0);}
+else if(q.has('t')){render(+q.get('t'));}
+else{ready().then(()=>{const t0=performance.now();const loop=()=>{render(((performance.now()-t0)/1000)%DUR);requestAnimationFrame(loop);};loop();});}
+</script>
+</body>
+</html>

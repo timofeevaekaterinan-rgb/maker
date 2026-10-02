@@ -329,6 +329,16 @@ footer{background:linear-gradient(180deg,#EDF1FB,#E8EDF9);padding:44px 0 50px;po
   .qa details p{font-size:15px;padding-right:0}
   .cols{grid-template-columns:1fr 1fr}
 }
+/* ---------- видео ---------- */
+.vmodal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;background:rgba(3,8,30,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s}
+.vmodal.on{opacity:1;visibility:visible}
+.vmodal .vbox{position:relative;width:min(1200px,100%);aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 40px 100px -20px rgba(0,0,0,.7);transform:scale(.96);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.vmodal.on .vbox{transform:none}
+.vmodal video{width:100%;height:100%;display:block}
+.vmodal .vx{position:absolute;top:-56px;right:0;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;display:grid;place-items:center}
+.vmodal .vx:hover{background:rgba(255,255,255,.24)}
+.vmodal .vx svg{width:20px;height:20px}
+@media (max-width:640px){.vmodal .vx{top:-52px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -486,7 +496,7 @@ footer{background:linear-gradient(180deg,#EDF1FB,#E8EDF9);padding:44px 0 50px;po
       <p>Посты, видео, баннеры, презентации и лендинги из одной идеи. Быстро, красиво и в вашем стиле.</p>
       <div class="cta">
         <a class="btn btn-white" href="prototype.html?login" data-login>Попробовать бесплатно<svg><use href="#i-arr"/></svg></a>
-        <a class="btn btn-ghost" href="#"><span class="play"><svg><use href="#i-play"/></svg></span>Смотреть видео</a>
+        <a class="btn btn-ghost" href="promo/maker-promo.mp4" data-video><span class="play"><svg><use href="#i-play"/></svg></span>Смотреть видео</a>
       </div>
       <ul class="checks">
         <li><svg><use href="#i-check"/></svg>Экономия времени</li>
@@ -622,7 +632,7 @@ footer{background:linear-gradient(180deg,#EDF1FB,#E8EDF9);padding:44px 0 50px;po
       <p>Создайте первые материалы и убедитесь, как это просто и удобно.</p>
       <div class="row">
         <a class="btn btn-white" href="prototype.html?login" data-login>Начать бесплатно<svg><use href="#i-arr"/></svg></a>
-        <a class="btn btn-ghost" href="#"><span class="play"><svg><use href="#i-play"/></svg></span>Смотреть видео</a>
+        <a class="btn btn-ghost" href="promo/maker-promo.mp4" data-video><span class="play"><svg><use href="#i-play"/></svg></span>Смотреть видео</a>
       </div>
       <div class="art" aria-hidden="true"><span class="p"></span><span class="p"></span><span class="p"></span></div>
     </div>
@@ -670,6 +680,24 @@ footer{background:linear-gradient(180deg,#EDF1FB,#E8EDF9);padding:44px 0 50px;po
   </div>
 </footer>
 
+<div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-label="Видео о Maker">
+  <div class="vbox">
+    <button class="vx" type="button" aria-label="Закрыть видео"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+    <video src="promo/maker-promo.mp4" poster="promo/poster.jpg" controls playsinline preload="none"></video>
+  </div>
+</div>
+<script>
+/* «Смотреть видео» — ролик во всплывающем плеере; закрыть: ✕, клик по фону, Esc */
+(()=>{
+  const m=document.getElementById('vmodal'),v=m.querySelector('video');let back=null;
+  const open=e=>{e.preventDefault();back=e.currentTarget;m.classList.add('on');document.body.style.overflow='hidden';v.currentTime=0;v.play().catch(()=>{});m.querySelector('.vx').focus();};
+  const close=()=>{m.classList.remove('on');document.body.style.overflow='';v.pause();if(back)back.focus();};
+  document.querySelectorAll('a[data-video]').forEach(a=>a.addEventListener('click',open));
+  m.addEventListener('click',e=>{if(e.target===m)close();});
+  m.querySelector('.vx').addEventListener('click',close);
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&m.classList.contains('on'))close();});
+})();
+</script>
 <script>
 /* Герой: карточки едут вверх шагами (рывок с ease-in-out → пауза), по кругу.
    Во время рывка каждая чуть доворачивается и сдвигается вбок («jitter»), с небольшим запаздыванием. */
