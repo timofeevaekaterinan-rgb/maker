@@ -877,7 +877,39 @@
   .pubtabs{margin:6px 2px 18px}
   .side .nav.sub a{color:rgba(255,255,255,.86)}
   .side .nav.sub a.on{background:rgba(255,255,255,.16);box-shadow:none;font-weight:600}
-  .side .side-foot{flex:1 0 auto;justify-content:flex-end;margin:0 -16px -18px;padding:24px 16px 18px;overflow:hidden}
+  .side .side-foot{flex:1 0 auto;justify-content:flex-end;margin:0 -16px -18px;padding:24px 16px 18px;overflow:hidden;position:relative}
+  /* меню прокручивается само, плашка пользователя всегда внизу поверх синего; фигуры — только в свободном месте */
+  .side{overflow:hidden}
+  .side-scroll{flex:0 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;gap:4px;margin:0 -16px;padding:0 16px 6px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.3) transparent}
+  .side .side-foot.no-art .side-art{display:none}
+  .side .side-foot.no-art{padding-top:12px}
+  /* свёрнутое меню: остаётся полоса иконок, видно, где вы */
+  @media (min-width:901px){
+    .app{transition:grid-template-columns .22s ease}
+    body .app.side-min{grid-template-columns:76px 1fr}
+    body .app.side-min .side{visibility:visible;padding:18px 10px 18px}
+    body .app.side-min .side-tg{display:none!important}
+    body .app.side-min .side-top{flex-direction:column;gap:10px}
+    body .app.side-min .side-top .logo{padding:0}
+    body .app.side-min .side .logo b{display:none}
+    body .app.side-min .side-x{margin:0}
+    body .app.side-min .side-x svg{transform:scaleX(-1)}
+    body .app.side-min .side .acct{justify-content:center;padding:8px;margin-top:12px}
+    body .app.side-min .side .acct .acct-tx,body .app.side-min .side .acct .an,body .app.side-min .side .acct .acct-chev{display:none}
+    body .app.side-min .side-scroll{margin:0 -10px;padding:0 10px 6px}
+    body .app.side-min .side .nav a,body .app.side-min .side .g2hd{justify-content:center;padding:11px 0;gap:0}
+    body .app.side-min .side .nav a .ct,body .app.side-min .side .nav a .badge,body .app.side-min .side .g2hd .ct,body .app.side-min .side .g2hd .chev2{display:none}
+    body .app.side-min .side .group2 .nav.sub{display:none!important}
+    body .app.side-min .side .group2.cur .g2hd{background:linear-gradient(90deg,#4B92FF,#3C82FF);box-shadow:0 10px 22px -12px rgba(0,18,90,.7),inset 0 1px 0 rgba(255,255,255,.25)}
+    body .app.side-min .side .navdiv{margin:10px 4px}
+    body .app.side-min .side .side-foot{margin:0 -10px -18px;padding:12px 10px 18px}
+    body .app.side-min .side .side-art{display:none}
+    body .app.side-min .side .guestrow{justify-content:center;padding:8px}
+    body .app.side-min .side .guestrow>span:not(.av),body .app.side-min .side .guestrow .cv,body .app.side-min .side .guestrow>svg{display:none}
+  }
+  .rail-fly .rf-h{padding:8px 12px 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+  .rail-fly button.on{color:var(--blue-ink);font-weight:700;background:var(--blue-softer)}
+  .rail-fly .rf-n{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--blue-soft);color:var(--blue-ink);font-size:10.5px;font-weight:700;margin-right:8px}
   .side .guestrow{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:16px;padding:12px 14px;color:#fff;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
   .side .guestrow:hover{background:rgba(255,255,255,.2)}
   .side .guestrow .av{width:38px;height:38px;font-size:14px;background:linear-gradient(140deg,#5EA0FF,#2459E0);color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.75)}
@@ -942,6 +974,8 @@
     .side-tg{display:grid}
     .i-panel{display:none}.i-burger,.i-x{display:block}
     .app .side{display:flex;visibility:visible;position:fixed;left:0;top:0;bottom:0;width:min(300px,86vw);height:auto;z-index:95;transform:translateX(-102%);transition:transform .24s ease;padding:22px 16px 18px}
+    body .app.side-min{grid-template-columns:1fr}
+    body .app.side-min .side{visibility:visible}
     .app.side-on .side{transform:none;box-shadow:24px 0 60px -20px rgba(10,30,90,.45)}
     .side-scrim{display:block;position:fixed;inset:0;z-index:94;background:rgba(16,24,40,.38);opacity:0;pointer-events:none;transition:opacity .2s ease}
     .app.side-on .side-scrim{opacity:1;pointer-events:auto}
@@ -6727,9 +6761,37 @@ function sideToggle(open){
   var app=document.querySelector('.app');
   if(sideMobile()){app.classList.toggle('side-on',open);if(open)document.querySelector('#side .side-x').focus();}
   else{app.classList.toggle('side-min',!open);try{localStorage.setItem('mk-side-min',open?'':'1');}catch(e){}
-    (open?document.querySelector('#side .side-x'):document.querySelector('.side-tg')).focus();}
+    var sx=document.querySelector('#side .side-x');sx.setAttribute('onclick','sideToggle('+(!open)+')');sx.setAttribute('aria-label',open?'Свернуть меню':'Развернуть меню');sx.title=open?'Свернуть меню до иконок':'Развернуть меню';sx.focus();}
 }
-try{if(localStorage.getItem('mk-side-min')==='1'&&!sideMobile())document.querySelector('.app').classList.add('side-min');}catch(e){}
+try{if(localStorage.getItem('mk-side-min')==='1'&&!sideMobile()){document.querySelector('.app').classList.add('side-min');var sx0=document.querySelector('#side .side-x');sx0.setAttribute('onclick','sideToggle(true)');sx0.setAttribute('aria-label','Развернуть меню');sx0.title='Развернуть меню';}}catch(e){}
+/* меню — в своей прокрутке между переключателем клиента и плашкой пользователя */
+(function(){
+  var side=document.getElementById('side'),acct=side.querySelector(':scope > .acct'),foot=side.querySelector(':scope > .side-foot');if(!acct||!foot)return;
+  var sc=document.createElement('div');sc.className='side-scroll';
+  while(acct.nextSibling&&acct.nextSibling!==foot)sc.appendChild(acct.nextSibling);
+  side.insertBefore(sc,foot);
+  /* подписи для полосы иконок */
+  side.querySelectorAll('.nav a').forEach(function(a){var t=a.querySelector('.ct');if(t&&!a.title)a.title=t.textContent;});
+  side.querySelectorAll('.g2hd').forEach(function(b){var t=b.querySelector('.ct');if(t)b.setAttribute('aria-label',t.textContent);});
+  var art=function(){foot.classList.toggle('no-art',foot.clientHeight<190);};
+  if(window.ResizeObserver)new ResizeObserver(art).observe(foot);else window.addEventListener('resize',art);art();
+})();
+/* в полосе иконок группа открывается всплывающим списком */
+function railFly(id,btn){
+  var was=document.getElementById('td-menu');tdMenuClose();if(was&&was.dataset.i==='rail-'+id)return;
+  var g=document.getElementById(id),m=document.createElement('div');m.className='td-menu rail-fly';m.id='td-menu';m.dataset.i='rail-'+id;m.setAttribute('role','menu');
+  var h='<div class="rf-h">'+hesc(g.querySelector('.g2hd .ct').textContent)+'</div>';
+  [].forEach.call(g.querySelectorAll('.nav.sub > *'),function(el){
+    if(el.classList.contains('nav-sl')){h+='<div class="rf-h">'+hesc(el.textContent)+'</div>';return;}
+    (el.matches('a')?[el]:[].slice.call(el.querySelectorAll('a'))).forEach(function(a){var n=a.querySelector('.stepn');
+      h+='<button role="menuitem" type="button" data-v="'+a.dataset.view+'" class="'+(a.classList.contains('on')?'on':'')+'">'+(n?'<span class="rf-n">'+n.textContent+'</span>':'')+hesc(a.querySelector('.ct').textContent)+'</button>';});
+  });
+  m.innerHTML=h;
+  m.addEventListener('click',function(ev){ev.stopPropagation();var b=ev.target.closest('button[data-v]');if(!b)return;tdMenuClose();go(b.dataset.v);});
+  m.addEventListener('keydown',function(ev){if(ev.key==='Escape'){tdMenuClose();btn.focus();}});
+  document.body.appendChild(m);var r=btn.getBoundingClientRect();m.style.position='fixed';m.style.left=(r.right+10)+'px';m.style.top=Math.max(8,Math.min(r.top,innerHeight-m.offsetHeight-8))+'px';m.style.minWidth='220px';
+  var f=m.querySelector('button.on')||m.querySelector('button');if(f)f.focus();setTimeout(function(){document.addEventListener('click',tdMenuClose);},0);
+}
 document.getElementById('side').addEventListener('click',function(e){if(sideMobile()&&e.target.closest('a[data-view],.logo'))sideToggle(false);});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.querySelector('.app.side-on'))sideToggle(false);});
 
@@ -8085,7 +8147,7 @@ function go(view,label){
   ROUTE={v:view,id:null,lab:label||'',p:null};crumbRender();routeSave();
   var nv=NAVMAP[view]||view;
   document.querySelectorAll('.nav a[data-view]').forEach(function(a){a.classList.toggle('on',a.dataset.view===nv);});
-  document.querySelectorAll('.side .group2').forEach(function(g){g.classList.toggle('open',!!g.querySelector('.nav a.on'));});
+  document.querySelectorAll('.side .group2').forEach(function(g){var c=!!g.querySelector('.nav a.on');g.classList.toggle('open',c);g.classList.toggle('cur',c);});
   document.querySelectorAll('.pubtabs .itab').forEach(function(t){t.classList.toggle('on',t.dataset.v===view);});
   window.scrollTo({top:0,behavior:'instant'});
   if(typeof VIEW_RENDER!=='undefined'&&VIEW_RENDER[view])VIEW_RENDER[view]();
@@ -8334,7 +8396,7 @@ window.toggleGroup=function(id,btn){
   var g=document.getElementById(id),open=btn.getAttribute('aria-expanded')==='true';
   btn.setAttribute('aria-expanded',String(!open)); g.classList.toggle('collapsed',open);
 };
-window.toggleG2=function(id,btn){var g=document.getElementById(id),open=!g.classList.contains('open');document.querySelectorAll('.side .group2').forEach(function(x){x.classList.toggle('open',x===g&&open);});};
+window.toggleG2=function(id,btn){if(document.querySelector('.app.side-min')&&!sideMobile()){railFly(id,btn);return;}var g=document.getElementById(id),open=!g.classList.contains('open');document.querySelectorAll('.side .group2').forEach(function(x){x.classList.toggle('open',x===g&&open);});};
 (function(){
   var dz=document.getElementById('dz'); if(!dz){return;}
   var input=document.getElementById('file'),pv=document.getElementById('pv'),
