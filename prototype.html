@@ -1662,6 +1662,13 @@
   .deep.open .deep-hd{border-style:solid}
   .deep.open .deep-cv{transform:rotate(180deg)}
   .deep-body{display:none;padding-top:16px}
+  .cp-more{position:relative}
+  .cp-more>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink-2);padding:6px 10px;border-radius:20px;border:1px dashed var(--line-2)}
+  .cp-more>summary::-webkit-details-marker{display:none}
+  .cp-more>summary::after{content:"";width:7px;height:7px;border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(45deg) translateY(-2px)}
+  .cp-more[open]>summary{border-style:solid;color:var(--ink)}
+  .cp-more-b{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px}
+  .cp-more[open]{flex-basis:100%}
   .st-fine>.panel+.panel{margin-top:14px}
   .st-ed .deep{margin-top:6px}
   .price-cols{columns:2;column-gap:32px}
@@ -2645,10 +2652,9 @@
       <!-- ============ IMAGES / KADRY ============ -->
       <section id="v-images" class="view">
         <div class="phead">
-          <div><h1>Фото и видео</h1><p>Кадры, фото и ролики проекта — из них берём картинки для тем контент-плана, постов, сторис и баннеров.</p></div>
+          <div><h1>Фото и видео</h1><p class="ph-why">Картинки и ролики клиента. Опишите сюжет — Maker снимет его в манере клиента; или загрузите свои фото. Отсюда картинки берутся в посты, сторис и баннеры.</p></div>
           <div class="sp"></div>
           <button class="pbtn ghost" onclick="openUploadModal()">+ свои фото</button>
-          <button class="pbtn ghost" onclick="toast('Настройка качества — заглушка прототипа')">Настроить качество</button>
           <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
         <div class="itabs"><button class="itab on" type="button" onclick="go('images')">Фото</button><button class="itab" type="button" onclick="go('video')">Видео</button></div>
@@ -2669,11 +2675,13 @@
           <textarea id="im-text" placeholder="Опишите, что нужно сгенерировать. Например: тренер у стойки ресепшена, тёплый свет…" maxlength="3000" oninput="document.getElementById('im-count').textContent=this.value.length+' / 3000'"></textarea>
           <div class="cp-row">
             <label class="cp-target">Клиент: <select class="cp-sel" id="im-target" data-projs="pick"></select></label>
-            <label class="cp-target">Модель: <select class="cp-sel"><option>Люди и сцены</option><option>Продукт крупно</option><option>Абстракции и фоны</option></select></label>
-            <label class="cp-target">Формат: <select class="cp-sel"><option>1:1</option><option>16:9</option><option>9:16</option><option>4:5</option></select></label>
-            <label class="cp-target">Качество: <select class="cp-sel"><option>1K</option><option>2K</option><option>4K</option></select></label>
+            <label class="cp-target">Что снимаем: <select class="cp-sel"><option>Люди и сцены</option><option>Продукт крупно</option><option>Абстракции и фоны</option></select></label>
+            <label class="cp-target">Формат: <select class="cp-sel"><option>Квадрат 1:1</option><option>Горизонталь 16:9</option><option>Вертикаль 9:16 — сторис</option><option>Лента 4:5</option></select></label>
             <label class="cp-target">Кадров: <select class="cp-sel" id="im-n" onchange="imPrice()"><option>1</option><option selected>4</option><option>8</option></select></label>
-            <label class="cp-toggle"><button class="toggle" aria-pressed="true" type="button" onclick="event.preventDefault();this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')==='true'?'false':'true')"></button>раскладывать тему</label>
+            <details class="cp-more"><summary>Ещё настройки</summary><div class="cp-more-b">
+              <label class="cp-target">Качество: <select class="cp-sel"><option>Обычное</option><option selected>Высокое</option><option>Для печати</option></select></label>
+              <label class="cp-toggle"><button class="toggle" aria-pressed="true" type="button" onclick="event.preventDefault();this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')==='true'?'false':'true')"></button>Сюжеты для каждого кадра придумывает Maker</label>
+            </div></details>
           </div>
           <div class="cp-row2">
             <span class="cp-count" id="im-count">0 / 3000</span>
@@ -2693,7 +2701,7 @@
       <!-- ============ BANNERS ============ -->
       <section id="v-banners" class="view">
         <div class="phead">
-          <div><h1>Баннеры</h1></div>
+          <div><h1>Баннеры</h1><p class="ph-why">Опишите, что рекламируем, — Maker напишет текст и соберёт баннер в стиле клиента сразу во всех размерах для VK и Директа. Дальше — модерация площадки и кампания.</p></div>
           <div class="sp"></div>
           <button class="pbtn ghost" onclick="var t=document.getElementById('bn-text');t.scrollIntoView({behavior:'smooth',block:'center'});t.focus({preventScroll:true})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новый комплект</button>
           <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
@@ -2710,9 +2718,9 @@
           </div>
           <select class="sortsel" id="bn-sort" onchange="renderBnList()"><option value="new">Сначала новые</option><option value="old">Сначала старые</option><option value="az">По названию</option></select>
         </div>
-        <p class="empty-hint">Нейросеть пишет только текст — четыре строки. Раскладку, цвет, шрифт и все размеры собирает код по вашему стилю: текст не разъезжается между площадками, а маркировку «Реклама» и erid код сам ставит в каждый размер. Платите за текст, а не за каждый формат.</p>
+        <p class="empty-hint">Нейросеть пишет только текст — четыре строки. Всё остальное собирается само по стилю клиента: текст не разъезжается между размерами, маркировка «Реклама» стоит в каждом. Платите за текст, а не за каждый размер.</p>
         <table class="tbl">
-          <thead><tr><th>Комплект</th><th>Проект</th><th>Статус</th><th>Площадки</th><th>Обновлён</th><th>Стоимость</th></tr></thead>
+          <thead><tr><th>Комплект</th><th>Клиент</th><th>Статус</th><th>Площадки</th><th>Обновлён</th><th>Стоимость</th></tr></thead>
           <tbody id="bn-body"></tbody>
         </table>
 
@@ -2721,8 +2729,8 @@
           <div class="grid2">
             <div class="panel" id="bn-master"></div>
             <div class="panel">
-              <h3 id="bn-fmt-h">Форматы</h3>
-              <p class="psub">Выключите лишние — в архив и на площадки уйдут только включённые. Каждый размер сверстан кодом, ничего не съезжает.</p>
+              <h3 id="bn-fmt-h">Размеры</h3>
+              <p class="psub">Под каждую площадку свой размер — ничего не обрезано. Выключите ненужные: в архив и на площадку уйдут только включённые.</p>
               <div class="fmtgrid" id="bn-fmts"></div>
             </div>
           </div>
@@ -2732,7 +2740,7 @@
           <textarea id="bn-text" placeholder="Что рекламируем? Например: бесплатный аудит для бизнеса…" maxlength="3000" oninput="document.getElementById('bn-count').textContent=this.value.length+' / 3000'"></textarea>
           <div class="cp-row">
             <label class="cp-target">Клиент: <select class="cp-sel" id="bn-target" data-projs="pick"></select></label>
-            <label class="cp-target">Подложка: <select class="cp-sel" id="bn-sub"><option>Цвет бренда</option><option>Фото бренда</option></select></label>
+            <label class="cp-target">Фон: <select class="cp-sel" id="bn-sub"><option>Светлый фон бренда</option><option>Кадр клиента</option></select></label>
             <label class="cp-target">Цель: <select class="cp-sel" id="bn-goal"><option>Заявки</option><option>Звонки</option><option>Запись</option><option>Продажа</option></select></label>
           </div>
           <div class="cp-row2">
@@ -3307,7 +3315,7 @@
           <div class="cp-row">
             <label class="cp-target">Клиент: <select class="cp-sel" id="vd-target" data-projs="pick" onchange="vfReset()"></select></label>
             <button class="cp-frame" type="button" onclick="openFramePicker()"><span class="cf-th empty" id="vf-th"></span><span class="cf-name" id="vf-name">Первый кадр: выбрать</span></button>
-            <label class="cp-target">Модель: <select class="cp-sel" id="vd-model"><option>Быстрее и дешевле</option><option>Реалистичнее</option><option>Плавнее, дороже</option></select></label>
+            <label class="cp-target">Как снимаем: <select class="cp-sel" id="vd-model"><option>Быстрее и дешевле</option><option>Реалистичнее</option><option>Плавнее, дороже</option></select></label>
             <label class="cp-target">Длительность: <select class="cp-sel" id="vd-dur"><option>5 с</option><option>10 с</option><option>15 с</option></select></label>
             <span class="cp-fmts" id="vd-fmts">Форматы:
               <button class="fmt-tg on" type="button" aria-pressed="true" data-r="9:16" onclick="vfFmt(this)">9:16</button><button class="fmt-tg on" type="button" aria-pressed="true" data-r="1:1" onclick="vfFmt(this)">1:1</button><button class="fmt-tg" type="button" aria-pressed="false" data-r="16:9" onclick="vfFmt(this)">16:9</button>
@@ -3878,6 +3886,7 @@ var SERIES=[
   {id:'o2',t:'Свои фото',p:'Атвинта',d:'1 окт',ts:3,own:true},
   {id:'s3',t:'Интерьер клиники',p:'Вита',d:'28 сен',ts:2,model:'Flux',sw:['#2E9E86','#EAF4EF','#B08A5A']}
 ];
+var VD_MODE={'Kling turbo':'Быстрее и дешевле','Kling pro':'Реалистичнее','Veo':'Плавнее'};
 var SH_ST={pub:'Принят',check:'Ждёт проверки',bad:'Не получился',redo:'Переснят',own:'Своё фото'};
 var SHOTS=[
   {id:1,s:'s1',t:'Дартс · в яблочко',img:'img/shots/sbertarget.jpg',st:'pub',pr:'Дротик точно в центре мишени, тёмный бар на фоне, контровой красный свет.',f:'1:1 · 2K',cost:'7,38 ₽'},
@@ -3956,7 +3965,7 @@ function reshoot(id){
 }
 function useIn(view,id){
   if(view==='banners'){closeModal('shot-modal');bnUseShot(shotById(id));return;}
-  var sh=shotById(id),what={banners:'в мастер-баннер',pages:'в страницу — выберите блок',campaigns:'в креатив кампании'}[view];
+  var sh=shotById(id),what={banners:'в основной баннер',pages:'в страницу — выберите блок',campaigns:'в креатив кампании'}[view];
   closeModal('shot-modal');go(view);
   toast('Кадр '+qn(sh.t)+' подставлен '+what+' (имитировано)');
 }
@@ -4083,8 +4092,8 @@ function bnHead(x){
   else pri='<button class="pbtn" onclick="go(\'campaigns\')">Открыть кампанию</button>';
   var note=x.st==='bad'?'<div class="lb-note bad bnote"><span><b>Площадка отклонила:</b> '+x.why+'</span><button class="mini pri" onclick="bnFix()">Добавить предупреждение во все форматы</button></div>'
     :x.st==='proc'?'<div class="lb-note bnote">Отправлено '+x.upd+'. Модерация VK и Директа обычно занимает до суток — статус обновится сам.</div>':'';
-  return '<div class="bset-hd"><div><h2>'+hesc(x.n)+' <span class="st '+x.st+'">'+BN_ST[x.st]+'</span></h2><div class="bset-meta">'+x.p+' · '+bnPlat(x)+' · '+n+' из '+FMTS.length+' форматов · '+plural(m,'вариант','варианта','вариантов')+' текста</div></div><span class="sp"></span><div class="bset-acts">'+
-    '<button class="pbtn ghost" onclick="tplSave(\'banner\',bnActive)">В шаблоны</button><button class="pbtn ghost" onclick="bnZip()">Скачать архивом</button>'+(x.st!=='bad'?'<button class="pbtn ghost" onclick="bnToCampaign()">В кампанию</button>':'')+pri+'</div></div>'+note;
+  return '<div class="bset-hd"><div><h2>'+hesc(x.n)+' <span class="st '+x.st+'">'+BN_ST[x.st]+'</span></h2><div class="bset-meta">'+x.p+' · '+bnPlat(x)+' · '+n+' из '+FMTS.length+' размеров · '+plural(m,'вариант','варианта','вариантов')+' текста · <a class="soc-th" onclick="tplSave(\'banner\',bnActive)">сохранить как шаблон</a></div></div><span class="sp"></span><div class="bset-acts">'+
+    '<button class="pbtn ghost" onclick="bnZip()">Скачать архивом</button>'+(x.st!=='bad'?'<button class="pbtn ghost" onclick="bnToCampaign()">В кампанию</button>':'')+pri+'</div></div>'+note;
 }
 function bnField(label,key,val,max,hint,err){
   return '<label class="bfield"><span class="bl"><span>'+label+'</span>'+(max?'<span class="cnt" id="bn-c-'+key+'">'+val.length+' / '+max+'</span>':'')+'</span>'+
@@ -4107,19 +4116,19 @@ function renderBnEditor(){
     shots.map(function(sh){return '<button type="button" class="'+(x.bg===sh.img?'on':'')+'" title="'+hesc(sh.t)+'" style="background-image:url(\''+sh.img+'\')" onclick="bnSetBg(\''+sh.img+'\')"></button>';}).join('')+
     '<button type="button" class="bgmore" onclick="go(\'images\')">Все кадры</button>';
   document.getElementById('bn-master').innerHTML=
-    '<h3>Мастер-баннер</h3><p class="psub">Меняете здесь — все форматы пересобираются сразу.</p>'+
+    '<h3>Основной баннер</h3><p class="psub">Меняете здесь — остальные размеры пересобираются сами.</p>'+
     '<div class="fstage big" id="bn-prev"></div>'+
     '<div class="bvars">'+vars+'</div><p class="bvhint">На площадку уйдут все варианты — она покажет каждый и оставит тот, что приносит больше заявок.</p>'+
     bnField('Заголовок','h',t.h,56)+bnField('Подзаголовок','s',t.s,81)+bnField('Кнопка','c',t.c,20)+
     '<div class="bsec"><span class="lb-lbl">Фон — светлый, цвет бренда или кадр клиента</span><div class="bgpick">'+bg+'</div></div>'+
-    '<div class="bsec"><span class="lb-lbl">Маркировка рекламы</span>'+bnField('Рекламодатель','adv',x.adv,0)+bnField('Токен erid','erid',x.erid,0,bnEridHint(x),!x.erid.trim())+'</div>';
+    '<div class="bsec"><span class="lb-lbl">Маркировка рекламы — обязательна по закону</span>'+bnField('Рекламодатель','adv',x.adv,0)+bnField('Токен erid','erid',x.erid,0,bnEridHint(x),!x.erid.trim())+'</div>';
   bnRefresh();
 }
 function bnRefresh(){
   var x=bnCur(),n=bnOn(x).length;
   document.getElementById('bn-prev').innerHTML=bnBanner(x,FMTS[0]);
   document.getElementById('bn-fmts').innerHTML=FMTS.map(function(f,i){return fmtCard(x,i,true);}).join('');
-  document.getElementById('bn-fmt-h').textContent=n+' из '+FMTS.length+' форматов · собраны кодом';
+  document.getElementById('bn-fmt-h').textContent=n+' из '+FMTS.length+' размеров готовы';
   renderBnList();
   var t=document.getElementById('prj-title'),pr=PROJECTS.filter(function(p){return p.n===t.textContent;})[0];
   renderPrjBanners(pr?pr.s:'СберТаргет');
@@ -4179,7 +4188,7 @@ function bnCreate(){
   openBuildModal('Собираем комплект',['Пишем 3 варианта текста','Собираем 10 форматов кодом','Ставим маркировку «Реклама»'],
     'Комплект собран: 3 варианта × 10 форматов. Вставьте erid из ОРД — и можно отправлять на модерацию.',function(){
       var bg='';
-      if(sub.indexOf('фото')>=0){var sh=SHOTS.filter(function(z){return serOf(z).p===pj&&['pub','redo','own'].indexOf(z.st)>=0;})[0];if(sh)bg=sh.img;}
+      if(sub.indexOf('кадр')>=0){var sh=SHOTS.filter(function(z){return serOf(z).p===pj&&['pub','redo','own'].indexOf(z.st)>=0;})[0];if(sh)bg=sh.img;}
       var x=bnNewSet(pj,first,[{h:first,s:'Подробности — по кнопке',c:cta},{h:'Успейте до конца месяца',s:first,c:cta},{h:first,s:'Ответим за 15 минут',c:cta}],bg);
       bnActive=x.id;bnResetFilters();renderBnEditor();
       document.getElementById('bn-editor').scrollIntoView({behavior:'smooth',block:'start'});
@@ -4272,7 +4281,7 @@ function vdCreate(){
   if(vfShot===null){toast('Выберите первый кадр — так ролик начнётся в бренде');openFramePicker();return;}
   var t=document.getElementById('vd-text').value.trim();
   var name=(t?t.split(/[.!?\n:]/)[0]:'Новый ролик').trim().slice(0,40)||'Новый ролик';
-  var model=document.getElementById('vd-model').value.split(' · ')[1]||'Kling turbo';
+  var model=['Kling turbo','Kling pro','Veo'][document.getElementById('vd-model').selectedIndex]||'Kling turbo';
   var dur=parseInt(document.getElementById('vd-dur').value,10)||5;
   VIDEOS.push({id:++vdSeq,t:name,p:pj,shot:vfShot,st:'proc',prog:0,dur:dur,model:model,fm:fm,
     pr:t||'Движение камеры по первому кадру в манере бренда.',cost:'до 41,03 ₽',d:'сегодня',ts:10+vdSeq,mv:['pan','zoom','push'][vdSeq%3]});
@@ -4338,7 +4347,7 @@ function vpRender(){
   var use=proc?'':'<div><span class="lb-lbl">Использовать в</span><div class="lb-use" style="grid-template-columns:1fr 1fr"><button type="button" onclick="vdUse(\'campaigns\','+v.id+')">'+ic.campaigns+'Кампанию</button><button type="button" onclick="vdUse(\'pages\','+v.id+')">'+ic.pages+'Страницу</button></div></div>';
   document.getElementById('vp-side').innerHTML='<div><span class="st '+v.st+'">'+VD_ST[v.st]+'</span></div>'+note+
     '<div class="lb-prompt"><span class="lb-lbl">Сюжет</span>'+hesc(v.pr)+'</div>'+first+
-    '<div>'+kv('Проект',v.p)+kv('Модель',v.model)+kv('Длительность',v.dur+' с')+kv('Форматы',v.fm.join(' · '))+kv('Стоимость',v.cost)+kv('Дата',v.d)+'</div>'+
+    '<div>'+kv('Клиент',v.p)+kv('Как снимали',VD_MODE[v.model]||v.model)+kv('Длительность',v.dur+' с')+kv('Форматы',v.fm.join(' · '))+kv('Стоимость',v.cost)+kv('Дата',v.d)+'</div>'+
     (acts?'<div class="lb-acts">'+acts+'</div>':'')+use;
 }
 function vpToggle(){var v=vdById(vpId);if(!v||v.st==='proc')return;vpPlaying?vpStop():vpStart();}
@@ -7176,7 +7185,7 @@ var GLOSS=[['erid','Номер маркировки рекламы. Без не�
   ['ROMI','Окупаемость рекламы: сколько вернулось на каждый вложенный рубль. 100% — вышли в ноль.'],['CRM','Ваша таблица или система продаж (amoCRM, Битрикс24, Excel). Из неё берём, кто из заявок купил.'],
   ['коллтрекинг','Сервис, который считает звонки с рекламы. Без него звонки не видны.'],['UTM','Метки в ссылке, по которым видно, из какой рекламы пришёл человек.'],['CTR','Доля тех, кто кликнул, от тех, кто увидел.'],
   ['рубрик','Постоянные темы, из которых складывается контент: польза, кейсы, закулисье, поводы.'],['Рубрик','Постоянные темы, из которых складывается контент: польза, кейсы, закулисье, поводы.'],
-  ['охват','Сколько разных людей увидели публикацию.'],['Охват','Сколько разных людей увидели публикацию.'],['Мастер-баннер','Главный баннер: правите его — остальные 10 размеров пересобираются сами.'],
+  ['охват','Сколько разных людей увидели публикацию.'],['Охват','Сколько разных людей увидели публикацию.'],['Основной баннер','Главный баннер: правите его — остальные 10 размеров пересобираются сами.'],
   ['цена заявки','Сколько рекламы потрачено на одну заявку: расход ÷ заявки.'],['Цена заявки','Сколько рекламы потрачено на одну заявку: расход ÷ заявки.'],['безопасные зоны','Места на экране, которые закрывает интерфейс площадки, — текст туда не ставим.']];
 var glossT=null,glossBusy=false;
 function glossApply(){
