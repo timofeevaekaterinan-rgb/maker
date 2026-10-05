@@ -1025,7 +1025,7 @@
   .rc-go svg{width:15px;height:15px}
   .recent-card:hover .rc-go{border-color:var(--blue-brd);color:var(--blue)}
   @media (max-width:900px){.hero-glass{width:62%;top:-70px;opacity:.55}}
-  @media (max-width:480px){.hero-glass{width:60%;top:-62px;right:0;opacity:.35}.td-act{margin-left:54px}.td-tx{flex-basis:calc(100% - 54px)!important}}
+  @media (max-width:480px){.hero-glass{width:60%;top:-62px;right:0;opacity:.35}.td-act{margin-left:0;width:100%}.td-tx{flex-basis:calc(100% - 54px)!important}}
 
   /* ---------- sidebar: collapse on desktop, drawer on mobile ---------- */
   .app{transition:grid-template-columns .22s ease}
@@ -2742,7 +2742,7 @@
         </div>
 
         <div class="proj-hd"><h2>Клиенты <span class="hcount" id="home-proj-cnt">4</span></h2></div>
-        <p class="proj-sub" id="home-proj-sub">Показаны все клиенты этого кабинета. Полный список, поиск и фильтры — на странице «Клиенты».</p>
+        <p class="proj-sub" id="home-proj-sub">Показаны все клиенты этого кабинета. Переключиться на одного — в меню слева вверху.</p>
 
         <div class="cards" id="home-cards"></div>
       </section>
@@ -3941,7 +3941,7 @@ document.getElementById('npclone-list').innerHTML=PROJECTS.map(function(p){
 }).join('');
 var hc=document.getElementById('home-proj-cnt');if(hc)hc.textContent=hp.length;
 if(!PROJECTS.length)document.getElementById('home-cards').innerHTML='<button class="newcard" type="button" onclick="nsNewClient()"><span class="plus"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>Новый клиент</button>';
-var ps=document.getElementById('home-proj-sub');if(ps)ps.textContent=hp.length&&hp!==PROJECTS?'Показан клиент, с которым вы работаете. Чтобы видеть всех, выберите «Все клиенты» в меню слева.':PROJECTS.length?'Показаны все клиенты этого кабинета. Полный список, поиск и фильтры — на странице «Клиенты».':'Клиентов пока нет. Заведите первого — это минута: название и, если есть, ссылка на сайт.';
+var ps=document.getElementById('home-proj-sub');if(ps)ps.textContent=hp.length&&hp!==PROJECTS?'Показан клиент, с которым вы работаете. Чтобы видеть всех, выберите «Все клиенты» в меню слева.':PROJECTS.length?'Показаны все клиенты этого кабинета. Переключиться на одного — в меню слева вверху.':'Клиентов пока нет. Заведите первого — это минута: название и, если есть, ссылка на сайт.';
 }
 renderProjLists();
 function imPrice(){
