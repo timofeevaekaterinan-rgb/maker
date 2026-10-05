@@ -837,6 +837,12 @@
   .side .group2 .nav.sub{border-left-color:rgba(255,255,255,.28)}
   .side .stepn{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;flex:none;font-style:normal;font-size:10.5px;font-weight:700;background:rgba(255,255,255,.18);color:#fff;margin-right:-2px}
   .side .nav a.on .stepn{background:var(--blue);color:#fff}
+  /* Контент: шаги 1–2–3 — одна цепочка, отдельно от материалов */
+  .side .nav-sl{display:block;font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.62);padding:8px 11px 4px}
+  .side .nav-sl:first-child{padding-top:4px}
+  .side .stepgrp{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:3px;margin:0 0 6px}
+  .side .stepgrp a{position:relative}
+  .side .stepgrp a:not(:last-child)::after{content:"";position:absolute;left:19.5px;top:calc(50% + 10px);height:calc(100% - 18px);border-left:1.5px dotted rgba(255,255,255,.5);pointer-events:none}
   .pubtabs{margin:6px 2px 18px}
   .side .nav.sub a{color:rgba(255,255,255,.86)}
   .side .nav.sub a.on{background:rgba(255,255,255,.16);box-shadow:none;font-weight:600}
@@ -2049,6 +2055,8 @@
   .dd-pill{margin-left:6px}
   /* клиент выбран в сайдбаре: выпадашки клиента на страницах — только показывают его */
   .dd-lock-ic{display:none;width:13px;height:13px;color:var(--ink-3);flex:none}
+  .cl-hide{display:none!important}
+  .toolbar.cl-empty{display:none}
   .dd.dd-lock .dd-btn{background:var(--inset);border-color:var(--line);box-shadow:none;cursor:default}
   .dd.dd-lock .dd-chev{display:none}
   .dd.dd-lock .dd-lock-ic{display:block}
@@ -2468,7 +2476,6 @@
 
     <nav class="nav" style="margin-top:14px">
       <a data-view="home" class="on" onclick="go('home')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-4v-7H9v7H5a1 1 0 0 1-1-1z"/></svg><span class="ct">Главная</span></a>
-      <a data-view="projects" onclick="go('projects')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="15" height="18" rx="2"/><path d="M8 8h7M8 12h7"/><path d="M8 16.5l1.5 1.5 3-3"/></svg><span class="ct">Клиенты</span></a>
       <a data-view="chats" onclick="go('chats')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span class="ct">Чаты</span></a>
     </nav>
 
@@ -2477,9 +2484,13 @@
     <div class="group2" id="g-cnt">
       <button class="g2hd" onclick="toggleG2('g-cnt',this)" title="Путь от идеи до публикации: стратегия → план → готовые посты"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span class="ct">Контент</span><svg class="chev2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
       <nav class="nav sub">
+        <span class="nav-sl">Соцсети · по шагам</span>
+        <div class="stepgrp">
         <a data-view="strat" onclick="go('strat')"><i class="stepn">1</i><span class="ct">Стратегия</span></a>
         <a data-view="plan" onclick="go('plan')"><i class="stepn">2</i><span class="ct">Контент-план</span></a>
         <a data-view="soc-post" onclick="go('soc-post')"><i class="stepn">3</i><span class="ct">Публикации</span></a>
+        </div>
+        <span class="nav-sl">Материалы</span>
         <a data-view="images" onclick="go('images')"><span class="ct">Фото и видео</span></a>
         <a data-view="pages" onclick="go('pages')"><span class="ct">Сайты и страницы</span></a>
         <a data-view="pres" onclick="go('pres')"><span class="ct">Презентации</span></a>
@@ -2582,7 +2593,7 @@
         </div>
         </div>
 
-        <div class="proj-hd"><h2>Клиенты <span class="hcount" id="home-proj-cnt">4</span></h2><a onclick="go('projects')">Все клиенты →</a></div>
+        <div class="proj-hd"><h2>Клиенты <span class="hcount" id="home-proj-cnt">4</span></h2></div>
         <p class="proj-sub" id="home-proj-sub">Показаны все клиенты этого кабинета. Полный список, поиск и фильтры — на странице «Клиенты».</p>
 
         <div class="cards" id="home-cards"></div>
@@ -6862,7 +6873,7 @@ function cleanSearch(){var q=location.search.replace(/^\?/,'').split('&').filter
 function stateGo(st){if(st===STATE)return;stateReload(st);}
 
 /* state map: every screen × every state, one click to open */
-var MAP_ROWS=[['home','Главная'],['projects','Клиенты'],['strat','Стратегия'],['plan','Контент-план'],['images','Фото'],['video','Видео'],['soc-post','Посты'],['soc-car','Карусели'],['soc-story','Сторис'],['soc-clip','Клипы'],['banners','Баннеры'],['campaigns','Кампании'],['result','Результат'],['style','Стиль'],['voice','Голос'],['facts','База фактов'],['templates','Шаблоны'],['groups','Аудитории'],['pages','Сайты и страницы'],['pres','Презентации'],['chats','Чаты'],['billing','Счёт и оплата'],['profile','Профиль']];
+var MAP_ROWS=[['home','Главная'],['strat','Стратегия'],['plan','Контент-план'],['images','Фото'],['video','Видео'],['soc-post','Посты'],['soc-car','Карусели'],['soc-story','Сторис'],['soc-clip','Клипы'],['banners','Баннеры'],['campaigns','Кампании'],['result','Результат'],['style','Стиль'],['voice','Голос'],['facts','База фактов'],['templates','Шаблоны'],['groups','Аудитории'],['pages','Сайты и страницы'],['pres','Презентации'],['chats','Чаты'],['billing','Счёт и оплата'],['profile','Профиль']];
 function mapOpen(view,st,sys){
   var r={v:view,id:null,p:null};
   try{localStorage.setItem('mk-route',JSON.stringify(r));}catch(e){}
@@ -7325,10 +7336,9 @@ function clientMenu(e){
   var ck='<svg class="cl-ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>';
   m.innerHTML=(PROJECTS.length?'<button role="menuitemradio" aria-checked="'+!CLIENT+'" type="button" data-c=""><span class="cl-i all">'+CL_ALL+'</span><span class="cl-n">Все клиенты</span>'+(!CLIENT?ck:'')+'</button>':'')+
     PROJECTS.map(function(p){var n=cvPending(p.s).length;return '<button role="menuitemradio" aria-checked="'+(CLIENT===p.s)+'" type="button" data-c="'+hesc(p.s)+'"><span class="cl-i" style="background:'+clientCol(p.s)+'">'+hesc(p.s.replace(/[«»"]/g,'').charAt(0).toUpperCase())+'</span><span class="cl-n">'+hesc(p.s)+(n?'<em>ждёт ответа: '+n+'</em>':'')+'</span>'+(CLIENT===p.s?ck:'')+'</button>';}).join('')+
-    '<hr><button role="menuitem" type="button" data-a="new">+ Новый клиент</button>'+(PROJECTS.length?'<button role="menuitem" type="button" data-a="list">Все клиенты списком</button>':'');
+    '<hr><button role="menuitem" type="button" data-a="new">+ Новый клиент</button>';
   m.addEventListener('click',function(ev){ev.stopPropagation();var b=ev.target.closest('button');if(!b)return;tdMenuClose();
     if(b.dataset.a==='new')openNewClient(null,function(p){clientSet(p);openProject(projByShort(p).n);});
-    else if(b.dataset.a==='list'){clientSet('');go('projects');}
     else{clientSet(b.dataset.c,true);}});
   m.addEventListener('keydown',function(ev){if(ev.key==='Escape'){tdMenuClose();btn.focus();}});
   document.body.appendChild(m);var r=btn.getBoundingClientRect();m.style.position='fixed';m.style.top=(r.bottom+6)+'px';m.style.left=r.left+'px';m.style.minWidth=Math.max(240,r.width)+'px';
@@ -7340,19 +7350,21 @@ function clientSync(fire){
     var all=sel.dataset.projs==='all',has=CLIENT&&sel.querySelector('option[value="'+CLIENT.replace(/"/g,'\\"')+'"]'),want=has?CLIENT:(all?'':null);
     /* один клиент в сайдбаре — выбор клиента на страницах закрыт; «Все клиенты» — фильтры снова свободны */
     var dd=sel.closest('.dd'),lock=!!has;
-    if(dd){dd.classList.toggle('dd-lock',lock);var b=dd.querySelector('.dd-btn');if(b){b.setAttribute('aria-disabled',lock);if(lock)b.title='Клиент выбран в меню слева — сменить можно там';else b.removeAttribute('title');}}
+    if(dd){dd.classList.toggle('dd-lock',lock);var lab=dd.closest('label.cp-target');(lab||dd).classList.toggle('cl-hide',lock);}
     if(want===null||sel.value===want)return;
     sel.value=want;sel.dataset.prev=want;
     if(fire&&(all||sel.id==='str-proj'||sel.id==='st-proj'||sel.id==='vo-proj'||sel.id==='fa-proj'||sel.id==='tp-proj'))try{sel.dispatchEvent(new Event('change'));}catch(e){}
   });
+  clientToolbars();
 }
+function clientToolbars(){document.querySelectorAll('.toolbar').forEach(function(t){var any=[].some.call(t.children,function(c){return !c.classList.contains('cl-hide');});t.classList.toggle('cl-empty',!any);});}
 function clientLockHint(){toast('Сейчас вы работаете с '+qn(CLIENT)+'. Сменить клиента или выбрать «Все клиенты» — в меню слева, вверху');var b=document.querySelector('.side .acct');if(b){b.classList.remove('acct-ping');void b.offsetWidth;b.classList.add('acct-ping');}}
 /* открыли материал другого клиента (из уведомления, ссылки, экрана клиента) — переключаем весь кабинет на него */
 function clientFollow(p){if(!CLIENT||!p||p===CLIENT||!projByShort(p))return;clientSet(p,false,true);toast('Переключились на '+qn(p)+' — это его материал');}
 function clientSet(p,nav,quiet){
   CLIENT=p&&projByShort(p)?p:'';try{localStorage.setItem('mk-client',CLIENT);}catch(e){}
   clientUI();clientSync(true);crumbRender();clientScope();
-  if(nav){if(CLIENT&&(ROUTE.v==='home'||ROUTE.v==='projects'||ROUTE.v==='project'))openProject(projByShort(CLIENT).n);else if(!CLIENT&&ROUTE.v==='project')go('projects');}
+  if(nav){if(CLIENT&&(ROUTE.v==='home'||ROUTE.v==='projects'||ROUTE.v==='project'))openProject(projByShort(CLIENT).n);else if(!CLIENT&&ROUTE.v==='project')go('home');}
   if(!quiet)toast(CLIENT?'Работаем с '+qn(CLIENT)+' — весь кабинет показывает этого клиента':'Показываем всех клиентов');
 }
 function clientInit(){var s='';try{s=localStorage.getItem('mk-client')||'';}catch(e){}if(STATE==='first'&&PROJECTS[0])s=PROJECTS[0].s;CLIENT=s&&projByShort(s)?s:'';clientUI();clientSync(false);clientScope();}
@@ -7864,7 +7876,7 @@ function dlMyData(){
 }
 
 /* ---------- where am I: breadcrumbs, back, route kept across reloads ---------- */
-var NAVH={home:[null,'Главная'],projects:[null,'Клиенты'],project:[null,'Клиенты','projects'],
+var NAVH={home:[null,'Главная'],projects:[null,'Клиенты'],project:[null,'Клиент'],
   strat:['Контент','Стратегия'],plan:['Контент','Контент-план'],images:['Контент','Фото и видео'],video:['Контент','Фото и видео'],
   'soc-post':['Контент','Посты'],'soc-car':['Контент','Карусели'],'soc-story':['Контент','Сторис'],'soc-clip':['Контент','Клипы'],
   banners:['Реклама','Баннеры'],campaigns:['Реклама','Кампании'],camp:['Реклама','Кампании','campaigns'],result:['Реклама','Результат'],
@@ -7878,6 +7890,7 @@ function crumbRender(){
   var v=ROUTE.v,h=NAVH[v]||[null,(CRUMB[v]||['—'])[0]],it=[];
   if(v==='home'){el.innerHTML='<b class="cr-cur">Главная</b>'+CR_SEP+'<span class="cr-g">'+hesc(document.querySelector('.side .acct .an')?document.querySelector('.side .acct .an').textContent:'')+'</span>';return;}
   it.push('<a class="cr-a cr-home" onclick="go(\'home\')">Главная</a>');
+  if(v==='project'){it.push('<b class="cr-cur">'+hesc(ROUTE.lab||ROUTE.id||'Клиент')+'</b>');el.innerHTML=it.join(CR_SEP);return;}
   if(h[0])it.push('<span class="cr-g">'+h[0]+'</span>');
   var deep=!!h[2]||!!ROUTE.id;
   if(deep)it.push('<a class="cr-a" onclick="routeUp()">'+h[1]+'</a>','<b class="cr-cur" title="'+hesc(ROUTE.lab||'')+'">'+hesc(ROUTE.lab||'—')+'</b>');
@@ -7934,7 +7947,7 @@ function routeApply(r,back){
     if(cvEl&&v!=='client'&&!cvEl.hidden){cvEl.hidden=true;document.body.classList.remove('cv-on');}
     if(!v||!(NAVH[v]||CRUMB[v])){go('home');return;}
     if(v==='client'){go('home');if(r.id&&projByShort(r.id))cvOpen(r.id);}
-    else if(v==='project'){var pr=PROJECTS.filter(function(x){return x.n===r.id;})[0];pr?openProject(pr.n):go('projects');}
+    else if(v==='project'){var pr=PROJECTS.filter(function(x){return x.n===r.id;})[0];pr?openProject(pr.n):go('home');}
     else if(v==='deck'){r.id&&dkById(r.id)?openDeck(r.id):go('pres');}
     else if(v==='camp'){r.id&&campById(r.id)?openCamp(r.id):go('campaigns');}
     else if(v==='build'||v==='page'){go('pages');}
@@ -8055,8 +8068,9 @@ var CRUMB={
   images:['Контент','Фото и видео'],video:['Контент','Фото и видео'],strat:['Контент','Стратегия'],plan:['Контент','Контент-план'],pres:['Презентации'],chats:['Чаты'],
   banners:['Баннеры'],campaigns:['Кампании'],result:['Результат'],deck:['Презентации','{l}'],camp:['Кампании','{l}'],billing:['Счёт и оплата'],states:['Карта состояний'],profile:['Профиль'],style:['Стиль'],voice:['Голос'],facts:['База фактов'],templates:['Шаблоны'],groups:['Аудитории'],'soc-post':['Соцсети','Посты'],'soc-car':['Соцсети','Карусели'],'soc-story':['Соцсети','Сторис'],'soc-clip':['Соцсети','Клипы']
 };
-var NAVMAP={video:'images',project:'projects',page:'pages',build:'pages',deck:'pres',camp:'campaigns','soc-car':'soc-post','soc-story':'soc-post','soc-clip':'soc-post'};
+var NAVMAP={video:'images',project:'home',page:'pages',build:'pages',deck:'pres',camp:'campaigns','soc-car':'soc-post','soc-story':'soc-post','soc-clip':'soc-post'};
 function go(view,label){
+  if(view==='projects')view='home'; /* отдельного списка клиентов нет — переключатель вверху сайдбара */
   document.querySelectorAll('.view').forEach(function(v){v.classList.remove('on')});
   var el=document.getElementById('v-'+view); if(el)el.classList.add('on');
   ROUTE={v:view,id:null,lab:label||'',p:null};crumbRender();routeSave();
@@ -8068,7 +8082,7 @@ function go(view,label){
   if(typeof VIEW_RENDER!=='undefined'&&VIEW_RENDER[view])VIEW_RENDER[view]();
 }
 function openProject(name){
-  var pr=PROJECTS.filter(function(p){return p.n===name;})[0];if(!pr){go('projects');return;}
+  var pr=PROJECTS.filter(function(p){return p.n===name;})[0];if(!pr){go('home');return;}
   if(CLIENT!==pr.s){CLIENT=pr.s;try{localStorage.setItem('mk-client',CLIENT);}catch(e){}clientUI();clientSync(true);}
   go('project',name);renderClientHome(pr);
 }
