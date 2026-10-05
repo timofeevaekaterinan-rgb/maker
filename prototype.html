@@ -1759,6 +1759,14 @@
   .sum-card{display:flex;gap:18px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin-bottom:12px;box-shadow:0 1px 2px rgba(26,34,48,.03)}
   .sum-card .sum-tx{flex:1;min-width:0;font-size:17px;line-height:1.55;color:var(--ink)}
   .sum-card .sum-tx b{font-weight:700;white-space:nowrap}
+  .sum-card .sum-tx b.wrap{white-space:normal}
+  .next-step{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--blue-softer);border:1px solid var(--blue-brd);border-radius:16px;padding:16px 20px;margin:0 0 12px}
+  .next-step .ns-ar{width:40px;height:40px;border-radius:12px;background:var(--blue);color:#fff;display:grid;place-items:center;flex:none}
+  .next-step .ns-ar svg{width:20px;height:20px}
+  .next-step .ns-tx{flex:1;min-width:240px;display:flex;flex-direction:column;gap:3px}
+  .next-step .ns-tx b{font-size:15.5px}
+  .next-step .ns-tx span{color:var(--ink-2);font-size:13.5px;line-height:1.45}
+  .next-step .lb-acts{margin:0}
   .sum-gap{color:var(--warn-ink);font-weight:600}
   .sum-card .sum-note{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-3);margin-top:10px;line-height:1.45}
   .verdict{flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:700;white-space:nowrap;background:var(--inset);color:var(--ink-2)}
@@ -6570,18 +6578,29 @@ var PER_N={1:'на 1 месяц',3:'на 3 месяца',6:'на полгода'
 function perName(v){return PER_N[v]||PER_N[3];}
 function strProj(){return document.getElementById('str-proj').value;}
 function strSet(p){document.getElementById('str-proj').value=p;syncTarget('str-target',p);renderStrat();}
+/* что дальше: из стратегии — в контент-план, не дожидаясь, если не нужно */
+function strNextHTML(p,s,gaps){
+  var n=PLAN.filter(function(x){return x.p===p;}).length,AR='<span class="ns-ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>';
+  var plan='<button class="pbtn" type="button" onclick="strNext(\''+esc(p)+'\')">Собрать контент-план →</button>',t,sub,acts;
+  if(n){t='Дальше — контент-план: уже '+plural(n,'тема','темы','тем');sub='Темы разложены по рубрикам этой стратегии. Поменяли стратегию — соберите план заново, темы встанут по новым рубрикам.';acts='<button class="pbtn" type="button" onclick="go(\'plan\');plSetProj(\''+esc(p)+'\')">Открыть контент-план →</button>';}
+  else if(s.st==='ok'){t='Шаг 2 — контент-план';sub='Стратегия согласована. Соберём темы на период: рубрики, доли и площадки возьмём отсюда.';acts=plan;}
+  else if(s.st==='check'){t='Можно двигаться дальше, не дожидаясь клиента';sub='Контент-план соберём из этой стратегии уже сейчас. Если клиент её поправит — пересоберём темы.';acts=plan;}
+  else{t='Что дальше';sub='Отправьте стратегию клиенту на согласование — или сразу соберите контент-план: ждать ответа не обязательно.'+(gaps?' Пропуски не мешают — в темах они останутся плашками.':'');acts='<button class="pbtn ghost" type="button" onclick="strStatus(\'check\')">Отправить клиенту</button>'+plan;}
+  return '<div class="next-step">'+AR+'<div class="ns-tx"><b>'+t+'</b><span>'+sub+'</span></div><div class="lb-acts">'+acts+'</div></div>';
+}
+function strNext(p){closeModal('gate-modal');go('plan');plSetProj(p);cpOpen('plan');}
 function strSummary(p,s,gs){
   // стратегия коротко — из её же полей; пропуски [...] — те же плашки, что ниже
   var clean=function(t){return /^\[[^\]]*\]$/.test(t)?'':t;};
   var gaps=([s.goal,s.pos].concat(s.msgs,s.kpi.map(function(k){return k[1];})).join(' ').match(/\[[^\]]+\]/g)||[]).length;
   var ch=s.ch.filter(function(c){return c[0]!=='story';}).map(function(c){return CH_NAME[c[0]];}),st=s.ch.some(function(c){return c[0]==='story';});
   var rub=s.rub.slice().sort(function(a,b){return b[1]-a[1];}).slice(0,3).map(function(r){return r[0].toLowerCase()+' '+r[1]+'%';});
-  var g=clean(s.goal);
-  var tx=(g?'Цель — <b>'+hesc(g.charAt(0).toLowerCase()+g.slice(1))+'</b>. ':'Цель пока не записана. ')+
+  var g=goalClean(clean(s.goal));
+  var tx=(g?'Цель — <b class="wrap">'+hesc(/^[А-ЯЁ][а-яё]/.test(g)&&!/^[А-ЯЁ]{2}/.test(g)?g.charAt(0).toLowerCase()+g.slice(1):g)+'</b>. ':'Цель пока не записана. ')+
     'Говорим '+(gs.length?'с '+plural(gs.length,'аудиторией','аудиториями','аудиториями'):'пока без выбранных аудиторий')+' в '+ch.join(' и ').replace(/ и (?=.* и )/g,', ')+(st?' (и сторис)':'')+'; больше всего — '+rub.join(', ')+'.'+
     (gaps?' <span class="sum-gap">'+plural(gaps,'пропуск','пропуска','пропусков')+' — сведения о клиенте, которых ещё нет, подсвечены оранжевым ниже.</span>':'');
   var vd=s.st==='ok'?['ok','Согласована — собирайте план']:s.st==='check'?['wait','Ждёт ответа клиента']:['','Черновик — отправьте клиенту'];
-  return '<div class="step-h" style="margin-top:18px">Коротко</div><div class="sum-card"><div class="sum-tx">'+tx+'</div><span class="verdict '+vd[0]+'">'+vd[1]+'</span></div><div class="step-h">Подробно — можно править</div>';
+  return '<div class="step-h" style="margin-top:18px">Коротко</div><div class="sum-card"><div class="sum-tx">'+tx+'</div><span class="verdict '+vd[0]+'">'+vd[1]+'</span></div>'+strNextHTML(p,s,gaps)+'<div class="step-h">Подробно — можно править</div>';
 }
 function renderStrat(){
   var p=strProj(),s=STRATS[p],el=document.getElementById('str-body');
@@ -6597,7 +6616,7 @@ function renderStrat(){
   var inp=function(k,v,ph){var un=/^\[[^\]]*\]$/.test(v),hint=un?v.slice(1,-1):ph;return '<input class="str-in'+(un?' ph':'')+'" value="'+(un?'':hesc(v))+'" placeholder="'+hesc(hint)+'" oninput="STRATS[\''+esc(p)+'\'].'+k+'=this.value||\'['+esc(hint)+']\';this.classList.toggle(\'ph\',!this.value)">';};
   var phT=function(t){return hesc(t).replace(/\[([^\]]+)\]/g,function(m,x){return PH(x);});};
   el.innerHTML='<div class="bset-hd"><div><h2>Стратегия '+hesc(qn(p))+' <span class="st '+STR_CLS[s.st]+'">'+STR_ST[s.st]+'</span></h2><div class="bset-meta">'+s.per+' · версия '+s.ver+' · обновлена '+s.upd+'</div></div><span class="sp"></span><div class="bset-acts">'+acts+'</div></div>'+
-    (s.fb?'<div class="lb-note wait bnote" style="margin:10px 0 0"><b>Клиент просит правки:</b> «'+hesc(s.fb)+'»</div>':'')+(s.st==='check'?'<div class="lb-note wait bnote">Клиент смотрит стратегию. Контент-план можно собирать уже сейчас — но темы могут поменяться после его ответа.</div>':'')+
+    (s.fb?'<div class="lb-note wait bnote" style="margin:10px 0 0"><b>Клиент просит правки:</b> «'+hesc(s.fb)+'»</div>':'')+
     strSummary(p,s,gs)+
     '<div class="str-grid">'+
     '<div class="panel"><h3>Цель и как меряем</h3><label class="bfield"><span class="bl"><span>Цель</span></span>'+inp('goal',s.goal,'Чего хотим от соцсетей')+'</label>'+
@@ -7521,7 +7540,12 @@ function renderClientHome(pr){
 function obNewClient(){openNewClient(null,function(p){go('strat');strSet(p);strFocus();});}
 
 /* generation listens: goal from what you told, audiences on request, themes in the client's niche */
-function strGoal(t){var s=String(t||'').split(/[.!?\n]+/).map(function(x){return x.trim();}).filter(function(x){return /(хотим|хочу|нужн|цель|чтобы|больше|увелич|привлеч|продава|заказ|запис)/i.test(x);})[0];if(!s)return '';s=s.replace(/^(мы\s+)?(хотим|хочу)\s+/i,'');return (s.charAt(0).toUpperCase()+s.slice(1)).slice(0,140);}
+function strGoal(t){var s=String(t||'').split(/[.!?\n]+/).map(function(x){return x.trim();}).filter(function(x){return /(хотим|хочу|нужн|цель|чтобы|больше|увелич|привлеч|продава|заказ|запис)/i.test(x);})[0];if(!s)return '';s=s.replace(/^(мы\s+)?(хотим|хочу)\s+/i,'');return goalClean(s);}
+/* цель из рассказа: без вводных «сейчас главная цель —», без висящих кавычек, с большой буквы */
+function goalClean(g){g=String(g||'').trim();if(/^\[/.test(g))return g;
+  g=g.replace(/^(а\s+)?(сейчас|сегодня|пока)?\s*(наша\s+|главная\s+|основная\s+)*(бизнес-?\s*)?(цель|задача)\s*(—|–|-|:|это)\s*/i,'').replace(/^(мы\s+)?(хотим|хочу)\s+/i,'');
+  var o=(g.match(/«/g)||[]).length,c=(g.match(/»/g)||[]).length;if(o!==c)g=g.replace(/[«»]/g,'');if((g.match(/"/g)||[]).length%2)g=g.replace(/"/g,'');
+  g=g.replace(/[\s.,;:!—–-]+$/,'');if(g.length>140)g=g.slice(0,140).replace(/\s+\S*$/,'')+'…';return g.charAt(0).toUpperCase()+g.slice(1);}
 function niche(p){var t=(p+' '+((STRATS[p]&&STRATS[p].brief)||'')).toLowerCase();
   if(/пекар|торт|кондит|хлеб|выпеч/.test(t))return {svc:'торт на заказ',what:'выпечке',aud:[['Живут рядом','Жители соседних домов, заходят по пути домой','Свежая выпечка рядом с домом'],['Заказывают к празднику','Готовятся к дню рождения, свадьбе, корпоративу','Торт на заказ к нужной дате'],['Офисы поблизости','Сотрудники и офис-менеджеры в 1–2 км','Выпечка к кофе и на встречи']]};
   if(/кофе|кафе|ресторан|бар\b/.test(t))return {svc:'завтрак',what:'кофе и завтраках',aud:[['Живут рядом','Жители соседних домов','Место у дома на каждый день'],['Работают рядом','Офисы в 1–2 км','Быстрый кофе и обед'],['Студенты','Учатся поблизости','Недорого и уютно посидеть']]};
@@ -8565,7 +8589,7 @@ function ikParse(p,t){
     CH.forEach(function(c){if(c[1].test(s)&&r.ch.indexOf(c[0])<0&&/(ведём|ведем|пишем|основа|есть|площадк|канал|группа|сообществ|аккаунт|соцсет|публику|также|ещё|еще|иногда|сторис|vk|telegram|tenchat|instagram)/i.test(s)){r.ch.push(c[0]);used=true;}});
     if(ikVoice(s,r.voice))return;
     var g=ikAud(s);if(g&&ix===0&&g.at>=2&&!/(клиент|гост|покупател|аудитор|приходят|заходят|ходят)/i.test(l))g=null;if(g&&!/₽|руб/.test(s)){var same=r.groups.filter(function(x){return x.n.toLowerCase().slice(0,6)===g.n.toLowerCase().slice(0,6);})[0];if(same){same.who+=' '+ikCap(s);}else r.groups.push(g);return;}
-    if(!r.goal&&/(хотим|нужно|нужна|нужны|цель|задача|чтобы\s+было)/i.test(l)&&!/(клиентам|им\s+нужн)/i.test(l)){var gl=strGoal(s);if(gl){r.goal=gl;var n=s.match(/(\d[\d\s]*)\s*(заяв|запис|продаж|заказ|клиент|подпис|гост)/i);if(n)r.goalN=n[1].replace(/\s/g,'')+' в месяц';return;}}
+    if(!r.goal&&/(хотим|нужно|нужна|нужны|цель|задача|чтобы\s+было)/i.test(l)&&!/(клиентам|им\s+нужн)/i.test(l)){var gl=strGoal(s);if(gl){r.goal=goalClean(gl);var n=s.match(/(\d[\d\s]*)\s*(заяв|запис|продаж|заказ|клиент|подпис|гост)/i);if(n)r.goalN=n[1].replace(/\s/g,'')+' в месяц';return;}}
     if(!r.pos&&/(отличаемся|в отличие|единственн|уникальн|наша фишка|главное преимущество|главное,\s+чем|чем\s+мы\s+лучше)/i.test(l)){r.pos=ikCap(s.replace(/^(главное,?\s+чем\s+отличаемся:?\s*|отличаемся\s+тем,?\s+что\s*|наша фишка\s*[—:-]?\s*)/i,''));return;}
     if(/(важно донести|хотим,\s+чтобы\s+знали|главная мысль|ключевое)/i.test(l)){r.msgs.push(ikCap(s.replace(/^.*?(?:донести|знали|мысль|ключевое)\s*[:—-]?\s*/i,'')));return;}
     if(used)return;
@@ -8636,7 +8660,7 @@ function ikShow(p,rep){
     ask.map(function(g){return '<div class="pg-gap"><span class="mk-ph">'+g[1]+'</span><span class="cp-note" style="margin:0">'+g[2]+'</span><div><input id="ik-'+g[0]+'" placeholder="Ответ" onkeydown="if(event.key===\'Enter\')ikAnswer(\''+g[0]+'\')"><button class="mini pri" type="button" onclick="ikAnswer(\''+g[0]+'\')">Ответить</button></div></div>';}).join('')+
     (rest.length?'<p class="cp-note" style="margin:6px 0 0">Ещё не нашли: '+rest.map(function(g){return g[1].toLowerCase();}).join(', ')+'.</p>':'')+'</div>';
   else h+='<div class="lb-note ok bnote" style="margin-top:12px">Пробелов нет — всё главное о клиенте есть.</div>';
-  h+='<div class="gate-acts"><button class="pbtn" type="button" onclick="closeModal(\'gate-modal\')">Готово</button></div>';
+  h+='<div class="gate-acts">'+(STRATS[p]?'<button class="pbtn ghost" type="button" onclick="closeModal(\'gate-modal\')">Готово</button><button class="pbtn" type="button" onclick="strNext(\''+esc(p)+'\')">Дальше: контент-план →</button>':'<button class="pbtn" type="button" onclick="closeModal(\'gate-modal\')">Готово</button>')+'</div>';
   document.getElementById('gt-title').textContent='Разобрали рассказ о '+qn(p);
   document.getElementById('gt-body').innerHTML=h;
   if(!document.getElementById('gate-modal').classList.contains('on'))openModal('gate-modal');
@@ -8644,7 +8668,7 @@ function ikShow(p,rep){
 function ikAnswer(k){
   var p=IK_P,inp=document.getElementById('ik-'+k),v=inp?inp.value.trim():'';if(!v){if(inp)inp.focus();return;}
   var S=STRATS[p];
-  if(k==='goal'&&S){S.goal=ikCap(v);var n=v.match(/(\d[\d\s]*)/);if(n&&S.kpi[0]&&/\[/.test(S.kpi[0][1]))S.kpi[0][1]=n[1].replace(/\s/g,'')+' в месяц';}
+  if(k==='goal'&&S){S.goal=goalClean(v);var n=v.match(/(\d[\d\s]*)/);if(n&&S.kpi[0]&&/\[/.test(S.kpi[0][1]))S.kpi[0][1]=n[1].replace(/\s/g,'')+' в месяц';}
   else if(k==='pos'&&S)S.pos=ikCap(v);
   else if(k==='aud'){var r=ikParse(p,v.split(/[,;\n]+/).map(function(x){return ikCap(x.trim());}).filter(Boolean).join('. '));if(!r.groups.length)v.split(/[,;\n]+/).forEach(function(x){x=x.trim();if(x)r.groups.push({n:ikCap(x).slice(0,48),who:ikCap(x)});});var rp=ikApply(p,{groups:r.groups,facts:[],voice:{say:[],lab:[],formal:0,emo:0},links:[],left:[],msgs:[],ch:[]},{});IK_REP.gNew=IK_REP.gNew.concat(rp.gNew);}
   else{var cat=k==='price'?'Цены и условия':'Адреса и время';FACTS.push({id:'f'+(++faSeq),p:p,cat:cat,t:ikCap(v),src:'вы',d:'сегодня'});IK_REP.facts[cat]=(IK_REP.facts[cat]||0)+1;IK_REP.fN++;}
