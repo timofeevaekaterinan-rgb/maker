@@ -522,6 +522,32 @@
   .pm-bal{display:block;padding:10px 12px;margin:4px 0;border-radius:10px;background:var(--inset);cursor:pointer;text-align:left;border:0;width:100%;font:inherit}
   .pm-bal small{display:block;font-size:11px;color:var(--ink-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
   .pm-bal .bm-top b{font-size:15px}
+  .hlp .cpd-pane{width:min(520px,100vw)}
+  .hlp-top{padding:12px 22px 0;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line)}
+  .hlp-top .tsearch{width:100%}.hlp-tabs{margin:0;overflow-x:auto;scrollbar-width:none}.hlp-tabs .itab{white-space:nowrap;padding:9px 10px;font-size:13.5px}
+  .hlp-foot{display:flex;gap:8px;flex-wrap:wrap;padding:12px 22px;border-top:1px solid var(--line)}
+  .hlp-here{background:var(--blue-softer);border:1px solid var(--blue-brd);border-radius:14px;padding:14px 16px;margin-bottom:14px}
+  .hlp-here small{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-ink)}.hlp-here b{font-family:var(--head);font-size:18px}.hlp-here p{margin:6px 0 0;color:var(--ink-2);font-size:13.5px;line-height:1.5}
+  .hlp-steps{margin:0 0 14px;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.45}
+  .hlp-q{border-top:1px solid var(--line);padding:10px 0}.hlp-q summary{cursor:pointer;font-weight:600;font-size:14px}.hlp-q p{margin:6px 0 0;color:var(--ink-2);font-size:13.5px;line-height:1.5}
+  .cpd-body .ip-h{margin-top:14px}
+  .hlp-w,.hlp-st{display:flex;flex-direction:column;gap:3px;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px}.hlp-w span,.hlp-st>span:last-child{color:var(--ink-2);line-height:1.45}
+  .hlp-st{flex-direction:row;align-items:flex-start;gap:10px}.hlp-st .st,.hlp-st .mk-ph{flex:none;min-width:130px;justify-content:flex-start}
+  .hlp-path{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .hlp-path li{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px}
+  .hlp-path li.cur{border-color:var(--blue-brd);background:var(--blue-softer)}
+  .hp-n{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--inset);font-weight:700;font-size:13px;color:var(--ink-2)}
+  .hlp-path li.done .hp-n{background:var(--ok-bg);color:var(--ok-ink)}.hlp-path li.cur .hp-n{background:var(--blue);color:#fff}
+  .hp-tx{flex:1;display:flex;flex-direction:column;min-width:0}.hp-tx small{color:var(--ink-2);font-size:12.5px;line-height:1.4}
+  .hlp-ul{margin:0 0 14px;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;line-height:1.5;color:var(--ink-2)}
+  .tip{position:fixed;z-index:120;width:300px;background:#1A2230;color:#fff;border-radius:14px;padding:14px 16px;box-shadow:0 24px 50px -16px rgba(0,0,0,.5);display:flex;flex-direction:column;gap:6px;animation:fade .2s ease}
+  .tip b{font-size:15px}.tip span{font-size:13.5px;line-height:1.45;color:rgba(255,255,255,.85)}
+  .tip-f{display:flex;align-items:center;gap:8px;margin-top:6px}.tip-f small{margin-right:auto;color:rgba(255,255,255,.55);font-size:12px}
+  .tip .mini{background:rgba(255,255,255,.12);color:#fff;border-color:transparent}.tip .mini.pri{background:#fff;color:#1A2230}
+  .tip-on{position:relative;z-index:119;box-shadow:0 0 0 4px rgba(76,146,255,.6),0 0 0 9999px rgba(10,16,30,.35)!important;border-radius:14px}
+  .seg{display:inline-flex;background:var(--inset);border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px}
+  .seg button{border:0;background:none;padding:7px 14px;border-radius:9px;font:inherit;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer}
+  .seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(26,34,48,.12)}
   .del-list{margin:6px 0 0;padding-left:18px;color:var(--ink-2);font-size:13.5px;line-height:1.5}
   .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#1A2230;color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:500;box-shadow:0 18px 40px -14px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.25s;z-index:50;display:flex;align-items:center;gap:10px;max-width:min(90vw,440px)}
 
@@ -1372,6 +1398,8 @@
   @media (max-width:600px){.pf-2{grid-template-columns:minmax(0,1fr)}.pf-mem{flex-wrap:wrap}.pf-mr{width:100%;justify-content:flex-start;padding-left:48px}.pf-rl{flex-wrap:wrap}.pf-nt-h,.pf-nt-r{grid-template-columns:minmax(0,1fr) 62px 62px}.pf-row{flex-wrap:wrap}.kv .v.pf-rv{max-width:none;text-align:left}}
 
   /* ---------- notifications ---------- */
+  .top-help{margin-left:auto}
+  .top-help+.top-bell{margin-left:8px}
   .top-bell{margin-left:auto;position:relative;width:38px;height:38px;border-radius:50%;border:1px solid var(--line-2);background:var(--panel);display:grid;place-items:center;cursor:pointer;color:var(--ink);flex:none}
   .top-bell:hover{border-color:var(--line-3)}
   .top-bell[aria-expanded="true"]{border-color:var(--blue-brd);box-shadow:0 0 0 3px var(--blue-softer)}
@@ -2608,6 +2636,7 @@
         <a data-view="images" onclick="go('images')"><span class="ct">Фото и видео</span></a>
         <a data-view="pages" onclick="go('pages')"><span class="ct">Сайты и страницы</span></a>
         <a data-view="pres" onclick="go('pres')"><span class="ct">Презентации</span></a>
+        <a data-view="templates" onclick="go('templates')"><span class="ct">Шаблоны</span></a>
       </nav>
     </div>
 
@@ -2627,7 +2656,6 @@
         <a data-view="voice" onclick="go('voice')"><span class="ct">Голос</span></a>
         <a data-view="facts" onclick="go('facts')"><span class="ct">База фактов</span></a>
         <a data-view="groups" onclick="go('groups')"><span class="ct">Аудитории</span></a>
-        <a data-view="templates" onclick="go('templates')"><span class="ct">Шаблоны</span></a>
       </nav>
     </div>
 
@@ -2648,6 +2676,7 @@
     <header class="topbar">
       <button class="side-tg" type="button" onclick="sideToggle(true)" aria-label="Показать меню" title="Показать меню"><svg class="i-panel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg><svg class="i-burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <nav class="crumb" id="crumb" aria-label="Где я"></nav>
+      <button class="top-bell top-help" id="help-btn" type="button" aria-label="Помощь" title="Помощь · клавиша ?" onclick="hlpOpen()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.4-2.7 4"/><path d="M12 17.4h.01"/></svg></button>
       <button class="top-bell" id="ntf-btn" type="button" aria-label="Уведомления" aria-haspopup="dialog" aria-expanded="false" aria-controls="ntf-panel" onclick="ntfOpen(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="ntf-n" id="ntf-n" hidden></span></button>
       <div class="ntf-panel" id="ntf-panel" role="dialog" aria-label="Уведомления"></div>
       <button class="top-av" type="button" aria-haspopup="menu" onclick="profMenu(event)">Г</button>
@@ -8027,7 +8056,7 @@ var NAVH={home:[null,'Главная'],projects:[null,'Клиенты'],project:
   strat:['Контент','Стратегия'],plan:['Контент','Контент-план'],images:['Контент','Фото и видео'],video:['Контент','Фото и видео'],
   'soc-post':['Контент','Публикации · посты'],'soc-car':['Контент','Публикации · карусели'],'soc-story':['Контент','Публикации · сторис'],'soc-clip':['Контент','Публикации · клипы'],
   banners:['Реклама','Баннеры'],campaigns:['Реклама','Кампании'],camp:['Реклама','Кампании','campaigns'],result:['Реклама','Результат'],
-  style:['Бренд клиента','Стиль'],voice:['Бренд клиента','Голос'],facts:['Бренд клиента','База фактов'],templates:['Бренд клиента','Шаблоны'],groups:['Бренд клиента','Аудитории'],
+  style:['Бренд клиента','Стиль'],voice:['Бренд клиента','Голос'],facts:['Бренд клиента','База фактов'],templates:['Контент','Шаблоны'],groups:['Бренд клиента','Аудитории'],
   pages:['Контент','Сайты и страницы'],page:['Контент','Сайты и страницы','pages'],build:['Контент','Сайты и страницы','pages'],pres:['Контент','Презентации'],deck:['Контент','Презентации','pres'],chats:[null,'Чаты'],
   billing:[null,'Счёт и оплата'],states:[null,'Карта состояний'],client:[null,'Экран клиента'],profile:[null,'Профиль']};
 var ROUTE={v:'home',id:null,lab:'',p:null},ROUTE_BUSY=false,routeT=null;
@@ -8155,7 +8184,7 @@ setTimeout(function(){
   stateApply();cabInit();userApply();pfApply();ntfSeed();clientInit();
   if(authOut())authShow('start');
   var r=routeParse();if(r&&r.v&&r.v!=='home')routeApply(r);else{ROUTE_LAST=routeSnap();crumbRender();}
-  stateEval();sysApply();renderToday();
+  stateEval();sysApply();renderToday();setTimeout(function(){tipsTry(0);},900);
   (function(){var g=go;go=function(){var res=g.apply(this,arguments);stateEval();sysApply();return res;};
     var c=charge;charge=function(){var b0=balance();c.apply(this,arguments);var b1=balance();if(LIMITS.low&&b0>=LIMITS.lowAt&&b1<LIMITS.lowAt)ntfPush({k:'money',t:'Баланс ниже '+rub(LIMITS.lowAt),s:'Осталось '+rub2(b1)+' — пополните, чтобы генерация не встала',fn:function(){go('billing');}});setTimeout(function(){stateEval();renderToday();},0);};
     var t=topup;topup=function(){t.apply(this,arguments);balBar();renderToday();};
@@ -8809,6 +8838,121 @@ function balMeter(big){
     '<div class="bm-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+I.pct+'" aria-label="Осталось '+I.pct+'%"><i style="width:'+I.pct+'%"></i></div>'+
     '<div class="bm-sub">'+(I.b<1?'Генерация на паузе — черновики и правки работают':'Хватит примерно на '+balWork(I.b))+'</div></div>';
 }
+
+/* ---------- справочный центр: «?» в шапке — объясняет любой экран ---------- */
+var HELP={
+  home:{s:['Напишите задачу в чат как коллеге — голосом, текстом, файлами','Или нажмите «Сделать» у напоминания — задача наберётся сама','Клиента выбирайте в меню слева вверху — Главная покажет только его'],q:[['С чего начать нового клиента?','«+ Новый клиент» в меню слева → «Рассказать о клиенте» → стратегия. Дальше Maker подскажет шаги.'],['Что такое напоминания?','Дела, которые ждут вас: правки клиента, проверка, пропуски. Нет дел — блока нет.']]},
+  strat:{s:['«Рассказать о клиенте» — опишите всё одним текстом, Maker разложит по разделам','Проверьте оранжевые плашки — это то, чего Maker не знает','Отправьте клиенту или сразу соберите контент-план — ждать не обязательно'],q:[['Зачем стратегия?','Из неё собирается всё: темы плана берут рубрики и доли, посты — голос и главные мысли.'],['Что за оранжевые плашки?','Сведения, которых нет. Maker их не выдумывает — впишите или ответьте один раз в «Чего не хватает».'],['Клиент не отвечает — что делать?','Двигайтесь дальше: контент-план можно собрать уже сейчас, а после ответа пересобрать.']]},
+  plan:{s:['«Собрать контент-план» — темы на период по рубрикам стратегии','Поправьте темы, факты и фото — прямо в карточке темы','«Отправить черновики клиенту» — одной ссылкой, без регистрации'],q:[['Откуда берутся темы?','Из рубрик и долей стратегии плюс ваши поводы из окна «Собрать». Без стратегии план не собрать.'],['Как тема становится постом?','Сама: в «Публикациях» она ждёт заготовкой — «Собрать пост» в один клик.']]},
+  'soc-post':{s:['Сверху — темы из плана, которые ждут сборки: «Собрать» в один клик','«Новый пост» — своя тема вне плана','Проверьте версии под каждую площадку и отправьте клиенту'],q:[['Почему у VK и Telegram разный текст?','У площадок разные лимиты и привычки: в VK длиннее и с вопросом, в Telegram — одна мысль.'],['Как поменять картинку?','Кликните по картинке в превью или «Поменять» справа: из фото клиента, сгенерировать или загрузить свою.'],['Соцсеть не подключена — что будет?','Запланированный пост придёт напоминанием с готовым текстом и картинкой.']]},
+  images:{s:['Опишите сюжет — Maker снимет серию в манере клиента','Проверьте кадры: «Принять» или «Переснять»','Или загрузите свои фото — они тоже пойдут в посты'],q:[['Сколько стоит неудачный кадр?','Ничего — «Не получился» переснимаем бесплатно.'],['Где эти кадры используются?','В постах, сторис, баннерах, темах плана — выбираются при «Поменять картинку».']]},
+  pages:{s:['«Новая страница» — опишите, что продаём; Maker соберёт лендинг в стиле клиента','Проверьте: тексты, цифры, форма — заполните пропуски','«Принять» → «Опубликовать» или «Отправить клиенту»'],q:[['Почему нельзя опубликовать?','На странице остались пропуски. На сайт с плашками она не уходит — заполните их справа.']]},
+  pres:{s:['«Новая презентация» — отчёт клиенту или предложение','Сначала проверьте план колоды: заголовки и тезисы','«Собрать» — слайды в стиле клиента, скачать PowerPoint или PDF'],q:[['Откуда цифры в отчёте?','Из «Результата» — те же данные, что на дашборде. Нет данных — честная плашка.']]},
+  banners:{s:['Опишите, что рекламируем — текст напишет нейросеть, размеры соберёт код','Проверьте основной баннер — остальные пересоберутся сами','«Отправить на модерацию» — площадка проверит до суток'],q:[['Что такое erid?','Номер маркировки рекламы, без него площадка не пропустит объявление.']]},
+  campaigns:{s:['Цель одной фразой: «40 продаж до 30 ноября»','Выберите баннеры, страницу и аудитории','Следите за итогом сверху — Maker подскажет, если что-то идёт не так'],q:[['Как удалить кампанию?','Сначала пауза, потом «Удалить» — её цифры уйдут из «Результата».']]},
+  result:{s:['Сверху — итог словами: окупается ли реклама','Ниже — что стоит сделать, с кнопками','Цифры и таблицы — в «Подробно»'],q:[['Почему выручка не совпадает?','Продажи учитываются после сверки с CRM — дата сверки указана под итогом.']]},
+  style:{s:['Источник: сайт или брендбук — стиль снимается сам','Поправьте цвета и шрифты — справа живое превью','Сохраните версию — материалы перекрасятся'],q:[['Что перекрасится?','Всё, что собрано в этом стиле: страницы, баннеры, слайды. Перед сохранением покажем список.']]},
+  voice:{s:['Двигайте ползунки — пример поста меняется сразу','Добавьте «так говорим / так не говорим»','Или скажите словами: «проще, без эмодзи, на вы»'],q:[['Где используется голос?','Во всех текстах: стратегия, посты, сторис, страницы, ответы в чате.']]},
+  facts:{s:['Вставьте текст как есть — Maker разложит по разделам','Сверху — чего не хватает: ответьте один раз, подставим везде','Правьте факт прямо в списке'],q:[['Зачем база фактов?','Чтобы тексты брали реальные цены, адреса и цифры — а не выдумывали.']]},
+  groups:{s:['Опишите всех клиентов одним текстом — разделим на группы сами','Проверьте карточки: задачи, возражения, где искать','Группы попадут в стратегию, кампании и варианты страниц'],q:[['Почему группа «дороже средней»?','Цена заявки в ней заметно выше, чем по клиенту в целом. Можно убрать её из кампаний.']]},
+  templates:{s:['Выберите шаблон — превью сразу в стиле клиента','«Использовать» — подставим в нужный раздел','Своё удачное сохраняйте в шаблоны из карточки'],q:[]},
+  chats:{s:['Спросите что угодно — про рекламу, тексты, идеи','Чат знает клиента: стиль, голос, факты','Из ответа можно сразу сделать черновик в разделе'],q:[]},
+  billing:{s:['Полоса показывает, сколько осталось с последнего пополнения','Цену действия видно, если навести на кнопку','Лимиты — чтобы ни одно действие не стоило неожиданно'],q:[['Что будет при нуле?','Генерация встанет на паузу, а черновики, правки и согласования продолжат работать.']]},
+  project:{s:['Здесь всё про клиента на одной странице','«Нужно от вас» — дела по клиенту','«Ждёт ответа клиента» — что у него на согласовании'],q:[]},
+  profile:{s:['Имя и фото видят коллеги и клиенты','Вход — кодом, паролем или Яндекс ID','Команда — пригласите коллег с нужной ролью'],q:[]}
+};
+['soc-car','soc-story','soc-clip'].forEach(function(v){HELP[v]=HELP['soc-post'];});HELP.video=HELP.images;HELP.camp=HELP.campaigns;HELP.deck=HELP.pres;HELP.build=HELP.pages;HELP.page=HELP.pages;
+var HLP_TAB='here';
+var HLP_ST=[['Публикации, темы, стратегия',['Черновик','draft'],['Ждёт проверки','check'],['На согласовании','check'],['Согласован','pub'],['Запланирован','proc'],['Опубликован','done']],
+  ['Кадры и ролики',['Ждёт проверки','check'],['Принят','pub'],['Не получился','bad'],['Переснят','redo'],['Своё фото','own']],
+  ['Страницы',['Черновик','draft'],['Ждёт проверки','check'],['Принята','pub'],['На согласовании','check'],['Опубликована','done']],
+  ['Баннеры и кампании',['На модерации','proc'],['Отклонён площадкой','bad'],['Работает','run'],['На паузе','pause'],['Завершена','done']]];
+function hlpOpen(tab){
+  var d=document.getElementById('hlp');if(!d){d=document.createElement('div');d.className='cpd hlp';d.id='hlp';d.setAttribute('aria-hidden','true');
+    d.innerHTML='<div class="cpd-bg" onclick="hlpClose()"></div><aside class="cpd-pane" role="dialog" aria-modal="true" aria-labelledby="hlp-t"><div class="cpd-hd"><div><h3 id="hlp-t">Помощь</h3><p>Как работает Maker — коротко и по делу</p></div><button class="modalx" type="button" aria-label="Закрыть" onclick="hlpClose()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'+
+      '<div class="hlp-top"><label class="tsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="hlp-q" type="search" placeholder="Найти: erid, статусы, оплата…" oninput="hlpRender()"></label>'+
+      '<div class="itabs hlp-tabs">'+[['here','Этот экран'],['path','Путь клиента'],['st','Статусы'],['dict','Словарь'],['money','Деньги']].map(function(t){return '<button class="itab" type="button" data-t="'+t[0]+'" onclick="HLP_TAB=\''+t[0]+'\';document.getElementById(\'hlp-q\').value=\'\';hlpRender()">'+t[1]+'</button>';}).join('')+'</div></div>'+
+      '<div class="cpd-body" id="hlp-body"></div><div class="hlp-foot"><button class="mini" type="button" onclick="hlpClose();tipsStart(true)">Показать подсказки по интерфейсу</button><button class="mini" type="button" onclick="toast(\'Поддержка ответит в течение часа (в прототипе имитировано)\')">Написать в поддержку</button></div></aside>';
+    document.body.appendChild(d);}
+  if(tab)HLP_TAB=tab;cpClose(true);hlpRender();d.classList.add('on');d.setAttribute('aria-hidden','false');document.body.classList.add('cpd-open');
+  setTimeout(function(){var q=document.getElementById('hlp-q');if(q&&HELP.focusSearch)q.focus();},200);
+}
+function hlpClose(){var d=document.getElementById('hlp');if(!d||!d.classList.contains('on'))return;d.classList.remove('on');d.setAttribute('aria-hidden','true');document.body.classList.remove('cpd-open');}
+function hlpPill(t,c){return '<span class="st '+c+'">'+t+'</span>';}
+function hlpStTip(t){for(var i=0;i<ST_TIP.length;i++)if(t.indexOf(ST_TIP[i][0])===0)return ST_TIP[i][1];return '';}
+function hlpRender(){
+  var el=document.getElementById('hlp-body'),q=(document.getElementById('hlp-q').value||'').trim().toLowerCase(),v=ROUTE.v,h=HELP[v]||HELP.home,name=(NAVH[v]||[null,'Главная'])[1];
+  document.querySelectorAll('#hlp .hlp-tabs .itab').forEach(function(b){b.classList.toggle('on',!q&&b.dataset.t===HLP_TAB);});
+  var faqAll=[];Object.keys(HELP).forEach(function(k){(HELP[k].q||[]).forEach(function(x){if(!faqAll.some(function(y){return y[0]===x[0];}))faqAll.push(x);});});
+  var faq=function(list){return list.map(function(x){return '<details class="hlp-q"><summary>'+hesc(x[0])+'</summary><p>'+hesc(x[1])+'</p></details>';}).join('');};
+  if(q){
+    var f1=faqAll.filter(function(x){return (x[0]+' '+x[1]).toLowerCase().indexOf(q)>=0;}),f2=GLOSS.filter(function(g){return (g[0]+' '+g[1]).toLowerCase().indexOf(q)>=0;}).filter(function(g,i,a){return a.findIndex(function(y){return y[1]===g[1];})===i;}),f3=ST_TIP.filter(function(t){return (t[0]+' '+t[1]).toLowerCase().indexOf(q)>=0;});
+    el.innerHTML=(f1.length?'<span class="ip-h">Вопросы</span>'+faq(f1):'')+(f2.length?'<span class="ip-h">Словарь</span>'+f2.map(function(g){return '<div class="hlp-w"><b>'+hesc(g[0])+'</b><span>'+hesc(g[1])+'</span></div>';}).join(''):'')+(f3.length?'<span class="ip-h">Статусы</span>'+f3.map(function(t){return '<div class="hlp-w"><b>'+hesc(t[0])+'</b><span>'+hesc(t[1])+'</span></div>';}).join(''):'')||'<p class="cp-note">Ничего не нашли. Попробуйте другое слово или напишите в поддержку.</p>';
+    return;
+  }
+  if(HLP_TAB==='here'){
+    var why=(document.querySelector('.view.on .ph-why, .view.on .phead p')||{}).textContent||'';
+    el.innerHTML='<div class="hlp-here"><small>Вы здесь</small><b>'+hesc(name)+'</b>'+(why?'<p>'+hesc(why)+'</p>':'')+'</div><span class="ip-h">Что делать — по шагам</span><ol class="hlp-steps">'+h.s.map(function(x){return '<li>'+hesc(x)+'</li>';}).join('')+'</ol>'+
+      (h.q.length?'<span class="ip-h">Частые вопросы</span>'+faq(h.q):'')+'<span class="ip-h">Ещё вопросы</span>'+faq(faqAll.filter(function(x){return h.q.indexOf(x)<0;}).slice(0,4));
+  }else if(HLP_TAB==='path'){
+    var p=CLIENT,has=function(f){return !!p&&f();},steps=[
+      ['Выбрать клиента','Переключатель вверху меню. Весь кабинет — про него.',!!p,"hlpClose();clientMenu({stopPropagation:function(){},currentTarget:document.querySelector('.side .acct')})"],
+      ['Рассказать о клиенте','Одним текстом — Maker разложит по аудиториям, фактам, голосу.',has(function(){return FACTS.some(function(x){return x.p===p;})||GROUPS.some(function(g){return g.p===p;});}),"hlpClose();go('strat');"+(p?"strSet('"+esc(p)+"');":'')+"cpOpen('strat')"],
+      ['Стратегия','Цель, аудитории, площадки, рубрики. Отправить клиенту — по желанию.',has(function(){return !!STRATS[p];}),"hlpClose();go('strat')"],
+      ['Контент-план','Темы на период из стратегии.',has(function(){return PLAN.some(function(x){return x.p===p;});}),"hlpClose();go('plan')"],
+      ['Публикации','Посты, карусели, сторис, клипы — из тем в один клик.',has(function(){return SOC.some(function(x){return x.p===p;});}),"hlpClose();go('soc-post')"],
+      ['Реклама','Баннеры → кампания → результат: окупается ли.',has(function(){return CAMPS.some(function(x){return x.p===p;});}),"hlpClose();go('banners')"]];
+    var cur=steps.findIndex(function(s){return !s[2];});
+    el.innerHTML=(p?'':'<div class="lb-note bnote" style="margin:0 0 12px">Выберите клиента — покажем, какие шаги пройдены.</div>')+'<ol class="hlp-path">'+steps.map(function(s,i){return '<li class="'+(s[2]?'done':i===cur?'cur':'')+'"><span class="hp-n">'+(s[2]?'✓':i+1)+'</span><span class="hp-tx"><b>'+s[0]+'</b><small>'+s[1]+'</small></span><button class="mini'+(i===cur?' pri':'')+'" type="button" onclick="'+s[3]+'">'+(i===cur?'Сделать':'Открыть')+'</button></li>';}).join('')+'</ol>';
+  }else if(HLP_TAB==='st'){
+    el.innerHTML='<p class="cp-note" style="margin:0 0 10px">Наведите на любой статус в кабинете — подсказка скажет то же самое.</p>'+HLP_ST.map(function(g){return '<span class="ip-h">'+g[0]+'</span>'+g.slice(1).map(function(x){return '<div class="hlp-st">'+hlpPill(x[0],x[1])+'<span>'+hesc(hlpStTip(x[0]))+'</span></div>';}).join('');}).join('')+
+      '<span class="ip-h">Плашки</span><div class="hlp-st"><span class="mk-ph">[цена]</span><span>'+hesc(PH_TIP)+'</span></div>';
+  }else if(HLP_TAB==='dict'){
+    var seen={};el.innerHTML=GLOSS.filter(function(g){if(seen[g[1]])return false;seen[g[1]]=1;return true;}).map(function(g){return '<div class="hlp-w"><b>'+hesc(g[0].charAt(0).toUpperCase()+g[0].slice(1))+'</b><span>'+hesc(g[1])+'</span></div>';}).join('');
+  }else{
+    el.innerHTML=balMeter(true)+'<span class="ip-h" style="margin-top:16px">Как устроена оплата</span><ul class="hlp-ul"><li>Подписки нет — платите только за то, что Maker сделал.</li><li>Цену действия видно, если навести на кнопку. «До 0,82 ₽» — потолок: чаще выходит меньше.</li><li>Дорогое (ролик, набор) Maker подтвердит перед списанием — порог задаётся в «Лимитах».</li><li>Бесплатно: правки руками, согласования, пересъёмка неудачного кадра, вопросы «для кого».</li><li>Деньги кончились — генерация на паузе, всё остальное работает.</li></ul><button class="pbtn" type="button" onclick="hlpClose();go(\'billing\')">Счёт и оплата →</button>';
+  }
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&document.getElementById('hlp')&&document.getElementById('hlp').classList.contains('on')&&!document.querySelector('.modalbg.on')){hlpClose();return;}
+  if(e.key==='?'&&!/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||'')&&!document.activeElement.isContentEditable){e.preventDefault();hlpOpen();}
+});
+
+/* ---------- подсказки по интерфейсу при первом входе ---------- */
+var TIPS=[['.side .acct','Это клиент, с которым вы работаете','Весь кабинет показывает только его. «Все клиенты» — когда нужно сравнить.'],
+  ['#g-cnt .g2hd','Начните с «Контента» → «Стратегия»','«Рассказать о клиенте» — опишите всё одним текстом, Maker разложит по разделам сам. Дальше — план и публикации по шагам.'],
+  ['#ntf-btn','Здесь — что случилось','Ответы клиента, готовые ролики, модерация и баланс.'],
+  ['#help-btn','Непонятно — нажмите «?»','Объясним любой экран, статусы, термины и деньги. Работает и клавиша «?».']];
+var TIP_I=0;
+function tipsStart(force){
+  try{if(!force&&localStorage.getItem('mk-tips')==='1')return;}catch(e){}
+  if(document.body.classList.contains('au-on')||document.getElementById('intro'))return;
+  TIP_I=0;tipShow();
+}
+function tipShow(){
+  var old=document.getElementById('tip');if(old)old.remove();
+  while(TIP_I<TIPS.length){var a=document.querySelector(TIPS[TIP_I][0]);if(a&&a.offsetParent&&a.getBoundingClientRect().width)break;TIP_I++;}
+  if(TIP_I>=TIPS.length){tipsEnd();return;}
+  var t=TIPS[TIP_I],a=document.querySelector(t[0]),r=a.getBoundingClientRect(),el=document.createElement('div');el.id='tip';el.className='tip';el.setAttribute('role','dialog');
+  el.innerHTML='<b>'+t[1]+'</b><span>'+t[2]+'</span><div class="tip-f"><small>'+(TIP_I+1)+' из '+TIPS.length+'</small><button class="mini" type="button" onclick="tipsEnd()">Пропустить</button><button class="mini pri" type="button" onclick="TIP_I++;tipShow()">'+(TIP_I===TIPS.length-1?'Понятно':'Дальше')+'</button></div>';
+  document.body.appendChild(el);a.classList.add('tip-on');
+  var w=el.offsetWidth,h=el.offsetHeight,left=r.right+14,top=r.top+r.height/2-h/2;
+  if(left+w>innerWidth-8){left=Math.max(8,r.right-w);top=r.bottom+12;el.classList.add('down');}else el.classList.add('right');
+  el.style.left=left+'px';el.style.top=Math.max(8,Math.min(top,innerHeight-h-8))+'px';
+  document.querySelectorAll('.tip-on').forEach(function(x){if(x!==a)x.classList.remove('tip-on');});
+  el.querySelector('.mini.pri').focus();
+}
+function tipsEnd(){var el=document.getElementById('tip');if(el)el.remove();document.querySelectorAll('.tip-on').forEach(function(x){x.classList.remove('tip-on');});try{localStorage.setItem('mk-tips','1');}catch(e){}}
+
+/* «Коротко / Подробно» на тяжёлых экранах — раскрыть или свернуть все «Подробно» разом */
+function viewDepth(btn,open){var v=btn.closest('.view'),st=deepState();v.querySelectorAll('.deep[data-deep]').forEach(function(d){deepSet(d,open);st[d.dataset.deep]=open;});try{localStorage.setItem('mk-deep',JSON.stringify(st));}catch(e){}segSync(v);if(open)setTimeout(glossApply,0);}
+function segSync(v){var ds=v.querySelectorAll('.deep[data-deep]'),open=ds.length&&[].every.call(ds,function(d){return d.classList.contains('open');});v.querySelectorAll('.seg button').forEach(function(b){b.classList.toggle('on',(b.dataset.d==='1')===!!open);});}
+(function(){['result','billing'].forEach(function(id){var v=document.getElementById('v-'+id),h=v&&v.querySelector(':scope > .phead');if(!h)return;
+  var sg=document.createElement('div');sg.className='seg';sg.setAttribute('role','group');sg.setAttribute('aria-label','Сколько показывать');sg.innerHTML='<button type="button" data-d="0" onclick="viewDepth(this,false)">Коротко</button><button type="button" data-d="1" onclick="viewDepth(this,true)">Подробно</button>';
+  var sp=h.querySelector(':scope > .sp');if(sp)sp.after(sg);else h.appendChild(sg);segSync(v);
+  var o=VIEW_RENDER[id];VIEW_RENDER[id]=function(){var r=o&&o.apply(this,arguments);segSync(v);return r;};});
+  var dt=deepToggle;deepToggle=function(btn){var r=dt.apply(this,arguments);var v=btn.closest('.view');if(v)segSync(v);return r;};})();
+function tipsTry(n){if((document.getElementById('intro')||document.body.classList.contains('au-on'))&&n<30){setTimeout(function(){tipsTry(n+1);},500);return;}if(!document.body.classList.contains('au-on'))tipsStart();}
 
 /* ---------- удалить что угодно: подтверждение с последствиями, потом «Вернуть» ---------- */
 var DEL_IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>';
