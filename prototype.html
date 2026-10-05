@@ -1644,6 +1644,7 @@
   .sum-card{display:flex;gap:18px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin-bottom:12px;box-shadow:0 1px 2px rgba(26,34,48,.03)}
   .sum-card .sum-tx{flex:1;min-width:0;font-size:17px;line-height:1.55;color:var(--ink)}
   .sum-card .sum-tx b{font-weight:700;white-space:nowrap}
+  .sum-gap{color:var(--warn-ink);font-weight:600}
   .sum-card .sum-note{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-3);margin-top:10px;line-height:1.45}
   .verdict{flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:700;white-space:nowrap;background:var(--inset);color:var(--ink-2)}
   .verdict::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
@@ -2760,7 +2761,7 @@
       <!-- ============ CAMPAIGNS ============ -->
       <section id="v-campaigns" class="view">
         <div class="phead">
-          <div><h1>Кампании</h1><p>Кампания связывает баннеры, страницу и бюджет. Цифры раз в день переносите из кабинета VK Рекламы или Директа — пара минут; продажи берём из CRM, так видна окупаемость.</p></div>
+          <div><h1>Кампании</h1><p class="ph-why">Кампания — это запуск рекламы: цель, срок, бюджет и что показываем (баннеры, страница). Здесь видно, идёт ли каждая по плану, а что она принесла — в «Результате».</p></div>
           <div class="sp"></div>
           <button class="pbtn ghost" onclick="var t=document.getElementById('cm-text');t.scrollIntoView({behavior:'smooth',block:'center'});t.focus({preventScroll:true})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новая кампания</button>
           <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
@@ -2777,7 +2778,8 @@
           </div>
           <select class="sortsel" id="cm-sort" onchange="renderCamps()"><option value="new">Сначала новые</option><option value="old">Сначала старые</option><option value="az">По названию</option><option value="spend">По расходу</option></select>
         </div>
-        <p class="empty-hint">Кампания не генерирует — она связывает. Одна фраза о том, чего вы хотите, разбирается на цель, срок и аудитории; состав собирается из того, что уже сделано: страницы, кадры, баннеры, ролики.</p>
+        <div class="sum-card" id="cm-sum"></div>
+        <p class="empty-hint">Кампания ничего не рисует — она собирает вместе то, что уже сделано: баннеры, страницу, кадры. Напишите одной фразой, чего хотите, — Maker разберёт на цель, срок, аудитории и бюджет. Расход и заявки раз в день переносите из кабинета VK Рекламы или Директа — пара минут.</p>
         <div class="notice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>Рекламные кабинеты пока не подключены — запуск делается руками, а расход и заявки вносятся за каждый день. Продукт так и подписывает эти цифры: «внесено вручную».</span><button class="mini" type="button" onclick="toast('Подключение VK Рекламы и Директа — вход через их кабинеты (имитировано)')">Подключить кабинеты</button></div>
         <table class="tbl cmtbl">
           <thead><tr><th>Кампания</th><th>Канал</th><th>Статус</th><th>Бюджет · план и факт</th><th>Цель</th><th>Цена заявки</th></tr></thead>
@@ -4976,6 +4978,19 @@ function renderCamps(){
     return '<tr onclick="openCamp(\''+c.id+'\')"><td><div class="pgtx"><span class="nm">'+hesc(c.n)+'</span>'+flag+'</div></td><td>'+c.ch+'</td><td><span class="st '+c.st+'">'+CM_ST[c.st]+'</span></td><td>'+bgtCell(c)+'</td><td>'+goal+'</td><td class="mono'+(a.ld?'':' dash')+'">'+(a.ld?rub(a.sp/a.ld):'—')+'</td></tr>';
   }).join('')||'<tr class="empty-row"><td colspan="6">Ничего не нашли по этим условиям. <a onclick="cmResetFilters()">Сбросить фильтры</a></td></tr>';
   document.getElementById('cm-attn-cnt').textContent=sig.filter(function(s){return !pj||s.c.p===pj;}).length||'';
+  // итог словами — те же campTotals и сигналы, что в строках
+  var mine=CAMPS.filter(function(c){return !pj||c.p===pj;}),run=mine.filter(function(c){return c.st==='run';}),
+    sp=run.reduce(function(t,c){return t+campTotals(c).sp;},0),bg=run.reduce(function(t,c){return t+c.budget;},0),
+    att={};sig.forEach(function(x){if(!pj||x.c.p===pj)att[x.c.id]=1;});var na=Object.keys(att).length,
+    other=[['pause','на паузе'],['draft','черновик','черновика','черновиков'],['done','завершена','завершены','завершено']].map(function(k){var n=mine.filter(function(c){return c.st===k[0];}).length;return n?(k.length>2?plural(n,k[1],k[2],k[3]):n+' '+k[1]):'';}).filter(Boolean),tx,vd;
+  if(!mine.length){tx='Кампаний пока нет. Напишите внизу, чего хотите добиться, — Maker предложит цель, срок, состав и бюджет.';vd=['','Нет кампаний'];}
+  else{
+    tx=run.length?'Сейчас '+plural(run.length,'идёт','идут','идут').replace(/^\d+ /,'')+' <b>'+plural(run.length,'кампания','кампании','кампаний')+'</b>: потрачено <b>'+rub(sp)+'</b> из '+rub(bg)+' бюджета.':'Сейчас ни одна кампания не идёт.';
+    if(other.length)tx+=' Ещё: '+other.join(', ')+'.';
+    if(na)tx+=' <b>'+plural(na,'кампания требует','кампании требуют','кампаний требуют')+' внимания</b> — отмечены в списке, внутри подсказка, что сделать.';
+    vd=na?['wait','Есть что поправить']:run.length?['ok','Идёт по плану']:['','Ничего не запущено'];
+  }
+  document.getElementById('cm-sum').innerHTML='<div class="sum-tx">'+tx+'</div><span class="verdict '+vd[0]+'">'+vd[1]+'</span>';
 }
 function cmResetFilters(){
   document.getElementById('cm-q').value='';document.getElementById('cm-proj').value='';
@@ -6358,6 +6373,19 @@ function flowHTML(p,here){
 /* ---- Стратегия ---- */
 function strProj(){return document.getElementById('str-proj').value;}
 function strSet(p){document.getElementById('str-proj').value=p;syncTarget('str-target',p);renderStrat();}
+function strSummary(p,s,gs){
+  // стратегия коротко — из её же полей; пропуски [...] — те же плашки, что ниже
+  var clean=function(t){return /^\[[^\]]*\]$/.test(t)?'':t;};
+  var gaps=([s.goal,s.pos].concat(s.msgs,s.kpi.map(function(k){return k[1];})).join(' ').match(/\[[^\]]+\]/g)||[]).length;
+  var ch=s.ch.filter(function(c){return c[0]!=='story';}).map(function(c){return CH_NAME[c[0]];}),st=s.ch.some(function(c){return c[0]==='story';});
+  var rub=s.rub.slice().sort(function(a,b){return b[1]-a[1];}).slice(0,3).map(function(r){return r[0].toLowerCase()+' '+r[1]+'%';});
+  var g=clean(s.goal);
+  var tx=(g?'Цель — <b>'+hesc(g.charAt(0).toLowerCase()+g.slice(1))+'</b>. ':'Цель пока не записана. ')+
+    'Говорим '+(gs.length?'с '+plural(gs.length,'аудиторией','аудиториями','аудиториями'):'пока без выбранных аудиторий')+' в '+ch.join(' и ').replace(/ и (?=.* и )/g,', ')+(st?' (и сторис)':'')+'; больше всего — '+rub.join(', ')+'.'+
+    (gaps?' <span class="sum-gap">'+plural(gaps,'пропуск','пропуска','пропусков')+' — сведения о клиенте, которых ещё нет, подсвечены оранжевым ниже.</span>':'');
+  var vd=s.st==='ok'?['ok','Согласована — собирайте план']:s.st==='check'?['wait','Ждёт ответа клиента']:['','Черновик — отправьте клиенту'];
+  return '<div class="step-h" style="margin-top:18px">Коротко</div><div class="sum-card"><div class="sum-tx">'+tx+'</div><span class="verdict '+vd[0]+'">'+vd[1]+'</span></div><div class="step-h">Подробно — можно править</div>';
+}
 function renderStrat(){
   var p=strProj(),s=STRATS[p],el=document.getElementById('str-body');
   document.getElementById('str-flow').innerHTML=flowHTML(p,'strat');
@@ -6373,6 +6401,7 @@ function renderStrat(){
   var phT=function(t){return hesc(t).replace(/\[([^\]]+)\]/g,function(m,x){return PH(x);});};
   el.innerHTML='<div class="bset-hd"><div><h2>Стратегия '+hesc(qn(p))+' <span class="st '+STR_CLS[s.st]+'">'+STR_ST[s.st]+'</span></h2><div class="bset-meta">'+s.per+' · версия '+s.ver+' · обновлена '+s.upd+'</div></div><span class="sp"></span><div class="bset-acts">'+acts+'</div></div>'+
     (s.fb?'<div class="lb-note wait bnote" style="margin:10px 0 0"><b>Клиент просит правки:</b> «'+hesc(s.fb)+'»</div>':'')+(s.st==='check'?'<div class="lb-note wait bnote">Клиент смотрит стратегию. Контент-план можно собирать уже сейчас — но темы могут поменяться после его ответа.</div>':'')+
+    strSummary(p,s,gs)+
     '<div class="str-grid">'+
     '<div class="panel"><h3>Цель и как меряем</h3><label class="bfield"><span class="bl"><span>Цель</span></span>'+inp('goal',s.goal,'Чего хотим от соцсетей')+'</label>'+
       s.kpi.map(function(k){return '<div class="kv"><span class="k">'+k[0]+'</span><span class="v">'+phT(k[1])+'</span></div>';}).join('')+'</div>'+
