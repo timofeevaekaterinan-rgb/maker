@@ -677,6 +677,32 @@
 
   /* ---------- social: posts, carousels, stories, clips ---------- */
   .soc-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  /* темы из контент-плана в «Публикациях» */
+  .plan-q{margin:0 0 18px}
+  .pq-hd{display:flex;align-items:flex-end;gap:16px;margin:0 2px 12px;flex-wrap:wrap}
+  .pq-ht{flex:1;min-width:260px;display:flex;flex-direction:column;gap:3px}
+  .pq-ht b{font-size:15px;font-weight:700}
+  .pq-ht span{font-size:13px;color:var(--ink-3);line-height:1.45;max-width:72ch}
+  .pq-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .pq-card{display:flex;flex-direction:column;gap:8px;min-width:0;padding:14px;border:1.5px dashed var(--line-3);border-radius:16px;background:var(--inset)}
+  .pq-card:focus-within{border-color:var(--blue-brd);background:var(--panel)}
+  .pq-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px;color:var(--ink-3)}
+  .pq-top .st{margin-left:auto}
+  .pq-rub{padding:2px 8px;border-radius:20px;background:var(--panel);border:1px solid var(--line);color:var(--ink-2);font-weight:600}
+  .pq-t,.pq-i{width:100%;border:1px solid transparent;border-radius:8px;background:transparent;font-family:inherit;color:var(--ink);resize:none;padding:4px 6px;margin:0 -6px;line-height:1.35}
+  .pq-t{font-size:14.5px;font-weight:700}
+  .pq-i{font-size:13px;color:var(--ink-2)}
+  .pq-t:hover,.pq-i:hover{border-color:var(--line-2);background:var(--panel)}
+  .pq-t:focus,.pq-i:focus{outline:0;border-color:var(--blue);background:var(--panel)}
+  .pq-meta{font-size:12px;color:var(--ink-3);margin-top:auto}
+  .pq-gap{color:var(--warn-ink);font-weight:600}
+  .pq-acts{display:flex;gap:6px;flex-wrap:wrap}
+  .pq-more{margin-top:10px}
+  .pq-empty{font-size:13.5px;color:var(--ink-2);padding:12px 16px;border:1.5px dashed var(--line-3);border-radius:14px;background:var(--inset)}
+  .pq-empty.ok{border-style:solid;border-color:var(--line);background:var(--panel)}
+  .pq-empty a{color:var(--blue);font-weight:600;cursor:pointer}
+  @media (max-width:1180px){.pq-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:480px){.pq-row{grid-template-columns:minmax(0,1fr)}}
   .sp-card.on{border-color:var(--blue-brd);box-shadow:0 0 0 3px var(--blue-softer)}
   .sp-prev{position:relative;margin:8px 8px 0;height:190px;border-radius:9px;background:var(--inset);display:grid;place-items:center;overflow:hidden}
   .sp-prev .badge-st{position:absolute;left:8px;top:8px;z-index:2}
@@ -3079,8 +3105,10 @@
           <div class="chipset" id="ss-post"><button class="chip on" data-st="" onclick="chipPick(this);renderSoc('post')">Все</button><button class="chip" data-st="draft" onclick="chipPick(this);renderSoc('post')">Черновики</button><button class="chip" data-st="check" onclick="chipPick(this);renderSoc('post')">На согласовании<span class="ccnt" id="scc-post"></span></button><button class="chip" data-st="ok" onclick="chipPick(this);renderSoc('post')">Согласованы</button><button class="chip" data-st="sched" onclick="chipPick(this);renderSoc('post')">Запланированы</button><button class="chip" data-st="pub" onclick="chipPick(this);renderSoc('post')">Опубликованы</button></div>
           <select class="sortsel" id="spl-post" onchange="renderSoc('post')"><option value="">Все площадки</option><option value="vk">VK</option><option value="tg">Telegram</option><option value="ig">Instagram</option><option value="tc">TenChat</option><option value="li">LinkedIn</option></select>
         </div>
+        <div class="plan-q" id="pq-post"></div>
         <div class="cards soc-grid" id="sg-post"></div>
         <div class="soc-ed" id="se-post"></div>
+        <div class="step-h">Или своё — вне контент-плана</div>
         <div class="create-panel">
           <textarea id="sx-post" placeholder="Тема поста или задача. Например: 3 ошибки, из-за которых таргет для кафе не окупается" maxlength="3000" oninput="document.getElementById('sxc-post').textContent=this.value.length+' / 3000'"></textarea>
           <div class="att-list" id="sopost-att"></div>
@@ -3105,8 +3133,10 @@
           <div class="chipset" id="ss-car"><button class="chip on" data-st="" onclick="chipPick(this);renderSoc('car')">Все</button><button class="chip" data-st="draft" onclick="chipPick(this);renderSoc('car')">Черновики</button><button class="chip" data-st="check" onclick="chipPick(this);renderSoc('car')">На согласовании<span class="ccnt" id="scc-car"></span></button><button class="chip" data-st="ok" onclick="chipPick(this);renderSoc('car')">Согласованы</button><button class="chip" data-st="sched" onclick="chipPick(this);renderSoc('car')">Запланированы</button><button class="chip" data-st="pub" onclick="chipPick(this);renderSoc('car')">Опубликованы</button></div>
           <select class="sortsel" id="spl-car" onchange="renderSoc('car')"><option value="">Все площадки</option><option value="vk">VK</option><option value="ig">Instagram</option><option value="tg">Telegram</option><option value="li">LinkedIn</option></select>
         </div>
+        <div class="plan-q" id="pq-car"></div>
         <div class="cards soc-grid" id="sg-car"></div>
         <div class="soc-ed" id="se-car"></div>
+        <div class="step-h">Или своё — вне контент-плана</div>
         <div class="create-panel">
           <textarea id="sx-car" placeholder="О чём карусель? Например: 5 ошибок при выборе подрядчика по рекламе" maxlength="3000" oninput="document.getElementById('sxc-car').textContent=this.value.length+' / 3000'"></textarea>
           <div class="att-list" id="socar-att"></div>
@@ -3131,8 +3161,10 @@
           <div class="chipset" id="ss-story"><button class="chip on" data-st="" onclick="chipPick(this);renderSoc('story')">Все</button><button class="chip" data-st="draft" onclick="chipPick(this);renderSoc('story')">Черновики</button><button class="chip" data-st="check" onclick="chipPick(this);renderSoc('story')">На согласовании<span class="ccnt" id="scc-story"></span></button><button class="chip" data-st="ok" onclick="chipPick(this);renderSoc('story')">Согласованы</button><button class="chip" data-st="sched" onclick="chipPick(this);renderSoc('story')">Запланированы</button><button class="chip" data-st="pub" onclick="chipPick(this);renderSoc('story')">Опубликованы</button></div>
           <select class="sortsel" id="spl-story" onchange="renderSoc('story')"><option value="">Все площадки</option><option value="vk">VK</option><option value="ig">Instagram</option><option value="tg">Telegram</option></select>
         </div>
+        <div class="plan-q" id="pq-story"></div>
         <div class="cards soc-grid" id="sg-story"></div>
         <div class="soc-ed" id="se-story"></div>
+        <div class="step-h">Или своё — вне контент-плана</div>
         <div class="create-panel">
           <textarea id="sx-story" placeholder="Для чего сторис? Например: напомнить про запись на чекап до конца месяца" maxlength="3000" oninput="document.getElementById('sxc-story').textContent=this.value.length+' / 3000'"></textarea>
           <div class="att-list" id="sostory-att"></div>
@@ -3157,8 +3189,10 @@
           <div class="chipset" id="ss-clip"><button class="chip on" data-st="" onclick="chipPick(this);renderSoc('clip')">Все</button><button class="chip" data-st="draft" onclick="chipPick(this);renderSoc('clip')">Черновики</button><button class="chip" data-st="check" onclick="chipPick(this);renderSoc('clip')">На согласовании<span class="ccnt" id="scc-clip"></span></button><button class="chip" data-st="ok" onclick="chipPick(this);renderSoc('clip')">Согласованы</button><button class="chip" data-st="sched" onclick="chipPick(this);renderSoc('clip')">Запланированы</button><button class="chip" data-st="pub" onclick="chipPick(this);renderSoc('clip')">Опубликованы</button></div>
           <select class="sortsel" id="spl-clip" onchange="renderSoc('clip')"><option value="">Все площадки</option><option value="vk">VK Клипы</option><option value="ig">Reels</option><option value="yt">Shorts</option></select>
         </div>
+        <div class="plan-q" id="pq-clip"></div>
         <div class="cards soc-grid" id="sg-clip"></div>
         <div class="soc-ed" id="se-clip"></div>
+        <div class="step-h">Или своё — вне контент-плана</div>
         <div class="create-panel">
           <textarea id="sx-clip" placeholder="Что показываем? Например: один день таргетолога за 30 секунд" maxlength="3000" oninput="document.getElementById('sxc-clip').textContent=this.value.length+' / 3000'"></textarea>
           <div class="att-list" id="soclip-att"></div>
@@ -5924,6 +5958,7 @@ function renderSoc(T){
   var list=SOC.filter(function(x){return x.type===T&&(!pj||x.p===pj)&&(!st||x.st===st)&&(!pl||x.plats.indexOf(pl)>=0)&&(!q||x.t.toLowerCase().indexOf(q)>=0);}).sort(function(a,b){return b.ts-a.ts;});
   document.getElementById('sg-'+T).innerHTML=list.map(socCard).join('')||'<div class="img-empty" style="grid-column:1/-1">Под эти условия ничего нет. <a onclick="socReset(\''+T+'\')">Сбросить фильтры</a></div>';
   var n=SOC.filter(function(x){return x.type===T&&x.st==='check'&&(!pj||x.p===pj);}).length;document.getElementById('scc-'+T).textContent=n||'';
+  if(typeof renderPlanQ==='function')renderPlanQ(T);
   socEdit(T);
 }
 function socReset(T){document.getElementById('sq-'+T).value='';document.getElementById('sp-'+T).value='';document.getElementById('spl-'+T).value='';document.querySelectorAll('#ss-'+T+' .chip').forEach(function(c){c.classList.toggle('on',c.dataset.st==='');});renderSoc(T);}
@@ -6036,6 +6071,43 @@ function socCreate(T){
       SOC.push(x);SOC_ACT[T]=x.id;ta.value='';document.getElementById('sxc-'+T).textContent='0 / 3000';ATT['so'+T]=[];attRender('so'+T);
       charge(p,'Соцсети',SOC_T[T][0]+' '+qn(x.t)+'',price);
       socReset(T);document.getElementById('se-'+T).scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+}
+
+/* ---------- темы из контент-плана в «Публикациях»: заготовки, которые ждут сборки ---------- */
+var SOC_PRICE={post:.82,car:1.64,story:1.2,clip:.41},PQ_ALL={};
+function pqList(T){
+  var pj=document.getElementById('sp-'+T).value,q=document.getElementById('sq-'+T).value.trim().toLowerCase();
+  return PLAN.filter(function(x){return (!pj||x.p===pj)&&!plMade(x).length&&(!q||x.t.toLowerCase().indexOf(q)>=0);}).sort(function(a,b){return a.d.localeCompare(b.d);});
+}
+function pqGaps(x){return x.facts.filter(function(f){return /^\[.*\]$/.test(f.trim());}).length;}
+function renderPlanQ(T){
+  var el=document.getElementById('pq-'+T);if(!el)return;
+  if(chipVal('ss-'+T)){el.innerHTML='';return;}           // фильтр по статусу — показываем только готовые публикации
+  var pj=document.getElementById('sp-'+T).value,all=PLAN.filter(function(x){return !pj||x.p===pj;}),L=pqList(T),nm=SOC_T[T][0].toLowerCase(),pr=SOC_PRICE[T];
+  if(!all.length){el.innerHTML='<div class="pq-empty">Тем из контент-плана пока нет. Соберите план — и темы сами появятся здесь заготовками. <a onclick="go(\'plan\')">К контент-плану →</a></div>';return;}
+  if(!L.length){el.innerHTML='<div class="pq-empty ok">Все темы контент-плана уже собраны в публикации.</div>';return;}
+  var show=PQ_ALL[T]?L:L.slice(0,4);
+  el.innerHTML='<div class="pq-hd"><div class="pq-ht"><b>Темы из контент-плана · '+plural(L.length,'ждёт','ждут','ждут').replace(/^\d+ /,L.length+' ')+' сборки</b><span>Заготовки уже с темой, главной мыслью и фактами. Поправьте, если нужно, и соберите — '+nm+' выйдет в голосе и стиле клиента.</span></div>'+
+    (L.length>1?'<button class="pbtn" type="button" onclick="pqMakeAll(\''+T+'\')">Собрать все '+L.length+' · до '+rub2(pr*L.length)+'</button>':'')+'</div>'+
+    '<div class="pq-row">'+show.map(function(x){var g=pqGaps(x);
+      return '<div class="pq-card"><div class="pq-top"><span class="pq-date">'+plDate(x.d)+'</span><span class="pq-rub">'+hesc(x.rub)+'</span><span class="st '+PL_CLS[x.st]+'">'+PL_ST[x.st]+'</span></div>'+
+        '<textarea class="pq-t" rows="2" aria-label="Тема" onchange="pqEdit(\''+x.id+'\',\'t\',this.value)">'+hesc(x.t)+'</textarea>'+
+        '<textarea class="pq-i" rows="2" aria-label="Главная мысль" onchange="pqEdit(\''+x.id+'\',\'idea\',this.value)">'+hesc(x.idea)+'</textarea>'+
+        '<div class="pq-meta">'+hesc(x.p)+' · '+plural(x.facts.length,'факт','факта','фактов')+(g?' · <span class="pq-gap">'+plural(g,'пропуск','пропуска','пропусков')+'</span>':'')+'</div>'+
+        '<div class="pq-acts"><button class="mini pri" type="button" onclick="pqMake(\''+x.id+'\',\''+T+'\')">Собрать '+nm+' · '+rub2(pr)+'</button><button class="mini" type="button" onclick="pqOpen(\''+x.id+'\')">В плане →</button></div></div>';}).join('')+'</div>'+
+    (L.length>4?'<button class="mini pq-more" type="button" onclick="PQ_ALL[\''+T+'\']=!PQ_ALL[\''+T+'\'];renderPlanQ(\''+T+'\')">'+(PQ_ALL[T]?'Свернуть':'Показать ещё '+(L.length-4))+'</button>':'');
+}
+function pqEdit(id,k,v){var x=plById(id);v=v.trim();if(!x||!v)return;x[k]=v;toast(k==='t'?'Тема обновлена — и в контент-плане тоже':'Мысль обновлена — и в контент-плане тоже');}
+function pqMake(id,T){plCur=id;plMake(T);}
+function pqOpen(id){var x=plById(id);go('plan');plSetProj(x.p);document.getElementById('pl-month').value=x.d.slice(0,7);plOpen(id);}
+function pqMakeAll(T){
+  var L=pqList(T),pr=SOC_PRICE[T],nm=SOC_T[T][1].toLowerCase();if(!L.length)return;
+  spendGate(pr*L.length,SOC_T[T][1]+' из контент-плана · '+L.length,function(){
+    openBuildModal('Собираем '+nm+' из плана',['Берём '+plural(L.length,'тему','темы','тем')+' с мыслями и фактами','Пишем в голосе клиента','Подстраиваем под площадки из стратегии'],plural(L.length,'черновик готов','черновика готовы','черновиков готовы')+' — проверьте и отправьте клиенту.',function(){
+      L.forEach(function(x){var z=plSocFrom(x,T,plPlats(x,T));SOC.push(z);charge(x.p,'Соцсети',SOC_T[T][0]+' из темы '+qn(x.t)+'',pr);});
+      renderSoc(T);renderToday();
     });
   });
 }
@@ -6234,15 +6306,20 @@ function plSendAll(){
   if(!l.length){toast('Черновиков в этом списке нет — всё уже у клиента или согласовано');return;}
   l.forEach(function(x){x.st='check';});renderPlan();renderToday();toast('Клиенту ушло '+plural(l.length,'тема','темы','тем')+' одной ссылкой — согласует без регистрации');
 }
+function plSocFrom(x,T,plats){
+  var d=dparse2(x.d),z={id:'s'+(++socSeq),type:T,p:x.p,t:x.t,st:'draft',date:dfmt(d),time:T==='story'?'10:00':'19:00',ts:20+socSeq,plats:plats,img:x.img,text:{},src:[],n:T==='car'?Math.min(7,x.facts.length+3):4,dur:T==='clip'?30:0,th:x.id};
+  if(T==='post'){var fl=x.facts.map(function(f){return '• '+f;}).join('\n'),body=x.t+'\n\n'+x.idea+'.\n\n'+fl;z.text={vk:body+'\n\nЕсть вопрос — пишите в комментариях, ответим.\n\n#'+tagOf(x.p),tg:body};}
+  if(T==='car'){z.slides=[{h:x.t,s:'Листайте →'}].concat(x.facts.map(function(f){return {h:f,s:'[объяснение в 1–2 строки]'};}));z.slides.push({h:x.idea,s:x.p});}
+  if(T==='story'){z.frames=[{h:x.t,s:x.idea,img:x.img}].concat(x.facts.slice(0,2).map(function(f,i){return {h:f,s:'[деталь]',img:tpShotImg(x.p,i+1)};}));z.frames.push({h:'[призыв к действию]',s:'[срок или условие]',img:x.img,stk:1});}
+  return z;
+}
+function plPlats(x,T){var s=STRATS[x.p],pl=T==='clip'?['vk','ig']:T==='story'?['vk','tg']:(s?s.ch.map(function(c){return c[0];}).filter(function(c){return SOC_FMT[T][c];}):[]);return pl.length?pl:['vk'];}
 function plMake(T){
   var x=plById(plCur),s=STRATS[x.p],price={post:.82,car:1.64,story:1.2,clip:.41}[T];
   var plats=T==='clip'?['vk','ig']:T==='story'?['vk','tg']:(s?s.ch.map(function(c){return c[0];}).filter(function(c){return SOC_FMT[T][c];}):[]);if(!plats.length)plats=['vk'];
   spendGate(price,SOC_T[T][0],function(){
     openBuildModal(T==='clip'?'Готовим раскладку':'Собираем '+SOC_T[T][0].toLowerCase(),['Берём тему, мысль и '+plural(x.facts.length,'факт','факта','фактов'),'Пишем в голосе '+qn(x.p)+'','Подстраиваем под '+plats.map(function(q){return platName(T,q);}).join(', ')],'Готово — открываем в разделе «'+SOC_T[T][1]+'».',function(){
-      var d=dparse2(x.d),z={id:'s'+(++socSeq),type:T,p:x.p,t:x.t,st:'draft',date:dfmt(d),time:T==='story'?'10:00':'19:00',ts:20+socSeq,plats:plats,img:x.img,text:{},src:[],n:T==='car'?Math.min(7,x.facts.length+3):4,dur:T==='clip'?30:0,th:x.id};
-      if(T==='post'){var fl=x.facts.map(function(f){return '• '+f;}).join('\n'),body=x.t+'\n\n'+x.idea+'.\n\n'+fl;z.text={vk:body+'\n\nЕсть вопрос — пишите в комментариях, ответим.\n\n#'+tagOf(x.p),tg:body};}
-      if(T==='car'){z.slides=[{h:x.t,s:'Листайте →'}].concat(x.facts.map(function(f){return {h:f,s:'[объяснение в 1–2 строки]'};}));z.slides.push({h:x.idea,s:x.p});}
-      if(T==='story'){z.frames=[{h:x.t,s:x.idea,img:x.img}].concat(x.facts.slice(0,2).map(function(f,i){return {h:f,s:'[деталь]',img:tpShotImg(x.p,i+1)};}));z.frames.push({h:'[призыв к действию]',s:'[срок или условие]',img:x.img,stk:1});}
+      var z=plSocFrom(x,T,plats);
       SOC.push(z);charge(x.p,'Соцсети',SOC_T[T][0]+' из темы '+qn(x.t)+'',price);
       go('soc-'+T);socOpen(z.id);
     });
@@ -6261,7 +6338,7 @@ function plCreate(){
   var ta=document.getElementById('pl-x'),t=ta.value.trim(),p=document.getElementById('pl-target').value,m=document.getElementById('pl-gm').value,n=parseInt(document.getElementById('pl-n').value,10),s=STRATS[p],files=ATT.pl.slice();
   if(!s){toast('Сначала стратегия: из неё берём рубрики и частоту');go('strat');strSet(p);strFocus();return;}
   spendGate(.82,'Контент-план',function(){
-    openBuildModal('Собираем контент-план',['Берём рубрики и частоту из стратегии '+qn(p)+'','Раскладываем '+plural(n,'тему','темы','тем')+' по датам'+(t?' с учётом ваших поводов':''),'Подставляем факты, чего не знаем — плашками'],'Готово — проверьте темы и отправьте клиенту одной ссылкой.',function(){
+    openBuildModal('Собираем контент-план',['Берём рубрики и частоту из стратегии '+qn(p)+'','Раскладываем '+plural(n,'тему','темы','тем')+' по датам'+(t?' с учётом ваших поводов':''),'Подставляем факты, чего не знаем — плашками'],'Готово — проверьте темы и отправьте клиенту одной ссылкой. Темы уже ждут в «Публикациях» заготовками.',function(){
       var a=m.split('-'),y=+a[0],mo=+a[1]-1,dates=[],dd=new Date(y,mo,1);
       while(dd.getMonth()===mo){var w=dd.getDay();if(w===1||w===3||w===5)dates.push(new Date(dd.getTime()));dd=addDays(dd,1);}
       var tot=s.rub.reduce(function(a,r){return a+r[1];},0)||1,raw=s.rub.map(function(r){return r[1]/tot*n;}),left=raw.map(Math.floor),pool=[];
