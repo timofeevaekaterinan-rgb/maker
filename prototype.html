@@ -780,6 +780,9 @@
   .side .nav a.on .ic{color:#fff}
   .side .navdiv{background:rgba(255,255,255,.2);margin:14px 6px}
   .side .group2 .nav.sub{border-left-color:rgba(255,255,255,.28)}
+  .side .stepn{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;flex:none;font-style:normal;font-size:10.5px;font-weight:700;background:rgba(255,255,255,.18);color:#fff;margin-right:-2px}
+  .side .nav a.on .stepn{background:var(--blue);color:#fff}
+  .pubtabs{margin:6px 2px 18px}
   .side .nav.sub a{color:rgba(255,255,255,.86)}
   .side .nav.sub a.on{background:rgba(255,255,255,.16);box-shadow:none;font-weight:600}
   .side .side-foot{flex:1 0 auto;justify-content:flex-end;margin:0 -16px -18px;padding:24px 16px 18px;overflow:hidden}
@@ -1583,6 +1586,34 @@
   .notice>span{flex:1}
   .tbl-wrap{overflow-x:auto;margin:0 -2px;padding:0 2px}
   .rs-block{margin-top:18px}
+
+  /* ---- слои экрана: итог → главное → подробно ---- */
+  .ph-why{color:var(--ink-2);font-size:14px;margin:4px 0 2px;max-width:620px;line-height:1.5}
+  .step-h{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:22px 2px 10px}
+  .toolbar+.step-h{margin-top:6px}
+  .sum-card{display:flex;gap:18px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin-bottom:12px;box-shadow:0 1px 2px rgba(26,34,48,.03)}
+  .sum-card .sum-tx{flex:1;min-width:0;font-size:17px;line-height:1.55;color:var(--ink)}
+  .sum-card .sum-tx b{font-weight:700;white-space:nowrap}
+  .sum-card .sum-note{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-3);margin-top:10px;line-height:1.45}
+  .verdict{flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:700;white-space:nowrap;background:var(--inset);color:var(--ink-2)}
+  .verdict::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+  .verdict.ok{background:var(--ok-bg);color:var(--ok-ink)}
+  .verdict.wait{background:var(--warn-bg);color:var(--warn-ink)}
+  .deep{margin-top:26px}
+  .deep-hd{width:100%;display:flex;align-items:center;gap:14px;padding:15px 18px;text-align:left;background:var(--panel);border:1px dashed var(--line-2);border-radius:16px;cursor:pointer;transition:border-color .15s,background .15s}
+  .deep-hd:hover{border-color:var(--blue-brd);background:var(--blue-softer)}
+  .deep-hd:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .deep-ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:none;background:var(--blue-softer);color:var(--blue)}
+  .deep-ic svg{width:18px;height:18px}
+  .deep-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .deep-tx b{font-size:15px;font-weight:700;color:var(--ink)}
+  .deep-tx small{font-size:13px;color:var(--ink-3);line-height:1.4}
+  .deep-cv{width:20px;height:20px;flex:none;color:var(--ink-3);transition:transform .2s}
+  .deep.open .deep-hd{border-style:solid}
+  .deep.open .deep-cv{transform:rotate(180deg)}
+  .deep-body{display:none;padding-top:16px}
+  .deep.open .deep-body{display:block}
+  @media (max-width:600px){.sum-card{flex-direction:column;gap:12px}.sum-card .sum-tx{font-size:16px}}
   .rs-cmp{font-size:12.5px;color:var(--ink-3);margin-left:auto}
   #rs-sub{color:var(--ink-3);font-size:13px;margin:0}
   .src-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 2px 16px;font-size:13px;color:var(--ink-2)}
@@ -2251,27 +2282,20 @@
 
     <div class="navdiv"></div>
 
-    <div class="group2 open" id="g-cnt">
-      <button class="g2hd" onclick="toggleG2('g-cnt',this)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span class="ct">Контент</span><svg class="chev2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="group2" id="g-cnt">
+      <button class="g2hd" onclick="toggleG2('g-cnt',this)" title="Путь от идеи до публикации: стратегия → план → готовые посты"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span class="ct">Контент</span><svg class="chev2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
       <nav class="nav sub">
-        <a data-view="strat" onclick="go('strat')"><span class="ct">Стратегия</span></a>
-        <a data-view="plan" onclick="go('plan')"><span class="ct">Контент-план</span></a>
+        <a data-view="strat" onclick="go('strat')"><i class="stepn">1</i><span class="ct">Стратегия</span></a>
+        <a data-view="plan" onclick="go('plan')"><i class="stepn">2</i><span class="ct">Контент-план</span></a>
+        <a data-view="soc-post" onclick="go('soc-post')"><i class="stepn">3</i><span class="ct">Публикации</span></a>
         <a data-view="images" onclick="go('images')"><span class="ct">Фото и видео</span></a>
-      </nav>
-    </div>
-
-    <div class="group2 open" id="g-soc">
-      <button class="g2hd" onclick="toggleG2('g-soc',this)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 10h8M8 14h5"/></svg><span class="ct">Соцсети</span><svg class="chev2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-      <nav class="nav sub">
-        <a data-view="soc-post" onclick="go('soc-post')"><span class="ct">Посты</span></a>
-        <a data-view="soc-car" onclick="go('soc-car')"><span class="ct">Карусели</span></a>
-        <a data-view="soc-story" onclick="go('soc-story')"><span class="ct">Сторис</span></a>
-        <a data-view="soc-clip" onclick="go('soc-clip')"><span class="ct">Клипы</span></a>
+        <a data-view="pages" onclick="go('pages')"><span class="ct">Сайты и страницы</span></a>
+        <a data-view="pres" onclick="go('pres')"><span class="ct">Презентации</span></a>
       </nav>
     </div>
 
     <div class="group2" id="g-lib">
-      <button class="g2hd" onclick="toggleG2('g-lib',this)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg><span class="ct">Реклама</span><svg class="chev2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      <button class="g2hd" onclick="toggleG2('g-lib',this)" title="Баннеры, запуск рекламы и что она принесла"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg><span class="ct">Реклама</span><svg class="chev2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
       <nav class="nav sub">
         <a data-view="banners" onclick="go('banners')"><span class="ct">Баннеры</span></a>
         <a data-view="campaigns" onclick="go('campaigns')"><span class="ct">Кампании</span></a>
@@ -2280,21 +2304,13 @@
     </div>
 
     <div class="group2" id="g-set">
-      <button class="g2hd" onclick="toggleG2('g-set',this)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a6 6 0 0 0 0 18c1.1 0 1.5-.6 1.5-1.3 0-.4-.2-.7-.4-1-.2-.3-.4-.6-.4-1 0-.8.7-1.4 1.5-1.4H16a4 4 0 0 0 4-4 8 8 0 0 0-8-8z"/><circle cx="8.5" cy="10.5" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="15.5" cy="10.5" r="1"/></svg><span class="ct">Бренд</span><svg class="chev2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      <button class="g2hd" onclick="toggleG2('g-set',this)" title="Как клиент выглядит и говорит — Maker держит это во всех материалах"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a6 6 0 0 0 0 18c1.1 0 1.5-.6 1.5-1.3 0-.4-.2-.7-.4-1-.2-.3-.4-.6-.4-1 0-.8.7-1.4 1.5-1.4H16a4 4 0 0 0 4-4 8 8 0 0 0-8-8z"/><circle cx="8.5" cy="10.5" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="15.5" cy="10.5" r="1"/></svg><span class="ct">Бренд клиента</span><svg class="chev2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
       <nav class="nav sub">
         <a data-view="style" onclick="go('style')"><span class="ct">Стиль</span></a>
         <a data-view="voice" onclick="go('voice')"><span class="ct">Голос</span></a>
         <a data-view="facts" onclick="go('facts')"><span class="ct">База фактов</span></a>
-        <a data-view="templates" onclick="go('templates')"><span class="ct">Шаблоны</span></a>
         <a data-view="groups" onclick="go('groups')"><span class="ct">Аудитории</span></a>
-      </nav>
-    </div>
-
-    <div class="group2" id="g-content">
-      <button class="g2hd" onclick="toggleG2('g-content',this)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5M8 12h8M8 16h5"/></svg><span class="ct">Ещё</span><svg class="chev2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-      <nav class="nav sub">
-        <a data-view="pages" onclick="go('pages')"><span class="ct">Сайты и страницы</span></a>
-        <a data-view="pres" onclick="go('pres')"><span class="ct">Презентации</span></a>
+        <a data-view="templates" onclick="go('templates')"><span class="ct">Шаблоны</span></a>
       </nav>
     </div>
 
@@ -2735,10 +2751,9 @@
       <!-- ============ RESULT / DENGI ============ -->
       <section id="v-result" class="view">
         <div class="phead">
-          <div><h1>Результат</h1><p id="rs-sub"></p></div>
+          <div><h1>Результат</h1><p class="ph-why">Окупается ли реклама и что поправить. Сначала итог словами, ниже — главные цифры, а воронка и таблицы — в «Подробно».</p><p id="rs-sub"></p></div>
           <div class="sp"></div>
-          <button class="pbtn ghost" onclick="dlResult()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Скачать для Excel</button>
-          <button class="pbtn ghost" onclick="rsReport()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Собрать отчёт</button>
+          <button class="pbtn ghost" onclick="rsReport()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Собрать отчёт для клиента</button>
           <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
         <div class="toolbar">
@@ -2746,34 +2761,48 @@
           <label class="cp-target">Период: <select class="sortsel fsel" id="rs-per" onchange="renderResult()"><option value="7">7 дней</option><option value="30" selected>30 дней</option><option value="m10">Октябрь</option><option value="m9">Сентябрь</option><option value="q3">III квартал</option></select></label>
           <span class="rs-cmp" id="rs-cmp"></span>
         </div>
-        <div class="src-row" id="rs-src"></div>
-        <div class="kpis" id="rs-kpis"></div>
+
+        <div class="step-h">Итог</div>
+        <div class="sum-card" id="rs-sum"></div>
         <div id="rs-ins"></div>
+        <div class="step-h">Главные цифры</div>
+        <div class="kpis" id="rs-kpis"></div>
 
-        <div class="panel rs-block">
-          <h3>Воронка</h3>
-          <p class="psub" id="rs-fn-sub"></p>
-          <div class="funnel" id="rs-funnel"></div>
-        </div>
+        <div class="deep" data-deep="result">
+          <button class="deep-hd" type="button" aria-expanded="false" onclick="deepToggle(this)">
+            <span class="deep-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
+            <span class="deep-tx"><b>Подробно: откуда цифры и как они складываются</b><small>Источники данных, воронка от показов до выручки, графики, кампании, во что ушли деньги</small></span>
+            <svg class="deep-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="deep-body">
+            <div class="src-row" id="rs-src"></div>
 
-        <div class="grid2 rs-block">
-          <div class="panel"><h3>Расход на рекламу по неделям</h3><p class="psub">внесено вручную · наведите на столбик</p><div id="rs-ch-sp"></div></div>
-          <div class="panel"><h3>Заявки по неделям</h3><p class="psub">со страниц и форм · наведите на столбик</p><div id="rs-ch-ld"></div></div>
-        </div>
+            <div class="panel rs-block">
+              <h3>Воронка</h3>
+              <p class="psub" id="rs-fn-sub"></p>
+              <div class="funnel" id="rs-funnel"></div>
+            </div>
 
-        <div class="panel rs-block">
-          <h3>Кампании за период</h3>
-          <p class="psub">Продажи и выручка — по сверке с CRM; нажмите на строку, чтобы открыть кампанию</p>
-          <div class="tbl-wrap"><table class="tbl rstbl"><thead><tr><th>Кампания</th><th>Канал</th><th>Расход</th><th>Заявки</th><th>Цена заявки</th><th>Продажи</th><th>Выручка</th><th>ROMI</th></tr></thead><tbody id="rs-body"></tbody></table></div>
-        </div>
+            <div class="grid2 rs-block">
+              <div class="panel"><h3>Расход на рекламу по неделям</h3><p class="psub">внесено вручную · наведите на столбик</p><div id="rs-ch-sp"></div></div>
+              <div class="panel"><h3>Заявки по неделям</h3><p class="psub">со страниц и форм · наведите на столбик</p><div id="rs-ch-ld"></div></div>
+            </div>
 
-        <div class="grid2 rs-block">
-          <div class="panel">
-            <h3>Во что ушли деньги</h3>
-            <p class="psub">Реклама — площадкам, производство — нам, по журналу действий</p>
-            <div class="price-lines" id="rs-split"></div>
+            <div class="panel rs-block">
+              <div class="ch-hd"><h3>Кампании за период</h3><button class="ntf-link" type="button" onclick="dlResult()">Скачать для Excel →</button></div>
+              <p class="psub">Продажи и выручка — по сверке с CRM; нажмите на строку, чтобы открыть кампанию</p>
+              <div class="tbl-wrap"><table class="tbl rstbl"><thead><tr><th>Кампания</th><th>Канал</th><th>Расход</th><th>Заявки</th><th>Цена заявки</th><th>Продажи</th><th>Выручка</th><th>ROMI</th></tr></thead><tbody id="rs-body"></tbody></table></div>
+            </div>
+
+            <div class="grid2 rs-block">
+              <div class="panel">
+                <h3>Во что ушли деньги</h3>
+                <p class="psub">Реклама — площадкам, производство — нам, по журналу действий</p>
+                <div class="price-lines" id="rs-split"></div>
+              </div>
+              <div class="panel rs-agency" id="rs-agency"></div>
+            </div>
           </div>
-          <div class="panel rs-agency" id="rs-agency"></div>
         </div>
       </section>
 
@@ -3043,6 +3072,7 @@
       <section id="v-soc-post" class="view">
         <div class="phead"><div><h1>Посты</h1><p>Одна тема — версии под каждую площадку: у VK, Telegram, Instagram, TenChat и LinkedIn разные длина текста, хэштеги и формат картинки.</p></div><div class="sp"></div>
           <button class="pbtn ghost" onclick="var t=document.getElementById('sx-post');t.scrollIntoView({behavior:'smooth',block:'center'});t.focus({preventScroll:true})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новый пост</button></div>
+        <div class="itabs pubtabs" role="tablist" aria-label="Формат публикации"><button class="itab on" type="button" data-v="soc-post" onclick="go('soc-post')">Посты</button><button class="itab" type="button" data-v="soc-car" onclick="go('soc-car')">Карусели</button><button class="itab" type="button" data-v="soc-story" onclick="go('soc-story')">Сторис</button><button class="itab" type="button" data-v="soc-clip" onclick="go('soc-clip')">Клипы</button></div>
         <div class="toolbar">
           <label class="tsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="sq-post" type="search" placeholder="Тема или название" oninput="renderSoc('post')"></label>
           <select class="sortsel fsel" id="sp-post" data-projs="all" onchange="renderSoc('post');syncTarget('sct-post',this.value)"></select>
@@ -3068,6 +3098,7 @@
       <section id="v-soc-car" class="view">
         <div class="phead"><div><h1>Карусели</h1><p>Серия слайдов в стиле клиента. VK и Telegram — квадрат и альбом до 10, Instagram — 4:5 и до 20 слайдов, LinkedIn — PDF-документ.</p></div><div class="sp"></div>
           <button class="pbtn ghost" onclick="var t=document.getElementById('sx-car');t.scrollIntoView({behavior:'smooth',block:'center'});t.focus({preventScroll:true})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новая карусель</button></div>
+        <div class="itabs pubtabs" role="tablist" aria-label="Формат публикации"><button class="itab" type="button" data-v="soc-post" onclick="go('soc-post')">Посты</button><button class="itab on" type="button" data-v="soc-car" onclick="go('soc-car')">Карусели</button><button class="itab" type="button" data-v="soc-story" onclick="go('soc-story')">Сторис</button><button class="itab" type="button" data-v="soc-clip" onclick="go('soc-clip')">Клипы</button></div>
         <div class="toolbar">
           <label class="tsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="sq-car" type="search" placeholder="Тема или название" oninput="renderSoc('car')"></label>
           <select class="sortsel fsel" id="sp-car" data-projs="all" onchange="renderSoc('car');syncTarget('sct-car',this.value)"></select>
@@ -3093,6 +3124,7 @@
       <section id="v-soc-story" class="view">
         <div class="phead"><div><h1>Сторис</h1><p>Вертикаль 9:16 у всех, но у каждой площадки своя безопасная зона под интерфейс и свой вид ссылки — показываем их на превью.</p></div><div class="sp"></div>
           <button class="pbtn ghost" onclick="var t=document.getElementById('sx-story');t.scrollIntoView({behavior:'smooth',block:'center'});t.focus({preventScroll:true})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новые сторис</button></div>
+        <div class="itabs pubtabs" role="tablist" aria-label="Формат публикации"><button class="itab" type="button" data-v="soc-post" onclick="go('soc-post')">Посты</button><button class="itab" type="button" data-v="soc-car" onclick="go('soc-car')">Карусели</button><button class="itab on" type="button" data-v="soc-story" onclick="go('soc-story')">Сторис</button><button class="itab" type="button" data-v="soc-clip" onclick="go('soc-clip')">Клипы</button></div>
         <div class="toolbar">
           <label class="tsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="sq-story" type="search" placeholder="Тема или название" oninput="renderSoc('story')"></label>
           <select class="sortsel fsel" id="sp-story" data-projs="all" onchange="renderSoc('story');syncTarget('sct-story',this.value)"></select>
@@ -3118,6 +3150,7 @@
       <section id="v-soc-clip" class="view">
         <div class="phead"><div><h1>Клипы</h1><p>Вертикальные ролики для соцсетей: VK Клипы, Reels, Shorts. Сначала раскадровка — дёшево и можно поправить, потом рендер. Рекламные ролики и исходники — в «Фото и видео».</p></div><div class="sp"></div>
           <button class="pbtn ghost" onclick="var t=document.getElementById('sx-clip');t.scrollIntoView({behavior:'smooth',block:'center'});t.focus({preventScroll:true})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новый клип</button></div>
+        <div class="itabs pubtabs" role="tablist" aria-label="Формат публикации"><button class="itab" type="button" data-v="soc-post" onclick="go('soc-post')">Посты</button><button class="itab" type="button" data-v="soc-car" onclick="go('soc-car')">Карусели</button><button class="itab" type="button" data-v="soc-story" onclick="go('soc-story')">Сторис</button><button class="itab on" type="button" data-v="soc-clip" onclick="go('soc-clip')">Клипы</button></div>
         <div class="toolbar">
           <label class="tsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="sq-clip" type="search" placeholder="Тема или название" oninput="renderSoc('clip')"></label>
           <select class="sortsel fsel" id="sp-clip" data-projs="all" onchange="renderSoc('clip');syncTarget('sct-clip',this.value)"></select>
@@ -5054,12 +5087,22 @@ function renderResult(){
     ['Заявки',sp3(A.ld),deltaHTML(A.ld,P&&P.ld,'up',hp),sp3(A.cl)+' кликов'],
     ['Цена заявки',A.ld?rub(cpl):'—',deltaHTML(cpl,pcpl,'down',hp),'расход ÷ заявки'],
     ['Выручка',rub(A.rev),stale?'<div class="kd">сравним после сверки с CRM</div>':deltaHTML(A.rev,P&&P.rev,'up',hp),plural(A.sl,'продажа','продажи','продаж')+' · '+crmNote],
-    ['ROMI',A.sp?pctf(romi):'—',stale?'<div class="kd">сравним после сверки с CRM</div>':hp&&P.sp?deltaHTML(romi+1,promi+1,'up',hp):deltaHTML(0,0,null,hp),'(выручка − расход) ÷ расход'+(stale?' · по '+dfmt(CRM.until):'')]
+    ['Окупаемость',A.sp?pctf(romi):'—',stale?'<div class="kd">сравним после сверки с CRM</div>':hp&&P.sp?deltaHTML(romi+1,promi+1,'up',hp):deltaHTML(0,0,null,hp),'ROMI: (выручка − расход) ÷ расход'+(stale?' · по '+dfmt(CRM.until):'')]
   ];
+  // итог словами: те же цифры, что в «Главных цифрах», — без противоречий
+  var per=R.lab.split(' · ')[0],sumTx,vd,note='';
+  if(!A.sp){sumTx='За '+per+' расходов на рекламу нет. Внесите цифры в «Кампаниях» — и здесь появится итог.';vd=['','Нет данных']; }
+  else{
+    sumTx='За '+per+' потратили на рекламу <b>'+rub(A.sp)+'</b> и получили <b>'+plural(A.ld,'заявку','заявки','заявок')+'</b>'+(A.ld?' — в среднем по <b>'+rub(cpl)+'</b> за каждую.':'.');
+    if(A.rev>0){sumTx+=' Продажи с них принесли <b>'+rub(A.rev)+'</b>: каждый рубль рекламы вернул <b>'+(A.rev/A.sp).toFixed(1).replace('.',',')+' ₽</b>.';vd=romi>=0?['ok','Реклама окупается']:['','Пока не окупается'];}
+    else{sumTx+=' Сколько из этих людей купили, пока не знаем.';vd=['wait','Нужны данные о продажах'];}
+    if(stale)note='<div class="sum-note">Продажи учтены по '+dfmt(CRM.until)+' — что с этим сделать, ниже.</div>';
+  }
+  document.getElementById('rs-sum').innerHTML='<div class="sum-tx">'+sumTx+note+'</div><span class="verdict '+vd[0]+'">'+vd[1]+'</span>';
   document.getElementById('rs-kpis').innerHTML=K.map(function(k,i){return '<div class="kpi'+(i===4?' hl':'')+'"><div class="kl">'+k[0]+'</div><div class="kv2">'+k[1]+'</div>'+k[2]+'<div class="kn">'+k[3]+'</div></div>';}).join('');
   var ins=resultInsights(pj,R);
   var more=ins.length-3;
-  document.getElementById('rs-ins').innerHTML=ins.length?'<div class="ins-list">'+ins.slice(0,RS_ALL?ins.length:3).map(insHTML).join('')+(more>0?'<button class="mini ins-more" type="button" onclick="RS_ALL=!RS_ALL;renderResult()">'+(RS_ALL?'Свернуть':'Показать ещё '+more)+'</button>':'')+'</div>':'';
+  document.getElementById('rs-ins').innerHTML=ins.length?'<div class="step-h">Что стоит сделать</div><div class="ins-list">'+ins.slice(0,RS_ALL?ins.length:3).map(insHTML).join('')+(more>0?'<button class="mini ins-more" type="button" onclick="RS_ALL=!RS_ALL;renderResult()">'+(RS_ALL?'Свернуть':'Показать ещё '+more)+'</button>':'')+'</div>':'';
   var conv=function(a,b){return b?pctf(a/b):'—';};
   document.getElementById('rs-fn-sub').textContent='Показы и клики — по площадкам, заявки — со страниц, продажи — '+crmNote+'. Пропуск в цепочке показываем честно.';
   document.getElementById('rs-funnel').innerHTML=[
@@ -5196,6 +5239,17 @@ function blPay(){
   d.slides[3].b=[rub(cs),'цена заявки в сентябре','В июле было '+rub(cj)+' — минус '+Math.round((1-cs/cj)*100)+'% за квартал.'];
   d.slides[6].data=[['VK Реклама',agg(new Date(2026,6,1),new Date(2026,8,30),'СберТаргет',null).ld-CAMPS.filter(function(c){return c.ch==='Яндекс Директ'&&c.p==='СберТаргет';}).reduce(function(s2,c){return s2+agg(new Date(2026,6,1),new Date(2026,8,30),null,c.id).ld;},0)],['Яндекс Директ',agg(new Date(2026,6,1),new Date(2026,8,30),null,'k2').ld]];
 })();
+
+/* ---------- «Подробно»: цифры и таблицы раскрываются по желанию и запоминаются ---------- */
+function deepState(){try{return JSON.parse(localStorage.getItem('mk-deep')||'{}');}catch(e){return {};}}
+function deepSet(el,open){el.classList.toggle('open',open);var b=el.querySelector('.deep-hd');if(b)b.setAttribute('aria-expanded',open);}
+function deepToggle(btn){
+  var el=btn.closest('.deep'),open=!el.classList.contains('open'),st=deepState();
+  deepSet(el,open);st[el.dataset.deep]=open;try{localStorage.setItem('mk-deep',JSON.stringify(st));}catch(e){}
+  if(open)setTimeout(function(){glossApply();},0);
+}
+function deepInit(){var st=deepState();document.querySelectorAll('.deep[data-deep]').forEach(function(el){deepSet(el,!!st[el.dataset.deep]);});}
+deepInit();
 
 var VIEW_RENDER={campaigns:renderCamps,result:renderResult,billing:renderBilling};
 renderCamps();renderHomeSignals();
@@ -7296,10 +7350,10 @@ function dlMyData(){
 /* ---------- where am I: breadcrumbs, back, route kept across reloads ---------- */
 var NAVH={home:[null,'Главная'],projects:[null,'Клиенты'],project:[null,'Клиенты','projects'],
   strat:['Контент','Стратегия'],plan:['Контент','Контент-план'],images:['Контент','Фото и видео'],video:['Контент','Фото и видео'],
-  'soc-post':['Соцсети','Посты'],'soc-car':['Соцсети','Карусели'],'soc-story':['Соцсети','Сторис'],'soc-clip':['Соцсети','Клипы'],
+  'soc-post':['Контент','Посты'],'soc-car':['Контент','Карусели'],'soc-story':['Контент','Сторис'],'soc-clip':['Контент','Клипы'],
   banners:['Реклама','Баннеры'],campaigns:['Реклама','Кампании'],camp:['Реклама','Кампании','campaigns'],result:['Реклама','Результат'],
-  style:['Бренд','Стиль'],voice:['Бренд','Голос'],facts:['Бренд','База фактов'],templates:['Бренд','Шаблоны'],groups:['Бренд','Аудитории'],
-  pages:['Ещё','Сайты и страницы'],page:['Ещё','Сайты и страницы','pages'],build:['Ещё','Сайты и страницы','pages'],pres:['Ещё','Презентации'],deck:['Ещё','Презентации','pres'],chats:[null,'Чаты'],
+  style:['Бренд клиента','Стиль'],voice:['Бренд клиента','Голос'],facts:['Бренд клиента','База фактов'],templates:['Бренд клиента','Шаблоны'],groups:['Бренд клиента','Аудитории'],
+  pages:['Контент','Сайты и страницы'],page:['Контент','Сайты и страницы','pages'],build:['Контент','Сайты и страницы','pages'],pres:['Контент','Презентации'],deck:['Контент','Презентации','pres'],chats:[null,'Чаты'],
   billing:[null,'Счёт и оплата'],states:[null,'Карта состояний'],client:[null,'Экран клиента'],profile:[null,'Профиль']};
 var ROUTE={v:'home',id:null,lab:'',p:null},ROUTE_BUSY=false,routeT=null;
 var CR_SEP='<svg class="sep" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
@@ -7475,14 +7529,15 @@ var CRUMB={
   images:['Контент','Фото и видео'],video:['Контент','Фото и видео'],strat:['Контент','Стратегия'],plan:['Контент','Контент-план'],pres:['Презентации'],chats:['Чаты'],
   banners:['Баннеры'],campaigns:['Кампании'],result:['Результат'],deck:['Презентации','{l}'],camp:['Кампании','{l}'],billing:['Счёт и оплата'],states:['Карта состояний'],profile:['Профиль'],style:['Стиль'],voice:['Голос'],facts:['База фактов'],templates:['Шаблоны'],groups:['Аудитории'],'soc-post':['Соцсети','Посты'],'soc-car':['Соцсети','Карусели'],'soc-story':['Соцсети','Сторис'],'soc-clip':['Соцсети','Клипы']
 };
-var NAVMAP={video:'images',project:'projects',page:'pages',build:'pages',deck:'pres',camp:'campaigns'};
+var NAVMAP={video:'images',project:'projects',page:'pages',build:'pages',deck:'pres',camp:'campaigns','soc-car':'soc-post','soc-story':'soc-post','soc-clip':'soc-post'};
 function go(view,label){
   document.querySelectorAll('.view').forEach(function(v){v.classList.remove('on')});
   var el=document.getElementById('v-'+view); if(el)el.classList.add('on');
   ROUTE={v:view,id:null,lab:label||'',p:null};crumbRender();routeSave();
   var nv=NAVMAP[view]||view;
   document.querySelectorAll('.nav a[data-view]').forEach(function(a){a.classList.toggle('on',a.dataset.view===nv);});
-  document.querySelectorAll('.group2').forEach(function(g){if(g.querySelector('.nav a.on'))g.classList.add('open');});
+  document.querySelectorAll('.side .group2').forEach(function(g){g.classList.toggle('open',!!g.querySelector('.nav a.on'));});
+  document.querySelectorAll('.pubtabs .itab').forEach(function(t){t.classList.toggle('on',t.dataset.v===view);});
   window.scrollTo({top:0,behavior:'instant'});
   if(typeof VIEW_RENDER!=='undefined'&&VIEW_RENDER[view])VIEW_RENDER[view]();
 }
@@ -7654,7 +7709,7 @@ window.toggleGroup=function(id,btn){
   var g=document.getElementById(id),open=btn.getAttribute('aria-expanded')==='true';
   btn.setAttribute('aria-expanded',String(!open)); g.classList.toggle('collapsed',open);
 };
-window.toggleG2=function(id,btn){document.getElementById(id).classList.toggle('open');};
+window.toggleG2=function(id,btn){var g=document.getElementById(id),open=!g.classList.contains('open');document.querySelectorAll('.side .group2').forEach(function(x){x.classList.toggle('open',x===g&&open);});};
 (function(){
   var dz=document.getElementById('dz'); if(!dz){return;}
   var input=document.getElementById('file'),pv=document.getElementById('pv'),
