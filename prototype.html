@@ -103,6 +103,10 @@
   .crumb .back{background:none;border:0;color:var(--ink-3);cursor:pointer;display:none;align-items:center;padding:4px;margin-right:2px}
   .crumb .back.on{display:inline-flex}
   .help{margin-left:auto;width:34px;height:34px;border-radius:50%;border:1px solid var(--line-2);background:var(--panel);color:var(--ink-3);display:grid;place-items:center;cursor:pointer}
+  #hc-sugg .chip.on{background:var(--blue)!important;border-color:var(--blue)!important;color:#fff!important;font-weight:600}
+  #hc-sugg .chip.on svg{color:#fff!important;stroke:#fff}
+  #hc-box.hc-flash{animation:hcFlash 1s ease}
+  @keyframes hcFlash{0%{box-shadow:0 0 0 0 rgba(46,107,230,.45)}100%{box-shadow:0 0 0 14px rgba(46,107,230,0)}}
   .showbtn{display:inline-flex;align-items:center;gap:9px;background:var(--blue-soft);color:var(--blue-ink);border:1px solid var(--blue-brd);border-radius:12px;padding:9px 18px;font-weight:600;font-size:14.5px;cursor:pointer}
   .showbtn .tri{width:14px;height:14px}
 
@@ -2847,7 +2851,6 @@
           <div><h1>Сайты и страницы</h1><p>Лендинг под акцию или услугу клиента — в его стиле, с формой заявки. Тему удобно взять из контент-плана.</p></div>
           <div class="sp"></div>
           <button class="pbtn ghost" onclick="openModal('newproj-modal')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новый клиент</button>
-          <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
 
         <div class="itabs">
@@ -2912,7 +2915,6 @@
           <div><h1>Фото и видео</h1><p class="ph-why">Картинки и ролики клиента. Опишите сюжет — Maker снимет его в манере клиента; или загрузите свои фото. Отсюда картинки берутся в посты, сторис и баннеры.</p></div>
           <div class="sp"></div>
           <button class="pbtn ghost" onclick="openUploadModal()">+ свои фото</button>
-          <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
         <div class="itabs"><button class="itab on" type="button" onclick="go('images')">Фото</button><button class="itab" type="button" onclick="go('video')">Видео</button></div>
         <div class="toolbar">
@@ -2961,7 +2963,6 @@
           <div><h1>Баннеры</h1><p class="ph-why">Опишите, что рекламируем, — Maker напишет текст и соберёт баннер в стиле клиента сразу во всех размерах для VK и Директа. Дальше — модерация площадки и кампания.</p></div>
           <div class="sp"></div>
           <button class="pbtn ghost" onclick="var t=document.getElementById('bn-text');t.scrollIntoView({behavior:'smooth',block:'center'});t.focus({preventScroll:true})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новый комплект</button>
-          <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
         <div class="toolbar">
           <label class="tsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="bn-q" type="search" placeholder="Название комплекта" oninput="renderBnList()"></label>
@@ -3020,7 +3021,6 @@
           <div><h1>Кампании</h1><p class="ph-why">Кампания — это запуск рекламы: цель, срок, бюджет и что показываем (баннеры, страница). Здесь видно, идёт ли каждая по плану, а что она принесла — в «Результате».</p></div>
           <div class="sp"></div>
           <button class="pbtn ghost" onclick="var t=document.getElementById('cm-text');t.scrollIntoView({behavior:'smooth',block:'center'});t.focus({preventScroll:true})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новая кампания</button>
-          <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
         <div class="toolbar">
           <label class="tsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="cm-q" type="search" placeholder="Название кампании" oninput="renderCamps()"></label>
@@ -3075,7 +3075,6 @@
           <div><h1>Результат</h1><p class="ph-why">Окупается ли реклама и что поправить. Сначала итог словами, ниже — главные цифры, а воронка и таблицы — в «Подробно».</p><p id="rs-sub"></p></div>
           <div class="sp"></div>
           <button class="pbtn ghost" onclick="rsReport()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Собрать отчёт для клиента</button>
-          <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
         <div class="toolbar">
           <select class="sortsel fsel" id="rs-proj" data-projs="all" onchange="renderResult()"></select>
@@ -3541,7 +3540,6 @@
         <div class="phead">
           <div><h1>Фото и видео</h1><p>Ролики для рекламы и исходники в стиле клиента. Вертикальные клипы для соцсетей — в «Соцсети › Клипы».</p></div>
           <div class="sp"></div>
-          <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
         <div class="itabs"><button class="itab" type="button" onclick="go('images')">Фото</button><button class="itab on" type="button" onclick="go('video')">Видео</button></div>
         <div class="toolbar">
@@ -3601,7 +3599,6 @@
           <div><h1>Презентации</h1><p>Отчёт клиенту за месяц или коммерческое предложение: сначала план колоды, потом сборка в стиле клиента.</p></div>
           <div class="sp"></div>
           <button class="pbtn ghost" onclick="var t=document.getElementById('dk-text');t.scrollIntoView({behavior:'smooth',block:'center'});t.focus({preventScroll:true})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новая презентация</button>
-          <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
         <div class="toolbar">
           <label class="tsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="dk-q" type="search" placeholder="Название презентации" oninput="renderDecks()"></label>
@@ -3662,7 +3659,6 @@
         <div class="phead">
           <div><h1>Чаты</h1><p class="ph-why">Все разговоры с Maker: задачи, вопросы и что из них получилось. Новый разговор начинается на Главной.</p></div>
           <div class="sp"></div>
-          <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
         <div class="chat-wrap" id="chat-wrap">
           <aside class="chat-list">
@@ -6098,7 +6094,19 @@ function hcTick(){
   HC.t=setTimeout(hcTick,HC.dir>0?(/[ ,:—]/.test(ch)?110:35+Math.random()*55):16);
 }
 function hcCurrent(){var l=hcSugs();return l[HC.i%l.length];}
-function hcInput(){var ta=document.getElementById('hc-text');ta.style.height='auto';ta.style.height=Math.max(84,ta.scrollHeight)+'px';}
+function hcInput(){var ta=document.getElementById('hc-text');ta.style.height='auto';ta.style.height=Math.max(84,ta.scrollHeight)+'px';
+  var on=document.querySelector('#hc-sugg .chip.on');if(on&&!HC.typing){var ph=HC_CHIPS[+on.dataset.i][1].slice(0,20);if(ta.value.slice(0,20)!==ph){on.classList.remove('on');on.setAttribute('aria-pressed','false');}}}
+/* чип «С чего начать»: выбран — подсвечен, фраза набрана целиком (с клиентом, если он выбран); второй клик — снять */
+function hcChip(i,btn){
+  var ta=document.getElementById('hc-text'),was=btn.classList.contains('on');
+  document.querySelectorAll('#hc-sugg .chip').forEach(function(c){c.classList.remove('on');c.setAttribute('aria-pressed','false');});
+  if(was){ta.value='';hcInput();HC.proj='';ta.focus();return;}
+  btn.classList.add('on');btn.setAttribute('aria-pressed','true');btn.dataset.i=i;
+  var cl=typeof CLIENT!=='undefined'&&CLIENT?CLIENT:'';
+  hcType(HC_CHIPS[i][1]+(cl?qn(cl):''),cl);
+  var box=document.getElementById('hc-box');if(box){box.classList.remove('hc-flash');void box.offsetWidth;box.classList.add('hc-flash');}
+  if(!cl)setTimeout(function(){toast('Допишите, для кого — или выберите клиента в меню слева');},900);
+}
 function hcTake(){var ta=document.getElementById('hc-text');ta.value=hcCurrent();HC.pos=0;HC.dir=1;HC.i++;hcInput();ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);}
 function hcType(text,proj){
   HC.proj=proj||'';
@@ -6136,7 +6144,7 @@ function hcVoiceStop(){
     toast('Голос расшифрован — в прототипе подставили пример фразы');
   }
 }
-function hcSend(){
+function hcSend(){document.querySelectorAll('#hc-sugg .chip.on').forEach(function(c){c.classList.remove('on');c.setAttribute('aria-pressed','false');});
   var ta=document.getElementById('hc-text'),text=ta.value.trim(),p=HC.proj||hcDetect(text)||CLIENT;HC.proj='';
   if(HC.rec)hcVoiceStop();
   if(!text&&!ATT.hc.length){ta.focus();toast('Напишите или скажите, что делаем — или возьмите подсказку');return;}
@@ -6147,16 +6155,16 @@ function hcSend(){
 }
 var HC_CHIPS=[
   ['Стратегия','Давай сделаем стратегию продвижения на квартал для ','<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'],
-  ['Контент-план','Составь контент-план на ноябрь — 3 поста в неделю и сторис в VK и Telegram — для ','<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'],
+  ['Контент-план','Составь контент-план на следующий месяц — 3 поста в неделю и сторис в VK и Telegram — для ','<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'],
   ['Посты','Напиши 3 поста на эту неделю в VK и Telegram для ','<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h5"/>'],
   ['Карусель','Сделай карусель из 6 слайдов «5 ошибок при выборе подрядчика» для ','<rect x="6" y="5" width="12" height="14" rx="2"/><path d="M3 8v8M21 8v8"/>'],
   ['Сторис','Нужны 3 сторис к акции до конца месяца для ','<rect x="7" y="2" width="10" height="20" rx="2"/>'],
   ['Баннеры','Собери баннеры к распродаже в VK и Директе для ','<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h6M7 14h4"/>'],
   ['Клипы','Сделай клип на 30 секунд с субтитрами для ','<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>'],
-  ['Презентация','Собери презентацию-отчёт клиенту за октябрь для ','<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>'],
+  ['Презентация','Собери презентацию-отчёт клиенту за прошлый месяц для ','<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>'],
   ['Лендинг','Собери лендинг под акцию с формой заявки для ','<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>']];
 function hcChips(){
-  document.getElementById('hc-sugg').innerHTML='<span class="hc-sl">С чего начать:</span>'+HC_CHIPS.map(function(c,i){return '<button class="chip" type="button" onclick="hcType(HC_CHIPS['+i+'][1])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+c[2]+'</svg>'+c[0]+'</button>';}).join('');
+  document.getElementById('hc-sugg').innerHTML='<span class="hc-sl">С чего начать:</span>'+HC_CHIPS.map(function(c,i){return '<button class="chip" type="button" onclick="hcChip('+i+',this)" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+c[2]+'</svg>'+c[0]+'</button>';}).join('');
 }
 function hcGreet(){var h=new Date().getHours();document.getElementById('h-greet').textContent=(h<5?'Доброй ночи':h<12?'Доброе утро':h<18?'Добрый день':'Добрый вечер')+' · кабинет агентства';}
 
