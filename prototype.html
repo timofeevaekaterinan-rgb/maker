@@ -147,6 +147,32 @@
   .create-panel{background:var(--panel);border:1px solid var(--line-2);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-top:26px}
   .create-panel textarea{width:100%;border:0;outline:0;font-family:inherit;font-size:14.5px;color:var(--ink);resize:vertical;min-height:52px;line-height:1.5}
   .create-panel textarea::placeholder{color:var(--ink-3)}
+  /* панель создания живёт в выезжающем окне справа; на странице её нет */
+  .content .create-panel{display:none!important}
+  .cpd{position:fixed;inset:0;z-index:85;pointer-events:none}
+  .cpd-bg{position:absolute;inset:0;background:rgba(20,26,38,.36);opacity:0;transition:opacity .22s ease}
+  .cpd-pane{position:absolute;top:0;right:0;bottom:0;width:min(560px,100vw);background:var(--panel);box-shadow:-24px 0 60px -30px rgba(20,26,38,.45);display:flex;flex-direction:column;transform:translateX(104%);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+  .cpd.on{pointer-events:auto}.cpd.on .cpd-bg{opacity:1}.cpd.on .cpd-pane{transform:none}
+  .cpd-hd{display:flex;align-items:flex-start;gap:12px;padding:20px 22px 14px;border-bottom:1px solid var(--line)}
+  .cpd-hd h3{margin:0;font-size:21px;font-weight:800;letter-spacing:-.02em}
+  .cpd-hd p{margin:4px 0 0;color:var(--ink-2);font-size:13.5px;line-height:1.45}
+  .cpd-hd .modalx{margin-left:auto;flex:none}
+  .cpd-body{flex:1;overflow:auto;padding:18px 22px 26px}
+  .cpd .create-panel{display:block!important;border:0;box-shadow:none;margin:0;padding:0;background:none}
+  .cpd .create-panel textarea{min-height:170px;font-size:15px;border:1px solid var(--line-2);border-radius:14px;padding:14px 16px;resize:vertical}
+  .cpd .create-panel textarea:focus{border-color:var(--blue-brd);box-shadow:0 0 0 3px var(--blue-softer)}
+  .cpd .cp-row{border-top:0;padding-top:4px}
+  .cpd .cp-row2{margin-top:18px}
+  body.cpd-open{overflow:hidden}
+  .cp-mic{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none}
+  .cp-mic svg{width:19px;height:19px}
+  .cp-mic:hover{border-color:var(--line-3)}
+  .cp-mic.rec{width:auto;border-radius:22px;padding:0 14px;gap:8px;display:inline-flex;align-items:center;background:#FCE9E7;border-color:#F3C5BF;color:#A33A2E;font-weight:600;font-size:13px}
+  .cp-mic.rec i{width:8px;height:8px;border-radius:50%;background:#D8443A;animation:cpRec 1s ease-in-out infinite}
+  @keyframes cpRec{50%{opacity:.25}}
+  .step-h .cp-own-b{margin-left:10px;vertical-align:middle}
+  .ntf-scope{padding:8px 16px;font-size:12.5px;color:var(--ink-2);background:var(--inset);border-bottom:1px solid var(--line)}
+  @media (max-width:600px){.cpd-pane{width:100vw}.cpd-hd{padding:16px 16px 12px}.cpd-body{padding:14px 16px 22px}}
   .cp-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:14px;margin-top:10px;border-top:1px solid var(--line)}
   .cp-target{font-size:13px;color:var(--ink-2)}
   .cp-target b{color:var(--ink)}
@@ -6256,7 +6282,7 @@ function socPublishNow(){var x=socCur();if(socSplit(x).man.length)socPubAsk();el
 function socRender(){
   var x=socCur();
   spendGate(41.03,'Рендер клипа',function(){
-    openBuildModal('Рендерим клип',['Снимаем сцены по раскадровке','Собираем ролик '+(x.dur||30)+' с','Ставим субтитры и обложку','Переобрезаем под '+x.plats.map(function(p){return platName('clip',p);}).join(', ')],'Клип готов — он ждёт согласования.',function(){x.rendered=true;x.st='check';charge(x.p,'Соцсети','Клип '+qn(x.t)+'',41.03);renderSoc('clip');ntfPush({k:'ready',t:'Клип готов',s:''+qn(x.t)+' · '+x.p+' — можно отправлять на согласование',fn:function(){go('soc-clip');socOpen(x.id);}});});
+    openBuildModal('Рендерим клип',['Снимаем сцены по раскадровке','Собираем ролик '+(x.dur||30)+' с','Ставим субтитры и обложку','Переобрезаем под '+x.plats.map(function(p){return platName('clip',p);}).join(', ')],'Клип готов — он ждёт согласования.',function(){x.rendered=true;x.st='check';charge(x.p,'Соцсети','Клип '+qn(x.t)+'',41.03);renderSoc('clip');ntfPush({p:x.p,k:'ready',t:'Клип готов',s:''+qn(x.t)+' · '+x.p+' — можно отправлять на согласование',fn:function(){go('soc-clip');socOpen(x.id);}});});
   });
 }
 function vfFmtGroup(btn){
@@ -6769,7 +6795,7 @@ function stateEval(){
     if(!mode){var o=view.querySelector(':scope > .ns-empty');if(o)o.remove();return;}
     var b=nsBox(view),h=(NAVH[v]||[null,''])[1];
     if(mode==='noclient')b.innerHTML='<span class="ns-ic">'+NS_IC+'</span><b>'+(v==='projects'?'Клиентов пока нет':'Сначала заведите клиента')+'</b><span>'+(v==='projects'?'Заведите первого — это минута: название и, если есть, ссылка на сайт или соцсеть. Остальное расскажете потом, любым способом.':''+qn(h)+' и всё остальное в Maker делается для конкретного клиента — в его стиле и голосе. Заведите первого: название и, если есть, ссылка на сайт.')+'</span><button class="pbtn" type="button" onclick="nsNewClient()">Завести клиента</button>';
-    else{var t=NS_TXT[v];b.innerHTML='<span class="ns-ic">'+NS_IC+'</span><b>'+t[0]+'</b><span>'+t[1]+'</span>'+(t[2]?'<button class="pbtn ghost" type="button" onclick="'+t[3]+'">'+t[2]+'</button>':'');}
+    else{var t=NS_TXT[v],cw=typeof CPD!=='undefined'&&CPD.ph[v]?'<button class="pbtn" type="button" onclick="cpOpen(\''+v+'\')">'+CPD_T[v][0]+'</button>':'';b.innerHTML='<span class="ns-ic">'+NS_IC+'</span><b>'+t[0]+'</b><span>'+t[1]+'</span>'+((t[2]||cw)?'<div class="lb-acts">'+cw+(t[2]?'<button class="pbtn ghost" type="button" onclick="'+t[3]+'">'+t[2]+'</button>':'')+'</div>':'');}
   });
   var rec=document.getElementById('home-recent');if(rec){var rv=[].filter.call(rec.querySelectorAll('.recent-card'),function(c){return !CLIENT||c.dataset.p===CLIENT;}).length;rec.style.display=(STATE==='new'||STATE==='first'||!rv)?'none':'';}
   balBar();
@@ -6932,7 +6958,7 @@ function cvSet(k,st,fb){var t=k.slice(0,1),x=cvItem(k);if(!x)return;x.st=st;if(f
 function cvNtf(k,ok){
   var t=k.slice(0,1),id=k.slice(2),x=cvItem(k),p=CV.p;if(!x)return;
   var what=t==='s'?'стратегию':t==='t'?'тему плана':SOC_T[x.type][0].toLowerCase(),title=t==='s'?'Стратегия '+p:x.t;
-  ntfPush({k:ok?'ok':'fix',t:ok?'Клиент согласовал '+what:'Клиент просит правки: '+what,s:ok?'«'+title+'» · '+p:'«'+(x.fb||'')+'» · '+title,
+  ntfPush({p:p,k:ok?'ok':'fix',t:ok?'Клиент согласовал '+what:'Клиент просит правки: '+what,s:ok?'«'+title+'» · '+p:'«'+(x.fb||'')+'» · '+title,
     fn:function(){if(t==='s'){go('strat');strSet(p);}else if(t==='t'){go('plan');plSetProj(p);document.getElementById('pl-month').value=x.d.slice(0,7);plOpen(id);}else{go('soc-'+x.type);socOpen(id);}}});
 }
 function cvOk(k){cvSet(k,'ok');CV.res[k]='ok';cvNtf(k,true);cvRender();}
@@ -7253,15 +7279,16 @@ function ntfSeed(){
   if(STATE==='new'||STATE==='first')return ntfBadge();
   var add=function(o){o.id='n'+(++ntfSeq);NTF.push(o);};
   if(STATE==='broke')add({k:'money',t:'Баланс 0 ₽ — генерация на паузе',s:'Черновики, правки и согласования работают',at:'сегодня, 08:00',fn:function(){go('billing');}});
-  add({k:'ok',t:'Клиент согласовал пост',s:'«Гости из соседних домов: как кафе получило 64 заявки» · СберТаргет',at:'сегодня, 10:12',fn:function(){go('soc-post');socOpen('sp1');}});
-  add({k:'bad',t:'Площадка отклонила баннеры',s:'«Осенний чекап» · Вита — нужно предупреждение о противопоказаниях',at:'сегодня, 09:40',fn:function(){bnGo('b4');}});
-  add({k:'info',t:'Баннеры прошли модерацию',s:'«Разработка сайтов» · Атвинта — уже показываются',at:'вчера, 18:05',read:true,fn:function(){bnGo('b3');}});
-  add({k:'ok',t:'Клиент согласовал стратегию',s:'Вита · IV квартал — можно собирать контент-план',at:'2 окт',read:true,fn:function(){go('strat');strSet('Вита');}});
+  add({p:'СберТаргет',k:'ok',t:'Клиент согласовал пост',s:'«Гости из соседних домов: как кафе получило 64 заявки» · СберТаргет',at:'сегодня, 10:12',fn:function(){go('soc-post');socOpen('sp1');}});
+  add({p:'Вита',k:'bad',t:'Площадка отклонила баннеры',s:'«Осенний чекап» · Вита — нужно предупреждение о противопоказаниях',at:'сегодня, 09:40',fn:function(){bnGo('b4');}});
+  add({p:'Атвинта',k:'info',t:'Баннеры прошли модерацию',s:'«Разработка сайтов» · Атвинта — уже показываются',at:'вчера, 18:05',read:true,fn:function(){bnGo('b3');}});
+  add({p:'Вита',k:'ok',t:'Клиент согласовал стратегию',s:'Вита · IV квартал — можно собирать контент-план',at:'2 окт',read:true,fn:function(){go('strat');strSet('Вита');}});
   add({k:'team',t:'Мария Лис приняла приглашение',s:'Роль — просмотр',at:'2 окт',read:true,fn:function(){go('profile');pfTab(document.querySelectorAll('#v-profile .itab')[3],'team');}});
   ntfBadge();
 }
+function ntfMine(){return NTF.filter(function(x){return !CLIENT||!x.p||x.p===CLIENT;});}
 function ntfBadge(){
-  var n=NTF.filter(function(x){return !x.read;}).length,b=document.getElementById('ntf-n'),btn=document.getElementById('ntf-btn');if(!b)return;
+  var n=ntfMine().filter(function(x){return !x.read;}).length,b=document.getElementById('ntf-n'),btn=document.getElementById('ntf-btn');if(!b)return;
   b.textContent=n>9?'9+':n;b.hidden=!n;btn.setAttribute('aria-label','Уведомления'+(n?', новых: '+n:''));
 }
 function ntfOpen(e){
@@ -7272,13 +7299,13 @@ function ntfOpen(e){
 }
 function ntfClose(e){var p=document.getElementById('ntf-panel');if(e&&p.contains(e.target))return;p.classList.remove('on');document.getElementById('ntf-btn').setAttribute('aria-expanded','false');document.removeEventListener('click',ntfClose);}
 function ntfRender(){
-  var p=document.getElementById('ntf-panel'),n=NTF.filter(function(x){return !x.read;}).length;
+  var p=document.getElementById('ntf-panel'),L=ntfMine(),n=L.filter(function(x){return !x.read;}).length;
   p.innerHTML='<div class="ntf-hd"><b>Уведомления</b>'+(n?'<button class="ntf-link" type="button" onclick="ntfAll()">Прочитать все</button>':'')+'<button class="ntf-ic" type="button" aria-label="Настроить уведомления" title="Настроить" onclick="ntfClose();go(\'profile\');pfTab(document.querySelectorAll(\'#v-profile .itab\')[2],\'ntf\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button><button class="ntf-ic ntf-x" type="button" aria-label="Закрыть" onclick="ntfClose()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'+
-    (NTF.length?'<div class="ntf-list">'+NTF.map(function(x){return '<button class="ntf-it'+(x.read?'':' new')+'" type="button" onclick="ntfGo(\''+x.id+'\')"><span class="ntf-k '+x.k+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+NTF_IC[x.k]+'</svg></span><span class="ntf-tx"><b>'+hesc(x.t)+'</b><span>'+hesc(x.s)+'</span><em>'+x.at+'</em></span>'+(x.read?'':'<i class="ntf-dot" aria-label="новое"></i>')+'</button>';}).join('')+'</div>'
+    (CLIENT?'<div class="ntf-scope">Только '+hesc(qn(CLIENT))+' и общие — про баланс и команду</div>':'')+(L.length?'<div class="ntf-list">'+L.map(function(x){return '<button class="ntf-it'+(x.read?'':' new')+'" type="button" onclick="ntfGo(\''+x.id+'\')"><span class="ntf-k '+x.k+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+NTF_IC[x.k]+'</svg></span><span class="ntf-tx"><b>'+hesc(x.t)+'</b><span>'+hesc(x.s)+'</span><em>'+x.at+'</em></span>'+(x.read?'':'<i class="ntf-dot" aria-label="новое"></i>')+'</button>';}).join('')+'</div>'
       :'<div class="ntf-empty"><b>Пока тихо</b><span>Здесь появятся ответы клиентов, готовые ролики и сборки, важное про баланс и модерацию.</span></div>');
 }
 function ntfGo(id){var x=NTF.filter(function(n){return n.id===id;})[0];if(!x)return;x.read=true;ntfBadge();ntfClose();if(x.fn)x.fn();}
-function ntfAll(){NTF.forEach(function(x){x.read=true;});ntfBadge();ntfRender();}
+function ntfAll(){ntfMine().forEach(function(x){x.read=true;});ntfBadge();ntfRender();}
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('ntf-panel').classList.contains('on')){ntfClose();document.getElementById('ntf-btn').focus();}});
 
 /* ---------- the marketer's cabinet → their clients: one current client for the whole cabinet ---------- */
@@ -7331,7 +7358,7 @@ function clientSet(p,nav,quiet){
 function clientInit(){var s='';try{s=localStorage.getItem('mk-client')||'';}catch(e){}if(STATE==='first'&&PROJECTS[0])s=PROJECTS[0].s;CLIENT=s&&projByShort(s)?s:'';clientUI();clientSync(false);clientScope();}
 /* то, что не фильтруется выпадашкой: Главная (напоминания, недавнее, клиенты) и «Счёт» по клиентам */
 function clientScope(){
-  try{renderToday();}catch(e){}try{renderProjLists();}catch(e){}
+  try{renderToday();}catch(e){}try{renderProjLists();}catch(e){}try{ntfBadge();if(document.getElementById('ntf-panel').classList.contains('on'))ntfRender();}catch(e){}
   var rc=document.querySelectorAll('#home-recent .recent-card'),vis=0;rc.forEach(function(c){var on=!CLIENT||c.dataset.p===CLIENT;c.style.display=on?'':'none';if(on)vis++;});
   var rw=document.getElementById('home-recent');if(rw&&STATE!=='new'&&STATE!=='first')rw.style.display=vis?'':'none';
   if(document.getElementById('v-billing')&&document.getElementById('v-billing').classList.contains('on'))try{renderBilling();}catch(e){}
@@ -8226,6 +8253,83 @@ window.toggleG2=function(id,btn){var g=document.getElementById(id),open=!g.class
   dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag');var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f){try{input.files=e.dataTransfer.files;}catch(_){}show(f);}});
   x.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();try{input.value='';}catch(_){}pv.classList.remove('on');btn.disabled=true;btn.style.opacity='.5';});
 })();
+
+/* ---------- «Создать»: панель создания — в выезжающем окне справа, с голосом ---------- */
+var CPD_T={pages:['Новая страница','Лендинг в стиле клиента, с формой заявки'],images:['Новые кадры','Опишите сюжет — снимем в манере клиента'],video:['Новый ролик','Из принятого кадра клиента'],
+  banners:['Новый комплект','Баннеры во всех размерах: текст напишет нейросеть, размеры соберёт код'],campaigns:['Новая кампания','Цель одной фразой — остальное соберём'],groups:['Новая аудитория','Кого хотите привлечь — опишите своими словами'],
+  facts:['Добавить факты','Вставьте текст с сайта, прайс или ответы клиента'],strat:['Рассказать о клиенте','Соберём стратегию: цель, аудитории, площадки, рубрики'],plan:['Собрать контент-план','Темы на месяц по рубрикам стратегии'],
+  'soc-post':['Новый пост','Своя тема, вне контент-плана'],'soc-car':['Новая карусель','Своя тема, вне контент-плана'],'soc-story':['Новые сторис','Свой повод, вне контент-плана'],'soc-clip':['Новый клип','Своя тема, вне контент-плана'],
+  pres:['Новая презентация','Сначала план колоды, потом сборка']};
+var CPD_SAY={strat:'Кофейня у метро со своим обжаром. Хотим больше гостей по утрам и заказов навынос, в декабре акция на зерно к праздникам. Сайт zerno-coffee.ru',
+  plan:'В ноябре упор на кейсы и запись онлайн, 11 ноября день открытых дверей',pages:'Лендинг под акцию: чекап со скидкой до 30 ноября, с формой заявки',
+  images:'Бариста наливает латте, утренний свет, крупный план рук',video:'Камера медленно проезжает по залу утром',banners:'Распродажа: скидка 20% до воскресенья',
+  campaigns:'40 продаж годовых карт до 30 ноября',groups:'Владельцы автосервисов в Казани, у которых 2–5 постов',facts:'Работаем с 8 до 20, в субботу до 16. Чекап стоит 6 900 рублей',
+  'soc-post':'Как мы собираем заказ навынос за 3 минуты','soc-car':'5 ошибок при выборе подрядчика по рекламе','soc-story':'Акция: скидка 15% до конца месяца',
+  'soc-clip':'Один день нашей команды за 30 секунд','pres':'Отчёт клиенту за октябрь: что сделали, заявки, цена заявки и план на ноябрь'};
+var CPD={on:null,ph:{},rec:null};
+var MIC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>';
+(function(){
+  var d=document.createElement('div');d.className='cpd';d.id='cpd';d.setAttribute('aria-hidden','true');
+  d.innerHTML='<div class="cpd-bg" onclick="cpClose()"></div><aside class="cpd-pane" role="dialog" aria-modal="true" aria-labelledby="cpd-t"><div class="cpd-hd"><div><h3 id="cpd-t"></h3><p id="cpd-s"></p></div><button class="modalx" type="button" aria-label="Закрыть" onclick="cpClose()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="cpd-body" id="cpd-body"></div></aside>';
+  document.body.appendChild(d);
+  document.querySelectorAll('section.view > .create-panel').forEach(function(pn){
+    var v=pn.parentNode.id.slice(2),ta=pn.querySelector('textarea');pn.dataset.v=v;
+    var ph=document.createComment('create-panel '+v);pn.parentNode.insertBefore(ph,pn);CPD.ph[v]={ph:ph,pn:pn};
+    /* голос — как на Главной */
+    var go2=pn.querySelector('.cp-row2 .pbtn');if(go2&&ta){var m=document.createElement('button');m.type='button';m.className='cp-mic';m.setAttribute('aria-label','Надиктовать голосом');m.title='Надиктовать голосом';m.innerHTML=MIC;m.onclick=function(){cpVoice(v);};go2.parentNode.insertBefore(m,go2);}
+    /* кнопка в шапке страницы: прежние «прокрутить к панели» открывают окно, нет кнопки — добавляем */
+    var head=pn.parentNode.querySelector(':scope > .phead'),btn=null;
+    if(head)[].forEach.call(head.querySelectorAll('button'),function(b){var oc=b.getAttribute('onclick')||'';if((ta&&oc.indexOf(ta.id)>=0)||/strFocus|plFocus/.test(oc))btn=b;});
+    if(head&&!btn){btn=document.createElement('button');btn.className='pbtn';btn.type='button';btn.innerHTML='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'+(CPD_T[v]||['Создать'])[0];
+      var sb=head.querySelector('.showbtn');if(!head.querySelector(':scope > .sp'))head.insertAdjacentHTML('beforeend','<div class="sp"></div>');sb?head.insertBefore(btn,sb):head.appendChild(btn);}
+    if(btn){btn.setAttribute('onclick',"cpOpen('"+v+"')");btn.classList.remove('ghost');}
+    var sh=pn.previousElementSibling;if(sh&&sh.classList.contains('step-h'))sh.insertAdjacentHTML('beforeend','<button class="mini cp-own-b" type="button" onclick="cpOpen(\''+v+'\')">Написать своё</button>');
+  });
+})();
+function cpOpen(v){
+  var x=CPD.ph[v];if(!x)return;if(CPD.on===v)return;cpClose(true);
+  var t=CPD_T[v]||[x.pn.parentNode.querySelector('h1').textContent,''];
+  document.getElementById('cpd-t').textContent=t[0];document.getElementById('cpd-s').textContent=t[1]+(CLIENT?' · для '+qn(CLIENT):'');
+  document.getElementById('cpd-body').appendChild(x.pn);CPD.on=v;
+  var d=document.getElementById('cpd');d.classList.add('on');d.setAttribute('aria-hidden','false');document.body.classList.add('cpd-open');
+  var ta=x.pn.querySelector('textarea');setTimeout(function(){if(ta)HTMLElement.prototype.focus.__o.call(ta,{preventScroll:true});},180);
+}
+function cpClose(quiet){
+  if(!CPD.on)return;var x=CPD.ph[CPD.on];if(CPD.rec)cpVoiceStop(true);
+  x.ph.parentNode.insertBefore(x.pn,x.ph.nextSibling);CPD.on=null;
+  var d=document.getElementById('cpd');d.classList.remove('on');d.setAttribute('aria-hidden','true');document.body.classList.remove('cpd-open');
+}
+/* всё, что раньше «прокручивало к панели и ставило курсор», теперь открывает окно */
+(function(){
+  var f0=HTMLElement.prototype.focus,s0=Element.prototype.scrollIntoView;
+  var own=function(el){var pn=el.closest&&el.closest('.create-panel');if(pn&&pn.dataset.v&&!pn.closest('.cpd')){cpOpen(pn.dataset.v);return true;}return false;};
+  HTMLElement.prototype.focus=function(){own(this);return f0.apply(this,arguments);};HTMLElement.prototype.focus.__o=f0;
+  Element.prototype.scrollIntoView=function(){if(own(this))return;if(this.closest&&this.closest('.cpd'))return;return s0.apply(this,arguments);};
+})();
+/* начали платную сборку или ушли со страницы — окно закрывается */
+(function(){
+  var sg=spendGate;spendGate=function(c,n,fn){return sg.call(this,c,n,function(){cpClose(true);return fn.apply(this,arguments);});};
+  var g0=go;go=function(){cpClose(true);return g0.apply(this,arguments);};
+})();
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&CPD.on&&!document.querySelector('.modalbg.on')&&!document.querySelector('.dd.open'))cpClose();},true);
+/* голосом: как на Главной — пишем, что слышим; без распознавания в прототипе подставляем пример */
+function cpVoice(v){
+  if(CPD.rec){cpVoiceStop();return;}
+  var pn=CPD.ph[v].pn,ta=pn.querySelector('textarea'),m=pn.querySelector('.cp-mic'),SR=window.SpeechRecognition||window.webkitSpeechRecognition,base=ta.value?ta.value.replace(/\s*$/,' '):'';
+  CPD.rec={v:v,t0:Date.now(),real:false,m:m};m.classList.add('rec');m.setAttribute('aria-label','Остановить запись');
+  var tick=function(){var sec=Math.floor((Date.now()-CPD.rec.t0)/1000);m.innerHTML='<i></i>'+Math.floor(sec/60)+':'+pad2(sec%60)+' · Стоп';};tick();CPD.rec.iv=setInterval(tick,250);
+  if(SR){try{var r=new SR();r.lang='ru-RU';r.interimResults=true;r.continuous=true;
+    r.onresult=function(e){var t='';for(var i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;ta.value=base+t;ta.dispatchEvent(new Event('input'));if(CPD.rec)CPD.rec.real=true;};
+    r.onerror=function(){};r.start();CPD.rec.r=r;}catch(e){}}
+}
+function cpVoiceStop(silent){
+  var rec=CPD.rec;if(!rec)return;CPD.rec=null;clearInterval(rec.iv);if(rec.r)try{rec.r.stop();}catch(e){}
+  rec.m.classList.remove('rec');rec.m.innerHTML=MIC;rec.m.setAttribute('aria-label','Надиктовать голосом');
+  if(silent)return;
+  var ta=CPD.ph[rec.v].pn.querySelector('textarea');
+  if(!rec.real){ta.value=(ta.value?ta.value.replace(/\s*$/,' '):'')+(CPD_SAY[rec.v]||'');ta.dispatchEvent(new Event('input'));toast('Голос расшифрован — в прототипе подставили пример фразы');}
+  HTMLElement.prototype.focus.__o.call(ta,{preventScroll:true});
+}
 
 /* ---------- toast ---------- */
 var toastT=null;
