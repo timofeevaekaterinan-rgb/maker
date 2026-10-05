@@ -511,6 +511,17 @@
   .ik-gaps>b{display:block;font-size:14px;color:var(--warn-ink)}
   .ik-gaps .pg-gap{border-top-color:rgba(154,90,34,.18)}
   .ik-ex{background:none;border:0;padding:0;color:var(--blue);font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+  .bm{display:flex;flex-direction:column;gap:7px}
+  .bm-top{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.bm-top b{font-family:var(--head);font-size:18px;font-weight:800;letter-spacing:-.02em}.bm-top span{color:var(--ink-3);font-size:12.5px}
+  .bm.big .bm-top b{font-size:34px}
+  .bm-bar{height:10px;border-radius:6px;background:var(--inset);overflow:hidden;box-shadow:inset 0 0 0 1px var(--line)}
+  .bm.big .bm-bar{height:14px;border-radius:8px}
+  .bm-bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#22A06B,#4CC38A);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .bm-mid .bm-bar i{background:linear-gradient(90deg,#2E6BE6,#5C93EC)}.bm-low .bm-bar i{background:linear-gradient(90deg,#E0722E,#F0A25E)}.bm-zero .bm-bar i{width:0!important}
+  .bm-sub{font-size:12.5px;color:var(--ink-2)}.bm-low .bm-sub,.bm-zero .bm-sub{color:var(--warn-ink)}
+  .pm-bal{display:block;padding:10px 12px;margin:4px 0;border-radius:10px;background:var(--inset);cursor:pointer;text-align:left;border:0;width:100%;font:inherit}
+  .pm-bal small{display:block;font-size:11px;color:var(--ink-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .pm-bal .bm-top b{font-size:15px}
   .del-list{margin:6px 0 0;padding-left:18px;color:var(--ink-2);font-size:13.5px;line-height:1.5}
   .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#1A2230;color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:500;box-shadow:0 18px 40px -14px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.25s;z-index:50;display:flex;align-items:center;gap:10px;max-width:min(90vw,440px)}
 
@@ -3090,7 +3101,7 @@
       <!-- ============ BILLING ============ -->
       <section id="v-billing" class="view">
         <div class="phead">
-          <div><h1>Счёт и оплата</h1><p class="ph-why">Сколько денег на балансе, на сколько их хватит и на что они уходят. Подписки нет — платите только за действия, цена всегда на кнопке до списания.</p></div>
+          <div><h1>Счёт и оплата</h1><p class="ph-why">Сколько денег на балансе, на сколько их хватит и на что они уходят. Подписки нет — платите только за действия. Полоса показывает, сколько осталось с последнего пополнения; цену действия видно, если навести на кнопку.</p></div>
           <div class="sp"></div>
         </div>
         <div class="step-h">Итог</div>
@@ -3117,7 +3128,7 @@
             <select class="sortsel fsel" id="bl-pj" data-projs="all" onchange="blPage=1;renderJournal()"></select>
             <div class="chipset" id="bl-sec">
               <button class="chip on" data-st="" onclick="chipPick(this);blPage=1;renderJournal()">Все</button>
-              <button class="chip" data-st="Изображения" onclick="chipPick(this);blPage=1;renderJournal()">Изображения</button>
+              <button class="chip" data-st="Фото и видео" onclick="chipPick(this);blPage=1;renderJournal()">Фото и видео</button>
               <button class="chip" data-st="Видео" onclick="chipPick(this);blPage=1;renderJournal()">Видео</button>
               <button class="chip" data-st="Сайты и страницы" onclick="chipPick(this);blPage=1;renderJournal()">Страницы</button>
               <button class="chip" data-st="Баннеры" onclick="chipPick(this);blPage=1;renderJournal()">Баннеры</button>
@@ -3204,7 +3215,7 @@
                 </div>
             <div class="panel">
               <h3>Манера фото</h3>
-              <p class="psub">Из неё снимаются серии в «Изображениях»: вы пишете сюжет, манеру берём отсюда.</p>
+              <p class="psub">Из неё снимаются серии в «Фото и видео»: вы пишете сюжет, манеру берём отсюда.</p>
               <div class="st-photo">
                 <label class="bfield"><span class="bl"><span>Свет</span></span><input id="st-ph-light" oninput="stSet('photo.light',this.value)"></label>
                 <label class="bfield"><span class="bl"><span>Цвет</span></span><input id="st-ph-color" oninput="stSet('photo.color',this.value)"></label>
@@ -4952,7 +4963,7 @@ function chatAct(kind,i){
     m={r:'ai',basis:true,ctxSnap:c.ctx.slice(),h:planHTML(c),acts:['shot'],link:['Собрать в Контент-плане',"go('plan');plSetProj('"+c.p+"');plFocus()"]};
   }else if(kind==='post'){
     var z={id:'s'+(++socSeq),type:'post',p:c.p,t:topic.slice(0,90),st:'draft',date:'завтра',time:'19:00',ts:20+socSeq,plats:['vk','tg'],img:tpShotImg(c.p,socSeq),text:{},src:[]};
-    SOC.push(z);c.cost+=.82;charge(c.p,'Соцсети','Пост из чата '+qn(z.t)+'',.82);
+    SOC.push(z);c.cost+=.82;charge(c.p,'Публикации','Пост из чата '+qn(z.t)+'',.82);
     m={r:'ai',h:'<p>Собрала черновик поста '+hesc(qn(z.t))+' в «Постах» — версии для VK и Telegram. Там же отправите клиенту на согласование.</p>',link:['Открыть в «Постах»',"go('soc-post');socOpen('"+z.id+"')"]};
   }else if(kind==='banners'){
     var cta='Оставить заявку',x=bnNewSet(c.p,topic.slice(0,48),[{h:topic.slice(0,48),s:'Подробности — по кнопке',c:cta},{h:'Успейте до конца месяца',s:topic.slice(0,60),c:cta},{h:topic.slice(0,48),s:'Ответим за 15 минут',c:cta}],'');
@@ -5062,7 +5073,7 @@ function campSignals(pj){
 }
 
 /* ---------- production journal & balance (Billing) ---------- */
-var OPS_T=[['Изображения','Кадр',1.47,7.36,5],['Изображения','Пересъёмка неудачного кадра',0,0,.4],['Сайты и страницы','Правка блока',.14,.56,2],['Сайты и страницы','Сборка страницы',1.4,2.25,.35],['Баннеры','Вариант текста',.43,.43,.5],['Баннеры','Комплект баннеров',1.2,1.72,.25],['Видео','Ролик',12.4,41.03,.1],['Чаты','Ответ',.3,.82,3],['Презентации','План колоды',.31,.31,.08],['Презентации','Сборка колоды',1.9,2.63,.06]];
+var OPS_T=[['Фото и видео','Кадр',1.47,7.36,5],['Фото и видео','Пересъёмка неудачного кадра',0,0,.4],['Сайты и страницы','Правка блока',.14,.56,2],['Сайты и страницы','Сборка страницы',1.4,2.25,.35],['Баннеры','Вариант текста',.43,.43,.5],['Баннеры','Комплект баннеров',1.2,1.72,.25],['Видео','Ролик',12.4,41.03,.1],['Чаты','Ответ',.3,.82,3],['Презентации','План колоды',.31,.31,.08],['Презентации','Сборка колоды',1.9,2.63,.06]];
 var PJW={'СберТаргет':1,'Атвинта':.6,'Вита':.35,'Таргет-сайт':.1};
 var JOURNAL=[];
 (function(){
@@ -5129,7 +5140,7 @@ function gateGo(){closeModal('gate-modal');var f=GATE_FN;GATE_FN=null;if(f)f();}
     if(c&&!c.p&&isShot){toast('Сначала выберите клиента — кадр снимаем в его манере');return;}
     if(c&&!c.p&&!c.general)return cS(isShot);
     var cost=isShot?4.64:.82;
-    spendGate(cost,isShot?'Кадр из чата':'Ответ в чате',function(){cS(isShot);charge(c?c.p||'Без клиента':'СберТаргет',isShot?'Изображения':'Чаты',isShot?'Кадр из чата':'Ответ в чате',cost);});
+    spendGate(cost,isShot?'Кадр из чата':'Ответ в чате',function(){cS(isShot);charge(c?c.p||'Без клиента':'СберТаргет',isShot?'Фото и видео':'Чаты',isShot?'Кадр из чата':'Ответ в чате',cost);});
   };
 })();
 
@@ -5527,7 +5538,7 @@ var BL_PRICES=[['Пост для соцсетей','до 0,82 ₽',1],['Кадр
 function renderBilling(){
   var bal=balance(),l30=JOURNAL.filter(function(x){return x.sec!=='topup'&&x.d>=dkey(addDays(YDAY,-29));}),avg=-l30.reduce(function(s,x){return s+x.v;},0)/30,days=avg?Math.floor(bal/avg):0;
   var amts=[500,1000,3000,5000];
-  document.getElementById('bl-balance').innerHTML='<h3>Баланс</h3><div class="bal-v">'+rub2(bal)+'</div>'+
+  document.getElementById('bl-balance').innerHTML='<h3>Баланс</h3>'+balMeter(true)+''+
     '<div class="bl-sec"><span class="lb-lbl">Пополнить</span><div class="chipset" id="bl-amt">'+amts.map(function(a){return '<button class="chip'+(a===blAmt?' on':'')+'" type="button" onclick="blAmt='+a+';renderBilling()">'+rub(a)+'</button>';}).join('')+'</div>'+
     '<div class="chipset">'+[['card','Картой'],['invoice','Счёт для юрлица']].map(function(m){return '<button class="chip'+(m[0]===blMethod?' on':'')+'" type="button" onclick="blMethod=\''+m[0]+'\';renderBilling()">'+m[1]+'</button>';}).join('')+'</div>'+
     '<div class="bl-pay"><button class="pbtn" type="button" onclick="blPay()">'+(blMethod==='card'?'Пополнить на '+rub(blAmt):'Выставить счёт на '+rub(blAmt))+'</button><span class="cp-note" style="margin:0">'+(blMethod==='card'?'деньги придут сразу':'после оплаты — за 1–2 рабочих дня')+'</span></div></div>'+
@@ -5536,14 +5547,14 @@ function renderBilling(){
   // итог словами — из тех же bal, avg, days, month и расходов по клиентам ниже
   var mf0=dkey(new Date(2026,9,1)),byP={};JOURNAL.forEach(function(x){if(x.sec==='topup'||x.d<mf0)return;byP[x.p]=(byP[x.p]||0)-x.v;});
   var topP=Object.keys(byP).sort(function(a,b){return byP[b]-byP[a];})[0],sumTx,vd;
-  if(!avg){sumTx='На балансе <b>'+rub2(bal)+'</b>. Расходов пока не было — цену каждого действия увидите на кнопке до списания.';vd=['','Расходов нет'];}
+  if(!avg){sumTx='На балансе <b>'+rub2(bal)+'</b>. Расходов пока не было — цену действия видно, если навести на кнопку.';vd=['','Расходов нет'];}
   else{
     sumTx='На балансе <b>'+rub2(bal)+'</b> — '+(days>90?'хватит надолго':'хватит примерно на <b>'+plural(days,'день','дня','дней')+'</b>')+', если тратить как обычно (в среднем '+rub2(avg)+' в день).'+
       (month?' В октябре списано <b>'+rub2(month)+'</b>'+(topP?', больше всего — на '+qn(topP)+' ('+rub2(byP[topP])+').':'.'):'');
     vd=bal<LIMITS.lowAt||days<7?['wait','Пора пополнить']:days<14?['','Скоро пополнить']:['ok','Денег хватает'];
   }
   document.getElementById('bl-sum').innerHTML='<div class="sum-tx">'+sumTx+'</div><span class="verdict '+vd[0]+'">'+vd[1]+'</span>';
-  document.getElementById('bl-cost').innerHTML='<h3>Сколько что стоит</h3><p class="psub">Самое частое. Цена всегда видна на кнопке до действия, неудачные кадры не оплачиваются.</p><div class="price-lines">'+BL_PRICES.filter(function(r){return r[2];}).map(function(r){return '<div class="kv"><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>';}).join('')+'</div>';
+  document.getElementById('bl-cost').innerHTML='<h3>Сколько что стоит</h3><p class="psub">Самое частое. Цену видно, если навести на кнопку; дорогое Maker подтвердит перед списанием, неудачные кадры не оплачиваются.</p><div class="price-lines">'+BL_PRICES.filter(function(r){return r[2];}).map(function(r){return '<div class="kv"><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>';}).join('')+'</div>';
 
   var ch=function(vals,cur,set,fmt){return '<div class="chipset">'+vals.map(function(v){return '<button class="chip'+(v===cur?' on':'')+'" type="button" onclick="'+set+'='+v+';renderBilling()">'+fmt(v)+'</button>';}).join('')+'</div>';};
   document.getElementById('bl-limits').innerHTML='<h3>Лимиты и уведомления</h3><p class="psub">Чтобы ни одно действие не стоило неожиданно</p>'+
@@ -5560,7 +5571,7 @@ function renderBilling(){
   document.getElementById('bl-docs').innerHTML='<h3>Документы</h3><p class="psub">ООО «Демо-агентство» · ИНН 7700000000</p>'+
     [['PDF','Квитанция об оплате','1 окт · '+rub(JOURNAL.filter(function(x){return x.d==='2026-10-01'&&x.sec==='topup';})[0].v)],['PDF','Акт за сентябрь 2026','подписан электронно'],['PDF','УПД за сентябрь 2026','для бухгалтерии'],['PDF','Счёт № 1042 от 1 окт','оплачен']].map(function(d){return '<div class="doc-row"><span class="di">'+d[0]+'</span><span>'+d[1]+'<small>'+d[2]+'</small></span><button class="mini" type="button" data-engine="billing-doc" onclick="engineFile(\''+d[1]+' · PDF\')">Скачать</button></div>';}).join('')+
     '<div class="gate-acts" style="justify-content:flex-start"><button class="mini" type="button" onclick="toast(\'Реквизиты компании — форма редактирования (имитировано)\')">Реквизиты компании</button></div>';
-  document.getElementById('bl-price').innerHTML='<h3>Все цены</h3><p class="psub">Цена всегда видна на кнопке до действия. Неудачные кадры не оплачиваются.</p><div class="price-lines price-cols">'+
+  document.getElementById('bl-price').innerHTML='<h3>Все цены</h3><p class="psub">Цену видно, если навести на кнопку; дорогое подтверждаем перед списанием. Неудачные кадры не оплачиваются.</p><div class="price-lines price-cols">'+
     BL_PRICES.map(function(r){return '<div class="kv"><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>';}).join('')+'</div>';
 }
 function renderJournal(){
@@ -6150,8 +6161,8 @@ function renderToday(){
   campSignals(CLIENT||undefined).forEach(function(x){it.push({p:x.c.p,k:'ads',c:'warn',t:x.t,s:'Кампании · '+x.s,a:x.a,fn:x.fn});});
   PAGES.filter(function(p){return p.st==='check';}).forEach(function(p){it.push({p:p.p,k:'page',c:'warn',t:'Проверьте страницу '+qn(p.n),s:'Сайты и страницы · '+p.p+' · ждёт проверки',a:'Проверить',fn:"openPage('"+esc(p.n)+"')"});});
   PAGES.filter(function(p){return p.fb&&p.st==='draft';}).forEach(function(p){it.unshift({p:p.p,k:'page',c:'warn',t:'Клиент просит правки: страница '+hesc(qn(p.n)),s:p.p+' · «'+hesc(p.fb)+'»',a:'Открыть',fn:"openPage('"+esc(p.n)+"')"});});
-  SHOTS.filter(function(z){return z.st==='bad';}).forEach(function(z){it.push({p:serOf(z).p,k:'img',c:'warn',t:''+qn(z.t)+' не получился — переснимем бесплатно',s:'Изображения · '+serOf(z).p,a:'Открыть',fn:'go(\'images\');openShot('+z.id+')'});});
-  if(typeof SOC!=='undefined')SOC.filter(function(x){return x.st==='check';}).forEach(function(x){it.push({p:x.p,k:'soc',c:'warn',t:SOC_T[x.type][0]+' '+qn(x.t)+' ждёт согласования клиента',s:'Соцсети · '+x.p,a:'Открыть',fn:"go('soc-"+x.type+"');socOpen('"+x.id+"')"});});
+  SHOTS.filter(function(z){return z.st==='bad';}).forEach(function(z){it.push({p:serOf(z).p,k:'img',c:'warn',t:''+qn(z.t)+' не получился — переснимем бесплатно',s:'Фото и видео · '+serOf(z).p,a:'Открыть',fn:'go(\'images\');openShot('+z.id+')'});});
+  if(typeof SOC!=='undefined')SOC.filter(function(x){return x.st==='check';}).forEach(function(x){it.push({p:x.p,k:'soc',c:'warn',t:SOC_T[x.type][0]+' '+qn(x.t)+' ждёт согласования клиента',s:'Публикации · '+x.p,a:'Открыть',fn:"go('soc-"+x.type+"');socOpen('"+x.id+"')"});});
   if(typeof SOC!=='undefined'){
     SOC.filter(function(x){return x.fb&&x.st==='draft';}).forEach(function(x){it.unshift({p:x.p,k:'soc',c:'warn',t:'Клиент просит правки: '+SOC_T[x.type][0].toLowerCase()+' '+hesc(qn(x.t))+'',s:x.p+' · «'+hesc(x.fb)+'»',a:'Открыть',fn:"go('soc-"+x.type+"');socOpen('"+x.id+"')"});});
     SOC.filter(function(x){return x.cl==='ok'&&x.st==='ok';}).forEach(function(x){it.push({p:x.p,k:'soc',c:'ok',t:'Клиент согласовал: '+SOC_T[x.type][0].toLowerCase()+' '+hesc(qn(x.t))+'',s:x.p+' · можно планировать публикацию',a:'Запланировать',fn:"go('soc-"+x.type+"');socOpen('"+x.id+"');socSchedule()"});});
@@ -6347,7 +6358,7 @@ function socTextEdit(ta){
   var c=document.getElementById('soc-cnt');c.textContent=ta.value.length+(f.lim?' / '+sp3(f.lim):'');c.classList.toggle('over',!!(f.lim&&ta.value.length>f.lim));
 }
 function socShorten(){var x=socCur(),f=SOC_FMT.post[x.cur],t=x.text[x.cur];var cut=t.slice(0,f.lim-1);x.text[x.cur]=cut.slice(0,Math.max(cut.lastIndexOf('\n'),cut.lastIndexOf('. ')+1)).trim();socEdit(x.type);toast('Сократили до лимита по последнему законченному абзацу');}
-function socVariant(){var x=socCur();spendGate(.41,'Другой вариант текста',function(){x.var=x.var||{};x.var[x.cur]=x.var[x.cur]?0:1;delete x.text[x.cur];socEdit(x.type);charge(x.p,'Соцсети','Вариант текста · '+platName(x.type,x.cur),.41);toast('Новый вариант в голосе бренда — прошлый не потерян, нажмите ещё раз');});}
+function socVariant(){var x=socCur();spendGate(.41,'Другой вариант текста',function(){x.var=x.var||{};x.var[x.cur]=x.var[x.cur]?0:1;delete x.text[x.cur];socEdit(x.type);charge(x.p,'Публикации','Вариант текста · '+platName(x.type,x.cur),.41);toast('Новый вариант в голосе бренда — прошлый не потерян, нажмите ещё раз');});}
 function socSlideEdit(k,v){var x=socCur();x.slides[x.idx][k]=v;var T=x.type,f=SOC_FMT.car[x.cur];document.querySelector('#se-'+T+' .cs-big').innerHTML=slideCard(x,x.slides[x.idx],x.idx,x.slides.length,f.r);}
 function socSlideAdd(){var x=socCur();x.slides.splice(x.slides.length-1,0,{h:'[новая мысль]',s:'[объяснение]'});x.idx=x.slides.length-2;socEdit(x.type);}
 function socSlideDel(){var x=socCur();if(x.idx===0||x.idx===x.slides.length-1){toast('Обложку и последний слайд не удаляем — это вход и призыв');return;}x.slides.splice(x.idx,1);x.idx--;socEdit(x.type);}
@@ -6369,7 +6380,7 @@ function socPublishNow(){var x=socCur();if(socSplit(x).man.length)socPubAsk();el
 function socRender(){
   var x=socCur();
   spendGate(41.03,'Рендер клипа',function(){
-    openBuildModal('Рендерим клип',['Снимаем сцены по раскадровке','Собираем ролик '+(x.dur||30)+' с','Ставим субтитры и обложку','Переобрезаем под '+x.plats.map(function(p){return platName('clip',p);}).join(', ')],'Клип готов — он ждёт согласования.',function(){x.rendered=true;x.st='check';charge(x.p,'Соцсети','Клип '+qn(x.t)+'',41.03);renderSoc('clip');ntfPush({p:x.p,k:'ready',t:'Клип готов',s:''+qn(x.t)+' · '+x.p+' — можно отправлять на согласование',fn:function(){go('soc-clip');socOpen(x.id);}});});
+    openBuildModal('Рендерим клип',['Снимаем сцены по раскадровке','Собираем ролик '+(x.dur||30)+' с','Ставим субтитры и обложку','Переобрезаем под '+x.plats.map(function(p){return platName('clip',p);}).join(', ')],'Клип готов — он ждёт согласования.',function(){x.rendered=true;x.st='check';charge(x.p,'Публикации','Клип '+qn(x.t)+'',41.03);renderSoc('clip');ntfPush({p:x.p,k:'ready',t:'Клип готов',s:''+qn(x.t)+' · '+x.p+' — можно отправлять на согласование',fn:function(){go('soc-clip');socOpen(x.id);}});});
   });
 }
 function vfFmtGroup(btn){
@@ -6389,7 +6400,7 @@ function socCreate(T){
       var x={id:'s'+(++socSeq),type:T,p:p,t:t.split(/[\n.!?]/)[0].slice(0,90),st:'draft',date:'завтра',time:'19:00',ts:20+socSeq,plats:plats,img:tpShotImg(p,socSeq),text:{},src:files,n:n,dur:T==='clip'?n:0};
       if(T==='story'||T==='car')x.slides=null;
       SOC.push(x);SOC_ACT[T]=x.id;ta.value='';document.getElementById('sxc-'+T).textContent='0 / 3000';ATT['so'+T]=[];attRender('so'+T);
-      charge(p,'Соцсети',SOC_T[T][0]+' '+qn(x.t)+'',price);
+      charge(p,'Публикации',SOC_T[T][0]+' '+qn(x.t)+'',price);
       socReset(T);document.getElementById('se-'+T).scrollIntoView({behavior:'smooth',block:'start'});
     });
   });
@@ -6511,7 +6522,7 @@ function pqMakeAll(T){
   var L=pqList(T),pr=SOC_PRICE[T],nm=SOC_T[T][1].toLowerCase();if(!L.length)return;
   spendGate(pr*L.length,SOC_T[T][1]+' из контент-плана · '+L.length,function(){
     openBuildModal('Собираем '+nm+' из плана',['Берём '+plural(L.length,'тему','темы','тем')+' с мыслями и фактами','Пишем в голосе клиента','Подстраиваем под площадки из стратегии'],plural(L.length,'черновик готов','черновика готовы','черновиков готовы')+' — проверьте и отправьте клиенту.',function(){
-      L.forEach(function(x){var z=plSocFrom(x,T,plPlats(x,T));SOC.push(z);charge(x.p,'Соцсети',SOC_T[T][0]+' из темы '+qn(x.t)+'',pr);});
+      L.forEach(function(x){var z=plSocFrom(x,T,plPlats(x,T));SOC.push(z);charge(x.p,'Публикации',SOC_T[T][0]+' из темы '+qn(x.t)+'',pr);});
       renderSoc(T);renderToday();
     });
   });
@@ -6753,7 +6764,7 @@ function plMake(T){
   spendGate(price,SOC_T[T][0],function(){
     openBuildModal(T==='clip'?'Готовим раскладку':'Собираем '+SOC_T[T][0].toLowerCase(),['Берём тему, мысль и '+plural(x.facts.length,'факт','факта','фактов'),'Пишем в голосе '+qn(x.p)+'','Подстраиваем под '+plats.map(function(q){return platName(T,q);}).join(', ')],'Готово — открываем в разделе «'+SOC_T[T][1]+'».',function(){
       var z=plSocFrom(x,T,plats);
-      SOC.push(z);charge(x.p,'Соцсети',SOC_T[T][0]+' из темы '+qn(x.t)+'',price);
+      SOC.push(z);charge(x.p,'Публикации',SOC_T[T][0]+' из темы '+qn(x.t)+'',price);
       go('soc-'+T);socOpen(z.id);
     });
   });
@@ -6784,7 +6795,7 @@ function plCreate(){
         for(var i=0;i<n;i++){
           var r=pool[i],cnt=seen[r]=(seen[r]||0)+1+(mi-1)*3;
           var dt=dates[Math.floor(i*dates.length/n)]||dates[dates.length-1];
-          PLAN.push({id:'t'+(++plSeq),p:p,d:dkey(dt),rub:r,t:(idx===0&&t?t.split(/[\n.!?]/)[0].slice(0,80):nicheFill(plBank(r,cnt-1),p)),idea:PL_IDEA[plKey(r)]||'[главная мысль]',facts:[factFor(p,['Цифры и результаты','О компании','Цены и условия'],idx)||'[факт из базы или ваших слов]'],img:tpShotImg(p,idx),st:'draft'});idx++;
+          PLAN.push({id:'t'+(++plSeq),p:p,d:dkey(dt),rub:r,t:(idx===0&&t?txtClean(t.split(/[\n.!?]/)[0].slice(0,80)):nicheFill(plBank(r,cnt-1),p)),idea:PL_IDEA[plKey(r)]||'[главная мысль]',facts:[txtClean(factFor(p,['Цифры и результаты','О компании','Цены и условия'],idx))||'[факт из базы или ваших слов]'],img:tpShotImg(p,idx),st:'draft'});idx++;
         }
       }
       ta.value='';ATT.pl=[];attRender('pl');charge(p,'Контент','Контент-план '+qn(p)+' '+perName(k),price);
@@ -8014,7 +8025,7 @@ function dlMyData(){
 /* ---------- where am I: breadcrumbs, back, route kept across reloads ---------- */
 var NAVH={home:[null,'Главная'],projects:[null,'Клиенты'],project:[null,'Клиент'],
   strat:['Контент','Стратегия'],plan:['Контент','Контент-план'],images:['Контент','Фото и видео'],video:['Контент','Фото и видео'],
-  'soc-post':['Контент','Посты'],'soc-car':['Контент','Карусели'],'soc-story':['Контент','Сторис'],'soc-clip':['Контент','Клипы'],
+  'soc-post':['Контент','Публикации · посты'],'soc-car':['Контент','Публикации · карусели'],'soc-story':['Контент','Публикации · сторис'],'soc-clip':['Контент','Публикации · клипы'],
   banners:['Реклама','Баннеры'],campaigns:['Реклама','Кампании'],camp:['Реклама','Кампании','campaigns'],result:['Реклама','Результат'],
   style:['Бренд клиента','Стиль'],voice:['Бренд клиента','Голос'],facts:['Бренд клиента','База фактов'],templates:['Бренд клиента','Шаблоны'],groups:['Бренд клиента','Аудитории'],
   pages:['Контент','Сайты и страницы'],page:['Контент','Сайты и страницы','pages'],build:['Контент','Сайты и страницы','pages'],pres:['Контент','Презентации'],deck:['Контент','Презентации','pres'],chats:[null,'Чаты'],
@@ -8131,8 +8142,8 @@ window.addEventListener('popstate',function(){var r=routeParse();if(!r)return;va
 function profMenu(e){
   e.stopPropagation();var btn=e.currentTarget,was=document.getElementById('td-menu');tdMenuClose();if(was&&was.dataset.i==='prof')return;
   var m=document.createElement('div');m.className='td-menu';m.id='td-menu';m.dataset.i='prof';m.setAttribute('role','menu');
-  m.innerHTML='<div class="pm-cab"><small>Кабинет</small><b>'+hesc(CAB)+'</b><span>'+hesc(pfFull())+'</span></div><button role="menuitem" type="button" data-a="me">Профиль и доступы</button><button role="menuitem" type="button" data-a="out">Выйти из кабинета</button>';
-  m.addEventListener('click',function(ev){ev.stopPropagation();var a=ev.target.dataset.a;if(!a)return;tdMenuClose();if(a==='me')go('profile');else signOut();});
+  m.innerHTML='<div class="pm-cab"><small>Кабинет</small><b>'+hesc(CAB)+'</b><span>'+hesc(pfFull())+'</span></div><button class="pm-bal" role="menuitem" type="button" data-a="bal"><small>Баланс</small>'+balMeter(false)+'</button><button role="menuitem" type="button" data-a="me">Профиль и доступы</button><button role="menuitem" type="button" data-a="out">Выйти из кабинета</button>';
+  m.addEventListener('click',function(ev){ev.stopPropagation();var a=(ev.target.closest('[data-a]')||{}).dataset;a=a&&a.a;if(!a)return;tdMenuClose();if(a==='me')go('profile');else if(a==='bal')go('billing');else signOut();});
   m.addEventListener('keydown',function(ev){if(ev.key==='Escape'){tdMenuClose();btn.focus();}});
   document.body.appendChild(m);
   var r=btn.getBoundingClientRect(),top=r.bottom+6;if(top+m.offsetHeight>innerHeight-8)top=r.top-m.offsetHeight-6;
@@ -8202,7 +8213,7 @@ var CRUMB={
   home:['Главная','СберТаргет'],projects:['Клиенты'],project:['Клиенты','{l}'],
   pages:['Сайты и страницы'],page:['Сайты и страницы','{l}'],build:['Сайты и страницы','Новая страница'],
   images:['Контент','Фото и видео'],video:['Контент','Фото и видео'],strat:['Контент','Стратегия'],plan:['Контент','Контент-план'],pres:['Презентации'],chats:['Чаты'],
-  banners:['Баннеры'],campaigns:['Кампании'],result:['Результат'],deck:['Презентации','{l}'],camp:['Кампании','{l}'],billing:['Счёт и оплата'],states:['Карта состояний'],profile:['Профиль'],style:['Стиль'],voice:['Голос'],facts:['База фактов'],templates:['Шаблоны'],groups:['Аудитории'],'soc-post':['Соцсети','Посты'],'soc-car':['Соцсети','Карусели'],'soc-story':['Соцсети','Сторис'],'soc-clip':['Соцсети','Клипы']
+  banners:['Баннеры'],campaigns:['Кампании'],result:['Результат'],deck:['Презентации','{l}'],camp:['Кампании','{l}'],billing:['Счёт и оплата'],states:['Карта состояний'],profile:['Профиль'],style:['Стиль'],voice:['Голос'],facts:['База фактов'],templates:['Шаблоны'],groups:['Аудитории'],'soc-post':['Публикации','Посты'],'soc-car':['Публикации','Карусели'],'soc-story':['Публикации','Сторис'],'soc-clip':['Публикации','Клипы']
 };
 var NAVMAP={video:'images',project:'home',page:'pages',build:'pages',deck:'pres',camp:'campaigns','soc-car':'soc-post','soc-story':'soc-post','soc-clip':'soc-post'};
 function go(view,label){
@@ -8566,6 +8577,14 @@ function ikSents(t){
   return s.split(/\n+|;\s+|(?:[.!?]+)\s+(?=[А-ЯЁA-Z0-9«"—•\-])|[.!?]+$/).map(function(x){return x.replace(/․ /g,'. ').replace(/^[\s•\-–—*]+|^\d+[.)]\s+/,'').replace(/[.\s]+$/,'').trim();}).filter(function(x){return x.length>4;});
 }
 function ikCap(x){x=String(x||'').trim();return x.charAt(0).toUpperCase()+x.slice(1);}
+/* фраза из рассказа → чистый факт: без висящих кавычек, без «у меня», без точки-хвоста */
+function txtClean(x){
+  x=String(x||'').trim();if(/^\[/.test(x))return x;
+  if(/^[«"].*[»"]$/.test(x)&&(x.match(/[«»"]/g)||[]).length===2)x=x.slice(1,-1);
+  var o=(x.match(/«/g)||[]).length,c=(x.match(/»/g)||[]).length;if(o!==c)x=x.replace(/[«»]/g,'');if((x.match(/"/g)||[]).length%2)x=x.replace(/"/g,'');
+  x=x.replace(/^у\s+меня(?=\s|,|$)/i,'У нас').replace(/^я\s+/i,'Мы ').replace(/\s+([,.;:])/g,'$1').replace(/[\s,;:—–-]+$/,'');
+  return ikCap(x);
+}
 function ikAud(s){
   var w=s.replace(/[«»"]/g,'').split(/\s+/),i=-1;
   for(var k=0;k<w.length;k++){if(IK_PERS.test(w[k].replace(/[,.:;]/g,''))&&!/^клиент/i.test(w[k])){i=k;break;}}
@@ -8605,15 +8624,15 @@ function ikParse(p,t){
     if(ikVoice(s,r.voice))return;
     var g=ikAud(s);if(g&&ix===0&&g.at>=2&&!/(клиент|гост|покупател|аудитор|приходят|заходят|ходят)/i.test(l))g=null;if(g&&!/₽|руб/.test(s)){var same=r.groups.filter(function(x){return x.n.toLowerCase().slice(0,6)===g.n.toLowerCase().slice(0,6);})[0];if(same){same.who+=' '+ikCap(s);}else r.groups.push(g);return;}
     if(!r.goal&&/(хотим|нужно|нужна|нужны|цель|задача|чтобы\s+было)/i.test(l)&&!/(клиентам|им\s+нужн)/i.test(l)){var gl=strGoal(s);if(gl){r.goal=goalClean(gl);var n=s.match(/(\d[\d\s]*)\s*(заяв|запис|продаж|заказ|клиент|подпис|гост)/i);if(n)r.goalN=n[1].replace(/\s/g,'')+' в месяц';return;}}
-    if(!r.pos&&/(отличаемся|в отличие|единственн|уникальн|наша фишка|главное преимущество|главное,\s+чем|чем\s+мы\s+лучше)/i.test(l)){r.pos=ikCap(s.replace(/^(главное,?\s+чем\s+отличаемся:?\s*|отличаемся\s+тем,?\s+что\s*|наша фишка\s*[—:-]?\s*)/i,''));return;}
+    if(!r.pos&&/(отличаемся|в отличие|единственн|уникальн|наша фишка|главное преимущество|главное,\s+чем|чем\s+мы\s+лучше)/i.test(l)){r.pos=txtClean(s.replace(/^(главное,?\s+чем\s+отличаемся:?\s*|отличаемся\s+тем,?\s+что\s*|наша фишка\s*[—:-]?\s*)/i,''));return;}
     if(/(важно донести|хотим,\s+чтобы\s+знали|главная мысль|ключевое)/i.test(l)){r.msgs.push(ikCap(s.replace(/^.*?(?:донести|знали|мысль|ключевое)\s*[:—-]?\s*/i,'')));return;}
     if(used)return;
     if(s.replace(/(?:https?:\/\/)?(?:[a-z0-9-]+\.)+[a-zрф]{2,}(?:\/\S*)?/gi,'').replace(/(канал|сайт|группа|наш|наша|наш[еи]|в|—|-|:|,)/gi,'').trim().length<4)return;
-    if(/^(не\s+(гарантир|обещ|пишем|говорим|использ|называем)|нельзя|запрещ)/i.test(l)){r.facts.push({cat:'Запреты',t:ikCap(s)});return;}
-    if(/(акци[яию]|скидк|в\s+подарок|распродаж)/i.test(l)){r.facts.push({cat:'Акции',t:ikCap(s)});return;}
+    if(/^(не\s+(гарантир|обещ|пишем|говорим|использ|называем)|нельзя|запрещ)/i.test(l)){r.facts.push({cat:'Запреты',t:txtClean(s)});return;}
+    if(/(акци[яию]|скидк|в\s+подарок|распродаж)/i.test(l)){r.facts.push({cat:'Акции',t:txtClean(s)});return;}
     var cat=(ix===0||/^(мы\s|компани|наша\s+компани)|работаем\s+с\s+\d{4}|на\s+рынке|сеть\s+из/i.test(l))&&!/₽|руб|скидк|акци|\d{1,2}:\d{2}/i.test(s)?'О компании':faGuess(s);
     if(cat==='О компании'&&ix>0&&!/^(мы\s|компани|наша)|работаем|на\s+рынке|сеть/i.test(l)){r.left.push(s);return;}
-    r.facts.push({cat:cat,t:ikCap(s)});
+    r.facts.push({cat:cat,t:txtClean(s)});
   });
   return r;
 }
@@ -8627,7 +8646,7 @@ function ikApply(p,r,o){
     var n=grNew(p,{n:g.n,who:g.who,task:g.task||'[задача группы]',geo:g.geo||'[гео]',age:g.age||'[возраст]',matters:g.task?[g.task]:['[что важно при выборе]'],obj:g.obj?[g.obj]:['[типичные возражения]'],words:'[какими словами говорят]',keys:[],sugg:false,fromTxt:true});rep.gNew.push(n.n);
   });
   r.facts.forEach(function(f){if(FACTS.some(function(x){return x.p===p&&x.t.slice(0,30)===f.t.slice(0,30);}))return;FACTS.push({id:'f'+(++faSeq),p:p,cat:f.cat,t:f.t,src:'рассказ',d:'сегодня'});rep.facts[f.cat]=(rep.facts[f.cat]||0)+1;rep.fN++;});
-  if(o.factsAll)r.left.forEach(function(s){FACTS.push({id:'f'+(++faSeq),p:p,cat:'О компании',t:ikCap(s),src:'рассказ',d:'сегодня'});rep.facts['О компании']=(rep.facts['О компании']||0)+1;rep.fN++;});
+  if(o.factsAll)r.left.forEach(function(s){FACTS.push({id:'f'+(++faSeq),p:p,cat:'О компании',t:txtClean(s),src:'рассказ',d:'сегодня'});rep.facts['О компании']=(rep.facts['О компании']||0)+1;rep.fN++;});
   var d=DESIGN[p];if(d){d.tone.formal=Math.max(0,Math.min(100,d.tone.formal+r.voice.formal));d.tone.emo=Math.max(0,Math.min(100,d.tone.emo+r.voice.emo));
     r.voice.say.forEach(function(x){if(!d.say.some(function(y){return y[0]===x[0];}))d.say.push(x);});if(rep.voice.length)voiceOf(p).hist.unshift({d:'сегодня',t:'Из рассказа: '+rep.voice.join(', ')});}
   r.links.forEach(function(u){var own=/vk\.com|t\.me|instagram|tenchat|youtube|dzen/i.test(u);if(own){if(!voiceOf(p).src.some(function(x){return x.u===u;}))voiceOf(p).src.push({u:u,k:'own'});rep.links.push(u+' — в источники голоса');}
@@ -8728,7 +8747,7 @@ function ipGen(){
   spendGate(7.38,'Кадр',function(){openBuildModal('Снимаем кадр',['Берём манеру '+qn(o.p)+' из «Стиля»','Снимаем: '+pr.slice(0,60),'Проверяем: без искажений и лишнего текста'],'Кадр готов — поставили в публикацию.',function(){
     var pool=['img/intro/02-post.jpg','img/intro/07-product.jpg','img/shots/vita.jpg','img/shots/ex-roster.jpg','img/intro/06-marketer.jpg','img/shots/hero-bg.jpg','img/intro/05-plan.jpg','img/leaf.jpg','img/intro/03-carousel.jpg','img/shots/ex-vita.jpg'].filter(function(u){return u!==o.cur;});
     var url=pool[(shotSeq++)%pool.length],sr=ipSer(o.p,false);
-    SHOTS.push({id:++shotSeq,s:sr.id,t:pr.slice(0,48),img:url,st:'pub',pr:pr,f:'1:1 · 2K',cost:'7,38 ₽'});charge(o.p,'Изображения','Кадр '+qn(pr.slice(0,40)),7.38);
+    SHOTS.push({id:++shotSeq,s:sr.id,t:pr.slice(0,48),img:url,st:'pub',pr:pr,f:'1:1 · 2K',cost:'7,38 ₽'});charge(o.p,'Фото и видео','Кадр '+qn(pr.slice(0,40)),7.38);
     try{rerenderShots();}catch(e){}closeModal('build-modal');o.set(url);toast('Новый кадр поставили — он есть и в «Фото и видео»');
   });});
 }
@@ -8749,6 +8768,47 @@ function socImg(){
 function plImg(){var x=plById(plCur);if(!x)return;imgPick({p:x.p,cur:x.img,title:'Фото для темы',prompt:x.t,set:function(u){x.img=u;plEdit();}});}
 /* клик по картинке в превью — тоже поменять */
 document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('.soc-left .mk-img, .soc-left .ph-wrap .ph9, .soc-left .cs-big .cs');if(t&&!e.target.closest('.st-zone'))socImg();});
+
+/* ---------- подсказки: что значит статус, что значит плашка; цены — не на кнопках, а в подсказке ---------- */
+var ST_TIP=[['План ждёт проверки','Maker собрал план колоды — проверьте и поправьте, потом соберём слайды.'],['Ждёт проверки','Maker собрал — проверьте вы: примите или попросите переделать. Клиент это ещё не видит.'],
+  ['На согласовании','Отправлено клиенту по ссылке — ждём его «да» или правки. Ответ придёт в уведомления.'],['Ждём ответа','Отправлено клиенту по ссылке — ждём его «да» или правки.'],['Согласован','Клиент сказал «да». Можно планировать и публиковать.'],
+  ['Принят','Вы проверили и приняли. Дальше — публикация или отправка клиенту.'],['Запланирован','Выйдет сам в назначенное время. Соцсеть не подключена — пришлём напоминание с готовым текстом.'],
+  ['Опубликован','Уже на площадке или на сайте.'],['На модерации','Площадка проверяет рекламу — обычно до суток. От вас ничего не нужно.'],['Отклонён','Площадка не пропустила — откройте: там причина и кнопка «Исправить».'],
+  ['Работает','Реклама показывается, бюджет тратится по плану.'],['Идёт','Реклама показывается, бюджет тратится по плану.'],['На паузе','Вы остановили — показов нет, деньги не тратятся.'],['Завершен','Срок закончился — цифры остались в «Результате».'],
+  ['Не получился','Кадр вышел с браком — переснимем бесплатно.'],['Переснят','Пересняли по вашему замечанию — проверьте ещё раз.'],['Своё','Вы загрузили сами — Maker это не генерировал.'],
+  ['Рендерится','Ролик собирается — несколько минут, можно уйти со страницы.'],['Готова','Собрано — можно показывать и скачивать.'],['Черновик','Видите только вы. Доделайте и отправьте на проверку или клиенту.']];
+var PH_TIP='Этого Maker не знает — и не выдумывает. Впишите сами или ответьте один раз в «База фактов › Чего не хватает» — подставим везде.';
+var PRICE_RX=/\s*·\s*(?:до\s+|от\s+|~)?\d[\d\s\u00a0]*(?:,\d+)?(?:\s*[–-]\s*\d[\d\s\u00a0]*(?:,\d+)?)?\s*₽(?:\s*за\s+\d+\s*шт\.)?/;
+var uiT=null,uiBusy=false;
+function uiDecorate(root){
+  if(uiBusy)return;uiBusy=true;
+  try{
+    (root||document).querySelectorAll('.st:not([data-tip])').forEach(function(el){var t=el.textContent.trim();for(var i=0;i<ST_TIP.length;i++)if(t.indexOf(ST_TIP[i][0])===0){el.setAttribute('data-tip','<b>'+hesc(t)+'</b> — '+ST_TIP[i][1]);break;}});
+    (root||document).querySelectorAll('.mk-ph:not([data-tip]),.phx:not([data-tip])').forEach(function(el){el.setAttribute('data-tip',PH_TIP);});
+    (root||document).querySelectorAll('button').forEach(function(b){
+      if(b.closest('#gt-body .gate-acts')&&/Пополнить|Списать|Подтвердить/.test(b.textContent))return;
+      var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null),n,cost='';
+      while((n=w.nextNode())){var m=n.nodeValue.match(PRICE_RX);if(m){cost=m[0].replace(/^\s*·\s*/,'').trim();n.nodeValue=n.nodeValue.replace(PRICE_RX,'');}}
+      if(cost){b.dataset.cost=cost;b.setAttribute('data-tip','Спишется '+hesc(cost)+' с баланса');}
+    });
+  }catch(e){}
+  uiBusy=false;
+}
+(function(){if(!window.MutationObserver)return;new MutationObserver(function(){if(uiBusy)return;clearTimeout(uiT);uiT=setTimeout(function(){uiDecorate();},40);}).observe(document.body,{childList:true,subtree:true,characterData:true});setTimeout(uiDecorate,0);})();
+
+/* ---------- баланс тает: полоса от последнего пополнения ---------- */
+function balInfo(){
+  var b=balance(),tops=JOURNAL.filter(function(x){return x.sec==='topup';}).slice().sort(function(a,c){return (a.d+a.tm)<(c.d+c.tm)?-1:1;}),lt=tops[tops.length-1];
+  var spent=lt?-JOURNAL.filter(function(x){return x.sec!=='topup'&&(x.d+x.tm)>=(lt.d+lt.tm);}).reduce(function(s,x){return s+x.v;},0):0,base=Math.max(b+spent,b,1),pct=Math.max(0,Math.min(100,Math.round(b/base*100)));
+  return {b:b,base:base,pct:pct,lt:lt,cls:b<1?'zero':pct<20?'low':pct<50?'mid':'ok'};
+}
+function balWork(b){var u=[[.82,'пост','поста','постов'],[7.38,'кадр','кадра','кадров'],[2.25,'страница','страницы','страниц']];return u.map(function(x){return plural(Math.floor(b/x[0]),x[1],x[2],x[3]);}).join(' · ');}
+function balMeter(big){
+  var I=balInfo();
+  return '<div class="bm bm-'+I.cls+(big?' big':'')+'"><div class="bm-top"><b>'+rub2(I.b)+'</b><span>'+(I.lt?'из '+rub2(I.base)+' с пополнения '+dfmt(dparse(I.lt.d)):'на балансе')+'</span></div>'+
+    '<div class="bm-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+I.pct+'" aria-label="Осталось '+I.pct+'%"><i style="width:'+I.pct+'%"></i></div>'+
+    '<div class="bm-sub">'+(I.b<1?'Генерация на паузе — черновики и правки работают':'Хватит примерно на '+balWork(I.b))+'</div></div>';
+}
 
 /* ---------- удалить что угодно: подтверждение с последствиями, потом «Вернуть» ---------- */
 var DEL_IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>';
