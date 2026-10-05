@@ -497,6 +497,12 @@
   .soon p{max-width:42ch;margin:0 auto;font-size:14px}
 
   /* toast */
+  .toast.has-act{pointer-events:auto}
+  #toast-act{margin-left:6px;background:none;border:0;color:#9DC0F2;font:inherit;font-weight:700;cursor:pointer;padding:2px 4px;border-radius:6px}
+  #toast-act:hover{background:rgba(255,255,255,.1)}
+  .del-btn{color:#A33A2E!important;display:inline-flex;align-items:center;gap:7px}
+  .del-btn svg{width:15px;height:15px}
+  .del-list{margin:6px 0 0;padding-left:18px;color:var(--ink-2);font-size:13.5px;line-height:1.5}
   .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#1A2230;color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:500;box-shadow:0 18px 40px -14px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.25s;z-index:50;display:flex;align-items:center;gap:10px;max-width:min(90vw,440px)}
 
 
@@ -3830,7 +3836,7 @@
   <div class="in-brand"><span class="in-mark"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mk-logo"/></svg></span><b>maker</b><span class="in-tag">Маркетинг в стиле каждого клиента</span></div>
 </div>
 <div class="ctip" id="ctip" role="tooltip"></div>
-<div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg><span id="toast-msg"></span></div>
+<div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg><span id="toast-msg"></span><button type="button" id="toast-act" hidden></button></div>
 <button class="demo-flag" id="demo-flag" type="button" aria-expanded="false" aria-controls="demo-panel" onclick="demoPanel()">прототип · <b>демо-режим</b></button>
 <div class="demo-panel" id="demo-panel" role="dialog" aria-label="Демо-режим"></div>
 
@@ -4106,7 +4112,7 @@ function renderShots(){
     var add=f?'':(x.own
       ?'<button class="mcard addshot" type="button" onclick="openUploadModal(\''+esc(x.p)+'\')"><span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>Добавить ещё фото<small>бесплатно</small></button>'
       :'<button class="mcard addshot" type="button" onclick="moreInSeries(\''+x.id+'\')"><span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>Ещё кадр в этой манере<small>~7 ₽ за кадр</small></button>');
-    return '<div class="series" id="ser-'+x.id+'"><div class="ser-hd"><div><h3>'+x.t+'</h3><div class="ser-meta">'+meta+'</div></div><span class="sp"></span><button class="mini" type="button" onclick="dlSeries(\''+x.id+'\')">Скачать серию</button></div><div class="mgrid">'+list.map(shotHTML).join('')+add+'</div></div>';
+    return '<div class="series" id="ser-'+x.id+'"><div class="ser-hd"><div><h3>'+x.t+'</h3><div class="ser-meta">'+meta+'</div></div><span class="sp"></span><button class="mini" type="button" onclick="dlSeries(\''+x.id+'\')">Скачать серию</button><button class="mini del-btn" type="button" onclick="delSeries(\''+x.id+'\')" aria-label="Удалить серию" title="Удалить серию">'+DEL_IC+'</button></div><div class="mgrid">'+list.map(shotHTML).join('')+add+'</div></div>';
   }).join('');
   document.getElementById('img-series').innerHTML=html||'<div class="img-empty">Под эти условия кадров нет. <a onclick="resetShots()">Сбросить фильтры</a></div>';
   var attn=SHOTS.filter(function(sh){return (!pj||serOf(sh).p===pj)&&shotMatch(sh,'attn');}).length;
@@ -7678,7 +7684,7 @@ function renderFacts(){
       (gaps.length>8?'<p class="cp-note">и ещё '+(gaps.length-8)+' — появятся по мере ответов</p>':'')+'</div>'
       :'<div class="lb-note ok bnote">Пропусков нет — во всех материалах '+hesc(qn(p))+' только известные факты.</div>')+
     '<div class="panel"><div class="ch-hd"><h3>Факты · '+all.length+'</h3></div><p class="psub">Отсюда нейросеть берёт цифры, цены и адреса — и не выдумывает своих</p>'+
-      (list.length?FACT_CATS.filter(function(c){return list.some(function(f){return f.cat===c;});}).map(function(c){return '<div class="fa-cat"><span class="lb-lbl">'+c+'</span>'+list.filter(function(f){return f.cat===c;}).map(function(f){return '<div class="pf-row"><span class="pf-k"><b class="fa-t" contenteditable="true" spellcheck="false" onblur="faEdit(\''+f.id+'\',this.textContent)">'+hesc(f.t)+'</b><span>'+f.src+' · '+f.d+'</span></span><button class="mini" type="button" aria-label="Удалить факт" onclick="FACTS=FACTS.filter(function(x){return x.id!==\''+f.id+'\';});renderFacts()">✕</button></div>';}).join('')+'</div>';}).join('')
+      (list.length?FACT_CATS.filter(function(c){return list.some(function(f){return f.cat===c;});}).map(function(c){return '<div class="fa-cat"><span class="lb-lbl">'+c+'</span>'+list.filter(function(f){return f.cat===c;}).map(function(f){return '<div class="pf-row"><span class="pf-k"><b class="fa-t" contenteditable="true" spellcheck="false" onblur="faEdit(\''+f.id+'\',this.textContent)">'+hesc(f.t)+'</b><span>'+f.src+' · '+f.d+'</span></span><button class="mini" type="button" aria-label="Удалить факт" onclick="delFact(\''+f.id+'\')">✕</button></div>';}).join('')+'</div>';}).join('')
         :'<p class="ch-empty">'+(all.length?'Под эти условия фактов нет.':'Фактов пока нет — вставьте ниже текст с сайта, прайс или ответы клиента.')+'</p>')+'</div>';
 }
 function faEdit(id,t){var f=FACTS.filter(function(x){return x.id===id;})[0];t=t.trim();if(f&&t&&t!==f.t){f.t=t;f.cat=f.cat==='Из ответов'?f.cat:faGuess(t);toast('Факт обновлён');}}
@@ -8502,10 +8508,149 @@ function cpVoiceStop(silent){
   HTMLElement.prototype.focus.__o.call(ta,{preventScroll:true});
 }
 
+/* ---------- удалить что угодно: подтверждение с последствиями, потом «Вернуть» ---------- */
+var DEL_IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>';
+/* ops: [{arr, pred}] — вынимает из массивов, помнит места; undo кладёт обратно */
+function delRun(ops){return ops.map(function(o){var out=[];for(var i=o.arr.length-1;i>=0;i--)if(o.pred(o.arr[i]))out.unshift([i,o.arr.splice(i,1)[0]]);return {arr:o.arr,out:out};});}
+function delUndo(rec){rec.forEach(function(r){r.out.forEach(function(x){r.arr.splice(Math.min(x[0],r.arr.length),0,x[1]);});});}
+var DEL_GO=null;
+function delAsk(title,lines,fn,word){
+  DEL_GO=fn;
+  document.getElementById('gt-title').textContent=title;
+  document.getElementById('gt-body').innerHTML=(lines.length?'<p class="ncl-sub" style="margin:0">Что ещё изменится:</p><ul class="del-list">'+lines.map(function(l){return '<li>'+l+'</li>';}).join('')+'</ul>':'<p class="ncl-sub" style="margin:0">Больше ничего не затронет.</p>')+
+    '<p class="cp-note">После удаления несколько секунд можно нажать «Вернуть».</p><div class="gate-acts"><button class="pbtn ghost" type="button" onclick="closeModal(\'gate-modal\')">Отмена</button><button class="pbtn pf-badbtn" type="button" onclick="closeModal(\'gate-modal\');var f=DEL_GO;DEL_GO=null;if(f)f();">'+(word||'Удалить')+'</button></div>';
+  openModal('gate-modal');
+}
+function delDone(msg,rec,after,back){after();toast(msg,{t:'Вернуть',fn:function(){delUndo(rec);if(back)back();after(true);toast('Вернули');}});}
+function delBtn(fn,label){return '<button class="pbtn ghost del-btn" type="button" onclick="'+fn+'">'+DEL_IC+(label||'Удалить')+'</button>';}
+function delPut(sel,html){var el=typeof sel==='string'?document.querySelector(sel):sel;if(el&&!el.querySelector('.del-btn'))el.insertAdjacentHTML('beforeend',html);}
+var cnt=function(n,a,b,c){return plural(n,a,b,c);};
+
+/* кадры и серии */
+function delShot(id){
+  var sh=shotById(id);if(!sh)return;var used=SOC.filter(function(x){return x.img===sh.img;}).length+PLAN.filter(function(x){return x.img===sh.img;}).length,bn=BSETS.filter(function(b){return b.bg===sh.img;}).length;
+  var l=[];if(used)l.push('Кадр стоит в '+cnt(used,'теме или публикации','темах и публикациях','темах и публикациях')+' — там он останется, пока не замените.');if(bn)l.push('Он фон у '+cnt(bn,'комплекта','комплектов','комплектов')+' баннеров — фон останется.');
+  delAsk('Удалить кадр '+qn(sh.t)+'?',l,function(){var rec=delRun([{arr:SHOTS,pred:function(x){return x.id===id;}}]);closeModal('shot-modal');delDone('Кадр удалён',rec,function(){rerenderShots();renderToday();});});
+}
+function delSeries(sid){
+  var ser=SERIES.filter(function(x){return x.id===sid;})[0];if(!ser)return;var n=SHOTS.filter(function(z){return z.s===sid;}).length;
+  delAsk('Удалить серию '+qn(ser.t)+'?',[cnt(n,'кадр','кадра','кадров')+' удалятся вместе с ней.'],function(){var rec=delRun([{arr:SHOTS,pred:function(z){return z.s===sid;}},{arr:SERIES,pred:function(x){return x.id===sid;}}]);delDone('Серия удалена',rec,function(){rerenderShots();renderToday();});});
+}
+/* ролик */
+function delVideo(id){
+  var v=vdById(id);if(!v)return;
+  delAsk('Удалить ролик '+qn(v.t)+'?',[],function(){var rec=delRun([{arr:VIDEOS,pred:function(x){return x.id===id;}}]);closeModal('video-modal');delDone('Ролик удалён',rec,function(){renderVideos();});});
+}
+/* баннеры */
+function delBanner(id){
+  var x=bnById(id);if(!x)return;var cm=CAMPS.filter(function(c){return c.mix&&c.mix.bn===id;}),l=[];
+  if(x.st==='pub'||x.st==='proc')l.push('Объявления снимем с показа на площадках.');
+  if(cm.length)l.push('Кампании '+cm.map(function(c){return qn(c.n);}).join(', ')+' останутся без баннеров.');
+  delAsk('Удалить комплект '+qn(x.n)+'?',l,function(){var rec=delRun([{arr:BSETS,pred:function(b){return b.id===id;}}]);cm.forEach(function(c){c.mix.bn=null;});bnActive=null;
+    delDone('Комплект удалён',rec,function(){renderBanners();renderCamps();renderToday();},function(){cm.forEach(function(c){c.mix.bn=id;});bnActive=id;});});
+}
+/* кампания */
+function delCamp(id){
+  var c=campById(id);if(!c)return;
+  if(c.st==='run'){toast('Кампания идёт — сначала поставьте её на паузу, потом удалите');return;}
+  var d=DAYS.filter(function(x){return x.c===id;}).length;
+  delAsk('Удалить кампанию '+qn(c.n)+'?',d?['Её цифры ('+cnt(d,'день','дня','дней')+') пропадут из «Результата» и отчётов.','Баннеры и страница останутся — они живут в своих разделах.']:['Баннеры и страница останутся — они живут в своих разделах.'],
+    function(){var rec=delRun([{arr:CAMPS,pred:function(x){return x.id===id;}},{arr:DAYS,pred:function(x){return x.c===id;}}]);go('campaigns');delDone('Кампания удалена',rec,function(){renderCamps();renderToday();});});
+}
+/* презентация */
+function delDeck(id){
+  var d=dkById(id);if(!d)return;
+  delAsk('Удалить презентацию '+qn(d.t)+'?',d.share&&d.share.when?['Ссылка, которую видел клиент, перестанет открываться.']:[],function(){var rec=delRun([{arr:DECKS,pred:function(x){return x.id===id;}}]);go('pres');delDone('Презентация удалена',rec,function(){renderDecks();renderToday();});});
+}
+/* чат */
+function delChat(id){
+  var c=chById(id);if(!c)return;
+  delAsk('Удалить чат '+qn(c.t)+'?',['Черновики, которые вы собрали из чата, останутся в своих разделах.'],function(){var rec=delRun([{arr:CHATS,pred:function(x){return x.id===id;}}]);chCur=null;chatBack();delDone('Чат удалён',rec,function(){renderChatList();});});
+}
+/* аудитория: уходит и из кампаний, и из вариантов страниц */
+function delGroup(id){
+  var g=grById(id);if(!g)return;var u=grUse(g),l=[];
+  if(u.camps.length)l.push('Уберём из '+cnt(u.camps.length,'кампании','кампаний','кампаний')+': '+u.camps.map(function(c){return qn(c.n);}).join(', ')+'.');
+  if(u.pages.length)l.push('Уберём вариант страницы для неё: '+u.pages.map(function(p){return qn(p.n);}).join(', ')+'.');
+  l.push('Стратегия перестанет на неё ссылаться.');
+  delAsk('Удалить аудиторию '+qn(g.n)+'?',l,function(){
+    var ops=[{arr:GROUPS,pred:function(x){return x.id===id;}}];
+    u.camps.forEach(function(c){ops.push({arr:c.groups,pred:function(n){return n===g.n;}});});
+    u.pages.forEach(function(p){ops.push({arr:p.groups,pred:function(x){return x[1]===g.slug||x[0]===g.n;}});});
+    var rec=delRun(ops);closeModal('grp-modal');delDone('Аудитория удалена',rec,function(){renderGroups();renderPages();renderCamps();});});
+}
+/* страница */
+function delPage(n){
+  var p=pgByName(n);if(!p)return;var cm=CAMPS.filter(function(c){return c.mix&&c.mix.page===n;}),l=[];
+  if(p.st==='pub')l.push('Снимем с сайта: '+hesc(p.url)+' перестанет открываться.');
+  if(cm.length)l.push('Кампании '+cm.map(function(c){return qn(c.n);}).join(', ')+' останутся без страницы.');
+  delAsk('Удалить страницу '+qn(n)+'?',l,function(){var rec=delRun([{arr:PAGES,pred:function(x){return x.n===n;}}]);cm.forEach(function(c){c.mix.page=null;});go('pages');
+    delDone('Страница удалена',rec,function(){renderPages();renderCamps();renderToday();},function(){cm.forEach(function(c){c.mix.page=n;});});});
+}
+/* публикация */
+function delSoc(id){
+  var x=socById(id);if(!x)return;var l=[];
+  if(x.st==='sched')l.push('Снимем с расписания — она не выйдет '+x.date+'.');
+  if(x.st==='pub')l.push('В соцсетях пост останется — удалить его там можно только в самой площадке.');
+  if(x.th)l.push('Тема контент-плана снова станет заготовкой в «Публикациях».');
+  delAsk('Удалить '+SOC_T[x.type][0].toLowerCase()+' '+qn(x.t)+'?',l,function(){var rec=delRun([{arr:SOC,pred:function(z){return z.id===id;}}]);SOC_ACT[x.type]=null;
+    delDone({post:'Пост удалён',car:'Карусель удалена',story:'Сторис удалены',clip:'Клип удалён'}[x.type],rec,function(){renderSoc(x.type);renderToday();});});
+}
+/* тема плана */
+function delTheme(id){
+  var x=plById(id);if(!x)return;var mk=plMade(x);
+  delAsk('Удалить тему '+qn(x.t)+'?',mk.length?['Собранные из неё публикации ('+mk.length+') останутся, но без ссылки на тему.']:[],function(){var rec=delRun([{arr:PLAN,pred:function(z){return z.id===id;}}]);mk.forEach(function(z){delete z.th;});plCur=null;
+    delDone('Тема удалена',rec,function(){renderPlan();renderToday();},function(){mk.forEach(function(z){z.th=id;});});});
+}
+/* стратегия */
+function delStrat(p){
+  var s0=STRATS[p];if(!s0)return;var n=PLAN.filter(function(x){return x.p===p;}).length;
+  delAsk('Удалить стратегию '+qn(p)+'?',n?['Контент-план ('+cnt(n,'тема','темы','тем')+') останется, но новые темы без стратегии собрать нельзя.']:[],function(){delete STRATS[p];
+    toast('Стратегия удалена',{t:'Вернуть',fn:function(){STRATS[p]=s0;renderStrat();renderToday();toast('Вернули');}});renderStrat();renderToday();});
+}
+/* факт */
+function delFact(id){var rec=delRun([{arr:FACTS,pred:function(x){return x.id===id;}}]);delDone('Факт удалён',rec,function(){renderFacts();});}
+/* клиент — со всеми материалами */
+function delClient(p){
+  var pr=projByShort(p);if(!pr)return;
+  var cnts=[[SOC.filter(function(x){return x.p===p;}).length,'публикац','ия','ии','ий'],[PLAN.filter(function(x){return x.p===p;}).length,'тем','а','ы',''],[PAGES.filter(function(x){return x.p===p;}).length,'страниц','а','ы',''],[BSETS.filter(function(x){return x.p===p;}).length,'комплект','','а','ов'],[CAMPS.filter(function(x){return x.p===p;}).length,'кампани','я','и','й']]
+    .filter(function(c){return c[0];}).map(function(c){return plural(c[0],c[1]+c[2],c[1]+c[3],c[1]+c[4]);});
+  var run=CAMPS.some(function(c){return c.p===p&&c.st==='run';});
+  if(run){toast('У клиента идут кампании — поставьте их на паузу, потом удаляйте');return;}
+  delAsk('Удалить клиента '+qn(p)+'?',['Вместе с ним удалятся все его материалы'+(cnts.length?': '+cnts.join(', '):'')+', стиль, голос, факты и аудитории.','Ссылки для клиента перестанут открываться.'],function(){
+    var sers=SERIES.filter(function(x){return x.p===p;}).map(function(x){return x.id;}),cids=CAMPS.filter(function(c){return c.p===p;}).map(function(c){return c.id;});
+    var rec=delRun([{arr:PROJECTS,pred:function(x){return x.s===p;}},{arr:SOC,pred:function(x){return x.p===p;}},{arr:PLAN,pred:function(x){return x.p===p;}},{arr:PAGES,pred:function(x){return x.p===p;}},{arr:BSETS,pred:function(x){return x.p===p;}},
+      {arr:CAMPS,pred:function(x){return x.p===p;}},{arr:DAYS,pred:function(x){return cids.indexOf(x.c)>=0;}},{arr:SHOTS,pred:function(z){return sers.indexOf(z.s)>=0;}},{arr:SERIES,pred:function(x){return x.p===p;}},{arr:VIDEOS,pred:function(x){return x.p===p;}},
+      {arr:DECKS,pred:function(x){return x.p===p;}},{arr:CHATS,pred:function(x){return x.p===p;}},{arr:GROUPS,pred:function(x){return x.p===p;}},{arr:FACTS,pred:function(x){return x.p===p;}}]);
+    var st=STRATS[p];delete STRATS[p];
+    var opts=[];document.querySelectorAll('select[data-projs] option').forEach(function(o){if(o.value===p){opts.push([o.parentNode,o,o.nextSibling]);o.remove();}});
+    if(CLIENT===p)clientSet('',false,true);go('home');
+    var all=function(){renderProjLists();clientUI();try{renderToday();}catch(e){}stateEval();};
+    delDone('Клиент '+qn(p)+' удалён',rec,all,function(){if(st)STRATS[p]=st;opts.forEach(function(o){o[0].insertBefore(o[1],o[2]&&o[2].parentNode===o[0]?o[2]:null);});});
+  },'Удалить клиента и всё его');
+}
+/* кнопки «Удалить» там, где карточку открывают */
+(function(){
+  var w=function(name,fn){var o=window[name];if(typeof o!=='function')return;window[name]=function(){var r=o.apply(this,arguments);try{fn.apply(this,arguments);}catch(e){}return r;};};
+  w('openShot',function(id){delPut('#lb-side .lb-acts',delBtn('delShot('+id+')'));});
+  w('vpRender',function(){if(typeof vpId!=='undefined'&&vpId!=null)delPut('#vp-side .lb-acts',delBtn('delVideo('+JSON.stringify(vpId).replace(/"/g,"&quot;")+')'));});
+  w('renderBnEditor',function(){if(bnActive)delPut('#bn-head .bset-acts',delBtn("delBanner('"+bnActive+"')"));});
+  w('renderCamp',function(){if(cmCur)delPut('#cp-head .dk-acts',delBtn("delCamp('"+cmCur+"')"));});
+  w('renderDeck',function(){if(dkCur)delPut('#dk-head .dk-acts',delBtn("delDeck('"+dkCur+"')"));});
+  w('renderChat',function(){var t=document.getElementById('ch-title');if(chCur&&t)delPut(t.closest('.ch-tt').parentNode,'<button class="mini del-btn" type="button" title="Удалить чат" aria-label="Удалить чат" onclick="delChat(\''+chCur+'\')">'+DEL_IC+'</button>');});
+  w('openGroup',function(id){var b=document.getElementById('gm-body');var a=b&&b.querySelector('.gm-ed .lb-acts');if(!a){b.querySelector('.gm-ed').insertAdjacentHTML('beforeend','<div class="lb-acts" style="margin-top:14px"></div>');a=b.querySelector('.gm-ed .lb-acts');}delPut(a,delBtn("delGroup('"+id+"')",'Удалить аудиторию'));});
+  w('pgReview',function(p){delPut('#pg-review .bset-acts',delBtn("delPage('"+esc(p.n)+"')"));});
+  w('socEdit',function(T){var x=socById(SOC_ACT[T]);if(x)delPut('#se-'+T+' .bset-acts',delBtn("delSoc('"+x.id+"')"));});
+  w('plEdit',function(){if(plCur)delPut('#pl-ed .bset-acts',delBtn("delTheme('"+plCur+"')"));});
+  w('renderStrat',function(){var p=strProj();if(STRATS[p])delPut('#str-body .bset-acts',delBtn("delStrat('"+esc(p)+"')"));});
+  w('renderClientHome',function(pr){var h=document.querySelector('#v-project .phead');if(h)delPut(h,delBtn("delClient('"+esc(pr.s)+"')",'Удалить клиента'));});
+})();
+
 /* ---------- toast ---------- */
 var toastT=null;
-function toast(msg){
-  var t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;
-  t.classList.add('on');if(toastT)clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},2600);
+function toast(msg,act){
+  var t=document.getElementById('toast'),b=document.getElementById('toast-act');document.getElementById('toast-msg').textContent=msg;
+  if(b){b.hidden=!act;if(act){b.textContent=act.t;b.onclick=function(){t.classList.remove('on');b.hidden=true;act.fn();};}}
+  t.classList.toggle('has-act',!!act);t.classList.add('on');if(toastT)clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},act?8000:2600);
 }
 </script>
