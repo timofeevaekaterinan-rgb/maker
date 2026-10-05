@@ -739,6 +739,21 @@
   .fmt-tg.on{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:600}
   .fmt-tg.on::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E")}
   .fp-hint{color:var(--ink-2);font-size:13.5px;margin:0 0 14px}
+  .img-row{display:flex;align-items:center;gap:12px;padding:4px 0 12px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+  .img-row i{width:56px;height:56px;border-radius:10px;background:#eee center/cover no-repeat;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+  .img-row span{flex:1;display:flex;flex-direction:column;min-width:0}.img-row small{color:var(--ink-3);font-size:12.5px}
+  .soc-left .mk-img,.soc-left .ph9,.soc-left .cs-big .cs{cursor:pointer;position:relative}
+  .soc-left .mk-img::after{content:"Поменять картинку";position:absolute;inset:auto 12px 12px auto;background:rgba(20,26,38,.75);color:#fff;font-size:12px;font-weight:600;padding:6px 10px;border-radius:8px;opacity:0;transition:opacity .15s}
+  .soc-left .mk-img:hover::after{opacity:1}
+  .pl-im-more{display:grid;place-items:center;font-size:22px;color:var(--blue);background:var(--blue-softer)!important;border:1.5px dashed var(--blue-brd)!important}
+  .ip-sec{margin-top:14px}.ip-sec:first-child{margin-top:0}
+  .ip-h{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
+  .ip-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .ip-grid button{aspect-ratio:1;border-radius:10px;border:0;background:#eee center/cover no-repeat;cursor:pointer;position:relative;padding:0}
+  .ip-grid button.on{box-shadow:0 0 0 3px var(--blue)}
+  .ip-grid button.on::after{content:"✓";position:absolute;top:5px;right:5px;width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}
+  .ip-gen{display:flex;gap:8px;align-items:flex-start}.ip-gen textarea{flex:1;min-width:0;border:1px solid var(--line-2);border-radius:10px;padding:9px 11px;font:inherit;font-size:13.5px;resize:vertical;min-height:62px}
+  @media (max-width:600px){.ip-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ip-gen{flex-direction:column}.ip-gen .pbtn{width:100%}}
   .fp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
   .fp-it{border:0;border-radius:12px;padding:0;background:none;cursor:pointer;text-align:left;font:inherit}
   .fp-it .fp-ph{position:relative;display:block;aspect-ratio:1;border-radius:10px;background-size:cover;background-position:center;transition:box-shadow .15s}
@@ -6287,14 +6302,14 @@ function socEdit(T){
   if(T==='post'){
     var f=SOC_FMT.post[pl],t=socText(x,pl),over=f.lim&&t.length>f.lim;
     left=mockPost(x,pl);
-    right='<div class="panel"><h3>Версия для '+platName(T,pl)+'</h3><div class="kv"><span class="k">Картинка</span><span class="v">'+f.sz+' · '+f.r.replace('/',':')+'</span></div><div class="kv"><span class="k">Текст</span><span class="v">'+f.show+'</span></div><div class="kv"><span class="k">Хэштеги</span><span class="v">'+f.tags+'</span></div>'+
+    right='<div class="panel"><h3>Версия для '+platName(T,pl)+'</h3>'+'<div class="img-row"><i style="background-image:url(\''+x.img+'\')"></i><span><b>Картинка</b><small>из фото клиента, сгенерировать или загрузить свою</small></span><button class="mini pri" type="button" onclick="socImg()">Поменять</button></div>'+'<div class="kv"><span class="k">Размер картинки</span><span class="v">'+f.sz+' · '+f.r.replace('/',':')+'</span></div>'+'<div class="kv"><span class="k">Текст</span><span class="v">'+f.show+'</span></div><div class="kv"><span class="k">Хэштеги</span><span class="v">'+f.tags+'</span></div>'+
       '<label class="bfield"><span class="bl"><span>Текст поста</span><span class="cnt'+(over?' over':'')+'" id="soc-cnt">'+t.length+(f.lim?' / '+sp3(f.lim):'')+'</span></span><textarea class="soc-ta" id="soc-ta" oninput="socTextEdit(this)">'+hesc(t)+'</textarea></label>'+
       (over?'<div class="lb-note wait bnote" style="margin:8px 0 0">Длиннее лимита '+platName(T,pl)+' на '+(t.length-f.lim)+' знаков <button class="mini" onclick="socShorten()">Сократить</button></div>':'')+
       '<div class="lb-acts" style="margin-top:10px"><button class="mini" onclick="socVariant()">Другой вариант · 0,41 ₽</button><button class="mini" onclick="copyPost()">Скопировать для '+platName(T,pl)+'</button><button class="mini" onclick="dlPost()">Скачать тексты и картинку</button></div></div>';
   }else if(T==='car'){
     var f2=SOC_FMT.car[pl],sl=socSlides(x),ci=Math.min(x.idx||0,sl.length-1);x.idx=ci;
     left='<div class="cs-big">'+slideCard(x,sl[ci],ci,sl.length,f2.r)+'</div><div class="cs-strip">'+sl.map(function(s,i){return '<button class="cs-th'+(i===ci?' on':'')+'" type="button" onclick="socIdx('+i+')">'+slideCard(x,s,i,sl.length,f2.r)+'</button>';}).join('')+'</div>';
-    right='<div class="panel"><h3>'+platName(T,pl)+' · '+f2.kind+'</h3><div class="kv"><span class="k">Слайд</span><span class="v">'+f2.sz+' · '+f2.r.replace('/',':')+'</span></div><div class="kv"><span class="k">Слайдов</span><span class="v">'+sl.length+' из '+(f2.max>100?'любого числа страниц':f2.max+' возможных')+'</span></div>'+
+    right='<div class="panel"><h3>'+platName(T,pl)+' · '+f2.kind+'</h3>'+(ci===0?'<div class="img-row"><i style="background-image:url(\''+x.img+'\')"></i><span><b>Фон обложки</b><small>из фото клиента, сгенерировать или загрузить свою</small></span><button class="mini pri" type="button" onclick="socImg()">Поменять</button></div>':'')+'<div class="kv"><span class="k">Слайд</span><span class="v">'+f2.sz+' · '+f2.r.replace('/',':')+'</span></div><div class="kv"><span class="k">Слайдов</span><span class="v">'+sl.length+' из '+(f2.max>100?'любого числа страниц':f2.max+' возможных')+'</span></div>'+
       (sl.length>f2.max?'<div class="lb-note wait bnote">В '+platName(T,pl)+' помещается '+f2.max+' — лишние уйдут вторым постом</div>':'')+
       '<label class="bfield"><span class="bl"><span>Заголовок слайда '+(ci+1)+'</span></span><input value="'+hesc(sl[ci].h)+'" oninput="socSlideEdit(\'h\',this.value)"></label><label class="bfield"><span class="bl"><span>Текст</span></span><input value="'+hesc(sl[ci].s)+'" oninput="socSlideEdit(\'s\',this.value)"></label>'+
       '<div class="lb-acts" style="margin-top:10px"><button class="mini" onclick="socSlideAdd()">+ Слайд</button>'+(sl.length>3?'<button class="mini" onclick="socSlideDel()">Удалить слайд</button>':'')+'<button class="mini" onclick="dlCarousel()">Скачать '+(pl==='li'?'PDF':'слайды')+'</button></div></div>';
@@ -6303,12 +6318,12 @@ function socEdit(T){
     if(isClip){
       var sc=socScenes(x),tot=sc.reduce(function(a,b){return a+b.d;},0),ci2=Math.min(x.idx||0,sc.length-1);x.idx=ci2;
       left='<div class="ph-wrap">'+frameCard(x,{h:'',s:sc[ci2].t.replace(/^[^:]*:\s*/,''),img:sc[ci2].img},ci2,sc.length,pl,zones).replace('class="ph9"','class="ph9 clip"')+'</div><label class="cp-toggle st-zone"><button class="toggle" type="button" aria-pressed="'+zones+'" onclick="SOC_Z[\''+T+'\']=!SOC_Z[\''+T+'\'];socEdit(\''+T+'\')"></button>Показать безопасные зоны</label>';
-      right='<div class="panel"><h3>Раскладка · '+tot+' с</h3><p class="psub">'+platName(T,pl)+': рекомендуем '+z.rec+'. Субтитры — внизу, над безопасной зоной.</p><ol class="sb-list">'+sc.map(function(s2,i){return '<li class="'+(i===ci2?'on':'')+'"><button type="button" class="sb-th" style="background-image:url(\''+s2.img+'\')" onclick="socIdx('+i+')"></button><input value="'+hesc(s2.t)+'" oninput="socSceneEdit('+i+',this.value)"><span class="sb-d">'+s2.d+' с</span></li>';}).join('')+'</ol>'+
+      right='<div class="panel"><h3>Раскладка · '+tot+' с</h3>'+'<div class="img-row"><i style="background-image:url(\''+sc[ci2].img+'\')"></i><span><b>Кадр сцены '+(ci2+1)+'</b><small>из фото клиента, сгенерировать или загрузить свою</small></span><button class="mini pri" type="button" onclick="socImg()">Поменять</button></div>'+'<p class="psub">'+platName(T,pl)+': рекомендуем '+z.rec+'. Субтитры — внизу, над безопасной зоной.</p><ol class="sb-list">'+sc.map(function(s2,i){return '<li class="'+(i===ci2?'on':'')+'"><button type="button" class="sb-th" style="background-image:url(\''+s2.img+'\')" onclick="socIdx('+i+')"></button><input value="'+hesc(s2.t)+'" oninput="socSceneEdit('+i+',this.value)"><span class="sb-d">'+s2.d+' с</span></li>';}).join('')+'</ol>'+
         '<div class="lb-acts" style="margin-top:12px">'+(x.rendered?'<button class="pbtn ghost" data-engine="clip-mp4" onclick="engineFile(\'Клип «\'+socCur().t+\'» · MP4 под \'+platName(\'clip\',socCur().cur||socCur().plats[0]))">Скачать ролик MP4</button><button class="pbtn ghost" onclick="dlClip()">Раскладка и субтитры</button>':'<button class="pbtn" onclick="socRender()">Рендерить ролик · до 41,03 ₽</button><button class="pbtn ghost" onclick="dlClip()">Раскладка и субтитры</button>')+'</div></div>';
     }else{
       var fr=socFrames(x),ci3=Math.min(x.idx||0,fr.length-1);x.idx=ci3;
       left='<div class="ph-wrap">'+frameCard(x,fr[ci3],ci3,fr.length,pl,zones)+'</div><div class="cs-strip ph-strip">'+fr.map(function(f3,i){return '<button class="cs-th'+(i===ci3?' on':'')+'" type="button" onclick="socIdx('+i+')">'+frameCard(x,f3,i,fr.length,pl,false)+'</button>';}).join('')+'</div><label class="cp-toggle st-zone"><button class="toggle" type="button" aria-pressed="'+zones+'" onclick="SOC_Z[\''+T+'\']=!SOC_Z[\''+T+'\'];socEdit(\''+T+'\')"></button>Показать безопасные зоны</label>';
-      right='<div class="panel"><h3>'+platName(T,pl)+' · кадр '+(ci3+1)+' из '+fr.length+'</h3><div class="kv"><span class="k">Формат</span><span class="v">1080×1920 · 9:16</span></div><div class="kv"><span class="k">Безопасная зона</span><span class="v">сверху '+z.top+'%, снизу '+z.bot+'%</span></div><div class="kv"><span class="k">Ссылка</span><span class="v">'+z.stk+'</span></div>'+
+      right='<div class="panel"><h3>'+platName(T,pl)+' · кадр '+(ci3+1)+' из '+fr.length+'</h3>'+'<div class="img-row"><i style="background-image:url(\''+fr[ci3].img+'\')"></i><span><b>Фон кадра</b><small>из фото клиента, сгенерировать или загрузить свою</small></span><button class="mini pri" type="button" onclick="socImg()">Поменять</button></div>'+'<div class="kv"><span class="k">Формат</span><span class="v">1080×1920 · 9:16</span></div><div class="kv"><span class="k">Безопасная зона</span><span class="v">сверху '+z.top+'%, снизу '+z.bot+'%</span></div><div class="kv"><span class="k">Ссылка</span><span class="v">'+z.stk+'</span></div>'+
         '<label class="bfield"><span class="bl"><span>Заголовок кадра</span></span><input value="'+hesc(fr[ci3].h)+'" oninput="socFrameEdit(\'h\',this.value)"></label><label class="bfield"><span class="bl"><span>Текст</span></span><input value="'+hesc(fr[ci3].s)+'" oninput="socFrameEdit(\'s\',this.value)"></label>'+
         '<label class="cp-toggle" style="margin-top:10px"><button class="toggle" type="button" aria-pressed="'+!!fr[ci3].stk+'" onclick="socFrameStk()"></button>Кнопка-ссылка на этом кадре</label><div class="lb-acts" style="margin-top:12px"><button class="mini" type="button" onclick="dlStory()">Скачать кадры PNG</button></div></div>';
     }
@@ -6704,7 +6719,7 @@ function plEdit(){
     '<label class="bfield"><span class="bl"><span>Дата выхода</span></span><input type="date" value="'+x.d+'" onchange="if(this.value){plField(\'d\',this.value);renderPlan();}"></label>'+
     '<div class="bfield"><span class="bl"><span>Рубрика</span><span class="cnt">из стратегии</span></span><div class="chipset">'+rubs.map(function(r){return '<button class="chip'+(r===x.rub?' on':'')+'" type="button" onclick="plField(\'rub\',\''+esc(r)+'\');renderPlan()">'+hesc(r)+'</button>';}).join('')+'</div></div>'+
     '<div class="bfield"><span class="bl"><span>Факты</span><span class="cnt">чего не знаем — в [скобках]</span></span><ul class="pl-facts">'+x.facts.map(function(f,i){return '<li><input value="'+hesc(f)+'" class="'+(/\[/.test(f)?'ph':'')+'" oninput="plFact('+i+',this)"><button class="mini" type="button" aria-label="Убрать факт" onclick="plFactDel('+i+')">✕</button></li>';}).join('')+'</ul><button class="mini" type="button" onclick="plFactAdd()">+ Факт</button></div>'+
-    '<div class="bfield"><span class="bl"><span>Фото</span><span class="cnt">из «Фото и видео» клиента</span></span><div class="pl-ph">'+shots.slice(0,6).map(function(im){var on=im===x.img;return '<button class="pl-im'+(on?' on':'')+'" type="button" aria-pressed="'+on+'" style="background-image:url(\''+im+'\')" onclick="plField(\'img\',\''+im+'\');plEdit()"></button>';}).join('')+'</div></div></div>';
+    '<div class="bfield"><span class="bl"><span>Фото</span><span class="cnt">из «Фото и видео» клиента</span></span><div class="pl-ph">'+shots.slice(0,6).map(function(im){var on=im===x.img;return '<button class="pl-im'+(on?' on':'')+'" type="button" aria-pressed="'+on+'" style="background-image:url(\''+im+'\')" onclick="plField(\'img\',\''+im+'\');plEdit()"></button>';}).join('')+'<button class="pl-im pl-im-more" type="button" onclick="plImg()" title="Сгенерировать или загрузить">+</button></div></div></div>';
   var right='<div class="panel"><h3>Собрать из темы</h3><p class="psub">Одна тема — разные форматы. Текст, факты и фото берём отсюда, оформление и голос — из «Бренда».</p>'+
     (x.st!=='ok'?'<div class="lb-note wait" style="margin:10px 0 4px">Тема ещё не согласована — собрать можно, но клиент может её поменять.</div>':'')+
     '<div class="pl-mk">'+['post','car','story','clip'].map(function(T){
@@ -8692,6 +8707,48 @@ function ikSample(p){
   return P+' — кофейня у метро со своим обжаром, работаем с 2021 года. Отличаемся тем, что жарим зерно сами каждую неделю. Капучино — 220 ₽, завтрак — от 390 ₽. Открыты с 7:30 до 22:00, ул. Мира, 5.\nУтром заходят офисные сотрудники по пути на работу — им нужно быстро и навынос. Днём молодые мамы с колясками, ценят тишину и десерты. Вечером студенты с ноутбуками, им важны розетки и недорого.\nХотим 300 заказов навынос в месяц. Ведём VK и Instagram.\nПишем на «ты», дружелюбно и с юмором. В декабре акция: пачка зерна в подарок к заказу от 1 500 ₽.';
 }
 function ikFill(id){var p=(document.getElementById(id==='str-x'?'str-target':id==='gr-text'?'gr-target':'fa-proj')||{}).value||CLIENT||'СберТаргет',ta=document.getElementById(id);ta.value=ikSample(p);ta.dispatchEvent(new Event('input'));HTMLElement.prototype.focus.__o?HTMLElement.prototype.focus.__o.call(ta):ta.focus();}
+
+/* ---------- картинка: выбрать из фото клиента, сгенерировать или загрузить свою ---------- */
+var IP=null;
+function imgPick(o){
+  IP=o;var shots=SHOTS.filter(function(z){var sr=serOf(z);return sr&&sr.p===o.p&&['pub','redo','own','check'].indexOf(z.st)>=0;});
+  if(o.cur&&!shots.some(function(z){return z.img===o.cur;}))shots.unshift({img:o.cur,t:'Сейчас стоит'});
+  document.getElementById('gt-title').textContent=o.title||'Картинка';
+  document.getElementById('gt-body').innerHTML='<div class="ip-sec"><span class="ip-h">Из фото '+hesc(qn(o.p))+'</span>'+(shots.length?'<div class="ip-grid">'+shots.map(function(z){return '<button type="button" class="'+(z.img===o.cur?'on':'')+'" title="'+hesc(z.t)+'" aria-label="'+hesc(z.t)+'" style="background-image:url(\''+z.img+'\')" onclick="ipSet(\''+z.img+'\')"></button>';}).join('')+'</div>':'<p class="cp-note" style="margin:0">Фото клиента пока нет — сгенерируйте или загрузите свою.</p>')+'</div>'+
+    '<div class="ip-sec"><span class="ip-h">Сгенерировать</span><div class="ip-gen"><textarea id="ip-pr" rows="2">'+hesc(o.prompt||'')+'</textarea><button class="pbtn" type="button" onclick="ipGen()">Снять · 7,38 ₽</button></div><p class="cp-note" style="margin:6px 0 0">Снимем в манере '+hesc(qn(o.p))+' из «Стиля». Кадр сохранится в «Фото и видео».</p></div>'+
+    '<div class="ip-sec"><span class="ip-h">Загрузить свою</span><label class="cp-attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M8 8l4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>Выбрать файл — JPG или PNG<input type="file" accept="image/*" onchange="ipUp(this)"></label></div>'+
+    '<div class="gate-acts"><button class="pbtn ghost" type="button" onclick="closeModal(\'gate-modal\')">Отмена</button></div>';
+  openModal('gate-modal');
+}
+function ipSet(url,msg){var o=IP;if(!o)return;closeModal('gate-modal');o.set(url);toast(msg||'Картинку поменяли');}
+function ipSer(p,own){var id=own?'o-'+p:'gen-'+p,sr=SERIES.filter(function(x){return x.id===id;})[0];if(!sr){sr=own?{id:id,t:'Свои фото',p:p,d:'сегодня',ts:9,own:true}:{id:id,t:'Для публикаций',p:p,d:'сегодня',ts:9,model:'Seedream'};SERIES.push(sr);}return sr;}
+function ipGen(){
+  var o=IP,pr=(document.getElementById('ip-pr').value||'').trim();if(!pr){document.getElementById('ip-pr').focus();toast('Опишите, что снимаем');return;}
+  closeModal('gate-modal');
+  spendGate(7.38,'Кадр',function(){openBuildModal('Снимаем кадр',['Берём манеру '+qn(o.p)+' из «Стиля»','Снимаем: '+pr.slice(0,60),'Проверяем: без искажений и лишнего текста'],'Кадр готов — поставили в публикацию.',function(){
+    var pool=['img/intro/02-post.jpg','img/intro/07-product.jpg','img/shots/vita.jpg','img/shots/ex-roster.jpg','img/intro/06-marketer.jpg','img/shots/hero-bg.jpg','img/intro/05-plan.jpg','img/leaf.jpg','img/intro/03-carousel.jpg','img/shots/ex-vita.jpg'].filter(function(u){return u!==o.cur;});
+    var url=pool[(shotSeq++)%pool.length],sr=ipSer(o.p,false);
+    SHOTS.push({id:++shotSeq,s:sr.id,t:pr.slice(0,48),img:url,st:'pub',pr:pr,f:'1:1 · 2K',cost:'7,38 ₽'});charge(o.p,'Изображения','Кадр '+qn(pr.slice(0,40)),7.38);
+    try{rerenderShots();}catch(e){}closeModal('build-modal');o.set(url);toast('Новый кадр поставили — он есть и в «Фото и видео»');
+  });});
+}
+function ipUp(inp){
+  var o=IP,f=inp.files&&inp.files[0];if(!f)return;if(!/^image\//.test(f.type)){toast('Нужна картинка — JPG или PNG');return;}
+  var url;try{url=URL.createObjectURL(f);}catch(e){return;}var sr=ipSer(o.p,true);
+  SHOTS.push({id:++shotSeq,s:sr.id,t:f.name.replace(/\.[^.]+$/,''),img:url,st:'own',f:'исходный размер',cost:'бесплатно'});try{rerenderShots();}catch(e){}
+  ipSet(url,'Ваше фото поставили — оно сохранилось в «Фото и видео» › «Свои фото»');
+}
+/* где в публикации меняется картинка: пост и обложка карусели — x.img, сторис — кадр, клип — сцена */
+function socImg(){
+  var x=socCur();if(!x)return;var T=x.type,i=x.idx||0,cur,set,title;
+  if(T==='story'){var fr=socFrames(x);cur=fr[i].img;title='Фон кадра '+(i+1);set=function(u){fr[i].img=u;renderSoc(T);};}
+  else if(T==='clip'){var sc=socScenes(x);cur=sc[i].img;title='Кадр сцены '+(i+1);set=function(u){sc[i].img=u;renderSoc(T);};}
+  else{cur=x.img;title=T==='car'?'Фон обложки':'Картинка для поста';set=function(u){x.img=u;renderSoc(T);};}
+  imgPick({p:x.p,cur:cur,title:title,prompt:x.t+(T==='post'?'':' — '+(title.toLowerCase())),set:set});
+}
+function plImg(){var x=plById(plCur);if(!x)return;imgPick({p:x.p,cur:x.img,title:'Фото для темы',prompt:x.t,set:function(u){x.img=u;plEdit();}});}
+/* клик по картинке в превью — тоже поменять */
+document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('.soc-left .mk-img, .soc-left .ph-wrap .ph9, .soc-left .cs-big .cs');if(t&&!e.target.closest('.st-zone'))socImg();});
 
 /* ---------- удалить что угодно: подтверждение с последствиями, потом «Вернуть» ---------- */
 var DEL_IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>';
