@@ -1662,6 +1662,11 @@
   .deep.open .deep-hd{border-style:solid}
   .deep.open .deep-cv{transform:rotate(180deg)}
   .deep-body{display:none;padding-top:16px}
+  .st-fine>.panel+.panel{margin-top:14px}
+  .st-ed .deep{margin-top:6px}
+  .price-cols{columns:2;column-gap:32px}
+  .price-cols .kv{break-inside:avoid}
+  @media (max-width:700px){.price-cols{columns:1}}
   .deep.open .deep-body{display:block}
   @media (max-width:600px){.sum-card{flex-direction:column;gap:12px}.sum-card .sum-tx{font-size:16px}}
   .rs-cmp{font-size:12.5px;color:var(--ink-3);margin-left:auto}
@@ -2859,17 +2864,26 @@
       <!-- ============ BILLING ============ -->
       <section id="v-billing" class="view">
         <div class="phead">
-          <div><h1>Счёт и оплата</h1><p>Без подписки: платите только за действия — каждое списание видно в журнале ниже.</p></div>
+          <div><h1>Счёт и оплата</h1><p class="ph-why">Сколько денег на балансе, на сколько их хватит и на что они уходят. Подписки нет — платите только за действия, цена всегда на кнопке до списания.</p></div>
           <div class="sp"></div>
         </div>
+        <div class="step-h">Итог</div>
+        <div class="sum-card" id="bl-sum"></div>
         <div class="grid2 bl-top">
           <div class="panel" id="bl-balance"></div>
-          <div class="panel" id="bl-limits"></div>
+          <div class="panel" id="bl-cost"></div>
         </div>
-        <div class="panel rs-block">
-          <h3>Расходы по проектам</h3>
+        <div class="deep" data-deep="billing-spend">
+          <button class="deep-hd" type="button" aria-expanded="false" onclick="deepToggle(this)">
+            <span class="deep-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+            <span class="deep-tx"><b>Подробно: куда ушли деньги</b><small>Расходы по каждому клиенту за месяц и журнал всех списаний — с выгрузкой в Excel для клиента и бухгалтерии</small></span>
+            <svg class="deep-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="deep-body">
+        <div class="panel">
+          <h3>Расходы по клиентам</h3>
           <p class="psub" id="bl-proj-sub"></p>
-          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Проект</th><th>Действий</th><th>Списано</th><th>Доля</th><th></th></tr></thead><tbody id="bl-proj"></tbody></table></div>
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Клиент</th><th>Действий</th><th>Списано</th><th>Доля</th><th></th></tr></thead><tbody id="bl-proj"></tbody></table></div>
         </div>
         <div class="panel rs-block">
           <div class="ch-hd"><h3>Журнал операций</h3><button class="ntf-link" type="button" onclick="dlJournal()">Скачать для Excel →</button></div>
@@ -2887,21 +2901,32 @@
             </div>
             <select class="sortsel" id="bl-per" onchange="blPage=1;renderJournal()"><option value="30">30 дней</option><option value="m10">Октябрь</option><option value="m9">Сентябрь</option><option value="all">Всё время</option></select>
           </div>
-          <div class="tbl-wrap"><table class="tbl jtbl"><thead><tr><th>Когда</th><th>Проект</th><th>Раздел</th><th>Действие</th><th>Сумма</th></tr></thead><tbody id="bl-jr"></tbody></table></div>
+          <div class="tbl-wrap"><table class="tbl jtbl"><thead><tr><th>Когда</th><th>Клиент</th><th>Раздел</th><th>Действие</th><th>Сумма</th></tr></thead><tbody id="bl-jr"></tbody></table></div>
           <div class="jr-foot" id="bl-jr-foot"></div>
         </div>
-        <div class="grid2 rs-block">
+          </div>
+        </div>
+        <div class="deep" data-deep="billing-set">
+          <button class="deep-hd" type="button" aria-expanded="false" onclick="deepToggle(this)">
+            <span class="deep-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
+            <span class="deep-tx"><b>Лимиты, документы и все цены</b><small>Подтверждение дорогих действий, лимит в месяц, предупреждение о низком остатке · акты, УПД, счета · полный список цен</small></span>
+            <svg class="deep-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="deep-body">
+        <div class="grid2">
+          <div class="panel" id="bl-limits"></div>
           <div class="panel" id="bl-docs"></div>
-          <div class="panel" id="bl-price"></div>
+        </div>
+        <div class="panel rs-block" id="bl-price"></div>
+          </div>
         </div>
       </section>
 
       <!-- ============ STYLE / DESIGN CODE ============ -->
       <section id="v-style" class="view">
         <div class="phead">
-          <div><h1>Стиль</h1><p id="st-sub">Стиль проекта: из него собирается всё — страницы, баннеры, кадры, презентации, тексты.</p></div>
+          <div><h1>Стиль</h1><p class="ph-why">Как выглядят материалы клиента: цвета, шрифты, логотип. Настроили один раз — Maker держит это везде: в постах, баннерах, страницах и презентациях. Справа видно, как это выглядит.</p><p id="st-sub"></p></div>
           <div class="sp"></div>
-          <button class="pbtn ghost" onclick="stTokens()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>Выгрузить токены</button>
         </div>
         <div class="toolbar">
           <label class="cp-target">Клиент: <select class="sortsel fsel" id="st-proj" data-projs="pick" onchange="stLoad()"></select></label>
@@ -2910,39 +2935,47 @@
         <div class="st-wrap">
           <div class="st-ed">
             <div class="panel" id="st-source"></div>
+            <div class="panel" id="st-logo"></div>
 
             <div class="panel">
               <h3>Цвета</h3>
-              <p class="psub">У каждого цвета — роль. Нейросеть не выбирает цвет: код берёт его отсюда по роли.</p>
+              <p class="psub">У каждого цвета своя роль: основной — кнопки и акценты, текст — для чтения, фон — подложка. Нейросеть цвет не выбирает — берёт отсюда по роли.</p>
               <div id="st-colors"></div>
-              <div class="bsec"><span class="lb-lbl">Читаемость — проверяем сами, до того как увидит клиент</span><div id="st-contrast"></div></div>
+              <div id="st-cwarn"></div>
             </div>
 
             <div class="panel">
-              <h3>Шрифты и форма</h3>
+              <h3>Шрифты</h3>
               <p class="psub">Шрифт без кириллицы подменим похожим — и честно скажем об этом.</p>
               <div class="st-fonts">
                 <label class="cp-target">Заголовки: <select class="cp-sel" id="st-fh" onchange="stSet('font.h',this.value)"><option>Onest</option><option>Manrope</option><option>Inter</option><option>Golos Text</option><option>Lora</option><option>PT Serif</option><option>SB Sans Display</option><option>SB Sans Text</option><option>Poppins</option></select></label>
                 <label class="cp-target">Текст: <select class="cp-sel" id="st-ft" onchange="stSet('font.t',this.value)"><option>Onest</option><option>Manrope</option><option>Inter</option><option>Golos Text</option><option>Lora</option><option>PT Serif</option><option>SB Sans Display</option><option>SB Sans Text</option><option>Poppins</option></select></label>
               </div>
               <div id="st-fnote"></div>
+            </div>
+
+            <div class="panel" id="st-voice"></div>
+
+            <div class="deep" data-deep="style-fine">
+              <button class="deep-hd" type="button" aria-expanded="false" onclick="deepToggle(this)">
+                <span class="deep-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg></span>
+                <span class="deep-tx"><b>Тонкие настройки стиля</b><small>Проверка читаемости, скругление и плотность, манера фото и эталонные кадры, история версий, выгрузка для разработчиков</small></span>
+                <svg class="deep-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="deep-body st-fine">
+                <div class="panel">
+                  <h3>Читаемость</h3>
+                  <p class="psub">Проверяем сами, до того как увидит клиент: текст должен читаться на любом фоне.</p>
+                  <div id="st-contrast"></div>
+                </div>
+                <div class="panel">
+                  <h3>Форма</h3>
+                  <p class="psub">Насколько скруглены углы и сколько воздуха между блоками.</p>
               <div class="bsec">
                 <div class="st-range"><span>Скругление</span><input type="range" id="st-r" min="0" max="24" step="2" oninput="stSet('radius',+this.value)"><b id="st-rv"></b></div>
                 <span class="lb-lbl" style="margin-top:12px">Плотность</span><div class="chipset" id="st-dens"></div>
               </div>
-            </div>
-
-            <div class="panel">
-              <h3>Тон голоса</h3>
-              <p class="psub">По нему пишутся тексты страниц и баннеров, ответы в чате и заметки к слайдам.</p>
-              <div class="st-range"><span>Дружеский</span><input type="range" id="st-tf" min="0" max="100" step="5" oninput="stSet('tone.formal',+this.value)"><span>Официальный</span></div>
-              <div class="st-range"><span>Сдержанный</span><input type="range" id="st-te" min="0" max="100" step="5" oninput="stSet('tone.emo',+this.value)"><span>Эмоциональный</span></div>
-              <div class="st-tone-ex" id="st-tone-ex"></div>
-              <div class="bsec"><span class="lb-lbl">Так говорим · так не говорим</span><div id="st-say"></div>
-                <div class="st-say-add"><input id="st-say-y" placeholder="Так говорим"><input id="st-say-n" placeholder="Так не говорим"><button class="mini" type="button" onclick="stSayAdd()">Добавить</button></div>
-              </div>
-            </div>
-
+                </div>
             <div class="panel">
               <h3>Манера фото</h3>
               <p class="psub">Из неё снимаются серии в «Изображениях»: вы пишете сюжет, манеру берём отсюда.</p>
@@ -2955,8 +2988,14 @@
               <div class="bsec"><span class="lb-lbl">Эталонные кадры — до трёх, из принятых</span><div class="bgpick" id="st-refs"></div></div>
             </div>
 
-            <div class="panel" id="st-logo"></div>
-            <div class="panel" id="st-hist"></div>
+                <div class="panel" id="st-hist"></div>
+                <div class="panel">
+                  <h3>Для разработчиков</h3>
+                  <p class="psub">Цвета, шрифты и скругления одним файлом — чтобы перенести стиль на сайт или в приложение клиента.</p>
+                  <button class="pbtn ghost" onclick="stTokens()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>Выгрузить токены</button>
+                </div>
+              </div>
+            </div>
           </div>
           <aside class="st-prev" id="st-prev"></aside>
         </div>
@@ -5245,15 +5284,28 @@ function rsReport(){
 
 /* ---------- Billing ---------- */
 var blPage=1,blAmt=1000,blMethod='card';
+var BL_PRICES=[['Пост для соцсетей','до 0,82 ₽',1],['Кадр','1,47–7,36 ₽',1],['Пересъёмка неудачного кадра','бесплатно',1],['Ролик 5–15 с','12,40–41,03 ₽',1],['Страница · сборка','до 2,25 ₽',1],['Страница · уточнение','0,14–1,12 ₽'],['Комплект баннеров · 10 форматов','до 1,72 ₽',1],['Ещё вариант текста баннера','0,43 ₽'],['План презентации','~0,31 ₽'],['Сборка колоды','до 2,63 ₽'],['Разбор кампании','до 1,73 ₽'],['Ответ в чате','до 0,82 ₽'],['Кадр из чата','до 4,64 ₽']];
 function renderBilling(){
   var bal=balance(),l30=JOURNAL.filter(function(x){return x.sec!=='topup'&&x.d>=dkey(addDays(YDAY,-29));}),avg=-l30.reduce(function(s,x){return s+x.v;},0)/30,days=avg?Math.floor(bal/avg):0;
   var amts=[500,1000,3000,5000];
-  document.getElementById('bl-balance').innerHTML='<h3>Баланс</h3><div class="bal-v">'+rub2(bal)+'</div><div class="bal-f'+(bal<LIMITS.lowAt?' warn':'')+'">'+(avg?(days>90?'хватит надолго':'хватит примерно на '+plural(days,'день','дня','дней'))+' · в среднем '+rub2(avg)+' в день за 30 дней':'расходов пока не было')+'</div>'+
+  document.getElementById('bl-balance').innerHTML='<h3>Баланс</h3><div class="bal-v">'+rub2(bal)+'</div>'+
     '<div class="bl-sec"><span class="lb-lbl">Пополнить</span><div class="chipset" id="bl-amt">'+amts.map(function(a){return '<button class="chip'+(a===blAmt?' on':'')+'" type="button" onclick="blAmt='+a+';renderBilling()">'+rub(a)+'</button>';}).join('')+'</div>'+
     '<div class="chipset">'+[['card','Картой'],['invoice','Счёт для юрлица']].map(function(m){return '<button class="chip'+(m[0]===blMethod?' on':'')+'" type="button" onclick="blMethod=\''+m[0]+'\';renderBilling()">'+m[1]+'</button>';}).join('')+'</div>'+
     '<div class="bl-pay"><button class="pbtn" type="button" onclick="blPay()">'+(blMethod==='card'?'Пополнить на '+rub(blAmt):'Выставить счёт на '+rub(blAmt))+'</button><span class="cp-note" style="margin:0">'+(blMethod==='card'?'деньги придут сразу':'после оплаты — за 1–2 рабочих дня')+'</span></div></div>'+
     '<div class="bl-sec"><div class="lim-row"><span>Автопополнение<small>на 1 000 ₽, когда остаток меньше '+rub(LIMITS.lowAt)+(STATE!=='new'&&STATE!=='first'?' · картой •• 4417':' · карта не привязана — привяжем при первой оплате картой')+'</small></span><button class="toggle" type="button"'+(STATE!=='new'&&STATE!=='first'?'':' disabled')+' aria-pressed="'+(LIMITS.auto&&STATE!=='new'&&STATE!=='first')+'" onclick="LIMITS.auto=!LIMITS.auto;renderBilling();toast(LIMITS.auto?\'Автопополнение включено\':\'Автопополнение выключено\')"></button></div></div>';
   var month=-JOURNAL.filter(function(x){return x.sec!=='topup'&&x.d>=dkey(new Date(2026,9,1));}).reduce(function(s,x){return s+x.v;},0);
+  // итог словами — из тех же bal, avg, days, month и расходов по клиентам ниже
+  var mf0=dkey(new Date(2026,9,1)),byP={};JOURNAL.forEach(function(x){if(x.sec==='topup'||x.d<mf0)return;byP[x.p]=(byP[x.p]||0)-x.v;});
+  var topP=Object.keys(byP).sort(function(a,b){return byP[b]-byP[a];})[0],sumTx,vd;
+  if(!avg){sumTx='На балансе <b>'+rub2(bal)+'</b>. Расходов пока не было — цену каждого действия увидите на кнопке до списания.';vd=['','Расходов нет'];}
+  else{
+    sumTx='На балансе <b>'+rub2(bal)+'</b> — '+(days>90?'хватит надолго':'хватит примерно на <b>'+plural(days,'день','дня','дней')+'</b>')+', если тратить как обычно (в среднем '+rub2(avg)+' в день).'+
+      (month?' В октябре списано <b>'+rub2(month)+'</b>'+(topP?', больше всего — на '+qn(topP)+' ('+rub2(byP[topP])+').':'.'):'');
+    vd=bal<LIMITS.lowAt||days<7?['wait','Пора пополнить']:days<14?['','Скоро пополнить']:['ok','Денег хватает'];
+  }
+  document.getElementById('bl-sum').innerHTML='<div class="sum-tx">'+sumTx+'</div><span class="verdict '+vd[0]+'">'+vd[1]+'</span>';
+  document.getElementById('bl-cost').innerHTML='<h3>Сколько что стоит</h3><p class="psub">Самое частое. Цена всегда видна на кнопке до действия, неудачные кадры не оплачиваются.</p><div class="price-lines">'+BL_PRICES.filter(function(r){return r[2];}).map(function(r){return '<div class="kv"><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>';}).join('')+'</div>';
+
   var ch=function(vals,cur,set,fmt){return '<div class="chipset">'+vals.map(function(v){return '<button class="chip'+(v===cur?' on':'')+'" type="button" onclick="'+set+'='+v+';renderBilling()">'+fmt(v)+'</button>';}).join('')+'</div>';};
   document.getElementById('bl-limits').innerHTML='<h3>Лимиты и уведомления</h3><p class="psub">Чтобы ни одно действие не стоило неожиданно</p>'+
     '<div class="lim-row" style="flex-wrap:wrap"><span>Подтверждать действия дороже<small>спросим перед списанием — например, ролик до 41 ₽</small></span>'+ch([0,5,10,20],LIMITS.confirm,'LIMITS.confirm',function(v){return v?rub(v):'Не спрашивать';})+'</div>'+
@@ -5262,15 +5314,15 @@ function renderBilling(){
     '<p class="cp-note">Если денег на действие не хватит, кнопка скажет об этом до списания — генерация не оборвётся на середине.</p>';
   var mf=dkey(new Date(2026,9,1)),pjs={};JOURNAL.forEach(function(x){if(x.sec==='topup'||x.d<mf)return;var p=pjs[x.p]||(pjs[x.p]={n:0,v:0});p.n++;p.v-=x.v;});
   var tot=Object.keys(pjs).reduce(function(s,k){return s+pjs[k].v;},0)||1;
-  document.getElementById('bl-proj-sub').textContent='Октябрь, по '+dfmt(YDAY)+' · производство в Maker; реклама оплачивается площадкам отдельно';
+  document.getElementById('bl-proj-sub').textContent='Октябрь, по '+dfmt(YDAY)+' · производство в Maker; реклама оплачивается площадкам отдельно. «Выгрузить для клиента» — таблица его расходов для отчёта';
   document.getElementById('bl-proj').innerHTML=Object.keys(pjs).sort(function(a,b){return pjs[b].v-pjs[a].v;}).map(function(k){var p=pjs[k],pr=projByShort(k);
     return '<tr style="cursor:default"><td><div class="pgname"><span class="pgthumb" style="background-image:url(\''+(pr?pr.img:'')+'\')"></span><span class="nm">'+k+'</span></div></td><td class="mono">'+p.n+'</td><td class="mono">'+rub2(p.v)+'</td><td style="min-width:140px"><div class="pbar" data-tip="'+pctf(p.v/tot)+' расходов месяца"><i style="width:'+(p.v/tot*100)+'%"></i></div></td><td><button class="mini" type="button" onclick="dlSpend(\''+esc(k)+'\')">Выгрузить для клиента</button></td></tr>';}).join('');
   renderJournal();
   document.getElementById('bl-docs').innerHTML='<h3>Документы</h3><p class="psub">ООО «Демо-агентство» · ИНН 7700000000</p>'+
     [['PDF','Квитанция об оплате','1 окт · '+rub(JOURNAL.filter(function(x){return x.d==='2026-10-01'&&x.sec==='topup';})[0].v)],['PDF','Акт за сентябрь 2026','подписан электронно'],['PDF','УПД за сентябрь 2026','для бухгалтерии'],['PDF','Счёт № 1042 от 1 окт','оплачен']].map(function(d){return '<div class="doc-row"><span class="di">'+d[0]+'</span><span>'+d[1]+'<small>'+d[2]+'</small></span><button class="mini" type="button" data-engine="billing-doc" onclick="engineFile(\''+d[1]+' · PDF\')">Скачать</button></div>';}).join('')+
     '<div class="gate-acts" style="justify-content:flex-start"><button class="mini" type="button" onclick="toast(\'Реквизиты компании — форма редактирования (имитировано)\')">Реквизиты компании</button></div>';
-  document.getElementById('bl-price').innerHTML='<h3>Сколько что стоит</h3><p class="psub">Цена всегда видна на кнопке до действия. Неудачные кадры не оплачиваются.</p><div class="price-lines">'+
-    [['Кадр','1,47–7,36 ₽'],['Пересъёмка неудачного кадра','бесплатно'],['Ролик 5–15 с','12,40–41,03 ₽'],['Страница · сборка','до 2,25 ₽'],['Страница · уточнение','0,14–1,12 ₽'],['Комплект баннеров · 10 форматов','до 1,72 ₽'],['Ещё вариант текста баннера','0,43 ₽'],['План презентации','~0,31 ₽'],['Сборка колоды','до 2,63 ₽'],['Разбор кампании','до 1,73 ₽'],['Ответ в чате','до 0,82 ₽'],['Кадр из чата','до 4,64 ₽']].map(function(r){return '<div class="kv"><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>';}).join('')+'</div>';
+  document.getElementById('bl-price').innerHTML='<h3>Все цены</h3><p class="psub">Цена всегда видна на кнопке до действия. Неудачные кадры не оплачиваются.</p><div class="price-lines price-cols">'+
+    BL_PRICES.map(function(r){return '<div class="kv"><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>';}).join('')+'</div>';
 }
 function renderJournal(){
   var pj=document.getElementById('bl-pj').value,sec=chipVal('bl-sec'),per=document.getElementById('bl-per').value;
@@ -5338,7 +5390,7 @@ function toneText(d){d=d||DRAFT;var t=d.tone,r=t.formal<34?0:t.formal<67?1:2,c=t
 function stLoad(){STP=document.getElementById('st-proj').value;DRAFT=clone(DESIGN[STP]);ST_DIRTY=false;stFill();stColors();stRender();}
 function stFill(){
   document.getElementById('st-fh').value=DRAFT.font.h;document.getElementById('st-ft').value=DRAFT.font.t;
-  document.getElementById('st-r').value=DRAFT.radius;document.getElementById('st-tf').value=DRAFT.tone.formal;document.getElementById('st-te').value=DRAFT.tone.emo;
+  document.getElementById('st-r').value=DRAFT.radius;
   ['light','color','comp','avoid'].forEach(function(k){document.getElementById('st-ph-'+k).value=DRAFT.photo[k]||'';});
 }
 function stSet(path,v){setPath(DRAFT,path,v);ST_DIRTY=true;stRender();}
@@ -5365,7 +5417,7 @@ function stFix(i){
 }
 function stRender(){
   if(!DRAFT)return;var d=DRAFT;
-  document.getElementById('st-sub').textContent='Стиль '+qn(STP)+': из него собирается всё — страницы, баннеры, кадры, презентации, тексты.';
+  document.getElementById('st-sub').textContent='';
   document.getElementById('st-ver').textContent='версия '+DESIGN[STP].v+(ST_DIRTY?' · есть несохранённые изменения':' · сохранено');
   var site=/\.ru|\.site|\.com/.test(d.src);
   document.getElementById('st-source').innerHTML='<h3>Источник</h3><p class="psub">'+hesc(d.src)+(d.at!=='—'?' · снят '+d.at:'')+'</p><div style="display:flex;gap:8px;flex-wrap:wrap">'+
@@ -5378,8 +5430,9 @@ function stRender(){
   document.getElementById('st-fnote').innerHTML=fn(d.font.h,'Заголовки')+(d.font.t!==d.font.h?fn(d.font.t,'Текст'):'');
   document.getElementById('st-rv').textContent=d.radius+' px';
   document.getElementById('st-dens').innerHTML=['Компактная','Обычная','Свободная'].map(function(x){return '<button class="chip'+(x===d.density?' on':'')+'" type="button" onclick="stSet(\'density\',\''+x+'\')">'+x+'</button>';}).join('');
-  document.getElementById('st-tone-ex').innerHTML='<small>Так нейросеть напишет оффер</small>'+toneText();
-  document.getElementById('st-say').innerHTML=d.say.length?d.say.map(function(s,i){return '<div class="say-row"><span class="sy">'+hesc(s[0])+'</span><span class="sn">'+hesc(s[1])+'</span><button class="ol-btn" type="button" aria-label="Удалить пару" onclick="DRAFT.say.splice('+i+',1);ST_DIRTY=true;stRender()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>';}).join(''):'<p class="cp-note" style="margin:0">Пар пока нет — добавьте 2–3 примера, и тексты сразу станут «вашими».</p>';
+  document.getElementById('st-voice').innerHTML='<div class="ch-hd"><h3>Голос</h3><button class="ntf-link" type="button" onclick="go(\'voice\')">Настроить голос →</button></div><p class="psub" style="margin-bottom:8px">Как клиент говорит — на отдельном экране «Голос». Стиль отвечает за то, как материалы выглядят.</p><div class="kv"><span class="k">Сейчас</span><span class="v">'+toneName(d.tone)+(d.say.length?' · '+plural(d.say.length,'правило','правила','правил')+' «так говорим»':'')+'</span></div>';
+  var bad=stPairs(d).filter(function(q){return contrast(q[1],q[2])<q[3];}).length;
+  document.getElementById('st-cwarn').innerHTML=bad?'<div class="lb-note wait bnote" style="margin:12px 0 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="flex:1">'+plural(bad,'сочетание цветов плохо читается','сочетания цветов плохо читаются','сочетаний цветов плохо читаются')+' — клиент может не разглядеть текст.</span><button class="mini" type="button" onclick="stShowContrast()">Показать и подобрать</button></div>':'<p class="cp-note" style="margin:10px 0 0">Все сочетания цветов читаются — проверили сами.</p>';
   var shots=SHOTS.filter(function(z){return serOf(z).p===STP&&['pub','redo','own'].indexOf(z.st)>=0;});
   document.getElementById('st-refs').innerHTML=shots.length?shots.map(function(z){return '<button type="button" class="'+(d.refs.indexOf(z.id)>=0?'on':'')+'" title="'+hesc(z.t)+'" style="background-image:url(\''+z.img+'\')" onclick="stRef('+z.id+')"></button>';}).join(''):'<p class="cp-note" style="margin:0">Принятых кадров пока нет — снимите серию в «Изображениях».</p>';
   var lg=function(dark){return d.logo?'<img src="'+d.logo+'" alt="Логотип">':'<span class="lg" style="font-family:'+fontCss(d.font.h)+';color:'+(dark?'#fff':d.col.ink)+'"><i style="background:'+(dark?d.col.accent:d.col.primary)+'">'+STP.charAt(0)+'</i>'+hesc(STP)+'</span>';};
@@ -5391,6 +5444,7 @@ function stRender(){
   stPreview();stSaveBar();
 }
 function stRef(id){var r=DRAFT.refs,k=r.indexOf(id);if(k>=0)r.splice(k,1);else{if(r.length>=3){toast('Эталонов — не больше трёх: снимите выбор с одного');return;}r.push(id);}ST_DIRTY=true;stRender();}
+function stShowContrast(){var el=document.querySelector('.deep[data-deep="style-fine"]');if(!el.classList.contains('open'))deepToggle(el.querySelector('.deep-hd'));document.getElementById('st-contrast').scrollIntoView({behavior:'smooth',block:'center'});}
 function stSayAdd(){var y=document.getElementById('st-say-y'),n=document.getElementById('st-say-n');if(!y.value.trim()&&!n.value.trim()){y.focus();return;}DRAFT.say.push([y.value.trim()||'—',n.value.trim()||'—']);y.value='';n.value='';ST_DIRTY=true;stRender();}
 function stRollback(i){var h=DESIGN[STP].hist[i];DRAFT=deepMerge(clone(DESIGN[STP]),h.ch);ST_DIRTY=true;stFill();stColors();stRender();toast('Версия '+h.v+' загружена в редактор — проверьте превью и сохраните как новую');}
 function stRescan(){var site=DRAFT.src.split(' ')[0];openBuildModal('Снимаем стиль заново',['Открываем '+site,'Сравниваем цвета, шрифты и скругления'],'Сайт не менялся с '+DRAFT.at+' — стиль совпадает, ничего не трогаем.');}
