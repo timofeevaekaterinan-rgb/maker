@@ -3,7 +3,7 @@
 <title>Кабинет Maker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600&family=Manrope:wght@500;700;800&family=Inter:wght@400;600;800&family=Golos+Text:wght@400;600;700&family=Lora:wght@500;700&family=PT+Serif:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600&family=Manrope:wght@500;700;800&family=Golos+Text:wght@400;600;700&family=Lora:wght@500;700&family=PT+Serif:wght@400;700&display=swap">
 <style>
   /* Кликабельный прототип кабинета Maker — многоэкранный, без бэкенда. Одна светлая тема, синий акцент. */
   :root{
@@ -17,9 +17,10 @@
     --warn-bg:#FDF1E7; --warn-ink:#9A5A22;
     --ok-bg:#E9F4EC; --ok-ink:#2E6B45;
     --set-bg:#EAF0F8; --set-ink:#345B87;
-    --sans:"Onest",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --sans:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --head:"Geologica","Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif; /* заголовки, цифры, акценты */
     --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-    --hand:"Caveat","Onest",cursive;
+    --hand:"Caveat","Inter",cursive;
     --shadow:0 1px 2px rgba(26,34,48,.04),0 12px 30px -20px rgba(26,34,48,.25);
   }
   *{box-sizing:border-box}
@@ -27,6 +28,8 @@
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
   ::selection{background:var(--blue);color:#fff}
   button{font-family:inherit}
+  /* Geologica — заголовки и крупные цифры интерфейса Maker; превью в стиле клиента задают свой шрифт (--fh/--ft) */
+  h1,h2,h3,h4,.logo b,.in-brand b,.tile .tv,.price-card .pnow,.stat .sv,.map-h,.ic-metric b,.ic-aa,.kpi .kv2,.fn-st .fv,.goal-v b,.ag-big,.bal-v,.gate-cost,.crm-res b,.cv-msg b,.cv-who b,.lp-h,.aa,.aa-pres b{font-family:var(--head)}
   :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:8px}
 
   .app{display:grid;grid-template-columns:252px 1fr;min-height:100vh}
@@ -3051,8 +3054,8 @@
               <h3>Шрифты</h3>
               <p class="psub">Шрифт без кириллицы подменим похожим — и честно скажем об этом.</p>
               <div class="st-fonts">
-                <label class="cp-target">Заголовки: <select class="cp-sel" id="st-fh" onchange="stSet('font.h',this.value)"><option>Onest</option><option>Manrope</option><option>Inter</option><option>Golos Text</option><option>Lora</option><option>PT Serif</option><option>SB Sans Display</option><option>SB Sans Text</option><option>Poppins</option></select></label>
-                <label class="cp-target">Текст: <select class="cp-sel" id="st-ft" onchange="stSet('font.t',this.value)"><option>Onest</option><option>Manrope</option><option>Inter</option><option>Golos Text</option><option>Lora</option><option>PT Serif</option><option>SB Sans Display</option><option>SB Sans Text</option><option>Poppins</option></select></label>
+                <label class="cp-target">Заголовки: <select class="cp-sel" id="st-fh" onchange="stSet('font.h',this.value)"><option>Geologica</option><option>Onest</option><option>Manrope</option><option>Inter</option><option>Golos Text</option><option>Lora</option><option>PT Serif</option><option>SB Sans Display</option><option>SB Sans Text</option><option>Poppins</option></select></label>
+                <label class="cp-target">Текст: <select class="cp-sel" id="st-ft" onchange="stSet('font.t',this.value)"><option>Geologica</option><option>Onest</option><option>Manrope</option><option>Inter</option><option>Golos Text</option><option>Lora</option><option>PT Serif</option><option>SB Sans Display</option><option>SB Sans Text</option><option>Poppins</option></select></label>
               </div>
               <div id="st-fnote"></div>
             </div>
@@ -3794,7 +3797,7 @@ function cloneProject(name){
 }
 
 /* ---------- design code: one model per project (colors, fonts, form, tone, photo manner) ---------- */
-var FONTS=[['Onest','Onest','sans'],['Manrope','Manrope','sans'],['Inter','Inter','sans'],['Golos Text','Golos Text','sans'],['Lora','Lora','serif'],['PT Serif','PT Serif','serif'],['SB Sans Display','Onest','brand'],['SB Sans Text','Onest','brand'],['Poppins','Manrope','nocyr']];
+var FONTS=[['Geologica','Geologica','sans'],['Onest','Onest','sans'],['Manrope','Manrope','sans'],['Inter','Inter','sans'],['Golos Text','Golos Text','sans'],['Lora','Lora','serif'],['PT Serif','PT Serif','serif'],['SB Sans Display','Onest','brand'],['SB Sans Text','Onest','brand'],['Poppins','Manrope','nocyr']];
 function fontOf(n){return FONTS.filter(function(x){return x[0]===n;})[0]||FONTS[0];}
 function fontCss(n){var f=fontOf(n);return "'"+f[1]+"',"+(f[2]==='serif'?'Georgia,serif':'system-ui,sans-serif');}
 var DESIGN={
@@ -3810,10 +3813,10 @@ var DESIGN={
     say:[['Примем без очереди по записи','Лучшие врачи города'],['Объясним план лечения простыми словами','Инновационные методики']],
     photo:{light:'Мягкий дневной',color:'Светлый, зелень и дерево',comp:'Пространство без людей, много воздуха',avoid:'Шприцы и кровь крупно, «больничный» белый'},refs:[7,8],logo:'',
     hist:[{v:1,d:'4 сен',t:'Взяли готовый набор «Клиника»'}]},
-  'Таргет-сайт':{v:1,src:'пока наши цвета — поменяйте на свои',at:'—',col:{primary:'#8A5A3C',deep:'#3B2618',accent:'#E3B04B',ink:'#2A1E17',bg:'#FFFFFF',surface:'#F6EFE8'},btn:'light',font:{h:'Onest',t:'Onest'},radius:12,density:'Обычная',tone:{formal:50,emo:50},
+  'Таргет-сайт':{v:1,src:'пока наши цвета — поменяйте на свои',at:'—',col:{primary:'#8A5A3C',deep:'#3B2618',accent:'#E3B04B',ink:'#2A1E17',bg:'#FFFFFF',surface:'#F6EFE8'},btn:'light',font:{h:'Geologica',t:'Inter'},radius:12,density:'Обычная',tone:{formal:50,emo:50},
     say:[],photo:{light:'',color:'',comp:'',avoid:''},refs:[],logo:'',hist:[{v:1,d:'—',t:'Цвета по умолчанию'}]}
 };
-DESIGN['__maker']={v:1,src:'цвета Maker',at:'—',col:{primary:'#2E6BE6',deep:'#16306E',accent:'#E0722E',ink:'#1A2230',bg:'#FFFFFF',surface:'#EEF3FD'},btn:'light',font:{h:'Onest',t:'Onest'},radius:12,density:'Обычная',tone:{formal:50,emo:50},say:[],photo:{light:'',color:'',comp:'',avoid:''},refs:[],logo:'',hist:[]};
+DESIGN['__maker']={v:1,src:'цвета Maker',at:'—',col:{primary:'#2E6BE6',deep:'#16306E',accent:'#E0722E',ink:'#1A2230',bg:'#FFFFFF',surface:'#EEF3FD'},btn:'light',font:{h:'Geologica',t:'Inter'},radius:12,density:'Обычная',tone:{formal:50,emo:50},say:[],photo:{light:'',color:'',comp:'',avoid:''},refs:[],logo:'',hist:[]};
 var PAL={};
 function palOf(d){var c=d.col;return {a:c.primary,b:c.deep,sf:c.surface,ink:c.ink,btn:d.btn==='accent'?c.accent:'#fff',bt:d.btn==='accent'?'#fff':c.deep,fh:fontCss(d.font.h),ft:fontCss(d.font.t),r:d.radius};}
 function syncPal(){Object.keys(DESIGN).forEach(function(p){PAL[p]=palOf(DESIGN[p]);});}
@@ -3857,7 +3860,7 @@ function projAdd(name,link){
   if(projByShort(name))return name;
   var site=link?link.replace(/^https?:\/\//,'').replace(/\/$/,''):'';
   PROJECTS.push({n:name,s:name,m:site?site+' · стиль ещё не сняли':'новый клиент · стиль ещё не сняли',img:'img/shots/hero-bg.jpg',stat:['draft','Черновик'],avs:[['#2E6BE6',name.replace(/[«»"]/g,'').charAt(0).toUpperCase()]],more:''});
-  DESIGN[name]={v:1,src:site||'цвета Maker — поменяйте на свои',at:'сегодня',col:{primary:'#2E6BE6',deep:'#16306E',accent:'#E0722E',ink:'#1A2230',bg:'#FFFFFF',surface:'#EEF3FD'},btn:'light',font:{h:'Onest',t:'Onest'},radius:12,density:'Обычная',tone:{formal:50,emo:50},say:[],photo:{light:'',color:'',comp:'',avoid:''},refs:[],logo:'',hist:[{v:1,d:'сегодня',t:'Новый клиент — цвета Maker по умолчанию'}]};
+  DESIGN[name]={v:1,src:site||'цвета Maker — поменяйте на свои',at:'сегодня',col:{primary:'#2E6BE6',deep:'#16306E',accent:'#E0722E',ink:'#1A2230',bg:'#FFFFFF',surface:'#EEF3FD'},btn:'light',font:{h:'Geologica',t:'Inter'},radius:12,density:'Обычная',tone:{formal:50,emo:50},say:[],photo:{light:'',color:'',comp:'',avoid:''},refs:[],logo:'',hist:[{v:1,d:'сегодня',t:'Новый клиент — цвета Maker по умолчанию'}]};
   syncPal();
   document.querySelectorAll('select[data-projs]').forEach(function(sel){var o=document.createElement('option');o.value=name;o.textContent=name;sel.insertBefore(o,sel.querySelector('option[value="+new"]'));});
   renderProjLists();
@@ -7789,7 +7792,7 @@ function dlLanding(){
   Promise.all(urls.map(function(u){return fetch(u).then(function(r){return r.blob();}).then(function(b){return new Promise(function(res){var fr=new FileReader();fr.onload=function(){res([u,fr.result]);};fr.readAsDataURL(b);});}).catch(function(){return [u,u];});})).then(function(pairs){
     pairs.forEach(function(p){html=html.split(p[0]).join(p[1]);});
     var title=(document.getElementById('crumb-b')||{}).textContent||(document.querySelector('#build-done .fh')||{}).textContent||'Страница';
-    var doc='<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+hesc(title)+'</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap"><style>'+css+'\nbody{background:#F5F8FC;display:grid;place-items:center;min-height:100vh;margin:0;padding:24px}</style></head><body>'+html+'</body></html>';
+    var doc='<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+hesc(title)+'</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;600;800&family=Inter:wght@400;500;600;700&family=Onest:wght@400;500;600;700;800&display=swap"><style>'+css+'\nbody{background:#F5F8FC;display:grid;place-items:center;min-height:100vh;margin:0;padding:24px}</style></head><body>'+html+'</body></html>';
     saveFile(fileSafe(title)+'.html',new Blob([doc],{type:'text/html'}),'Страница одним файлом — откроется в любом браузере');
   });
 }
