@@ -2227,6 +2227,79 @@
   .auth .alt:hover{background:var(--inset)}
   .auth .alt svg{width:16px;height:16px;color:var(--ink-3)}
   .auth .foot{margin-top:22px;font-size:12.5px;color:var(--ink-3);text-align:center;line-height:1.5}
+  /* ---- вход по макету (с 5 окт): облако карточек + карточка входа ---- */
+  .auth{display:block;padding:0;background:radial-gradient(60% 70% at 28% 42%,#4A86FF 0%,#1A4EE6 42%,#0A2A9E 100%)}
+  .au-shell{width:100%;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,560px);align-items:center;gap:28px;max-width:1440px;margin:0 auto;padding:28px 48px;min-height:calc(100vh - 46px)}
+  .auth .auth-card{max-width:none;width:100%;margin:0;align-self:center;padding:40px 46px 34px;border-radius:28px;background:linear-gradient(180deg,#fff,#F3F6FD);border:1px solid rgba(255,255,255,.7);box-shadow:0 40px 90px -30px rgba(3,20,90,.65)}
+  .auth .auth-card h1{text-align:left;font-size:36px;margin-bottom:10px}
+  .auth .auth-card .as{text-align:left;font-size:16px;margin-bottom:26px}
+  .au-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:30px}
+  .au-top .logo{margin:0!important}
+  .auth .au-top .logo .mark{width:44px;height:44px}
+  .auth .au-top .logo b{font-size:32px;letter-spacing:-.03em}
+  .au-lang{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 13px;border:1px solid var(--line-2);border-radius:12px;background:#fff;font:inherit;font-weight:600;font-size:14px;color:var(--ink);cursor:pointer}
+  .au-lang svg{width:18px;height:18px;color:var(--ink-2)}
+  .au-lang .cv{width:14px;height:14px}
+  .au-ya{width:100%;height:60px;display:flex;align-items:center;gap:14px;padding:0 18px 0 11px;border:1px solid var(--line-2);border-radius:14px;background:#fff;font:inherit;font-weight:600;font-size:15.5px;color:var(--ink);cursor:pointer;transition:background .15s}
+  .au-ya:hover{background:var(--inset)}
+  .au-ya>span:nth-child(2){flex:1;text-align:center}
+  .au-ya-ic{width:38px;height:38px;border-radius:50%;background:#FC3F1D;color:#fff;display:grid;place-items:center;font-weight:700;font-size:20px;flex:none}
+  .au-ya>svg{width:20px;height:20px;color:var(--ink-2);flex:none}
+  .auth .au-s-start .divider{margin:22px 0}
+  .auth label.au-f{display:flex;align-items:center;gap:12px;height:56px;padding:0 14px 0 16px;border:1.5px solid var(--line-2);border-radius:14px;background:#fff;margin:0 0 12px;cursor:text;font-size:inherit;font-weight:400;color:inherit}
+  .au-f:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-softer)}
+  .au-f.err{border-color:#E7B4AE;background:#FFF8F7}
+  .au-fi{display:grid;place-items:center;color:var(--ink-3);flex:none}
+  .au-fi svg{width:22px;height:22px}
+  .au-f input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:15.5px;color:var(--ink)}
+  .au-eye{background:none;border:0;padding:4px;color:var(--ink-3);cursor:pointer;display:grid;flex:none}
+  .au-eye svg{width:22px;height:22px}
+  .au-s-start .au-err{margin:-2px 0 8px;min-height:0}
+  .au-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 18px}
+  .auth label.au-rem{display:inline-flex;align-items:center;gap:10px;margin:0;font-size:14.5px;font-weight:500;color:var(--ink);cursor:pointer}
+  .au-rem input{width:22px;height:22px;margin:0;accent-color:var(--blue);cursor:pointer}
+  .au-row .au-link{font-size:14.5px}
+  .auth .au-s-start .submit{height:60px;border-radius:14px;font-size:17px;background:linear-gradient(180deg,#2A66FF,#0E48E6);box-shadow:0 16px 30px -14px rgba(16,72,230,.7)}
+  .au-hint{text-align:center;font-size:13px;color:var(--ink-3);margin:12px 0 0}
+  .au-alt{display:block;margin:12px auto 0;font-size:13.5px}
+  .au-reg{text-align:center;font-size:14.5px;color:var(--ink-2);margin:18px 0 0}
+  .au-reg .au-link{font-size:14.5px}
+  .au-note{background:var(--blue-softer);color:var(--ink);border-radius:12px;padding:11px 14px;font-size:13.5px;line-height:1.5;margin:0 0 12px}
+  .auth .au-s-start .foot{margin-top:14px}
+  .au-art{position:relative;width:100%;aspect-ratio:.95;max-height:88vh;container-type:inline-size;justify-self:center}
+  .aa-blk{position:absolute;border-radius:9cqw;background:linear-gradient(150deg,rgba(130,170,255,.55),rgba(30,90,245,.5));border:1px solid rgba(255,255,255,.3);filter:blur(1px)}
+  .aa-blk.w{background:linear-gradient(150deg,rgba(255,255,255,.55),rgba(200,220,255,.2));filter:blur(3px)}
+  .aa-blk.d{background:linear-gradient(150deg,#3E7CFF,#0B3FD4)}
+  .aa-card{position:absolute;display:flex;flex-direction:column;padding:2.2cqw;border-radius:4cqw;background:linear-gradient(160deg,rgba(255,255,255,.72),rgba(225,236,255,.35));border:1px solid rgba(255,255,255,.85);box-shadow:0 5cqw 9cqw -3cqw rgba(4,25,120,.55),inset 0 1px 0 #fff;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .aa-tag{align-self:flex-start;display:inline-flex;align-items:center;gap:1.6cqw;height:7cqw;padding:0 2.8cqw 0 1.4cqw;border-radius:2.4cqw;background:#fff;font-weight:700;font-size:2.9cqw;color:var(--ink);box-shadow:0 1.6cqw 3cqw -1.6cqw rgba(10,40,150,.45);margin-bottom:1.8cqw;white-space:nowrap}
+  .aa-tag i{width:4.4cqw;height:4.4cqw;border-radius:1.2cqw;background:linear-gradient(160deg,#3B7BFF,#0A44E0);color:#fff;display:grid;place-items:center}
+  .aa-tag i svg{width:2.8cqw;height:2.8cqw}
+  .aa-pic{flex:1;border-radius:2.8cqw;background:#DFE7F5 center/cover no-repeat;position:relative;overflow:hidden}
+  .aa-play{position:absolute;left:50%;top:55%;width:11cqw;height:11cqw;margin:-5.5cqw 0 0 -5.5cqw;border-radius:50%;border:.5cqw solid #fff;background:rgba(255,255,255,.18);display:grid;place-items:center;color:#fff}
+  .aa-play svg{width:5cqw;height:5cqw;margin-left:.6cqw}
+  .aa-bld{background:linear-gradient(180deg,#EAF0FF,#C7D6FF)}
+  .aa-bld svg{width:100%;height:100%;display:block}
+  .aa-pres{background:linear-gradient(160deg,#fff,#E6EDFF);padding:2.6cqw}
+  .aa-pres b{font-size:3.3cqw;line-height:1.1;font-weight:800;color:#0B1230;display:block}
+  .aa-ln{display:block;height:.9cqw;width:40%;border-radius:1cqw;background:#9DB7FF;margin-top:2cqw}
+  .aa-ln.s{width:22%;background:#1F5BFF;margin-top:1cqw}
+  .aa-bars{position:absolute;right:2.6cqw;bottom:2.6cqw;width:44%;height:64%;display:flex;align-items:flex-end;gap:1.2cqw}
+  .aa-bars i{flex:1;border-radius:1cqw 1cqw 0 0;background:linear-gradient(180deg,#5D93FF,#0A44E0)}
+  .aa-logo{position:absolute;aspect-ratio:1;padding:1.6cqw;border-radius:4.5cqw;background:linear-gradient(160deg,rgba(255,255,255,.5),rgba(180,205,255,.25));border:1px solid rgba(255,255,255,.7);box-shadow:0 4cqw 8cqw -2cqw rgba(4,25,120,.6)}
+  .aa-logo svg{width:100%;height:100%;display:block}
+  @media (max-width:980px){
+    .au-shell{grid-template-columns:minmax(0,1fr);padding:0 0 28px;gap:0;min-height:0}
+    .au-art{aspect-ratio:1.02;max-height:none;max-width:600px;width:100%}
+    .auth .auth-card{max-width:560px;width:calc(100% - 32px);margin:-44px auto 0;position:relative;z-index:2;justify-self:center}
+  }
+  @media (max-width:480px){
+    .auth .auth-card{padding:26px 20px 24px;border-radius:24px}
+    .auth .auth-card h1{font-size:28px}
+    .au-top{margin-bottom:22px}
+    .auth .au-top .logo b{font-size:26px}
+    .auth .au-top .logo .mark{width:36px;height:36px}
+    .au-ya{font-size:14.5px}
+  }
 
   /* ===== CONCEPT v2 ===== */
   .navdiv{height:1px;background:var(--line);margin:14px 8px}
@@ -6847,11 +6920,11 @@ function clientLink(p){
 function clCopy(u){try{navigator.clipboard.writeText(u).then(function(){toast('Ссылка скопирована');},function(){toast('Скопируйте ссылку вручную: '+u);});}catch(e){toast('Скопируйте ссылку вручную: '+u);}}
 
 /* ---------- sign-in: code by e-mail or SMS, Яндекс ID; a new person gets a short «let's meet» step ---------- */
-var AU={step:'start',by:'mail',val:'',tries:3,t:0,timer:null,isNew:true,demo:false,err:'',ya:false,role:'Агентство'};
-var AU_CODE='1234';
+var AU={step:'start',by:'mail',val:'',tries:3,t:0,timer:null,isNew:true,demo:false,err:'',ya:false,role:'Агентство',pw:false,reg:false,rem:true,note:'',eye:false};
+var AU_CODE='1234',AU_PW='maker2026';
 function authOut(){try{return localStorage.getItem('mk-auth')==='out';}catch(e){return false;}}
 function authShow(step,o){
-  o=o||{};AU.step=step||'start';AU.err=o.err||'';AU.demo=!!o.demo;if(o.by)AU.by=o.by;if(o.val!==undefined)AU.val=o.val;if(o.tries)AU.tries=o.tries;
+  o=o||{};AU.step=step||'start';AU.err=o.err||'';AU.demo=!!o.demo;if(o.by)AU.by=o.by;if(o.val!==undefined)AU.val=o.val;if(o.tries)AU.tries=o.tries;AU.pw=!!o.pw;AU.reg=!!o.reg;AU.note=o.note||'';
   if(AU.step==='code'&&!AU.t)authTimer(o.t||45);
   document.body.classList.add('au-on');authRender();
 }
@@ -6865,17 +6938,35 @@ function auHidden(){
 var AU_LOGO='<div class="logo"><svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#mk-logo"/></svg><b>maker</b></div>';
 var AU_ID='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2.2"/><path d="M5.8 16c.6-1.6 1.8-2.4 3.2-2.4s2.6.8 3.2 2.4M14.5 10h4M14.5 13.5h3"/></svg>';
 var AU_LEGAL='<p class="foot">Продолжая, вы соглашаетесь с <a onclick="toast(\'Условия использования — отдельная страница (в прототипе нет)\')">условиями</a> и&nbsp;<a onclick="toast(\'Политика обработки персональных данных по 152-ФЗ — отдельная страница (в прототипе нет)\')">обработкой персональных данных</a>.</p>';
+var AU_TAG=function(ic,t){return '<span class="aa-tag"><i>'+ic+'</i>'+t+'</span>';};
+var AU_ART='<div class="au-art" aria-hidden="true">'+
+  '<span class="aa-blk" style="left:-6%;top:4%;width:40%;height:34%;transform:rotate(-14deg)"></span><span class="aa-blk w" style="left:40%;top:-6%;width:34%;height:26%;transform:rotate(10deg)"></span><span class="aa-blk" style="left:62%;top:58%;width:44%;height:40%;transform:rotate(-8deg)"></span><span class="aa-blk w" style="left:-8%;top:70%;width:46%;height:34%;transform:rotate(12deg)"></span><span class="aa-blk d" style="left:30%;top:82%;width:40%;height:30%;transform:rotate(-6deg)"></span>'+
+  '<div class="aa-card" style="left:6%;top:16%;width:27%;height:33%;transform:rotate(-10deg)">'+AU_TAG('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 8h10M7 12h10M7 16h6"/></svg>','Посты')+'<div class="aa-pic" style="background-image:url(img/leaf.jpg)"></div></div>'+
+  '<div class="aa-card" style="left:30%;top:5%;width:34%;height:53%;transform:rotate(-5deg)">'+AU_TAG('<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>','Видео')+'<div class="aa-pic" style="background-image:url(img/intro/06-marketer.jpg);background-position:62% 22%"><span class="aa-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6.5v11l9-5.5z"/></svg></span></div></div>'+
+  '<div class="aa-logo" style="left:70%;top:9%;width:17%;transform:rotate(9deg)"><svg viewBox="0 0 100 100"><use href="#mk-logo"/></svg></div>'+
+  '<div class="aa-card" style="left:62%;top:30%;width:31%;height:38%;transform:rotate(8deg)">'+AU_TAG('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>','Лендинги')+'<div class="aa-pic" style="background-image:url(img/hero-bg.jpg);background-position:70% 50%"></div></div>'+
+  '<div class="aa-card" style="left:4%;top:47%;width:31%;height:35%;transform:rotate(-10deg)">'+AU_TAG('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m3 16 6-6 5 5 3-3 4 4"/></svg>','Баннеры')+'<div class="aa-pic aa-bld"><svg viewBox="0 0 100 80" preserveAspectRatio="xMidYMax slice"><defs><linearGradient id="aaB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7FA6FF"/><stop offset="1" stop-color="#0B3FD4"/></linearGradient></defs><path d="M22 80 52 14 84 46V80Z" fill="url(#aaB)"/><path d="M52 14 84 46V80H66Z" fill="#0A2FA8" opacity=".55"/><path d="M30 80 52 30" stroke="#fff" stroke-opacity=".35" stroke-width="1"/></svg></div></div>'+
+  '<div class="aa-card" style="left:35%;top:56%;width:34%;height:33%;transform:rotate(6deg)">'+AU_TAG('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 13v-2M12 13V8M16 13v-4"/></svg>','Презентации')+'<div class="aa-pic aa-pres"><b>Рост<br>вашего<br>бренда</b><span class="aa-ln"></span><span class="aa-ln s"></span><span class="aa-bars"><i style="height:22%"></i><i style="height:38%"></i><i style="height:58%"></i><i style="height:86%"></i></span></div></div>'+
+'</div>';
 function authRender(){
   var el=document.getElementById('auth'),c='';el.classList.remove('gone');
-  var demo='<div class="au-demo"><span><b>Демо</b> · код всегда <b>'+AU_CODE+'</b> · войти как</span><button class="chip'+(AU.isNew?' on':'')+'" type="button" onclick="AU.isNew=true;authRender()">новый</button><button class="chip'+(AU.isNew?'':' on')+'" type="button" onclick="AU.isNew=false;authRender()">уже с кабинетом</button>'+(AU.demo?'<span class="sp"></span><button class="mini" type="button" onclick="authHide()">← В кабинет</button>':'')+'</div>';
+  var demo='<div class="au-demo"><span><b>Демо</b> · код всегда <b>'+AU_CODE+'</b>, пароль <b>'+AU_PW+'</b> · войти как</span><button class="chip'+(AU.isNew?' on':'')+'" type="button" onclick="AU.isNew=true;authRender()">новый</button><button class="chip'+(AU.isNew?'':' on')+'" type="button" onclick="AU.isNew=false;authRender()">уже с кабинетом</button>'+(AU.demo?'<span class="sp"></span><button class="mini" type="button" onclick="authHide()">← В кабинет</button>':'')+'</div>';
   if(AU.step==='start'){
-    var mail=AU.by==='mail';
-    c=AU_LOGO+'<h1>Вход в Maker</h1><p class="as">Без пароля — пришлём код. Если вы у нас впервые, кабинет создадим сразу.</p>'+
-      '<div class="au-seg" role="tablist"><button class="chip'+(mail?' on':'')+'" type="button" role="tab" aria-selected="'+mail+'" onclick="AU.by=\'mail\';AU.val=\'\';AU.err=\'\';authRender()">Почта</button><button class="chip'+(mail?'':' on')+'" type="button" role="tab" aria-selected="'+!mail+'" onclick="AU.by=\'tel\';AU.val=\'\';AU.err=\'\';authRender()">Телефон</button></div>'+
-      '<label for="au-in">'+(mail?'Электронная почта':'Номер телефона')+'</label><input class="inp'+(AU.err?' err':'')+'" id="au-in" '+(mail?'type="email" autocomplete="email" placeholder="name@company.ru"':'type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"')+' value="'+hesc(AU.val)+'" aria-invalid="'+!!AU.err+'" aria-describedby="au-err" onkeydown="if(event.key===\'Enter\'){event.preventDefault();authSend();}" oninput="'+(mail?'':'this.value=auMask(this.value);')+'AU.val=this.value">'+
+    var tel=AU.by==='tel',pw=AU.pw&&!AU.reg;
+    var ICM='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>',ICT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg>',ICL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>',ICE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>'+(AU.eye?'':'<path d="M4 4l16 16"/>')+'</svg>';
+    c='<div class="au-top">'+AU_LOGO+'<button class="au-lang" type="button" onclick="toast(\'Английская версия интерфейса — в следующей версии продукта\')" aria-label="Язык интерфейса: русский"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>RU<svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button></div>'+
+      (AU.reg?'<h1>Регистрация</h1><p class="as">Почта или телефон — пришлём код, и кабинет ваш. Пароль не нужен.</p>':'<h1>Вход в аккаунт</h1><p class="as">Продолжайте создавать крутой контент вместе с Maker.</p>')+
+      '<button class="au-ya" type="button" onclick="authYa()"><span class="au-ya-ic">Я</span><span>'+(AU.reg?'Зарегистрироваться':'Войти')+' через Яндекс ID</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'+
+      '<div class="divider">или</div>'+
+      (AU.note?'<div class="au-note" role="status">'+AU.note+'</div>':'')+
+      '<label class="au-f'+(AU.err&&!AU.errPw?' err':'')+'"><span class="au-fi">'+(tel?ICT:ICM)+'</span><input id="au-in" type="text" inputmode="'+(tel?'tel':'email')+'" autocomplete="username" placeholder="Почта или телефон" aria-label="Почта или телефон" value="'+hesc(AU.val)+'" aria-invalid="'+!!AU.err+'" aria-describedby="au-err" onkeydown="if(event.key===\'Enter\'){event.preventDefault();'+(pw?'document.getElementById(\'au-pw\').focus()':'authSend()')+';}" oninput="authField(this)"></label>'+
+      (pw?'<label class="au-f'+(AU.errPw?' err':'')+'"><span class="au-fi">'+ICL+'</span><input id="au-pw" type="'+(AU.eye?'text':'password')+'" autocomplete="current-password" placeholder="Пароль" aria-label="Пароль" onkeydown="if(event.key===\'Enter\'){event.preventDefault();authPw();}"><button class="au-eye" type="button" aria-label="'+(AU.eye?'Скрыть пароль':'Показать пароль')+'" onclick="var v=document.getElementById(\'au-pw\').value;AU.eye=!AU.eye;AU.val=document.getElementById(\'au-in\').value;authRender();var p=document.getElementById(\'au-pw\');p.value=v;p.focus()">'+ICE+'</button></label>':'')+
       '<div class="au-err" id="au-err" role="alert">'+(AU.err||'')+'</div>'+
-      '<button class="submit" type="button" onclick="authSend()">Получить код</button>'+
-      '<div class="divider">или</div><button class="alt" type="button" onclick="authYa()">'+AU_ID+'Войти с Яндекс ID</button>'+AU_LEGAL;
+      '<div class="au-row">'+(AU.reg?'<span></span>':'<label class="au-rem"><input type="checkbox"'+(AU.rem?' checked':'')+' onchange="AU.rem=this.checked"><span>Запомнить меня</span></label>')+
+        (AU.reg?'':pw?'<button class="au-link" type="button" onclick="authForgot()">Забыли пароль?</button>':'<button class="au-link" type="button" onclick="AU.pw=true;AU.err=\'\';AU.errPw=false;AU.note=\'\';AU.val=document.getElementById(\'au-in\').value;authRender();setTimeout(function(){var f=document.getElementById(AU.val?\'au-pw\':\'au-in\');if(f)f.focus();},50)">Войти с паролем</button>')+'</div>'+
+      '<button class="submit" type="button" onclick="'+(pw?'authPw()':'authSend()')+'">'+(pw?'Войти':'Получить код')+'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'+
+      (pw?'<button class="au-link au-alt" type="button" onclick="AU.pw=false;AU.err=\'\';AU.errPw=false;AU.val=document.getElementById(\'au-in\').value;authRender()">Войти по коду — без пароля</button>':'<p class="au-hint">Пришлём код на почту или в SMS — пароль не нужен.</p>')+
+      '<p class="au-reg">'+(AU.reg?'Уже есть аккаунт? <button class="au-link" type="button" onclick="AU.reg=false;AU.err=\'\';authRender()">Войти</button>':'Ещё нет аккаунта? <button class="au-link" type="button" onclick="AU.reg=true;AU.pw=false;AU.err=\'\';AU.note=\'\';AU.isNew=true;authRender()">Зарегистрироваться</button>')+'</p>'+AU_LEGAL;
   }else if(AU.step==='code'){
     var mail2=AU.by==='mail';
     c='<button class="au-back" type="button" onclick="AU.step=\'start\';AU.err=\'\';clearInterval(AU.timer);AU.t=0;authRender()">← Изменить '+(mail2?'почту':'номер')+'</button>'+
@@ -6885,11 +6976,11 @@ function authRender(){
       '<div class="au-resend">'+(AU.t>0?'Отправить ещё раз через <span id="au-t">0:'+pad2(AU.t)+'</span>':'<button class="au-link" type="button" onclick="authResend()">Отправить код ещё раз</button>')+'</div>'+
       '<p class="foot">'+(mail2?'Не пришло? Проверьте «Спам» и «Промоакции».':'SMS идёт до минуты.')+' Нет доступа? <a onclick="toast(\'Поддержка ответит в течение часа (в прототипе имитировано)\')">Напишите в поддержку</a></p>';
   }else if(AU.step==='locked'){
-    c=AU_LOGO+'<h1>Слишком много попыток</h1><p class="as">Подождите 10 минут и запросите новый код — так мы защищаем ваш кабинет от подбора.</p><button class="alt" type="button" onclick="AU.step=\'start\';AU.tries=3;AU.err=\'\';authRender()">Войти другим способом</button>';
+    c=AU_LOGO+'<h1>Слишком много попыток</h1><p class="as">Подождите 10 минут и запросите новый код — так мы защищаем ваш кабинет от подбора.</p><button class="alt" type="button" onclick="AU.step=\'start\';AU.tries=3;AU.err=\'\';AU.pw=false;authRender()">Войти другим способом</button>';
   }else if(AU.step==='ya'){
     c=AU_LOGO+'<div class="au-spin" aria-hidden="true"></div><h1>Открываем Яндекс ID</h1><p class="as" role="status">Войдите там и разрешите Maker видеть имя и почту — после этого вернём вас сюда.</p><button class="alt" type="button" onclick="AU.step=\'start\';authRender()">Отмена</button>';
   }else if(AU.step==='yaerr'){
-    c=AU_LOGO+'<h1>Яндекс ID не ответил</h1><p class="as">Такое бывает: окно закрыли или сеть моргнула. Попробуйте ещё раз — или войдите по почте.</p><button class="submit" type="button" onclick="authYa()">Попробовать снова</button><div class="divider">или</div><button class="alt" type="button" onclick="AU.step=\'start\';AU.by=\'mail\';authRender()">Войти по почте</button>';
+    c=AU_LOGO+'<h1>Яндекс ID не ответил</h1><p class="as">Такое бывает: окно закрыли или сеть моргнула. Попробуйте ещё раз — или войдите по почте.</p><button class="submit" type="button" onclick="authYa()">Попробовать снова</button><div class="divider">или</div><button class="alt" type="button" onclick="AU.step=\'start\';AU.by=\'mail\';authRender()">Войти по коду</button>';
   }else if(AU.step==='hello'){
     c=AU_LOGO+'<h1>Давайте знакомиться</h1><p class="as">Полминуты — и кабинет ваш. Клиентов заведёте внутри, первый шаг подскажем.</p>'+
       '<label for="au-name">Как к вам обращаться</label><input class="inp" id="au-name" autocomplete="given-name" placeholder="Имя">'+
@@ -6897,12 +6988,42 @@ function authRender(){
       '<label>Вы работаете</label><div class="au-seg au-role">'+['Агентство','Фрилансер','Маркетолог в компании'].map(function(r){return '<button class="chip'+(AU.role===r?' on':'')+'" type="button" aria-pressed="'+(AU.role===r)+'" onclick="AU.role=\''+r+'\';authRender()">'+r+'</button>';}).join('')+'</div>'+
       '<div class="au-err" id="au-err" role="alert">'+(AU.err||'')+'</div><button class="submit" type="button" onclick="authHello()">Начать работу</button>'+(AU.ya?'<p class="foot">Почту взяли из Яндекс ID.</p>':'');
   }
-  el.innerHTML=demo+'<div class="auth-card au-s-'+AU.step+'">'+c+'</div>';
+  el.innerHTML=demo+'<div class="au-shell">'+AU_ART+'<div class="auth-card au-s-'+AU.step+'">'+c+'</div></div>';
   if(AU.step==='code')authCodeWire();
   setTimeout(function(){var f=el.querySelector(AU.step==='code'?'.au-code input':'#au-in, #au-name');if(f)f.focus();},40);
 }
+function auKind(v){v=String(v||'').trim();return /^[+\d(][\d\s()+-]*$/.test(v)&&v.replace(/\D/g,'').length>=1&&v.indexOf('@')<0?'tel':'mail';}
+function authField(inp){
+  var k=auKind(inp.value),was=AU.by;AU.by=k;
+  if(k==='tel'){var pos=inp.value.length;inp.value=auMask(inp.value);}
+  AU.val=inp.value;AU.err='';AU.errPw=false;
+  if(k!==was){var ic=inp.parentNode.querySelector('.au-fi');if(ic)ic.innerHTML=k==='tel'?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>';inp.setAttribute('inputmode',k==='tel'?'tel':'email');}
+  var e=document.getElementById('au-err');if(e)e.textContent='';inp.parentNode.classList.remove('err');
+}
+function auValid(){
+  if(AU.by==='mail'&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(AU.val))return AU.val?'Похоже, в адресе опечатка — проверьте, пожалуйста':'Введите почту или телефон';
+  if(AU.by==='tel'&&AU.val.replace(/\D/g,'').length!==11)return 'Нужно 10 цифр после +7';
+  return '';
+}
+function authPw(){
+  AU.val=((document.getElementById('au-in')||{}).value||'').trim();AU.by=auKind(AU.val);var p=(document.getElementById('au-pw')||{}).value||'';
+  var e=auValid();if(e){AU.err=e;AU.errPw=false;authRender();return;}
+  if(!p){AU.err='Введите пароль';AU.errPw=true;authRender();setTimeout(function(){var f=document.getElementById('au-pw');if(f)f.focus();},50);return;}
+  if(AU.isNew){AU.err='Для этой почты пароль не задан. Войдите по коду — пароль можно задать потом в профиле.';AU.errPw=true;authRender();return;}
+  if(p===AU_PW){AU.err='';authDone(false);return;}
+  AU.tries--;
+  if(AU.tries<=0){AU.step='locked';AU.err='';authRender();return;}
+  AU.err='Неверный пароль — '+(AU.tries===1?'осталась 1 попытка':'осталось '+AU.tries+' попытки');AU.errPw=true;authRender();
+  setTimeout(function(){var f=document.getElementById('au-pw');if(f)f.focus();},50);
+}
+function authForgot(){
+  AU.val=((document.getElementById('au-in')||{}).value||'').trim();AU.by=auKind(AU.val);
+  AU.pw=false;AU.err='';AU.errPw=false;AU.tries=3;
+  AU.note='Ничего страшного: войдите по коду — он придёт на почту или в SMS. Новый пароль зададите в профиле, в «Вход и безопасность».';
+  authRender();
+}
 function authSend(){
-  var v=(document.getElementById('au-in')||{}).value||'';AU.val=v.trim();
+  var v=(document.getElementById('au-in')||{}).value||'';AU.val=v.trim();AU.by=auKind(AU.val);var ve=auValid();if(ve){AU.err=ve;authRender();return;}AU.note='';
   if(AU.by==='mail'&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(AU.val)){AU.err=AU.val?'Похоже, в адресе опечатка — проверьте, пожалуйста':'Введите почту — на неё придёт код';authRender();return;}
   if(AU.by==='tel'&&AU.val.replace(/\D/g,'').length!==11){AU.err=AU.val?'Нужно 10 цифр после +7':'Введите номер — на него придёт SMS с кодом';authRender();return;}
   AU.err='';AU.tries=3;AU.step='code';authTimer(45);authRender();
@@ -6946,11 +7067,11 @@ function userApply(){
 /* every sign-in state, for the state map */
 var AU_DEMO=[['mail','Почта','start',{by:'mail',val:''}],['tel','Телефон','start',{by:'tel',val:''}],['typo','Опечатка в почте','start',{by:'mail',val:'name@agency',err:'Похоже, в адресе опечатка — проверьте, пожалуйста'}],
   ['code','Код из письма','code',{by:'mail',val:'kate@agency.ru'}],['sms','Код из SMS','code',{by:'tel',val:'+7 (912) 345-67-89'}],['bad','Неверный код','code',{by:'mail',val:'kate@agency.ru',tries:2,err:'Неверный код — осталось 2 попытки'}],
-  ['lock','Много попыток','locked',{}],['ya','Яндекс ID — переход','ya',{}],['yaerr','Яндекс ID — ошибка','yaerr',{}],['hello','Знакомство (новый)','hello',{}]];
-function authDemo(k){var d=AU_DEMO.filter(function(x){return x[0]===k;})[0];if(!d)return;var o={demo:true};Object.keys(d[3]).forEach(function(q){o[q]=d[3][q];});AU.t=0;clearInterval(AU.timer);AU.tries=o.tries||3;demoPanel(false);authShow(d[2],o);}
+  ['pw','С паролем','start',{pw:true,by:'mail',val:'alina@agency.ru'}],['pwbad','Неверный пароль','start',{pw:true,by:'mail',val:'alina@agency.ru',tries:2,err:'Неверный пароль — осталось 2 попытки'}],['forgot','Забыли пароль','start',{by:'mail',val:'alina@agency.ru',note:'Ничего страшного: войдите по коду — он придёт на почту или в SMS. Новый пароль зададите в профиле, в «Вход и безопасность».'}],['reg','Регистрация','start',{reg:true}],['lock','Много попыток','locked',{}],['ya','Яндекс ID — переход','ya',{}],['yaerr','Яндекс ID — ошибка','yaerr',{}],['hello','Знакомство (новый)','hello',{}]];
+function authDemo(k){var d=AU_DEMO.filter(function(x){return x[0]===k;})[0];if(!d)return;var o={demo:true};Object.keys(d[3]).forEach(function(q){o[q]=d[3][q];});AU.t=0;clearInterval(AU.timer);AU.tries=o.tries||3;AU.errPw=k==='pwbad';if(k==='pw'||k==='pwbad')AU.isNew=false;demoPanel(false);authShow(d[2],o);}
 
 /* ---------- personal profile: me, sign-in & security, notifications, team & access ---------- */
-var PF={name:'Алина',last:'Петрова',role:'Агентство',email:'alina@agency.ru',phone:'',ya:true,photo:'',tz:'msk',
+var PF={name:'Алина',last:'Петрова',role:'Агентство',email:'alina@agency.ru',phone:'',ya:true,pw:true,pwd:'12 сен',photo:'',tz:'msk',
   sess:[{id:'s1',d:'MacBook · Chrome',w:'Москва',t:'сейчас',me:true},{id:'s2',d:'iPhone · Safari',w:'Москва',t:'вчера, 21:40'},{id:'s3',d:'Windows · Яндекс Браузер',w:'Санкт-Петербург',t:'28 сен'}],
   team:[{id:'u0',n:'Вы',e:'',r:'own',me:true},{id:'u1',n:'Иван Котов',e:'ivan@agency.ru',r:'edit'},{id:'u2',n:'Мария Лис',e:'maria@agency.ru',r:'view'},{id:'u3',n:'',e:'buh@agency.ru',r:'buh',pend:true}],
   ntf:{appr:[1,1],bal:[1,0],render:[0,1],week:[1,0],news:[0,0]},tg:false,quiet:true,tab:'me'};
@@ -6969,6 +7090,12 @@ function pfApply(){
   var on=document.querySelector('.guestrow .on'),or=document.querySelector('.guestrow .or');if(on)on.textContent=pfFull();if(or)or.textContent='Владелец · '+PF.role.toLowerCase();
 }
 function pfTab(btn,t){PF.tab=t;try{btn.scrollIntoView({block:'nearest',inline:'nearest'});}catch(e){}btn.parentNode.querySelectorAll('.itab').forEach(function(x){x.classList.toggle('on',x===btn);});document.querySelectorAll('#v-profile .pf-tab').forEach(function(x){x.hidden=x.id!=='pf-'+t;});renderProfile();}
+function pfPw(){
+  document.getElementById('gt-title').textContent=PF.pw?'Сменить пароль':'Задать пароль';
+  document.getElementById('gt-body').innerHTML='<p class="cn-p">Пароль — запасной способ входа. Код и Яндекс ID продолжат работать.</p><label class="bfield"><span class="bl"><span>Новый пароль</span><span class="cnt" id="pw-n">0</span></span><input id="pw-new" type="password" autocomplete="new-password" oninput="document.getElementById(\'pw-n\').textContent=this.value.length+(this.value.length<8?\' · нужно от 8\':\'\')"></label><div class="au-err" id="pw-err" style="margin:4px 0 0"></div><div class="gate-acts"><button class="pbtn ghost" type="button" onclick="closeModal(\'gate-modal\')">Отмена</button><button class="pbtn" type="button" onclick="pfPwSave()">Сохранить</button></div>';
+  openModal('gate-modal');setTimeout(function(){document.getElementById('pw-new').focus();},60);
+}
+function pfPwSave(){var v=document.getElementById('pw-new').value;if(v.length<8){document.getElementById('pw-err').textContent='Минимум 8 символов';return;}PF.pw=true;PF.pwd='сегодня';closeModal('gate-modal');renderProfile();toast('Пароль сохранён — теперь можно входить и с ним');}
 function renderProfile(){
   var t=PF.tab;
   if(t==='me'){
@@ -6984,10 +7111,10 @@ function renderProfile(){
     document.getElementById('pf-danger').innerHTML='<h3>Данные и аккаунт</h3>'+pfRow('Мои данные','Клиенты, стратегии, план, публикации и факты одним архивом','Скачать',"dlMyData()")+
       pfRow('Удалить аккаунт','Кабинет и клиенты удалятся через 14 дней — до этого можно отменить','Удалить…',"pfDelete()",true);
   }else if(t==='sec'){
-    var methods=[['Код на почту',PF.email?hesc(PF.email):'почта не добавлена',!!PF.email,PF.email?'':"pfContact('mail')"],['Код по SMS',PF.phone?hesc(PF.phone):'телефон не добавлен',!!PF.phone,PF.phone?'':"pfContact('tel')"],['Яндекс ID',PF.ya?'привязан':'не привязан',PF.ya,'']];
+    var methods=[['Код на почту',PF.email?hesc(PF.email):'почта не добавлена',!!PF.email,PF.email?'':"pfContact('mail')"],['Код по SMS',PF.phone?hesc(PF.phone):'телефон не добавлен',!!PF.phone,PF.phone?'':"pfContact('tel')"],['Яндекс ID',PF.ya?'привязан':'не привязан',PF.ya,''],['Пароль',PF.pw?'задан · '+PF.pwd:'не задан — входите кодом или через Яндекс ID',PF.pw,'']];
     var on=methods.filter(function(m){return m[2];}).length;
-    document.getElementById('pf-sec').innerHTML='<div class="panel"><h3>Способы входа</h3><p class="psub">Пароля нет — входите кодом или через Яндекс ID. Хотя бы один способ остаётся всегда.</p>'+
-      methods.map(function(m,i){var act=i===2?(m[2]?'<button class="mini" type="button" '+(on<2?'disabled title="Это единственный способ входа"':'')+' onclick="PF.ya=false;renderProfile();toast(\'Яндекс ID отвязан\')">Отвязать</button>':'<button class="mini" type="button" onclick="pfYa()">Привязать</button>'):(m[2]?'<span class="st pub">включён</span>':'<button class="mini" type="button" onclick="'+m[3]+'">Добавить</button>');
+    document.getElementById('pf-sec').innerHTML='<div class="panel"><h3>Способы входа</h3><p class="psub">Входите кодом, через Яндекс ID или паролем — если задали его. Хотя бы один способ остаётся всегда.</p>'+
+      methods.map(function(m,i){var act=i===3?(m[2]?'<button class="mini" type="button" onclick="pfPw()">Сменить</button><button class="mini" type="button" '+(on<2?'disabled title="Это единственный способ входа"':'')+' onclick="PF.pw=false;renderProfile();toast(\'Пароль убран — входите кодом или через Яндекс ID\')">Убрать</button>':'<button class="mini" type="button" onclick="pfPw()">Задать</button>'):i===2?(m[2]?'<button class="mini" type="button" '+(on<2?'disabled title="Это единственный способ входа"':'')+' onclick="PF.ya=false;renderProfile();toast(\'Яндекс ID отвязан\')">Отвязать</button>':'<button class="mini" type="button" onclick="pfYa()">Привязать</button>'):(m[2]?'<span class="st pub">включён</span>':'<button class="mini" type="button" onclick="'+m[3]+'">Добавить</button>');
         return '<div class="pf-row"><span class="pf-k"><b>'+m[0]+'</b><span>'+m[1]+'</span></span>'+act+'</div>';}).join('')+'</div>'+
       '<div class="panel"><div class="pf-hd"><div><h3>Где вы вошли</h3><p class="psub">Если не узнаёте устройство — завершите сеанс.</p></div>'+(PF.sess.length>1?'<button class="pbtn ghost" type="button" onclick="PF.sess=PF.sess.filter(function(s){return s.me;});renderProfile();toast(\'Вышли на всех других устройствах\')">Выйти на других устройствах</button>':'')+'</div>'+
       PF.sess.map(function(s){return '<div class="pf-row"><span class="pf-k"><b>'+s.d+(s.me?' <span class="st proc">это устройство</span>':'')+'</b><span>'+s.w+' · '+s.t+'</span></span>'+(s.me?'':'<button class="mini" type="button" onclick="pfEnd(\''+s.id+'\')">Завершить</button>')+'</div>';}).join('')+'</div>';
