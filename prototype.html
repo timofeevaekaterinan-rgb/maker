@@ -272,6 +272,37 @@
   .steps li.done .sx{color:var(--ink)}
   @keyframes spin{to{transform:rotate(360deg)}}
 
+  /* страница: проверка перед публикацией */
+  .pg-rv{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start;margin-top:14px}
+  .pg-side{display:flex;flex-direction:column;gap:14px;min-width:0}
+  .pg-ck{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px}
+  .pg-ck:first-of-type{border-top:0}
+  .pg-ck i{width:20px;height:20px;border-radius:50%;flex:none;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;background:var(--ok-bg);color:var(--ok-ink)}
+  .pg-ck i.n{background:var(--inset);color:var(--ink-3)}
+  .pg-ck i.w{background:var(--warn-bg);color:var(--warn-ink)}
+  .pg-ck span{display:flex;flex-direction:column}.pg-ck small{color:var(--ink-3);font-size:12.5px}
+  .pg-gap{display:flex;flex-direction:column;gap:6px;padding:10px 0;border-top:1px solid var(--line)}
+  .pg-gap:first-of-type{border-top:0}
+  .pg-gap div{display:flex;gap:8px}.pg-gap input{flex:1;min-width:0;border:1px solid var(--line-2);border-radius:9px;padding:7px 10px;font:inherit;font-size:13.5px}
+  .pgv{background:#fff;border:1px solid var(--line-2);border-radius:16px;overflow:hidden;font-family:var(--ft);color:#1A2230;box-shadow:var(--shadow)}
+  .pgv-nav{display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid var(--line);font:700 13px var(--fh)}
+  .pgv-nav i{width:22px;height:22px;border-radius:6px;background:var(--a);color:#fff;display:grid;place-items:center;font-style:normal;font-size:11px}
+  .pgv-nav em{margin-left:auto;font:600 11px var(--ft);font-style:normal;background:var(--btn);color:var(--bt);padding:6px 11px;border-radius:16px}
+  .pgv-hero{display:grid;grid-template-columns:1.15fr 1fr;gap:18px;padding:26px 18px;background:#F6F8FC}
+  .pgv-hero h4{font:800 28px/1.08 var(--fh);letter-spacing:-.02em;margin:0 0 10px}
+  .pgv-hero p{font-size:14px;color:#59627A;margin:0 0 16px;line-height:1.5}
+  .pgv-cta{display:inline-block;background:var(--btn);color:var(--bt);border-radius:22px;padding:10px 18px;font-weight:600;font-size:13px}
+  .pgv-ph{border-radius:12px;background:#ddd center/cover no-repeat;min-height:190px}
+  .pgv-secs{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px}
+  .pgv-sec{border:1px solid #E3E9F2;border-radius:12px;padding:14px}
+  .pgv-sec b{display:block;font:700 15px var(--fh);margin-bottom:6px}
+  .pgv-sec span{font-size:13px;color:#59627A;line-height:1.45}
+  .pgv-form{margin:0 18px 18px;padding:16px;border-radius:12px;background:linear-gradient(135deg,var(--a),var(--b));color:#fff}
+  .pgv-form b{font:700 16px var(--fh)}
+  .pgv-fi{background:rgba(255,255,255,.95);height:36px;border-radius:8px;color:#8E97AC;font-size:12.5px;display:flex;align-items:center;padding:0 12px;margin-top:8px}
+  .pgv-fb{display:inline-block;margin-top:10px;background:#fff;color:#1A2230;border-radius:20px;padding:9px 16px;font-weight:700;font-size:12.5px}
+  @media (max-width:1100px){.pg-rv{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:600px){.pgv-hero,.pgv-secs{grid-template-columns:minmax(0,1fr)}.pgv-hero h4{font-size:23px}}
   .result-page{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start;margin-top:6px}
   .frame{background:var(--panel);border:1px solid var(--line-2);border-radius:20px;padding:12px;box-shadow:var(--shadow)}
   .frame .notch{width:46px;height:5px;border-radius:5px;background:var(--line-2);margin:2px auto 12px}
@@ -2646,7 +2677,7 @@
             <h3>Быстрые действия</h3>
             <p class="psub">Всё собирается в снятом стиле — чужой шрифт или цвет на материал не попадут.</p>
             <div class="qacts">
-              <button class="qact" onclick="startBuild()"><span class="qi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 20h18"/></svg></span><b>Страница</b><span>Текст, фото, форма — и публикация</span><span class="qp">от 150 ₽</span></button>
+              <button class="qact" onclick="go('pages');cpOpen('pages')"><span class="qi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 20h18"/></svg></span><b>Страница</b><span>Текст, фото, форма — и публикация</span><span class="qp">от 150 ₽</span></button>
               <button class="qact" onclick="go('images')"><span class="qi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="M21 15l-5-5L5 21"/></svg></span><b>Кадр</b><span>Снимок в манере бренда с приёмкой</span><span class="qp">от 8 ₽</span></button>
               <button class="qact" onclick="go('banners')"><span class="qi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="14" height="14" rx="2"/><path d="M17 9l4-2v10l-4-2"/></svg></span><b>Баннеры</b><span>Один мастер → 10 форматов</span><span class="qp">от 20 ₽</span></button>
             </div>
@@ -2694,37 +2725,7 @@
           </div>
         </div>
 
-        <div id="build-done" style="display:none">
-          <div class="notice info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 6"/></svg>Страница собрана в стиле клиента. Ничего не выдумано: где данных не было — стоит прочерк.</div>
-          <div class="result-page">
-            <div class="frame">
-              <div class="notch"></div>
-              <div class="fnav"><span>СберТаргет</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></div>
-              <div class="fh">Реклама под ключ для локального бизнеса</div>
-              <div class="fs">Настроим, запустим и покажем заявки — в вашем стиле</div>
-              <span class="fbtn">Оставить заявку <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              <div class="fphoto"></div>
-              <div class="fform"><div class="fi"></div><div class="fi"></div><div class="fi" style="width:60%"></div></div>
-            </div>
-            <div>
-              <div class="price-card" style="margin-bottom:18px">
-                <div><span class="pnow">150 ₽</span><span class="pwas">214 000 ₽</span></div>
-                <p class="pl">Столько стоит страница целиком: тексты, фотографии, сборка и публикация. Рядом — те же работы по рыночным ставкам, продукт считает это сам.</p>
-                <div class="price-lines">
-                  <div class="kv"><span class="k">Тексты 4 секций</span><span class="v">60 ₽</span></div>
-                  <div class="kv"><span class="k">Фотографии · 3 кадра</span><span class="v">24 ₽</span></div>
-                  <div class="kv"><span class="k">Сборка и раскладка</span><span class="v">51 ₽</span></div>
-                  <div class="kv"><span class="k">Публикация</span><span class="v">15 ₽</span></div>
-                </div>
-              </div>
-              <div class="row" style="gap:12px">
-                <button class="pbtn" style="flex:1;justify-content:center" onclick="publishPage()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>Опубликовать</button>
-                <button class="pbtn ghost" style="flex:1;justify-content:center" onclick="dlLanding()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 17v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"/></svg>Скачать</button>
-              </div>
-              <div class="notice" style="margin-top:16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Пока вы не подтвердите утверждения, которых не было в задаче, страница не опубликуется.</div>
-            </div>
-          </div>
-        </div>
+        <div id="build-done" style="display:none"><div id="pg-review"></div></div>
       </section>
 
       <!-- ============ PAGES ============ -->
@@ -2749,6 +2750,8 @@
               <button class="chip on" data-st="" onclick="chipPick(this);renderPages()">Все</button>
               <button class="chip" data-st="pub" onclick="chipPick(this);renderPages()">Опубликованные</button>
               <button class="chip" data-st="check" onclick="chipPick(this);renderPages()">Ждёт проверки</button>
+              <button class="chip" data-st="ok" onclick="chipPick(this);renderPages()">Принятые</button>
+              <button class="chip" data-st="cl" onclick="chipPick(this);renderPages()">На согласовании</button>
               <button class="chip" data-st="draft" onclick="chipPick(this);renderPages()">Черновики</button>
             </div>
             <select class="sortsel" id="pg-sort" onchange="renderPages()">
@@ -2779,7 +2782,7 @@
             <span class="cp-count" id="cp-count">0 / 3000</span>
             <span class="sp"></span>
             <button class="pbtn ghost" type="button" onclick="toast('Уточняющие вопросы — заглушка прототипа')">Уточнить · 0,14–1,12 ₽</button>
-            <button class="pbtn" type="button" onclick="startBuild()">Создать · до 2,25 ₽</button>
+            <button class="pbtn" type="button" onclick="pgCreate()">Создать · до 2,25 ₽</button>
           </div>
           <div class="cp-starters">
             С чего начать:
@@ -3961,7 +3964,8 @@ function plural(n,a,b,c){var m=n%10,h=n%100;return n+' '+(m===1&&h!==11?a:(m>=2&
 function esc(t){return String(t).replace(/'/g,"\\'");}
 
 /* pages */
-var PG_ST={pub:'Опубликована',check:'Ждёт проверки',draft:'Черновик'};
+var PG_ST={pub:'Опубликована',check:'Ждёт проверки',ok:'Принята',cl:'На согласовании',draft:'Черновик'};
+var PG_CLS={draft:'draft',check:'check',ok:'pub',cl:'check',pub:'done'};
 var PAGES=[
   {n:'Реклама под ключ',p:'СберТаргет',st:'pub',url:'sbertarget.ru',upd:'сегодня',ts:6,cost:'2,25 ₽',img:'img/shots/sbertarget.jpg',
     groups:[['Владельцы малого бизнеса','owners'],['Маркетологи в штате','mkt']]},
@@ -3981,7 +3985,7 @@ function renderPages(){
   var chev='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>';
   var html=list.map(function(p){
     var sub=p.groups.length?'<button class="grp-tg" type="button" onclick="event.stopPropagation();toggleGroups('+p.i+',this)">'+chev+plural(p.groups.length,'группа','группы','групп')+' покупателей</button>':'<span class="pgsub">одна версия для всех</span>';
-    var row='<tr onclick="openPage(\''+esc(p.n)+'\')"><td><div class="pgname"><span class="pgthumb" style="background-image:url(\''+p.img+'\')"></span><span class="pgtx"><span class="nm">'+p.n+'</span>'+sub+'</span></div></td><td>'+p.p+'</td><td><span class="st '+p.st+'">'+PG_ST[p.st]+'</span></td><td class="mono'+(p.url?'':' dash')+'">'+(p.url||'—')+'</td><td>'+p.upd+'</td><td class="mono">'+p.cost+'</td></tr>';
+    var row='<tr onclick="openPage(\''+esc(p.n)+'\')"><td><div class="pgname"><span class="pgthumb" style="background-image:url(\''+p.img+'\')"></span><span class="pgtx"><span class="nm">'+p.n+'</span>'+sub+'</span></div></td><td>'+p.p+'</td><td><span class="st '+PG_CLS[p.st]+'">'+PG_ST[p.st]+'</span></td><td class="mono'+(p.url?'':' dash')+'">'+(p.url||'—')+'</td><td>'+p.upd+'</td><td class="mono">'+p.cost+'</td></tr>';
     if(p.groups.length){
       row+='<tr class="grp-row" id="grp-'+p.i+'" style="display:none"><td colspan="6"><div class="grp-list">'+p.groups.map(function(g){
         var u=(p.url||'адрес после публикации')+'/?g='+g[1];
@@ -6073,7 +6077,8 @@ function renderToday(){
     PROJECTS.forEach(function(pr){var n=PLAN.filter(function(x){return x.p===pr.s&&x.st==='check';}).length;if(n)it.push({p:pr.s,k:'plan',c:'warn',t:plural(n,'тема','темы','тем')+' '+qn(pr.s)+(n%10===1&&n%100!==11?' ждёт':' ждут')+' согласования клиента',s:'Контент-план',a:'Открыть',fn:"go('plan');plSetProj('"+pr.s+"')"});});
   }
   campSignals(CLIENT||undefined).forEach(function(x){it.push({p:x.c.p,k:'ads',c:'warn',t:x.t,s:'Кампании · '+x.s,a:x.a,fn:x.fn});});
-  PAGES.filter(function(p){return p.st==='check';}).forEach(function(p){it.push({p:p.p,k:'page',c:'warn',t:''+qn(p.n)+' ждёт подтверждения',s:'Сайты и страницы · '+p.p,a:'Открыть',fn:"go('pages');pgFilter('check')"});});
+  PAGES.filter(function(p){return p.st==='check';}).forEach(function(p){it.push({p:p.p,k:'page',c:'warn',t:'Проверьте страницу '+qn(p.n),s:'Сайты и страницы · '+p.p+' · ждёт проверки',a:'Проверить',fn:"openPage('"+esc(p.n)+"')"});});
+  PAGES.filter(function(p){return p.fb&&p.st==='draft';}).forEach(function(p){it.unshift({p:p.p,k:'page',c:'warn',t:'Клиент просит правки: страница '+hesc(qn(p.n)),s:p.p+' · «'+hesc(p.fb)+'»',a:'Открыть',fn:"openPage('"+esc(p.n)+"')"});});
   SHOTS.filter(function(z){return z.st==='bad';}).forEach(function(z){it.push({p:serOf(z).p,k:'img',c:'warn',t:''+qn(z.t)+' не получился — переснимем бесплатно',s:'Изображения · '+serOf(z).p,a:'Открыть',fn:'go(\'images\');openShot('+z.id+')'});});
   if(typeof SOC!=='undefined')SOC.filter(function(x){return x.st==='check';}).forEach(function(x){it.push({p:x.p,k:'soc',c:'warn',t:SOC_T[x.type][0]+' '+qn(x.t)+' ждёт согласования клиента',s:'Соцсети · '+x.p,a:'Открыть',fn:"go('soc-"+x.type+"');socOpen('"+x.id+"')"});});
   if(typeof SOC!=='undefined'){
@@ -6082,7 +6087,7 @@ function renderToday(){
   }
   if(typeof PLAN!=='undefined')PLAN.filter(function(x){return x.fb&&x.st==='draft';}).forEach(function(x){it.unshift({p:x.p,k:'plan',c:'warn',t:'Клиент просит правки темы '+hesc(qn(x.t))+'',s:x.p+' · «'+hesc(x.fb)+'»',a:'Открыть',fn:"go('plan');plSetProj('"+esc(x.p)+"');document.getElementById('pl-month').value='"+x.d.slice(0,7)+"';plOpen('"+x.id+"')"});});
   if(typeof STRATS!=='undefined')Object.keys(STRATS).forEach(function(p){var st=STRATS[p];if(st.fb&&st.st==='draft')it.unshift({p:p,k:'plan',c:'warn',t:'Клиент просит правки стратегии '+hesc(qn(p))+'',s:'«'+hesc(st.fb)+'»',a:'Открыть',fn:"go('strat');strSet('"+esc(p)+"')"});});
-  DECKS.filter(function(d){return d.st==='check';}).forEach(function(d){it.push({p:d.p,k:'deck',c:'',t:'План '+qn(d.t)+' ждёт вашей проверки',s:'Презентации · '+d.p,a:'Открыть',fn:"openDeck('"+d.id+"')"});});
+  DECKS.filter(function(d){return d.st==='check';}).forEach(function(d){it.push({p:d.p,k:'deck',c:'warn',t:'Проверьте план презентации '+qn(d.t),s:'Презентации · '+d.p+' · ждёт проверки',a:'Проверить',fn:"openDeck('"+d.id+"')"});});
   it=it.filter(function(x){return !TD_HIDE[x.t]&&(!CLIENT||!x.p||x.p===CLIENT);});TD_LIST=it;
   document.getElementById('td-cnt').textContent=it.length;
   var more=document.getElementById('td-more');
@@ -6905,9 +6910,10 @@ function cvPending(p){
   if(STRATS[p]&&STRATS[p].st==='check')out.push('s:'+p);
   PLAN.filter(function(x){return x.p===p&&x.st==='check';}).sort(function(a,b){return a.d<b.d?-1:1;}).forEach(function(x){out.push('t:'+x.id);});
   SOC.filter(function(x){return x.p===p&&x.st==='check';}).forEach(function(x){out.push('p:'+x.id);});
+  PAGES.filter(function(x){return x.p===p&&x.st==='cl';}).forEach(function(x){out.push('g:'+x.n);});
   return out;
 }
-function cvItem(k){var t=k.slice(0,1),id=k.slice(2);return t==='s'?STRATS[id]:t==='t'?plById(id):socById(id);}
+function cvItem(k){var t=k.slice(0,1),id=k.slice(2);if(t==='g')return pgByName(id);return t==='s'?STRATS[id]:t==='t'?plById(id):socById(id);}
 function cvBest(){var best=null,n=-1;PROJECTS.forEach(function(p){var c=cvPending(p.s).length;if(c>n){n=c;best=p.s;}});return best;}
 function cvAgency(){return CAB;}
 function cvOpen(p,mode){
@@ -6946,6 +6952,9 @@ function cvCard(k,i){
       '<dt>Где и как часто</dt><dd><ul>'+x.ch.map(function(c){return '<li><b>'+CH_NAME[c[0]]+'</b> — '+hesc(c[1]).toLowerCase()+', '+c[2]+'</li>';}).join('')+'</ul></dd>'+
       '<dt>О чём пишем</dt><dd>'+x.rub.map(function(r){return '<div class="cv-rub"><span>'+hesc(r[0])+'</span><i><b style="width:'+Math.round(r[1]/tot*100)+'%"></b></i><em>'+r[1]+'%</em></div>';}).join('')+'</dd></dl>'+
       (/\[/.test(x.goal+x.pos+x.msgs.join(''))?'<p class="cv-hint">Где написано «уточняем» — команда допишет. Можете подсказать в правках.</p>':'');
+  }else if(t==='g'){
+    head='<span class="cv-type">Страница</span><span class="cv-when">'+(x.url?hesc(x.url):'адрес — после публикации')+'</span>';
+    body='<h2>'+hesc(x.n)+'</h2><div class="cv-prev">'+pgFrame(x)+'</div><p class="cv-hint">Так страница будет выглядеть на сайте. Опубликуем после вашего «да».</p>';
   }else if(t==='t'){
     head='<span class="cv-type">Тема контент-плана · '+hesc(x.rub)+'</span><span class="cv-when">'+plDate(x.d)+'</span>';
     body='<div class="cv-theme"><span class="cv-th-img" style="background-image:url(\''+x.img+'\')"></span><div><h2>'+hesc(x.t)+'</h2><p>'+socFmtTxt(x.idea)+'</p><ul>'+x.facts.map(function(f){return '<li>'+socFmtTxt(f)+'</li>';}).join('')+'</ul></div></div><p class="cv-hint">Это тема и главная мысль — сам пост команда соберёт после вашего «да».</p>';
@@ -6965,12 +6974,12 @@ function cvCard(k,i){
   else act='<div class="cv-act"><button class="pbtn" type="button" onclick="cvOk(\''+k+'\')">Согласовать</button><button class="pbtn ghost" type="button" onclick="CV.fix[\''+k+'\']=1;cvRender();setTimeout(function(){var t=document.getElementById(\'cvf-'+i+'\');if(t)t.focus();},30)">Нужны правки</button></div>';
   return '<article class="cv-card'+(r?' decided':'')+'"><div class="cv-ch">'+head+'</div>'+body+act+'</article>';
 }
-function cvSet(k,st,fb){var t=k.slice(0,1),x=cvItem(k);if(!x)return;x.st=st;if(fb)x.fb=fb;else delete x.fb;x.cl=st==='ok'?'ok':st==='draft'?'fix':'';}
+function cvSet(k,st,fb){var t=k.slice(0,1),x=cvItem(k);if(!x)return;if(t==='g'&&st==='check')st='cl';x.st=st;if(fb)x.fb=fb;else delete x.fb;x.cl=st==='ok'?'ok':st==='draft'?'fix':'';}
 function cvNtf(k,ok){
   var t=k.slice(0,1),id=k.slice(2),x=cvItem(k),p=CV.p;if(!x)return;
-  var what=t==='s'?'стратегию':t==='t'?'тему плана':SOC_T[x.type][0].toLowerCase(),title=t==='s'?'Стратегия '+p:x.t;
+  var what=t==='s'?'стратегию':t==='t'?'тему плана':t==='g'?'страницу':SOC_T[x.type][0].toLowerCase(),title=t==='s'?'Стратегия '+p:t==='g'?x.n:x.t;
   ntfPush({p:p,k:ok?'ok':'fix',t:ok?'Клиент согласовал '+what:'Клиент просит правки: '+what,s:ok?'«'+title+'» · '+p:'«'+(x.fb||'')+'» · '+title,
-    fn:function(){if(t==='s'){go('strat');strSet(p);}else if(t==='t'){go('plan');plSetProj(p);document.getElementById('pl-month').value=x.d.slice(0,7);plOpen(id);}else{go('soc-'+x.type);socOpen(id);}}});
+    fn:function(){if(t==='s'){go('strat');strSet(p);}else if(t==='t'){go('plan');plSetProj(p);document.getElementById('pl-month').value=x.d.slice(0,7);plOpen(id);}else if(t==='g'){openPage(id);}else{go('soc-'+x.type);socOpen(id);}}});
 }
 function cvOk(k){cvSet(k,'ok');CV.res[k]='ok';cvNtf(k,true);cvRender();}
 function cvFixGo(k,i){var v=document.getElementById('cvf-'+i).value.trim();if(!v)return;cvSet(k,'draft',v);CV.res[k]='fix';cvNtf(k,false);delete CV.fix[k];cvRender();}
@@ -7385,7 +7394,7 @@ function renderClientHome(pr){
   var th=PLAN.filter(function(x){return x.p===p&&x.d>=today;}).sort(function(a,b){return a.d<b.d?-1:1;}).slice(0,3);
   var d=DESIGN[p],gs=GROUPS.filter(function(g){return g.p===p&&!g.sugg;}),bs=BSETS.filter(function(b){return b.p===p;}),cm=CAMPS.filter(function(c){return c.p===p;});
   var row=function(a,b,fn,st){return '<button class="ch-row" type="button" onclick="'+fn+'"><span class="ch-tx"><b>'+a+'</b>'+(b?'<span>'+b+'</span>':'')+'</span>'+(st||'')+'</button>';};
-  var pendName=function(k){var t=k.slice(0,1),x=cvItem(k);return t==='s'?'Стратегия · '+x.per:t==='t'?'Тема '+hesc(qn(x.t))+'':SOC_T[x.type][0]+' '+hesc(qn(x.t))+'';};
+  var pendName=function(k){var t=k.slice(0,1),x=cvItem(k);return t==='s'?'Стратегия · '+x.per:t==='t'?'Тема '+hesc(qn(x.t))+'':t==='g'?'Страница '+hesc(qn(x.n)):SOC_T[x.type][0]+' '+hesc(qn(x.t))+'';};
   var fixes=[];
   SOC.filter(function(x){return x.p===p&&x.fb&&x.st==='draft';}).forEach(function(x){fixes.push(row('Правки: '+SOC_T[x.type][0].toLowerCase()+' '+hesc(qn(x.t))+'','«'+hesc(x.fb)+'»',"go('soc-"+x.type+"');socOpen('"+x.id+"')",'<span class="st check">правки</span>'));});
   PLAN.filter(function(x){return x.p===p&&x.fb&&x.st==='draft';}).forEach(function(x){fixes.push(row('Правки темы '+hesc(qn(x.t))+'','«'+hesc(x.fb)+'»',"go('plan');plOpen('"+x.id+"')",'<span class="st check">правки</span>'));});
@@ -7846,12 +7855,12 @@ function dkExport(f){
 }
 /* landing page → one HTML file with styles and pictures inside */
 function dlLanding(){
-  var node=document.querySelector('#build-done .frame');if(!node){toast('Страница ещё не собрана');return;}
+  var node=document.querySelector('#pg-review .pgv');if(!node){toast('Страница ещё не собрана');return;}
   var css=[].map.call(document.querySelectorAll('style'),function(s){return s.textContent;}).join('\n'),html=node.outerHTML,urls=[];
   html.replace(/url\(['"]?([^'")]+)['"]?\)/g,function(m,u){if(!/^data:/.test(u)&&urls.indexOf(u)<0)urls.push(u);return m;});
   Promise.all(urls.map(function(u){return fetch(u).then(function(r){return r.blob();}).then(function(b){return new Promise(function(res){var fr=new FileReader();fr.onload=function(){res([u,fr.result]);};fr.readAsDataURL(b);});}).catch(function(){return [u,u];});})).then(function(pairs){
     pairs.forEach(function(p){html=html.split(p[0]).join(p[1]);});
-    var title=(document.getElementById('crumb-b')||{}).textContent||(document.querySelector('#build-done .fh')||{}).textContent||'Страница';
+    var title=PG_CUR||'Страница';
     var doc='<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+hesc(title)+'</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;600;800&family=Inter:wght@400;500;600;700&family=Onest:wght@400;500;600;700;800&display=swap"><style>'+css+'\nbody{background:#F5F8FC;display:grid;place-items:center;min-height:100vh;margin:0;padding:24px}</style></head><body>'+html+'</body></html>';
     saveFile(fileSafe(title)+'.html',new Blob([doc],{type:'text/html'}),'Страница одним файлом — откроется в любом браузере');
   });
@@ -7950,7 +7959,7 @@ function routeApply(r,back){
     else if(v==='project'){var pr=PROJECTS.filter(function(x){return x.n===r.id;})[0];pr?openProject(pr.n):go('home');}
     else if(v==='deck'){r.id&&dkById(r.id)?openDeck(r.id):go('pres');}
     else if(v==='camp'){r.id&&campById(r.id)?openCamp(r.id):go('campaigns');}
-    else if(v==='build'||v==='page'){go('pages');}
+    else if(v==='build'||v==='page'){r.id&&pgByName(r.id)?openPage(r.id):go('pages');}
     else{
       go(v);
       if(r.p&&projByShort(r.p)){if(v==='strat')strSet(r.p);else if(v==='plan')plSetProj(r.p);}
@@ -8087,12 +8096,10 @@ function openProject(name){
   go('project',name);renderClientHome(pr);
 }
 function openPage(name){
-  go('build','Новая страница'); // reuse build result as page preview
-  // jump straight to done state for existing pages
-  document.getElementById('build-run').style.display='none';
-  document.getElementById('build-done').style.display='block';
-  ROUTE.id=name;ROUTE.lab=name;crumbRender();routeSave();
-  toast('Открыта страница · '+qn(name)+'');
+  var p=pgByName(name);if(!p){go('pages');return;}
+  go('build',name);PG_FIX=false;
+  document.getElementById('build-run').style.display='none';document.getElementById('build-done').style.display='block';
+  ROUTE.id=name;ROUTE.lab=name;crumbRender();routeSave();pgReview(p);
 }
 function chipPick(btn){btn.parentNode.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on')});btn.classList.add('on');}
 function prjTab(btn,id){
@@ -8121,7 +8128,7 @@ function fillArea(textId,countId,text){
 
 /* ---------- build flow ---------- */
 var buildTimer=null;
-function startBuild(){
+function startBuild(onDone){
   go('build','Новая страница');
   var run=document.getElementById('build-run'),done=document.getElementById('build-done');
   run.style.display='block';done.style.display='none';
@@ -8132,11 +8139,89 @@ function startBuild(){
   function step(){
     if(i>0)items[i-1].classList.remove('active'),items[i-1].classList.add('done');
     if(i<items.length){items[i].classList.add('active');i++;buildTimer=setTimeout(step,780);}
-    else{buildTimer=setTimeout(function(){run.style.display='none';done.style.display='block';},420);}
+    else{buildTimer=setTimeout(function(){run.style.display='none';done.style.display='block';if(onDone)onDone();},420);}
   }
   step();
 }
-function publishPage(){toast('Страница опубликована на sbertarget.ru (имитировано)');}
+/* ---------- страница: собрать → проверить → принять → опубликовать / отправить клиенту ---------- */
+var PG_CUR=null,PG_FIX=false;
+function pgByName(n){return PAGES.filter(function(x){return x.n===n;})[0];}
+function pgContent(p){
+  if(p.c)return p.c;
+  var done=p.st==='pub'||p.st==='ok',f=function(cats,ph){return factFor(p.p,cats,0)||ph;};
+  var secs=[['Что вы получите',f(['Цифры и результаты'],'[главный результат для клиента — с цифрой]')],['Сколько стоит',f(['Цены и условия'],'[цена или «от …»]')],
+    ['Как это работает','Оставляете заявку — связываемся '+(done?'в течение дня':'[за какое время отвечаете]')+' и договариваемся о деталях.'],['Где и когда',f(['Адреса и время'],'[адрес и часы работы]')]];
+  if(done)secs=secs.filter(function(x){return !/\[/.test(x[1]);});
+  p.c={h:p.h||p.n,s:f(['О компании'],done?'':'[чем вы полезны — одной фразой]'),cta:{'Звонки':'Позвонить','Запись':'Записаться','Продажа':'Купить'}[p.goal]||'Оставить заявку',secs:secs,form:p.goal==='Звонки'?['Телефон']:['Имя','Телефон']};
+  return p.c;
+}
+function pgGaps(p){var c=pgContent(p);return phList([c.h,c.s].concat(c.secs.map(function(x){return x[1];})));}
+function pgFill(p,plate,val){var c=pgContent(p),r=function(t){return String(t).split(plate).join(val);};c.h=r(c.h);c.s=r(c.s);c.secs.forEach(function(x){x[1]=r(x[1]);});}
+function pgFrame(p){
+  var c=pgContent(p),nm=p.p.replace(/[«»"]/g,'');
+  return '<div class="pgv" style="'+tpVars(p.p)+'"><div class="pgv-nav"><i>'+hesc(nm.charAt(0))+'</i>'+hesc(p.p)+'<em>'+hesc(c.cta)+'</em></div>'+
+    '<div class="pgv-hero"><div><h4>'+socFmtTxt(c.h)+'</h4><p>'+(c.s?socFmtTxt(c.s):'')+'</p><span class="pgv-cta">'+hesc(c.cta)+' →</span></div><div class="pgv-ph" style="background-image:url(\''+p.img+'\')"></div></div>'+
+    '<div class="pgv-secs">'+c.secs.map(function(x){return '<div class="pgv-sec"><b>'+hesc(x[0])+'</b><span>'+socFmtTxt(x[1])+'</span></div>';}).join('')+'</div>'+
+    '<div class="pgv-form"><b>'+hesc(c.cta)+'</b>'+c.form.map(function(f){return '<div class="pgv-fi">'+f+'</div>';}).join('')+'<span class="pgv-fb">Отправить</span></div></div>';
+}
+function pgReview(p){
+  PG_CUR=p.n;var el=document.getElementById('pg-review');if(!el)return;
+  var gaps=pgGaps(p),c=pgContent(p),acts;
+  if(p.st==='draft')acts='<button class="pbtn" type="button" onclick="pgBuild()">'+(p.fb?'Пересобрать с правками':'Собрать страницу')+' · 2,25 ₽</button>';
+  else if(p.st==='check')acts='<button class="pbtn ghost" type="button" onclick="PG_FIX=true;pgReview(pgByName(PG_CUR));setTimeout(function(){var t=document.getElementById(\'pg-fix\');if(t)t.focus();},40)">Нужны правки</button><button class="pbtn" type="button" onclick="pgAccept()">Принять</button>';
+  else if(p.st==='ok')acts='<button class="pbtn ghost" type="button" onclick="dlLanding()">Скачать</button><button class="pbtn ghost" type="button" onclick="pgSend()">Отправить клиенту</button><button class="pbtn" type="button" onclick="pgPublish()">Опубликовать</button>';
+  else if(p.st==='cl')acts='<button class="pbtn ghost" type="button" onclick="clientLink(\''+esc(p.p)+'\')">Ссылка для клиента</button><button class="pbtn" type="button" onclick="pgClientOk()">Клиент согласовал</button>';
+  else acts='<button class="pbtn ghost" type="button" onclick="dlLanding()">Скачать</button><button class="pbtn ghost" type="button" onclick="toast(\'Открываем '+esc(p.url)+' (в прототипе имитировано)\')">Открыть на сайте</button>';
+  var note=p.st==='check'?'<div class="lb-note wait bnote">Проверьте страницу, прежде чем она уйдёт на сайт или клиенту: тексты, цифры, цены и форма заявки. Тексты Maker уже сверил с базой фактов'+(gaps.length?' — не хватает '+plural(gaps.length,'сведения','сведений','сведений')+', они подсвечены.':'.')+'</div>'
+    :p.st==='draft'?'<div class="lb-note bnote">Черновик: соберём страницу в стиле '+hesc(qn(p.p))+' — потом вы её проверите.</div>'
+    :p.st==='cl'?'<div class="lb-note wait bnote">Страница у клиента на согласовании — ответ придёт в уведомления.</div>':'';
+  if(p.fb)note='<div class="lb-note wait bnote"><b>Клиент просит правки:</b> «'+hesc(p.fb)+'»</div>'+note;
+  if(p.fixed&&p.st==='check')note+='<div class="lb-note ok bnote">Пересобрали с учётом правок: «'+hesc(p.fixed)+'» — проверьте ещё раз.</div>';
+  var ck=function(ok,t,sub){return '<div class="pg-ck"><i class="'+(ok==='n'?'n':ok?'':'w')+'">'+(ok==='n'?'·':ok?'✓':'!')+'</i><span><b>'+t+'</b><small>'+sub+'</small></span></div>';};
+  var numGap=phList(c.secs.map(function(x){return x[1];})).length;
+  var side='<div class="panel"><h3>Что проверить</h3>'+
+    ck(!/\[/.test(c.h+c.s),'Первый экран','заголовок, подзаголовок и кнопка «'+hesc(c.cta)+'»')+
+    ck(!numGap,'Факты: цифры, цены, адреса',numGap?'не хватает '+plural(numGap,'сведения','сведений','сведений')+' — ниже':'взяты из базы фактов, своих не выдумали')+
+    ck(true,'Форма заявки','поля: '+c.form.join(', ').toLowerCase()+' · заявки придут в «Результат»')+
+    ck(p.url?true:'n','Адрес',p.url?hesc(p.url):'появится после публикации')+
+    ck(true,'Стиль',hesc(qn(p.p))+': цвета, шрифты и голос из «Бренда клиента»')+'</div>';
+  if(p.st!=='pub'&&p.st!=='cl')side+='<div class="panel"><h3>Пропуски'+(gaps.length?' · '+gaps.length:'')+'</h3>'+(gaps.length?'<p class="psub">Ответьте — подставим в страницу и сохраним в базу фактов клиента.</p>'+gaps.map(function(g,i){return '<div class="pg-gap"><span class="mk-ph">'+hesc(g)+'</span><div><input id="pg-g-'+i+'" placeholder="Ответ" onkeydown="if(event.key===\'Enter\')pgGapFill('+i+')"><button class="mini pri" type="button" onclick="pgGapFill('+i+')">Подставить</button></div></div>';}).join(''):'<p class="cp-note" style="margin:0">Пропусков нет — в странице только известные факты.</p>')+'</div>';
+  if(PG_FIX&&p.st==='check')side='<div class="panel"><h3>Что поправить</h3><label class="bfield"><textarea id="pg-fix" rows="4" placeholder="Например: заголовок короче, убрать цену, добавить блок с отзывами"></textarea></label><div class="lb-acts" style="margin-top:10px"><button class="pbtn ghost" type="button" onclick="PG_FIX=false;pgReview(pgByName(PG_CUR))">Отмена</button><button class="pbtn" type="button" onclick="pgFixGo()">Пересобрать · 2,25 ₽</button></div></div>'+side;
+  side+='<div class="panel"><div class="kv"><span class="k">Стоимость</span><span class="v">'+p.cost+' · тексты, кадры и сборка</span></div><div class="kv"><span class="k">Обновлена</span><span class="v">'+p.upd+'</span></div></div>';
+  el.innerHTML='<div class="bset-hd"><div><h2>'+hesc(p.n)+' <span class="st '+PG_CLS[p.st]+'">'+PG_ST[p.st]+'</span></h2><div class="bset-meta">'+hesc(p.p)+' · страница'+(p.groups.length?' · варианты для '+plural(p.groups.length,'аудитории','аудиторий','аудиторий'):'')+'</div></div><span class="sp"></span><div class="bset-acts">'+acts+'</div></div>'+note+
+    '<div class="pg-rv"><div>'+pgFrame(p)+'</div><div class="pg-side">'+side+'</div></div>';
+}
+function pgCur(){return pgByName(PG_CUR);}
+function pgAfter(){renderPages();renderToday();pgReview(pgCur());}
+function pgGapFill(i){var p=pgCur(),g=pgGaps(p)[i],inp=document.getElementById('pg-g-'+i),v=inp?inp.value.trim():'';if(!g)return;if(!v){inp.focus();return;}
+  pgFill(p,g,v);FACTS.push({id:'f'+(++faSeq),p:p.p,cat:'Из ответов',t:g.slice(1,-1)+': '+v,src:'вы',d:'сегодня'});pgReview(p);toast('Подставили и сохранили в базу фактов');}
+function pgGapsBlock(p,what){var g=pgGaps(p);if(!g.length)return false;toast('Сначала заполните '+plural(g.length,'пропуск','пропуска','пропусков')+' — '+what+' с плашками не уходит');var i=document.getElementById('pg-g-0');if(i)i.focus();return true;}
+function pgAccept(){var p=pgCur();if(pgGapsBlock(p,'страница'))return;p.st='ok';delete p.fixed;p.upd='сегодня';pgAfter();toast('Страница принята — опубликуйте или отправьте клиенту');}
+function pgPublish(){var p=pgCur();if(pgGapsBlock(p,'на сайт страница'))return;p.url=p.url||(connSlug(p.p)+'.ru/'+p.n.split(/\s+/).slice(0,3).map(connSlug).filter(Boolean).join('-'));p.st='pub';p.upd='сегодня';pgAfter();toast('Опубликовано: '+p.url+' (в прототипе имитировано)');}
+function pgSend(){var p=pgCur();sendCheck(pgGaps(p),function(){p.st='cl';delete p.fb;pgAfter();toast('Отправили клиенту — ссылка скопирована');});}
+function pgClientOk(){var p=pgCur();p.st='ok';delete p.fb;p.cl='ok';pgAfter();toast('Клиент согласовал — можно публиковать');}
+function pgFixGo(){
+  var p=pgCur(),t=(document.getElementById('pg-fix')||{}).value||'';t=t.trim();if(!t){document.getElementById('pg-fix').focus();toast('Напишите, что поправить');return;}
+  spendGate(2.25,'Пересборка страницы',function(){openBuildModal('Пересобираем страницу',['Читаем ваши правки','Переписываем блоки','Сверяем с базой фактов'],'Готово — проверьте страницу ещё раз.',function(){
+    p.fixed=t;p.st='check';p.upd='сегодня';PG_FIX=false;charge(p.p,'Страницы','Пересборка '+qn(p.n),2.25);pgAfter();});});
+}
+function pgBuild(){
+  var p=pgCur(),fb=p.fb;
+  spendGate(2.25,'Страница',function(){startBuild(function(){p.st='check';p.c=null;if(fb){p.fixed=fb;delete p.fb;}p.upd='сегодня';charge(p.p,'Страницы','Страница '+qn(p.n),2.25);
+    document.getElementById('build-run').style.display='none';document.getElementById('build-done').style.display='block';ROUTE.id=p.n;ROUTE.lab=p.n;crumbRender();routeSave();pgAfter();});});
+}
+function pgCreate(){
+  var ta=document.getElementById('cp-text'),t=ta.value.trim(),cl=document.getElementById('cp-proj').value||CLIENT,goal=document.getElementById('cp-goal').value;
+  if(!t){ta.focus();toast('Опишите страницу одной-двумя фразами');return;}
+  if(!cl||!projByShort(cl)){toast('Выберите клиента — страница собирается в его стиле');return;}
+  spendGate(2.25,'Страница',function(){
+    var n=t.split(/[\n.!?:]/)[0].trim().slice(0,60)||'Новая страница',k=2,base=n;while(pgByName(n))n=base+' · '+(k++);
+    var pg={n:n,p:cl,st:'check',url:'',upd:'сегодня',ts:50+PAGES.length,cost:'2,25 ₽',img:tpShotImg(cl,PAGES.length),groups:[],goal:goal,brief:t,h:n};
+    ta.value='';document.getElementById('cp-count').textContent='0 / 3000';
+    startBuild(function(){PAGES.push(pg);charge(cl,'Страницы','Страница '+qn(n),2.25);renderPages();renderToday();openPage(n);});
+  });
+}
+function publishPage(){pgPublish();}
 function enterApp(){document.getElementById('auth').classList.add('gone');go('home');}
 
 /* ---------- modal helpers ---------- */
