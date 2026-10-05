@@ -1063,7 +1063,9 @@
   .flow{display:flex;align-items:stretch;gap:8px;margin:0 2px 20px;flex-wrap:wrap}
   .flow-st{flex:1;min-width:0;display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
   .flow-st:hover{border-color:var(--line-3)}
-  .flow-st.here{border-color:var(--blue-brd);box-shadow:0 0 0 3px var(--blue-softer);cursor:default}
+  .flow-st.here{position:relative;border:2px solid var(--blue);background:var(--blue-softer);box-shadow:0 8px 20px -12px rgba(46,107,230,.55);cursor:default;padding:11px 13px}
+  .flow-st.here .flow-tx b{color:var(--blue-ink)}
+  .flow-st.here::after{content:"Вы здесь";position:absolute;top:-10px;right:12px;background:var(--blue);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:20px}
   .flow-n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;font-weight:700;font-size:13px;background:var(--inset);color:var(--ink-2);border:1px solid var(--line-2)}
   .flow-st.cur .flow-n{background:var(--blue);border-color:var(--blue);color:#fff}
   .flow-st.done .flow-n{background:var(--ok-ink);border-color:var(--ok-ink);color:#fff}
