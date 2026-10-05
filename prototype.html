@@ -502,6 +502,15 @@
   #toast-act:hover{background:rgba(255,255,255,.1)}
   .del-btn{color:#A33A2E!important;display:inline-flex;align-items:center;gap:7px}
   .del-btn svg{width:15px;height:15px}
+  .ik-list{display:flex;flex-direction:column}
+  .ik-row{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+  .ik-row:first-child{border-top:0}
+  .ik-tx{flex:1;display:flex;flex-direction:column;gap:2px;font-size:13.5px;min-width:0}
+  .ik-tx span{color:var(--ink-2);font-size:13px;line-height:1.45}
+  .ik-gaps{margin-top:14px;padding:14px;border-radius:12px;background:var(--warn-bg)}
+  .ik-gaps>b{display:block;font-size:14px;color:var(--warn-ink)}
+  .ik-gaps .pg-gap{border-top-color:rgba(154,90,34,.18)}
+  .ik-ex{background:none;border:0;padding:0;color:var(--blue);font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
   .del-list{margin:6px 0 0;padding-left:18px;color:var(--ink-2);font-size:13.5px;line-height:1.5}
   .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#1A2230;color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:500;box-shadow:0 18px 40px -14px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.25s;z-index:50;display:flex;align-items:center;gap:10px;max-width:min(90vw,440px)}
 
@@ -2689,6 +2698,7 @@
         <div class="phead">
           <div><h1 id="prj-title">СберТаргет</h1><p id="prj-sub">Стиль снят и зафиксирован. Всё, что собирает продукт, красится в этот код — включая опубликованное.</p></div>
           <div class="sp"></div>
+          <button class="pbtn ghost" type="button" onclick="go('strat');strSet(CLIENT);cpOpen('strat')">Рассказать о клиенте</button>
           <button class="pbtn ghost" type="button" onclick="clientLink(CLIENT)">Ссылка для клиента</button>
           <button class="pbtn" type="button" onclick="prjTask()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новая задача</button>
         </div>
@@ -3234,9 +3244,9 @@
         </div>
         <div class="cards gr-grid" id="gr-grid"></div>
         <div class="create-panel">
-          <textarea id="gr-text" placeholder="Кого хотите привлечь? Например: владельцы автосервисов в Казани, у которых 2–5 постов" maxlength="3000" oninput="document.getElementById('gr-count').textContent=this.value.length+' / 3000'"></textarea>
+          <textarea id="gr-text" placeholder="Кого хотите привлечь? Опишите всех сразу, как есть, — разделим на группы сами. Например: владельцы автосервисов в Казани, у которых 2–5 постов" maxlength="3000" oninput="document.getElementById('gr-count').textContent=this.value.length+' / 3000'"></textarea>
           <div class="cp-row"><label class="cp-target">Клиент: <select class="cp-sel" id="gr-target" data-projs="pick"></select></label></div>
-          <div class="cp-row2"><span class="cp-count" id="gr-count">0 / 3000</span><span class="sp"></span><button class="pbtn" type="button" onclick="grCreate()">Описать группу · ~0,31 ₽</button></div>
+          <div class="cp-row2"><span class="cp-count" id="gr-count">0 / 3000</span><button class="ik-ex" type="button" onclick="ikFill('gr-text')">Показать на примере</button><span class="sp"></span><button class="pbtn" type="button" onclick="grCreate()">Описать группу · ~0,31 ₽</button></div>
           <p class="cp-note">Нейросеть заполнит карточку: задача, возражения, слова, где искать, оффер. Чего не знаем — оставим плашкой.</p>
         </div>
       </section>
@@ -3261,7 +3271,7 @@
           <textarea id="fa-x" placeholder="Вставьте текст с сайта, прайс, ответы клиента или расшифровку созвона — разберём на отдельные факты" maxlength="5000"></textarea>
           <div class="att-list" id="fa-att"></div>
           <div class="cp-row"><label class="cp-attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l8-8"/></svg>Прайс, бриф, документы<input type="file" multiple accept=".pdf,.doc,.docx,.xlsx,.txt,.md,image/*" onchange="attAdd('fa',this)"></label></div>
-          <div class="cp-row2"><span class="sp"></span><button class="pbtn" type="button" onclick="faParse()">Разобрать на факты · 0,41 ₽</button></div>
+          <div class="cp-row2"><button class="ik-ex" type="button" onclick="ikFill('fa-x')">Показать на примере</button><span class="sp"></span><button class="pbtn" type="button" onclick="faParse()">Разобрать на факты · 0,41 ₽</button></div>
           <p class="cp-note">Каждый факт можно поправить прямо в списке или удалить. Неуверенное лучше не добавлять — нейросеть будет на него опираться.</p>
         </div>
       </section>
@@ -3315,7 +3325,7 @@
             <label class="cp-target">Период: <select class="cp-sel" id="str-per"><option value="1">1 месяц</option><option value="3" selected>3 месяца</option><option value="6">Полгода</option><option value="12">Год</option></select></label>
             <label class="cp-attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l8-8"/></svg>Бриф, презентация, скрины<input type="file" multiple accept="image/*,.pdf,.doc,.docx,.pptx,.txt,.md" onchange="attAdd('str',this)"></label>
           </div>
-          <div class="cp-row2"><span class="cp-count" id="str-xc">0 / 3000</span><span class="sp"></span><button class="pbtn" type="button" id="str-go" onclick="strCreate()">Собрать стратегию · до 0,82 ₽</button></div>
+          <div class="cp-row2"><span class="cp-count" id="str-xc">0 / 3000</span><button class="ik-ex" type="button" onclick="ikFill('str-x')">Показать на примере</button><span class="sp"></span><button class="pbtn" type="button" id="str-go" onclick="strCreate()">Собрать стратегию · до 0,82 ₽</button></div>
           <p class="cp-note">Аудитории берём из «Аудиторий», голос — из «Голоса». Чего не знаем — оставим плашками, а не выдумаем.</p>
         </div>
       </section>
@@ -5924,13 +5934,14 @@ function grRemoveUse(id){
 function grNew(p,o){var g={id:'g'+(++grSeq),p:p,slug:'g'+grSeq,ws:.3,wl:.3,keys:[],matters:[],obj:[],words:'',geo:'[гео]',age:'[возраст]',interests:'[интересы]',offer:'[оффер для этой группы]',task:'[задача группы]'};for(var k in o)g[k]=o[k];GROUPS.push(g);return g;}
 function grCreate(){
   var t=document.getElementById('gr-text').value.trim(),p=document.getElementById('gr-target').value;
-  if(!t){document.getElementById('gr-text').focus();toast('Опишите группу одной-двумя фразами');return;}
-  spendGate(.31,'Карточка группы',function(){
-    openBuildModal('Описываем группу',['Разбираем описание','Подбираем задачи и возражения','Готовим настройки таргета'],'Карточка готова — проверьте: чего не поняли, оставили плашками.',function(){
-      var city=(t.match(/в\s+([А-ЯЁ][а-яё]+)/)||[])[1],name=t.split(/[,.]/)[0].replace(/\s+в\s+[А-ЯЁ][а-яё]+$/,'').trim();
-      var g=grNew(p,{n:name.charAt(0).toUpperCase()+name.slice(1,48),who:t,geo:city?'Город: '+city:'[гео]',matters:['[что важно при выборе]'],obj:['[типичные возражения]'],words:'[какими словами говорят]',keys:[name.toLowerCase()],sugg:false});
-      document.getElementById('gr-text').value='';charge(p,'Группы','Карточка группы '+qn(g.n)+'',.31);
-      document.getElementById('gr-proj').value='';renderGroups();openGroup(g.id);
+  if(!t){document.getElementById('gr-text').focus();toast('Опишите, кого хотите привлечь, — можно всех сразу одним текстом');return;}
+  spendGate(.31,'Разбор аудиторий',function(){
+    openBuildModal('Разбираем описание',['Находим, о каких людях речь','Делим на группы: задачи, возражения, гео','Остальное — в факты, голос и стратегию'],'Готово.',function(){
+      var r=ikParse(p,t);IK_TXT=t;
+      if(!r.groups.length){var name=t.split(/[,.]/)[0].trim();r.groups.push({n:ikCap(name).slice(0,48),who:ikCap(t)});}
+      var rp=ikApply(p,r,{text:t});
+      document.getElementById('gr-text').value='';charge(p,'Группы','Разбор аудиторий',.31);
+      document.getElementById('gr-proj').value='';renderGroups();closeModal('build-modal');ikShow(p,rp);
     });
   });
 }
@@ -6611,14 +6622,14 @@ function strCreate(){
   var ta=document.getElementById('str-x'),t=ta.value.trim(),p=document.getElementById('str-target').value,per=perName(document.getElementById('str-per').value),files=ATT.str.slice();
   if(!t&&!files.length){ta.focus();toast('Расскажите о клиенте или задаче — хотя бы пару фраз');return;}
   spendGate(.82,'Стратегия',function(){
-    openBuildModal('Собираем стратегию',['Читаем ваш рассказ'+(files.length?' и '+qn(files[0].n)+'':''),'Берём аудитории и голос '+qn(p)+'','Раскладываем рубрики и частоту по площадкам'],'Готово — проверьте плашки и отправьте клиенту.',function(){
+    openBuildModal('Собираем стратегию',['Читаем ваш рассказ'+(files.length?' и '+qn(files[0].n)+'':''),'Раскладываем по разделам: аудитории, факты, голос','Раскладываем рубрики и частоту по площадкам'],'Готово — проверьте плашки и отправьте клиенту.',function(){
       var old=STRATS[p],gs=GROUPS.filter(function(g){return g.p===p&&!g.sugg;});
       STRATS[p]={st:'draft',per:per,upd:'сегодня',ver:old?old.ver+1:1,goal:old?old.goal:'[чего хотим от соцсетей]',kpi:old?old.kpi:[['Заявки из соцсетей','[сколько в месяц]'],['Охват','[сколько]']],
         pos:old?old.pos:'[чем вы отличаетесь — одной фразой]',msgs:old?old.msgs:['[главная мысль 1]','[главная мысль 2]'],
         ch:old?old.ch:[['vk','Основа: посты и карусели','3 поста в неделю'],['tg','Короткие новости','2–3 в неделю'],['story','Сторис','через день']],
         rub:old?old.rub:[['Польза',40,'Ответы на частые вопросы'],['Кейсы',30,'Результаты клиентов в цифрах'],['Закулисье',10,'Люди и процесс'],['Повод',20,'Акции и новинки']]};
-      var S=STRATS[p];if(/^\[/.test(S.pos)&&factFor(p,['О компании'],0))S.pos=factFor(p,['О компании'],0);S.brief=(S.brief?S.brief+'\n':'')+t;var gl=strGoal(t);if(gl&&/^\[/.test(S.goal))S.goal=gl;ta.value='';ATT.str=[];attRender('str');charge(p,'Контент','Стратегия '+qn(p)+'',.82);strSet(p);
-      document.getElementById('str-body').scrollIntoView({behavior:'smooth',block:'start'});
+      var S=STRATS[p];IK_TXT=t;var rp=ikApply(p,ikParse(p,t),{newStrat:!old,text:t});if(/^\[/.test(S.pos)&&factFor(p,['О компании'],0))S.pos=factFor(p,['О компании'],0);
+      ta.value='';ATT.str=[];attRender('str');charge(p,'Контент','Стратегия '+qn(p)+'',.82);strSet(p);closeModal('build-modal');ikShow(p,rp);
     });
   });
 }
@@ -7692,12 +7703,11 @@ function faParse(){
   var p=faP(),ta=document.getElementById('fa-x'),t=ta.value.trim(),files=ATT.fa.slice();
   if(!p){toast('Сначала выберите клиента');return;}
   if(!t&&!files.length){ta.focus();toast('Вставьте текст — с сайта, из прайса или ответы клиента');return;}
-  spendGate(.41,'Разобрать на факты',function(){
-    openBuildModal('Разбираем на факты',['Читаем текст'+(files.length?' и '+qn(files[0].n)+'':''),'Делим на отдельные факты','Раскладываем по разделам'],'Готово — проверьте факты, неверные удалите.',function(){
-      var parts=t.replace(/(^|[\s(])(ул|д|г|пр|пл|пер|т|им|корп|стр|руб|мин|тыс|млн)\.\s/gi,'$1$2\u2024').split(/(?:[.!?]+\s+(?=[А-ЯЁA-Z0-9«"]))|[\n;]+|[.!?]+$/).map(function(s){return s.trim().replace(/[.]$/,'').replace(/\u2024/g,'. ');}).filter(function(s){return s.length>8;}),n=0;
-      parts.forEach(function(s){FACTS.push({id:'f'+(++faSeq),p:p,cat:faGuess(s),t:s.charAt(0).toUpperCase()+s.slice(1),src:files.length?files[0].n:'вы',d:'сегодня'});n++;});
-      if(files.length&&!parts.length){FACTS.push({id:'f'+(++faSeq),p:p,cat:'О компании',t:'[что важного в '+qn(files[0].n)+']',src:files[0].n,d:'сегодня'});n++;}
-      ta.value='';ATT.fa=[];attRender('fa');charge(p,'Бренд','Разбор на факты',.41);renderFacts();toast('Добавили '+plural(n,'факт','факта','фактов'));
+  spendGate(.41,'Разобрать текст',function(){
+    openBuildModal('Разбираем текст',['Читаем текст'+(files.length?' и '+qn(files[0].n)+'':''),'Делим на факты, аудитории и правила голоса','Раскладываем по разделам'],'Готово.',function(){
+      var r=ikParse(p,t);IK_TXT=t;var rp=ikApply(p,r,{factsAll:true,text:t});
+      if(files.length&&!t){FACTS.push({id:'f'+(++faSeq),p:p,cat:'О компании',t:'[что важного в '+qn(files[0].n)+']',src:files[0].n,d:'сегодня'});rp.fN++;}
+      ta.value='';ATT.fa=[];attRender('fa');charge(p,'Бренд','Разбор текста',.41);renderFacts();closeModal('build-modal');ikShow(p,rp);
     });
   });
 }
@@ -8507,6 +8517,157 @@ function cpVoiceStop(silent){
   if(!rec.real){ta.value=(ta.value?ta.value.replace(/\s*$/,' '):'')+(CPD_SAY[rec.v]||'');ta.dispatchEvent(new Event('input'));toast('Голос расшифрован — в прототипе подставили пример фразы');}
   HTMLElement.prototype.focus.__o.call(ta,{preventScroll:true});
 }
+
+/* ---------- рассказ одним текстом → Maker сам раскладывает по разделам ---------- */
+var IK_PERS=/^(студент|школьник|мам|родител|пап|пенсионер|владельц|предпринимател|собственник|сотрудник|менеджер|женщин|мужчин|девушк|парн|подрост|молодёж|молодеж|семь|семейн|турист|маркетолог|фрилансер|блогер|жител|айтишник|программист|учител|бухгалтер|руководител|директор|пар[ыа]\b|дет[иея]|покупател[иь] из|корпоратив|компани[ий] с|офисн|бизнесмен|застройщик|архитектор|дизайнер|риелтор|автовладельц|водител|спортсмен|невест|выпускник|абитуриент)/i;
+var IK_ADJ=/(ые|ие|ых|их|ая|яя|ый|ой|ий|ее|ое)$/i;
+var IK_STOP=/^(в|во|из|у|на|с|со|которые|которым|которых|что|им|они|—|-|хотят|ищут|приходят|ходят|заходят|покупают|заказывают|ценят|любят|боятся|записывают|сидят|часто|обычно|за)$/i;
+function ikSents(t){
+  var s=String(t||'').replace(/\r/g,'').replace(/(^|[\s(])(ул|д|г|пр|пл|пер|т|им|корп|стр|руб|мин|тыс|млн|т\.е|т\.к|др|пр)\.\s/gi,'$1$2․ ');
+  return s.split(/\n+|;\s+|(?:[.!?]+)\s+(?=[А-ЯЁA-Z0-9«"—•\-])|[.!?]+$/).map(function(x){return x.replace(/․ /g,'. ').replace(/^[\s•\-–—*]+|^\d+[.)]\s+/,'').replace(/[.\s]+$/,'').trim();}).filter(function(x){return x.length>4;});
+}
+function ikCap(x){x=String(x||'').trim();return x.charAt(0).toUpperCase()+x.slice(1);}
+function ikAud(s){
+  var w=s.replace(/[«»"]/g,'').split(/\s+/),i=-1;
+  for(var k=0;k<w.length;k++){if(IK_PERS.test(w[k].replace(/[,.:;]/g,''))&&!/^клиент/i.test(w[k])){i=k;break;}}
+  if(i<0)return null;
+  var st=i;if(i>0&&IK_ADJ.test(w[i-1].replace(/[,.:;]/g,''))&&!/^(наши|основные|ещё|еще|другие|многие|первые|вторые|третьи)$/i.test(w[i-1]))st=i-1;
+  var nm=[];for(var j=st;j<w.length&&nm.length<6;j++){var x=w[j];if(j>i&&(IK_STOP.test(x.replace(/[,.:;]/g,''))||/(ят|ют|ат|ут)$/i.test(x)&&x.length>4&&j>i))break;nm.push(x.replace(/[,.:;—]+$/,''));if(/[,.:;—]$/.test(x)||/^[—-]$/.test(w[j+1]||''))break;}
+  var name=ikCap(nm.join(' ').replace(/\s+\d.*$/,'').replace(/\s+(из|в|у)$/,'')),m;
+  var g={n:name.slice(0,48),who:ikCap(s),src:s,at:st};
+  if((m=s.match(/(\d{2})\s*[–-]\s*(\d{2})\s*(лет|года)?/)))g.age=m[1]+'–'+m[2];else if((m=s.match(/(\d{2})\s*\+/)))g.age=m[1]+'+';
+  if((m=s.match(/((?:из|в|у)\s+(?:соседн|спальн|бизнес|район|центр|офис)[^,.:;]*|рядом[^,.:;]*|в радиусе[^,.:;]*|живут[^,.:;]*|работают\s+(?:рядом|в|поблизости)[^,.:;]*)/i))){var gw=m[1].trim().split(/\s+/),go=[];for(var q=0;q<gw.length&&go.length<5;q++){if(q>1&&(/^(—|-|им|и)$/.test(gw[q])||/(ят|ют|ат|ут|ит)$/i.test(gw[q])&&gw[q].length>4))break;go.push(gw[q]);}g.geo=go.join(' ');}
+  if((m=s.match(/(?:нужн\S*|хотят|ищут|важн\S*|ценят|приходят за|за\s+тем,?\s+чтобы)\s+([^.;:]+?)(?=,\s*(?:но|а|им|боятся|сомнева|не\s+вер|переживают)|\s+и\s+(?:боятся|не\s+вер|сомнева|переживают)|[.;:]|$)/i)))g.task=ikCap(m[1].trim());
+  if((m=s.match(/((?:не\s+вер|не\s+доверя|боятся|сомнева|переживают|не\s+готовы|дорого)[^.;]*)/i)))g.obj=ikCap(m[1].trim());
+  return g;
+}
+function ikVoice(s,v){
+  var hit=false,l=s.toLowerCase();
+  if(!/(пишем|общаемся|обраща|тон|голос|стиль|эмодзи|смайл|восклиц|юмор|шутим|канцеляр|панибрат)/.test(l)||/₽|руб/.test(l))return false;
+  if(/на\s*«?ты»?(?![а-яё])/.test(l)){v.say.push(['Обращаемся на «ты»','на «вы»']);v.formal-=15;v.lab.push('на «ты»');hit=true;}
+  if(/на\s*«?вы»?(?![а-яё])/.test(l)){v.say.push(['Обращаемся на «вы»','на «ты»']);v.lab.push('на «вы»');hit=true;}
+  if(/без\s+эмодзи|без\s+смайл|не\s+(использ\S+|став\S+)\s+эмодзи/.test(l)){v.say.push(['Без эмодзи','😊🔥 в тексте']);v.lab.push('без эмодзи');hit=true;}
+  if(/без\s+восклиц/.test(l)){v.say.push(['Спокойно, без восклицаний','«Срочно!!!»']);v.emo-=15;v.lab.push('без восклицаний');hit=true;}
+  if(/дружелюб|по-простому|тепл|по-доброму/.test(l)){v.formal-=15;v.lab.push('дружелюбно');hit=true;}
+  if(/строг|официал|делов|сдержан/.test(l)){v.formal+=15;v.lab.push('строже');hit=true;}
+  if(/спокойн/.test(l)&&!/без\s+восклиц/.test(l)){v.emo-=10;v.lab.push('спокойно');hit=true;}
+  if(/юмор|шутим|с\s+иронией|весел/.test(l)){v.emo+=15;v.lab.push('с юмором');hit=true;}
+  if(/без\s+канцеляр|без\s+панибрат/.test(l)){v.say.push(['Простые слова','«осуществляем», «в рамках»']);v.lab.push('без канцелярита');hit=true;}
+  v.lab=v.lab.filter(function(x,i){return v.lab.indexOf(x)===i;});
+  return hit;
+}
+function ikParse(p,t){
+  var r={groups:[],facts:[],voice:{say:[],lab:[],formal:0,emo:0},goal:'',goalN:'',pos:'',msgs:[],ch:[],links:[],left:[]};
+  (String(t).match(/(?:https?:\/\/)?(?:[a-z0-9-]+\.)+(?:ru|com|рф|su|io|me|net|org|pro|site|online)(?:\/[^\s,;)]*)?/gi)||[]).forEach(function(u){u=u.replace(/^https?:\/\//,'').replace(/[.]$/,'');if(r.links.indexOf(u)<0)r.links.push(u);});
+  var CH=[['vk',/(^|[^a-z])vk|вконтакт|\bвк\b/i],['tg',/telegram|телеграм|t\.me|\bтг\b/i],['ig',/instagram|инстаграм|\bинст[уаеы]?\b/i],['tc',/tenchat|тенчат/i],['yt',/youtube|ютуб/i],['li',/linkedin|линкедин/i],['story',/сторис|stories/i]];
+  ikSents(t).forEach(function(s,ix){
+    var l=s.toLowerCase(),used=false;
+    CH.forEach(function(c){if(c[1].test(s)&&r.ch.indexOf(c[0])<0&&/(ведём|ведем|пишем|основа|есть|площадк|канал|группа|сообществ|аккаунт|соцсет|публику|также|ещё|еще|иногда|сторис|vk|telegram|tenchat|instagram)/i.test(s)){r.ch.push(c[0]);used=true;}});
+    if(ikVoice(s,r.voice))return;
+    var g=ikAud(s);if(g&&ix===0&&g.at>=2&&!/(клиент|гост|покупател|аудитор|приходят|заходят|ходят)/i.test(l))g=null;if(g&&!/₽|руб/.test(s)){var same=r.groups.filter(function(x){return x.n.toLowerCase().slice(0,6)===g.n.toLowerCase().slice(0,6);})[0];if(same){same.who+=' '+ikCap(s);}else r.groups.push(g);return;}
+    if(!r.goal&&/(хотим|нужно|нужна|нужны|цель|задача|чтобы\s+было)/i.test(l)&&!/(клиентам|им\s+нужн)/i.test(l)){var gl=strGoal(s);if(gl){r.goal=gl;var n=s.match(/(\d[\d\s]*)\s*(заяв|запис|продаж|заказ|клиент|подпис|гост)/i);if(n)r.goalN=n[1].replace(/\s/g,'')+' в месяц';return;}}
+    if(!r.pos&&/(отличаемся|в отличие|единственн|уникальн|наша фишка|главное преимущество|главное,\s+чем|чем\s+мы\s+лучше)/i.test(l)){r.pos=ikCap(s.replace(/^(главное,?\s+чем\s+отличаемся:?\s*|отличаемся\s+тем,?\s+что\s*|наша фишка\s*[—:-]?\s*)/i,''));return;}
+    if(/(важно донести|хотим,\s+чтобы\s+знали|главная мысль|ключевое)/i.test(l)){r.msgs.push(ikCap(s.replace(/^.*?(?:донести|знали|мысль|ключевое)\s*[:—-]?\s*/i,'')));return;}
+    if(used)return;
+    if(s.replace(/(?:https?:\/\/)?(?:[a-z0-9-]+\.)+[a-zрф]{2,}(?:\/\S*)?/gi,'').replace(/(канал|сайт|группа|наш|наша|наш[еи]|в|—|-|:|,)/gi,'').trim().length<4)return;
+    if(/^(не\s+(гарантир|обещ|пишем|говорим|использ|называем)|нельзя|запрещ)/i.test(l)){r.facts.push({cat:'Запреты',t:ikCap(s)});return;}
+    if(/(акци[яию]|скидк|в\s+подарок|распродаж)/i.test(l)){r.facts.push({cat:'Акции',t:ikCap(s)});return;}
+    var cat=(ix===0||/^(мы\s|компани|наша\s+компани)|работаем\s+с\s+\d{4}|на\s+рынке|сеть\s+из/i.test(l))&&!/₽|руб|скидк|акци|\d{1,2}:\d{2}/i.test(s)?'О компании':faGuess(s);
+    if(cat==='О компании'&&ix>0&&!/^(мы\s|компани|наша)|работаем|на\s+рынке|сеть/i.test(l)){r.left.push(s);return;}
+    r.facts.push({cat:cat,t:ikCap(s)});
+  });
+  return r;
+}
+function ikGrSame(p,n){var w=function(x){return x.toLowerCase().replace(/[«»"]/g,'').split(/\s+/).filter(function(y){return y.length>=4&&!/^(из|для|без|рядом)$/.test(y);}).map(function(y){return y.slice(0,5);});},a=w(n);
+  return GROUPS.filter(function(g){if(g.p!==p)return false;var b=w(g.n);return a[0]&&a[0]===b[0]&&(a.length<2||b.length<2||a[1]===b[1]);})[0];}
+function ikApply(p,r,o){
+  o=o||{};var rep={gNew:[],gUpd:[],facts:{},fN:0,voice:r.voice.lab.slice(),strat:[],ch:[],links:[],left:r.left.length,noStrat:false};
+  r.groups.forEach(function(g){
+    var ex=ikGrSame(p,g.n);
+    if(ex){var f=0;['task','geo','age'].forEach(function(k){if(g[k]&&(!ex[k]||/^\[/.test(ex[k])||ex[k]==='—')){ex[k]=g[k];f++;}});if(g.obj&&(!ex.obj.length||/^\[/.test(ex.obj[0]))){ex.obj=[g.obj];f++;}if(f)rep.gUpd.push(ex.n);return;}
+    var n=grNew(p,{n:g.n,who:g.who,task:g.task||'[задача группы]',geo:g.geo||'[гео]',age:g.age||'[возраст]',matters:g.task?[g.task]:['[что важно при выборе]'],obj:g.obj?[g.obj]:['[типичные возражения]'],words:'[какими словами говорят]',keys:[],sugg:false,fromTxt:true});rep.gNew.push(n.n);
+  });
+  r.facts.forEach(function(f){if(FACTS.some(function(x){return x.p===p&&x.t.slice(0,30)===f.t.slice(0,30);}))return;FACTS.push({id:'f'+(++faSeq),p:p,cat:f.cat,t:f.t,src:'рассказ',d:'сегодня'});rep.facts[f.cat]=(rep.facts[f.cat]||0)+1;rep.fN++;});
+  if(o.factsAll)r.left.forEach(function(s){FACTS.push({id:'f'+(++faSeq),p:p,cat:'О компании',t:ikCap(s),src:'рассказ',d:'сегодня'});rep.facts['О компании']=(rep.facts['О компании']||0)+1;rep.fN++;});
+  var d=DESIGN[p];if(d){d.tone.formal=Math.max(0,Math.min(100,d.tone.formal+r.voice.formal));d.tone.emo=Math.max(0,Math.min(100,d.tone.emo+r.voice.emo));
+    r.voice.say.forEach(function(x){if(!d.say.some(function(y){return y[0]===x[0];}))d.say.push(x);});if(rep.voice.length)voiceOf(p).hist.unshift({d:'сегодня',t:'Из рассказа: '+rep.voice.join(', ')});}
+  r.links.forEach(function(u){var own=/vk\.com|t\.me|instagram|tenchat|youtube|dzen/i.test(u);if(own){if(!voiceOf(p).src.some(function(x){return x.u===u;}))voiceOf(p).src.push({u:u,k:'own'});rep.links.push(u+' — в источники голоса');}
+    else if(d&&/цвета Maker/.test(d.src)){d.src=u;rep.links.push(u+' — сайт клиента, стиль снимем с него');}else rep.links.push(u+' — сайт клиента');});
+  var S=STRATS[p];
+  if(S){
+    var ph=function(v){return !v||/^\[/.test(v);};
+    if(r.goal&&ph(S.goal)){S.goal=r.goal;rep.strat.push('цель');}
+    if(r.goalN&&S.kpi[0]&&/\[/.test(S.kpi[0][1])){S.kpi[0][1]=r.goalN;rep.strat.push('цифра цели');}
+    if(r.pos&&ph(S.pos)){S.pos=r.pos;rep.strat.push('позиционирование');}
+    if(r.msgs.length){var k=0;S.msgs=S.msgs.map(function(m){return /^\[/.test(m)&&r.msgs[k]?r.msgs[k++]:m;});if(k)rep.strat.push('главные мысли');}
+    if(r.ch.length&&o.newStrat){var NM={vk:['Основа: посты и карусели','3 поста в неделю'],tg:['Короткие новости','2–3 в неделю'],ig:['Визуал и сторис','3 поста в неделю'],tc:['Экспертные разборы','2 поста в неделю'],yt:['Ролики и Shorts','1 в неделю'],li:['Кейсы на английском','1 в неделю'],story:['Сторис','через день']};
+      S.ch=r.ch.map(function(c){return [c,NM[c][0],NM[c][1]];});rep.strat.push('площадки');}
+    rep.ch=r.ch.map(function(c){return CH_NAME[c];});
+    S.brief=(S.brief?S.brief+'\n':'')+(o.text||'');
+  }else rep.noStrat=true;
+  return rep;
+}
+var IK_P=null,IK_REP=null,IK_TXT='';
+function ikGaps(p){
+  var S=STRATS[p],gs=GROUPS.filter(function(g){return g.p===p&&!g.sugg;}),f=function(c){return FACTS.some(function(x){return x.p===p&&x.cat===c;});},out=[];
+  if(S&&/^\[/.test(S.goal))out.push(['goal','Цель','Чего хотите от соцсетей? Например: 40 записей в месяц']);
+  if(!gs.length)out.push(['aud','Аудитории','Кто ваши клиенты? Перечислите 2–3 типа людей — разложим сами']);
+  if(S&&/^\[/.test(S.pos))out.push(['pos','Позиционирование','Чем вы отличаетесь от соседей — одной фразой?']);
+  if(!f('Цены и условия'))out.push(['price','Цены','Сколько стоит основная услуга или товар?']);
+  if(!f('Адреса и время'))out.push(['addr','Адрес и часы','Где вы и когда работаете? (если не онлайн)']);
+  return out;
+}
+function ikShow(p,rep){
+  IK_P=p;IK_REP=rep;var gaps=ikGaps(p),ask=gaps.slice(0,3),rest=gaps.slice(3);
+  var row=function(ic,t,sub,btn){return '<div class="ik-row"><span class="td-ic">'+ic+'</span><span class="ik-tx"><b>'+t+'</b><span>'+sub+'</span></span>'+(btn||'')+'</div>';};
+  var go=function(t,fn){return '<button class="mini" type="button" onclick="closeModal(\'gate-modal\');'+fn+'">'+t+' →</button>';};
+  var IC={aud:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.4 3.4-5 6.5-5s5.7 1.6 6.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2c2.8.2 4.8 1.8 5.5 4.8"/></svg>',fa:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',st:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>',vo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h2l3-7 4 14 3-7h4"/></svg>',ln:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>'};
+  var rows=[];
+  if(rep.gNew.length||rep.gUpd.length)rows.push(row(IC.aud,'Аудитории'+(rep.gNew.length?' · '+plural(rep.gNew.length,'новая','новые','новых'):''),(rep.gNew.length?rep.gNew.map(function(n){return hesc(qn(n));}).join(', '):'')+(rep.gUpd.length?(rep.gNew.length?'; ':'')+'дополнили: '+rep.gUpd.map(function(n){return hesc(qn(n));}).join(', '):''),go('Аудитории',"go('groups')")));
+  if(rep.fN)rows.push(row(IC.fa,'База фактов · '+plural(rep.fN,'факт','факта','фактов'),Object.keys(rep.facts).map(function(c){return c.toLowerCase()+' '+rep.facts[c];}).join(', '),go('Факты',"go('facts')")));
+  if(rep.strat.length)rows.push(row(IC.st,'Стратегия',ikCap(rep.strat.map(function(x){return x==='площадки'&&rep.ch.length?'площадки: '+rep.ch.join(', '):x;}).join(', ')),go('Стратегия',"go('strat');strSet('"+esc(p)+"')")));
+  else if(rep.ch.length)rows.push(row(IC.st,'Площадки',rep.ch.join(', ')+' — учтём в стратегии',''));
+  if(rep.voice.length)rows.push(row(IC.vo,'Голос',ikCap(rep.voice.join(', ')),go('Голос',"go('voice')")));
+  if(rep.links.length)rows.push(row(IC.ln,'Ссылки',rep.links.map(hesc).join('; '),''));
+  var h='<p class="ncl-sub" style="margin:0 0 10px">Разложили по разделам — поправить можно там.'+(rep.left?' Ещё '+plural(rep.left,'фразу','фразы','фраз')+' сохранили в рассказ стратегии — пригодятся при генерации.':'')+'</p>'+
+    (rows.length?'<div class="ik-list">'+rows.join('')+'</div>':'<div class="lb-note wait bnote">Ничего определённого не нашли — расскажите подробнее: кто клиенты, сколько стоит, чего хотите.</div>')+
+    (rep.noStrat?'<div class="lb-note bnote" style="margin-top:12px">Стратегии у '+hesc(qn(p))+' ещё нет. <button class="mini pri" type="button" onclick="ikStrat()">Собрать из этого рассказа · 0,82 ₽</button></div>':'');
+  if(ask.length)h+='<div class="ik-gaps"><b>Не хватает'+(STRATS[p]?' для стратегии':'')+'</b><span class="cp-note" style="margin:2px 0 8px">Ответьте коротко — или пропустите: в стратегии эти места подсвечены оранжевым.</span>'+
+    ask.map(function(g){return '<div class="pg-gap"><span class="mk-ph">'+g[1]+'</span><span class="cp-note" style="margin:0">'+g[2]+'</span><div><input id="ik-'+g[0]+'" placeholder="Ответ" onkeydown="if(event.key===\'Enter\')ikAnswer(\''+g[0]+'\')"><button class="mini pri" type="button" onclick="ikAnswer(\''+g[0]+'\')">Ответить</button></div></div>';}).join('')+
+    (rest.length?'<p class="cp-note" style="margin:6px 0 0">Ещё не нашли: '+rest.map(function(g){return g[1].toLowerCase();}).join(', ')+'.</p>':'')+'</div>';
+  else h+='<div class="lb-note ok bnote" style="margin-top:12px">Пробелов нет — всё главное о клиенте есть.</div>';
+  h+='<div class="gate-acts"><button class="pbtn" type="button" onclick="closeModal(\'gate-modal\')">Готово</button></div>';
+  document.getElementById('gt-title').textContent='Разобрали рассказ о '+qn(p);
+  document.getElementById('gt-body').innerHTML=h;
+  if(!document.getElementById('gate-modal').classList.contains('on'))openModal('gate-modal');
+}
+function ikAnswer(k){
+  var p=IK_P,inp=document.getElementById('ik-'+k),v=inp?inp.value.trim():'';if(!v){if(inp)inp.focus();return;}
+  var S=STRATS[p];
+  if(k==='goal'&&S){S.goal=ikCap(v);var n=v.match(/(\d[\d\s]*)/);if(n&&S.kpi[0]&&/\[/.test(S.kpi[0][1]))S.kpi[0][1]=n[1].replace(/\s/g,'')+' в месяц';}
+  else if(k==='pos'&&S)S.pos=ikCap(v);
+  else if(k==='aud'){var r=ikParse(p,v.split(/[,;\n]+/).map(function(x){return ikCap(x.trim());}).filter(Boolean).join('. '));if(!r.groups.length)v.split(/[,;\n]+/).forEach(function(x){x=x.trim();if(x)r.groups.push({n:ikCap(x).slice(0,48),who:ikCap(x)});});var rp=ikApply(p,{groups:r.groups,facts:[],voice:{say:[],lab:[],formal:0,emo:0},links:[],left:[],msgs:[],ch:[]},{});IK_REP.gNew=IK_REP.gNew.concat(rp.gNew);}
+  else{var cat=k==='price'?'Цены и условия':'Адреса и время';FACTS.push({id:'f'+(++faSeq),p:p,cat:cat,t:ikCap(v),src:'вы',d:'сегодня'});IK_REP.facts[cat]=(IK_REP.facts[cat]||0)+1;IK_REP.fN++;}
+  ikRefresh();ikShow(p,IK_REP);toast('Записали');
+}
+function ikRefresh(){['renderStrat','renderGroups','renderFacts','renderVoice','renderToday'].forEach(function(f){try{if(typeof window[f]==='function')window[f]();}catch(e){}});}
+function ikStrat(){
+  var p=IK_P,t=IK_TXT;closeModal('gate-modal');
+  spendGate(.82,'Стратегия',function(){openBuildModal('Собираем стратегию',['Берём ваш рассказ','Берём аудитории и голос '+qn(p),'Раскладываем рубрики и площадки'],'Готово — проверьте плашки и отправьте клиенту.',function(){
+    STRATS[p]={st:'draft',per:perName(3),upd:'сегодня',ver:1,goal:'[чего хотим от соцсетей]',kpi:[['Заявки из соцсетей','[сколько в месяц]'],['Охват','[сколько]']],pos:'[чем вы отличаетесь — одной фразой]',msgs:['[главная мысль 1]','[главная мысль 2]'],
+      ch:[['vk','Основа: посты и карусели','3 поста в неделю'],['tg','Короткие новости','2–3 в неделю'],['story','Сторис','через день']],rub:[['Польза',40,'Ответы на частые вопросы'],['Кейсы',30,'Результаты клиентов в цифрах'],['Закулисье',10,'Люди и процесс'],['Повод',20,'Акции и новинки']]};
+    var r=ikParse(p,t);r.groups=[];r.facts=[];r.voice={say:[],lab:[],formal:0,emo:0};r.links=[];var rep=ikApply(p,r,{newStrat:true,text:t});charge(p,'Контент','Стратегия '+qn(p),.82);
+    closeModal('build-modal');go('strat');strSet(p);if(IK_REP){IK_REP.strat=rep.strat;IK_REP.ch=rep.ch;IK_REP.noStrat=false;}ikShow(p,IK_REP||rep);
+  });});
+}
+/* пример рассказа — чтобы попробовать без своего текста */
+function ikSample(p){
+  var P=qn(p);
+  if(/вита|клиник|мед|стомат/i.test(p))return P+' — сеть из трёх клиник в спальных районах, работаем с 2015 года. Главное, чем отличаемся: чекап за одно утро — анализы, УЗИ и разбор с терапевтом в тот же день. Чекап «Базовый» стоит 6 900 ₽, первичный приём терапевта — 1 900 ₽. Работаем по будням с 8:00 до 20:00, в субботу до 16:00, ул. Лесная, 12.\nНаши клиенты очень разные. Молодые мамы 28–40 лет из соседних домов записывают детей и себя, им важно удобное время и без очередей, боятся, что будет долго. Офисные сотрудники из бизнес-центров рядом хотят пройти обследование до работы. Пенсионеры 60+ приходят по рекомендации, им важно внимание врача, сомневаются, что платно лучше, чем в поликлинике.\nХотим 150 записей на чекапы в месяц из соцсетей. Ведём VK и Telegram, иногда сторис.\nПишем спокойно и на «вы», без эмодзи и без восклицаний. Не обещаем вылечить и не пишем «лучшие врачи». До 30 ноября скидка 15% на чекап для двоих.';
+  if(/таргет|реклам|сайт|разработ|атвинт|агентств|студи/i.test(p))return P+' — настраиваем рекламу для малого бизнеса под ключ, на рынке с 2019 года, запустили больше 300 кампаний. Отличаемся тем, что считаем цену заявки, а не клики, и запускаем за один день. Запуск — от 15 000 ₽ в месяц, бюджет на рекламу отдельно.\nВладельцы кафе и салонов красоты в спальных районах — им нужны заявки из соседних домов, но не верят, что реклама окупится. Маркетологи небольших компаний, которым не хватает рук на рутину, им важны прозрачные отчёты. Предприниматели без своего маркетолога хотят просто получать заявки и боятся, что агентство их обманет.\nХотим 60 заявок в месяц из соцсетей. Основа — VK и Telegram, ещё TenChat.\nОбщаемся на «вы», дружелюбно, без панибратства и без эмодзи. Не гарантируем «100% результат». Канал t.me/'+connSlug(p)+'.';
+  return P+' — кофейня у метро со своим обжаром, работаем с 2021 года. Отличаемся тем, что жарим зерно сами каждую неделю. Капучино — 220 ₽, завтрак — от 390 ₽. Открыты с 7:30 до 22:00, ул. Мира, 5.\nУтром заходят офисные сотрудники по пути на работу — им нужно быстро и навынос. Днём молодые мамы с колясками, ценят тишину и десерты. Вечером студенты с ноутбуками, им важны розетки и недорого.\nХотим 300 заказов навынос в месяц. Ведём VK и Instagram.\nПишем на «ты», дружелюбно и с юмором. В декабре акция: пачка зерна в подарок к заказу от 1 500 ₽.';
+}
+function ikFill(id){var p=(document.getElementById(id==='str-x'?'str-target':id==='gr-text'?'gr-target':'fa-proj')||{}).value||CLIENT||'СберТаргет',ta=document.getElementById(id);ta.value=ikSample(p);ta.dispatchEvent(new Event('input'));HTMLElement.prototype.focus.__o?HTMLElement.prototype.focus.__o.call(ta):ta.focus();}
 
 /* ---------- удалить что угодно: подтверждение с последствиями, потом «Вернуть» ---------- */
 var DEL_IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>';
