@@ -913,6 +913,30 @@
   .str-ch{display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:baseline}
   .str-ch span{color:var(--ink-2)}
   .str-ch em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--ink-3);white-space:nowrap}
+  /* соцсети клиента */
+  .str-ch{grid-template-columns:90px minmax(0,1fr) auto auto}
+  .str-cn{font-size:12px;font-weight:600;color:var(--ok-ink);white-space:nowrap}
+  .cn-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .cn-row:last-child{border-bottom:0}
+  .cn-ic{width:24px;height:24px;border-radius:50%;flex:none;display:grid;place-items:center;border:1.5px dashed var(--line-3)}
+  .cn-ic.ok{border:0;background:var(--ok-bg);color:var(--ok-ink)}
+  .cn-ic.rm{border:0;background:var(--inset)}
+  .cn-ic svg{width:13px;height:13px}
+  .cn-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+  .cn-tx b{font-size:14px;font-weight:600}
+  .cn-tx b em{font-style:normal;font-size:11px;font-weight:600;color:var(--blue);margin-left:6px}
+  .cn-tx span{font-size:12.5px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis}
+  .cn-ru{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:12px 0 2px}
+  .cn-p{color:var(--ink-2);font-size:14px;margin:0 0 14px;line-height:1.5}
+  .cn-steps{margin:0 0 14px;padding-left:20px;color:var(--ink-2);font-size:14px;line-height:1.55}
+  .cn-steps li{margin-bottom:6px}
+  .cn-wait{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:18px 0 8px;color:var(--ink-2);font-size:14px}
+  .cn-wait small{color:var(--ink-3)}
+  .cn-pick{display:flex;flex-direction:column;gap:8px}
+  .cn-opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line-2);border-radius:12px;cursor:pointer}
+  .cn-opt:has(input:checked){border-color:var(--blue);background:var(--blue-softer)}
+  .cn-opt span{display:flex;flex-direction:column}
+  .cn-opt small{font-size:12.5px;color:var(--ink-3)}
   .str-rub{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto;gap:16px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
   .str-rub-hd{display:flex;flex-direction:column;gap:1px;min-width:0}
   .str-rub-hd b{font-size:14px}
@@ -6041,11 +6065,12 @@ function socSchedule(){
   document.getElementById('gt-title').textContent='Когда опубликовать';
   var opts=[['Завтра','10:00'],['Завтра','19:00'],['Пятница','12:00'],['Суббота','11:00']];
   document.getElementById('gt-body').innerHTML='<p style="color:var(--ink-2);font-size:14px;margin:0 0 12px">'+hesc(qn(x.t))+' · '+x.plats.map(function(p){return platName(x.type,p);}).join(', ')+'. Лучшее время по прошлым публикациям проекта — вечер буднего дня.</p><div class="chipset">'+opts.map(function(o,i){return '<button class="chip'+(i===1?' on':'')+'" type="button" onclick="chipPick(this)" data-st="'+o[0]+'|'+o[1]+'">'+o[0]+', '+o[1]+'</button>';}).join('')+'</div>'+
-    '<p class="cp-note">Соцсети пока не подключены: в назначенное время пришлём напоминание с готовым текстом и картинкой. Подключите VK и Telegram — будем публиковать сами.</p><div class="gate-acts"><button class="pbtn ghost" onclick="closeModal(\'gate-modal\')">Отмена</button><button class="pbtn" onclick="socScheduleGo()">Запланировать</button></div>';
+    socSchedNote(x)+'<div class="gate-acts"><button class="pbtn ghost" onclick="closeModal(\'gate-modal\')">Отмена</button><button class="pbtn" onclick="socScheduleGo()">Запланировать</button></div>';
   openModal('gate-modal');
 }
+function socSchedNote(x){var S=socSplit(x),T=x.type;return '<div class="cn-list" style="margin-top:12px">'+x.plats.map(function(pl){var ok=connAuto(x.p,pl),c=connOf(x.p,pl);return '<div class="cn-row"><span class="cn-ic '+(ok?'ok':c?'rm':'')+'">'+(ok?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>':'')+'</span><span class="cn-tx"><b>'+platName(T,pl)+'</b><span>'+(ok?'опубликуем сами в назначенное время':'в назначенное время пришлём напоминание с готовым текстом и картинкой')+'</span></span>'+(!c&&CONN_PL[pl]?'<button class="mini" type="button" onclick="connOpen(\''+esc(x.p)+'\',\''+pl+'\',\'socSchedule()\')">Подключить</button>':'')+'</div>';}).join('')+'</div>';}
 function socScheduleGo(){var x=socCur(),c=document.querySelector('#gt-body .chip.on'),v=c.dataset.st.split('|');x.date=v[0].toLowerCase();x.time=v[1];x.st='sched';closeModal('gate-modal');renderSoc(x.type);toast('Запланировано: '+v[0].toLowerCase()+' в '+v[1]);}
-function socPublishNow(){var x=socCur();x.st='pub';x.date='сегодня';renderSoc(x.type);toast('Соцсети не подключены — текст и картинка скопированы, вставьте в '+x.plats.map(function(p){return platName(x.type,p);}).join(' и '));}
+function socPublishNow(){var x=socCur();if(socSplit(x).man.length)socPubAsk();else socPublishGo();}
 function socRender(){
   var x=socCur();
   spendGate(41.03,'Рендер клипа',function(){
@@ -6073,6 +6098,91 @@ function socCreate(T){
       socReset(T);document.getElementById('se-'+T).scrollIntoView({behavior:'smooth',block:'start'});
     });
   });
+}
+
+/* ---------- соцсети клиента: подключаем страницы клиента, чтобы публиковать самим ---------- */
+// Подключение принадлежит клиенту (его сообщество, канал, профиль), а не кабинету. mode: auto — публикуем сами, remind — площадка не даёт публиковать сервисам, присылаем напоминание с готовым текстом.
+var CONN={'СберТаргет':{vk:{n:'СберТаргет · реклама под ключ',u:'vk.com/sbertarget',d:'12 сен',mode:'auto'}},'Атвинта':{tc:{n:'Атвинта',u:'tenchat.ru/atwinta',d:'3 окт',mode:'remind'}}};
+var CONN_PL={vk:['VK','сообщество','auto'],tg:['Telegram','канал','auto'],tc:['TenChat','профиль компании','remind'],ig:['Instagram','бизнес-аккаунт','auto'],li:['LinkedIn','страница компании','auto'],yt:['YouTube','канал','auto']};
+var CONN_ORDER=['vk','tg','tc','ig','li','yt'];
+function connSlug(p){var m={а:'a',б:'b',в:'v',г:'g',д:'d',е:'e',ё:'e',ж:'zh',з:'z',и:'i',й:'y',к:'k',л:'l',м:'m',н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',ф:'f',х:'h',ц:'ts',ч:'ch',ш:'sh',щ:'sch',ъ:'',ы:'y',ь:'',э:'e',ю:'yu',я:'ya'};return String(p).toLowerCase().split('').map(function(c){return m[c]!==undefined?m[c]:/[a-z0-9]/.test(c)?c:'';}).join('')||'client';}
+function connOf(p,pl){return (CONN[p]||{})[pl];}
+function connAuto(p,pl){var c=connOf(p,pl);return !!(c&&c.mode==='auto');}
+function connLine(p,pl){var c=connOf(p,pl);return c?(c.mode==='auto'?hesc(c.u)+' · публикуем сами':'напоминания с готовым текстом'):'не подключено';}
+function connSet(p,pl,o){(CONN[p]=CONN[p]||{})[pl]=o;}
+function connOff(p,pl){if(CONN[p])delete CONN[p][pl];toast(CONN_PL[pl][0]+' клиента '+qn(p)+' отключён — дальше пришлём напоминание с текстом');connRefresh();}
+function connRefresh(){var v=document.querySelector('.view.on');if(!v)return;
+  if(v.id==='v-project'){var pr=PROJECTS.filter(function(x){return x.s===CLIENT;})[0];if(pr)renderClientHome(pr);}
+  if(v.id==='v-strat'&&typeof renderStrat==='function')renderStrat();
+  if(v.id.indexOf('v-soc-')===0)renderSoc(v.id.replace('v-soc-',''));}
+// окно подключения: шаги своими экранами, чужие интерфейсы не рисуем
+function connOpen(p,pl,after){
+  var P=CONN_PL[pl],ru=PL_RU.indexOf(pl)>=0,t=document.getElementById('gt-title'),b=document.getElementById('gt-body');
+  t.textContent='Подключить '+P[0]+' клиента '+qn(p);
+  var ruNote=ru?'<div class="lb-note wait bnote" style="margin:0 0 12px">'+P[0]+' ограничен в РФ: подключение и публикация могут работать нестабильно.</div>':'';
+  var back=after?'<button class="pbtn ghost" type="button" onclick="'+after+'">Назад</button>':'<button class="pbtn ghost" type="button" onclick="closeModal(\'gate-modal\')">Отмена</button>';
+  if(P[2]==='remind'){
+    b.innerHTML='<p class="cn-p">'+P[0]+' пока не даёт сервисам публиковать за вас. Включим напоминания: в назначенное время пришлём готовый текст и картинку — вставите в один клик.</p>'+
+      '<div class="gate-acts">'+back+'<button class="pbtn" type="button" onclick="connDone(\''+esc(p)+'\',\''+pl+'\',{n:\''+esc(p)+'\',u:\'\',mode:\'remind\'},'+(after?'\''+esc(after)+'\'':'null')+')">Включить напоминания</button></div>';
+  }else if(pl==='tg'){
+    b.innerHTML=ruNote+'<ol class="cn-steps"><li>Откройте канал клиента в Telegram → «Администраторы» → «Добавить».</li><li>Найдите <b>@MakerPostBot</b> и дайте право <b>«Публиковать сообщения»</b>. Остальные права не нужны.</li><li>Вставьте ссылку на канал — проверим, что бот на месте.</li></ol>'+
+      '<label class="bfield"><span class="bl"><span>Ссылка на канал</span></span><input id="cn-tg" placeholder="t.me/имя_канала" autocomplete="off"></label>'+
+      '<div class="gate-acts">'+back+'<button class="pbtn" type="button" onclick="connTg(\''+esc(p)+'\','+(after?'\''+esc(after)+'\'':'null')+')">Проверить и подключить</button></div>';
+    setTimeout(function(){var i=document.getElementById('cn-tg');if(i)i.focus();},60);
+  }else{
+    b.innerHTML=ruNote+'<p class="cn-p">Откроется '+P[0]+'. Войдите как администратор '+(pl==='vk'?'сообщества':'страницы')+' клиента и разрешите Maker публиковать записи. Пароль от '+P[0]+' мы не видим и не храним.</p>'+
+      '<div class="gate-acts">'+back+'<button class="pbtn" type="button" onclick="connOauth(\''+esc(p)+'\',\''+pl+'\','+(after?'\''+esc(after)+'\'':'null')+')">Открыть '+P[0]+'</button></div>';
+  }
+  openModal('gate-modal');
+}
+function connOauth(p,pl,after){
+  var P=CONN_PL[pl],b=document.getElementById('gt-body');
+  b.innerHTML='<div class="cn-wait"><div class="au-spin" aria-hidden="true"></div><p role="status">Открываем '+P[0]+'… Войдите там и разрешите доступ — вернём сюда сами.<br><small>в прототипе имитировано</small></p></div>';
+  setTimeout(function(){
+    var slug=connSlug(p),opts=[[p,(pl==='vk'?'vk.com/':pl==='yt'?'youtube.com/@':pl==='ig'?'instagram.com/':'linkedin.com/company/')+slug],[p+' — новости',(pl==='vk'?'vk.com/':pl==='yt'?'youtube.com/@':pl==='ig'?'instagram.com/':'linkedin.com/company/')+slug+'_news']];
+    b.innerHTML='<p class="cn-p">'+P[0]+' разрешил доступ. Выберите '+P[1]+', куда публиковать для '+qn(p)+':</p><div class="cn-pick">'+opts.map(function(o,i){return '<label class="cn-opt"><input type="radio" name="cn-pick" value="'+i+'"'+(i?'':' checked')+'><span><b>'+hesc(o[0])+'</b><small>'+o[1]+'</small></span></label>';}).join('')+'</div>'+
+      '<div class="gate-acts"><button class="pbtn ghost" type="button" onclick="closeModal(\'gate-modal\')">Отмена</button><button class="pbtn" type="button" id="cn-go">Подключить</button></div>';
+    document.getElementById('cn-go').onclick=function(){var i=+document.querySelector('input[name=cn-pick]:checked').value;connDone(p,pl,{n:opts[i][0],u:opts[i][1],mode:'auto'},after);};
+  },1200);
+}
+function connTg(p,after){
+  var v=(document.getElementById('cn-tg').value||'').trim().replace(/^https?:\/\//,'');
+  if(!/^(t\.me\/|@)?[a-z0-9_]{4,}$/i.test(v)){var i=document.getElementById('cn-tg');i.focus();toast('Нужна ссылка вида t.me/имя_канала');return;}
+  var u='t.me/'+v.replace(/^t\.me\/|^@/,''),b=document.getElementById('gt-body');
+  b.innerHTML='<div class="cn-wait"><div class="au-spin" aria-hidden="true"></div><p role="status">Проверяем, что @MakerPostBot — администратор '+hesc(u)+'…<br><small>в прототипе имитировано</small></p></div>';
+  setTimeout(function(){connDone(p,'tg',{n:p,u:u,mode:'auto'},after);},1000);
+}
+function connDone(p,pl,o,after){
+  o.d='сегодня';connSet(p,pl,o);var P=CONN_PL[pl];
+  if(after){eval(after);}else closeModal('gate-modal');
+  toast(o.mode==='auto'?P[0]+' клиента '+qn(p)+' подключён — публикуем сами по расписанию':'Напоминания для '+P[0]+' включены');
+  connRefresh();
+}
+// панель на странице клиента
+function connPanel(p){
+  var s=STRATS[p],need=s?s.ch.map(function(c){return c[0];}).filter(function(c){return CONN_PL[c];}):[];
+  var main=CONN_ORDER.filter(function(k){return PL_RU.indexOf(k)<0;}),ru=CONN_ORDER.filter(function(k){return PL_RU.indexOf(k)>=0;});
+  var row=function(k){var c=connOf(p,k),P=CONN_PL[k];
+    return '<div class="cn-row"><span class="cn-ic '+(c?(c.mode==='auto'?'ok':'rm'):'')+'">'+(c?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>':'')+'</span><span class="cn-tx"><b>'+P[0]+(need.indexOf(k)>=0?' <em>в стратегии</em>':'')+'</b><span>'+connLine(p,k)+'</span></span>'+
+      (c?'<button class="mini" type="button" onclick="connOff(\''+esc(p)+'\',\''+k+'\')">Отключить</button>':'<button class="mini'+(need.indexOf(k)>=0?' pri':'')+'" type="button" onclick="connOpen(\''+esc(p)+'\',\''+k+'\')">Подключить</button>')+'</div>';};
+  return main.map(row).join('')+'<div class="cn-ru">огр. в РФ</div>'+ru.map(row).join('');
+}
+function connMissing(p){var s=STRATS[p];return s?s.ch.map(function(c){return c[0];}).filter(function(c){return CONN_PL[c]&&!connOf(p,c);}):[];}
+// публикация: подключённое — сами, остальное — скопировать / напоминание
+function socSplit(x){var a=[],m=[];x.plats.forEach(function(pl){(connAuto(x.p,pl)?a:m).push(pl);});return {auto:a,man:m};}
+function socPubAsk(){
+  var x=socCur(),S=socSplit(x),T=x.type;
+  document.getElementById('gt-title').textContent='Опубликовать сейчас';
+  document.getElementById('gt-body').innerHTML='<p class="cn-p">'+hesc(qn(x.t))+' · '+x.p+'</p><div class="cn-list">'+x.plats.map(function(pl){var ok=connAuto(x.p,pl),c=connOf(x.p,pl);
+      return '<div class="cn-row"><span class="cn-ic '+(ok?'ok':c?'rm':'')+'">'+(ok?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>':'')+'</span><span class="cn-tx"><b>'+platName(T,pl)+'</b><span>'+(ok?'опубликуем сами, сразу':c?'площадка не даёт публиковать сервисам — скопируем текст и картинку':'не подключён — скопируем текст и картинку, вставите сами')+'</span></span>'+
+        (!c&&CONN_PL[pl]?'<button class="mini pri" type="button" onclick="connOpen(\''+esc(x.p)+'\',\''+pl+'\',\'socPubAsk()\')">Подключить</button>':'')+'</div>';}).join('')+'</div>'+
+    '<div class="gate-acts"><button class="pbtn ghost" type="button" onclick="closeModal(\'gate-modal\')">Отмена</button><button class="pbtn" type="button" onclick="closeModal(\'gate-modal\');socPublishGo()">Опубликовать</button></div>';
+  openModal('gate-modal');
+}
+function socPublishGo(){
+  var x=socCur(),S=socSplit(x),T=x.type,nm=function(a){return a.map(function(pl){return platName(T,pl);}).join(' и ');};
+  x.st='pub';x.date='сегодня';renderSoc(T);
+  toast((S.auto.length?'Опубликовали в '+nm(S.auto):'')+(S.auto.length&&S.man.length?'. ':'')+(S.man.length?'Для '+nm(S.man)+' текст и картинка скопированы — вставьте сами':''));
 }
 
 /* ---------- темы из контент-плана в «Публикациях»: заготовки, которые ждут сборки ---------- */
@@ -6208,7 +6318,7 @@ function renderStrat(){
       '<button class="chat-link" type="button" onclick="go(\'groups\')">Аудитории →</button></div>'+
     '<div class="panel"><h3>Позиционирование и главные мысли</h3><label class="bfield"><span class="bl"><span>Одной фразой</span></span>'+inp('pos',s.pos,'Чем отличаетесь')+'</label>'+
       '<ol class="str-msgs">'+s.msgs.map(function(m){return '<li>'+phT(m)+'</li>';}).join('')+'</ol></div>'+
-    '<div class="panel"><h3>Площадки и частота</h3>'+s.ch.map(function(c){return '<div class="str-ch"><b>'+CH_NAME[c[0]]+'</b><span>'+hesc(c[1])+'</span><em>'+c[2]+'</em></div>';}).join('')+'</div>'+
+    '<div class="panel"><h3>Площадки и частота</h3>'+s.ch.map(function(c){var k=c[0],cn=CONN_PL[k]?connOf(strProj(),k):null;return '<div class="str-ch"><b>'+CH_NAME[k]+'</b><span>'+hesc(c[1])+'</span><em>'+c[2]+'</em>'+(CONN_PL[k]?(cn?'<span class="str-cn ok">'+(cn.mode==='auto'?'подключён':'напоминания')+'</span>':'<button class="mini" type="button" onclick="connOpen(\''+esc(strProj())+'\',\''+k+'\')">Подключить</button>'):'<span></span>')+'</div>';}).join('')+'</div>'+
     '<div class="panel str-wide"><h3>Рубрики</h3><p class="psub">Доля от всех публикаций — по ней раскладываем темы в контент-плане'+(tot!==100?' · <b class="str-bad">сейчас '+tot+'%, нужно 100%</b>':'')+'</p>'+
       s.rub.map(function(r,i){return '<div class="str-rub"><div class="str-rub-hd"><b>'+hesc(r[0])+'</b><span>'+hesc(r[2])+'</span></div><div class="str-bar"><i style="width:'+r[1]+'%"></i></div><div class="str-pct"><button class="mini" type="button" aria-label="Меньше" onclick="strRub('+i+',-5)">−</button><span>'+r[1]+'%</span><button class="mini" type="button" aria-label="Больше" onclick="strRub('+i+',5)">+</button></div></div>';}).join('')+'</div>'+
     '<div class="panel str-wide"><h3>Голос</h3><div class="kv"><span class="k">Тон</span><span class="v">'+toneName(d.tone)+'</span></div>'+
@@ -6408,6 +6518,7 @@ function stateApply(){
   if(STATE==='broke'){var t=JOURNAL.filter(function(x){return x.sec==='topup';}).pop();if(t)t.v=Math.round((t.v-balance())*100)/100;}
   if(STATE!=='new'&&STATE!=='first')return;
   [PROJECTS,PAGES,SITES,SERIES,SHOTS,BSETS,VIDEOS,DECKS,CHATS,CAMPS,DAYS,GROUPS,SOC,PLAN,SOC_LAST,FACTS].forEach(function(a){a.length=0;});
+  if(typeof CONN!=='undefined')Object.keys(CONN).forEach(function(k){delete CONN[k];});
   Object.keys(STRATS).forEach(function(k){delete STRATS[k];});
   JOURNAL.length=0;JOURNAL.push({d:dkey(TODAY),tm:'09:00',p:'—',sec:'topup',act:'Приветственный бонус',v:BONUS});
   bnActive=null;chCur=null;Object.keys(SOC_ACT).forEach(function(k){SOC_ACT[k]=null;});
@@ -6945,6 +7056,7 @@ function renderClientHome(pr){
   if(drT)fixes.push(row(plural(drT,'тема','темы','тем')+' в черновике','отправьте клиенту одной ссылкой',"go('plan')"));
   if(okS)fixes.push(row(plural(okS,'публикация согласована','публикации согласованы','публикаций согласовано'),'осталось запланировать',"go('soc-post')"));
   if(drS)fixes.push(row(plural(drS,'черновик','черновика','черновиков')+' публикаций','доделать и отправить на согласование',"go('soc-post')"));
+  var cmis=connMissing(p);if(cmis.length)fixes.push(row('Подключить соцсети клиента: '+cmis.map(function(k){return CONN_PL[k][0];}).join(', '),'тогда будем публиковать по расписанию сами',"connOpen('"+esc(p)+"','"+cmis[0]+"')"));
   var gp=faGaps(p).length;if(gp)fixes.unshift(row('Ответить на '+plural(gp,'вопрос','вопроса','вопросов')+' о клиенте','ответ подставится во все материалы',"go('facts')",'<span class="st check">'+gp+'</span>'));
   var cnt={};mine.forEach(function(x){cnt[x.st]=(cnt[x.st]||0)+1;});
   var pan=function(h,sub,body,more){return '<div class="panel ch-p"><div class="ch-hd"><h3>'+h+'</h3>'+(more||'')+'</div>'+(sub?'<p class="psub">'+sub+'</p>':'')+body+'</div>';};
@@ -6961,6 +7073,7 @@ function renderClientHome(pr){
     pan('Стиль и голос',d?d.src:'','<div class="swrow ch-sw">'+(d?['primary','deep','accent','surface','ink'].map(function(k){return '<div class="sw"><i style="background:'+d.col[k]+'"></i></div>';}).join(''):'')+'</div>'+
       (d?'<div class="kv"><span class="k">Шрифты</span><span class="v">'+hesc(d.font.h)+(d.font.t!==d.font.h?' · '+hesc(d.font.t):'')+'</span></div><div class="kv"><span class="k">Голос</span><span class="v">'+toneName(d.tone)+'</span></div>':''),
       link('Изменить',"go('style');var s=document.getElementById('st-proj');if(s){s.value='"+esc(p)+"';s.dispatchEvent(new Event('change'));}"))+
+    pan('Соцсети клиента','Подключите страницы клиента — Maker будет публиковать по расписанию сам. Без подключения пришлём напоминание с готовым текстом.',connPanel(p))+
     pan('Реклама и аудитории','',
       '<div class="kv"><span class="k">Баннеры</span><span class="v">'+(bs.length?plural(bs.length,'комплект','комплекта','комплектов')+(bs.filter(function(b){return b.st==='pub';}).length?' · '+bs.filter(function(b){return b.st==='pub';}).length+' работают':''):'<span class="dash">—</span>')+'</span></div>'+
       '<div class="kv"><span class="k">Кампании</span><span class="v">'+(cm.length?plural(cm.length,'кампания','кампании','кампаний'):'<span class="dash">—</span>')+'</span></div>'+
