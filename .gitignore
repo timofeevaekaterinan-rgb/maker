@@ -5,3 +5,4 @@ transcript*.txt
 .claude/
 !promo/maker-promo.mp4
 promo/*.wav
+*.mov
