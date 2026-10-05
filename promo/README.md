@@ -13,3 +13,11 @@ python3 music.py
 node render.js frames frames 30
 ffmpeg -framerate 30 -i frames/f%04d.jpg -i music.wav -c:v libx264 -preset slow -crf 19 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart maker-promo.mp4
 ```
+
+## Reels для Instagram
+
+`maker-reels.mp4` — 15 с, 1080×1920 (9:16), обложка `reels-cover.jpg`. На лендинг не поставлен. Референс — `ScreenRecording_10-02-2026 20-21-45_1.MP4` («Think FAST / Can't find your iPhone? (it happens)»).
+
+- `reels.html` — сцена; текст держится в безопасной зоне Reels (300–1500 px по высоте).
+- `music_reels.py` — саундтрек (инструменты общие с `music.py`) → `music_reels.wav`.
+- Пересборка: `python3 music_reels.py`, `node render.js frames rframes 30 reels.html 1080 1920 15`, затем ffmpeg как выше с `music_reels.wav`.
