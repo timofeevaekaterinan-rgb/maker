@@ -2487,7 +2487,7 @@
         <div class="grid2">
           <div class="panel" id="prj-design">
             <h3>Стиль</h3>
-            <p class="psub">Снят с сайта автоматически. Поправите здесь — перекрасятся все страницы проекта.</p>
+            <p class="psub">Снят с сайта автоматически. Поправите здесь — перекрасятся все страницы клиента.</p>
             <div class="swrow" style="margin-bottom:18px">
               <div class="sw"><i style="background:#21A038"></i><span>#21A038</span></div>
               <div class="sw"><i style="background:#0B1F17"></i><span>#0B1F17</span></div>
@@ -2617,13 +2617,13 @@
           </div>
           <p class="empty-hint">Варианты под аудитории — это одна страница с одним адресом: группа отличается меткой в адресе, а не отдельной копией. Разверните строку, чтобы увидеть адреса групп.</p>
           <table class="tbl pgtbl">
-            <thead><tr><th>Страница</th><th>Проект</th><th>Статус</th><th>Адрес</th><th>Обновлена</th><th>Стоимость</th></tr></thead>
+            <thead><tr><th>Страница</th><th>Клиент</th><th>Статус</th><th>Адрес</th><th>Обновлена</th><th>Стоимость</th></tr></thead>
             <tbody id="pg-body"></tbody>
           </table>
         </div>
 
         <div id="pt2-sites" style="display:none">
-          <p class="empty-hint">Сайт — это домен проекта и всё, что к нему подключено: защищённое соединение, Метрика, коллтрекинг. Страницы публикуются на этот домен.</p>
+          <p class="empty-hint">Сайт — это домен клиента и всё, что к нему подключено: защищённое соединение, Метрика, коллтрекинг. Страницы публикуются на этот домен.</p>
           <div class="site-list" id="site-list"></div>
         </div>
 
@@ -3015,7 +3015,7 @@
       <!-- ============ TEMPLATES ============ -->
       <section id="v-templates" class="view">
         <div class="phead">
-          <div><h1>Шаблоны</h1><p>Структура — из шаблона, оформление — из стиля выбранного проекта. Свои удачные работы сохраняйте сюда и переносите на других клиентов.</p></div>
+          <div><h1>Шаблоны</h1><p class="ph-why">Готовые заготовки для постов, баннеров, страниц и презентаций. Берёте шаблон — он сразу в стиле выбранного клиента. Свои удачные работы сохраняйте сюда, чтобы повторить для других клиентов.</p></div>
           <div class="sp"></div>
         </div>
         <div class="toolbar">
@@ -3039,7 +3039,7 @@
       <!-- ============ AUDIENCE GROUPS ============ -->
       <section id="v-groups" class="view">
         <div class="phead">
-          <div><h1>Аудитории</h1><p>Один список на проект — для вариантов страниц и кампаний. Рабочие карточки, а не «персоны»: предлагает нейросеть, правите вы.</p></div>
+          <div><h1>Аудитории</h1><p class="ph-why">Кому клиент адресует рекламу и публикации: кто эти люди, что им важно, что их останавливает. Отсюда берутся стратегия, тексты и настройки рекламы. Предлагает Maker — правите вы.</p></div>
           <div class="sp"></div>
           <button class="pbtn ghost" onclick="grSuggestSite()">Предложить по сайту</button>
           <button class="pbtn ghost" onclick="grFindCRM()">Найти в заявках из CRM</button>
@@ -3067,7 +3067,7 @@
 
       <!-- ============ BRAND: facts ============ -->
       <section id="v-facts" class="view">
-        <div class="phead"><div><h1>База фактов</h1><p>Всё, что знаем о клиенте наверняка: цены, адреса, цифры, акции и запреты. Отсюда нейросеть берёт факты — и не выдумывает своих.</p></div></div>
+        <div class="phead"><div><h1>База фактов</h1><p class="ph-why">Всё, что знаем о клиенте наверняка: цены, адреса, цифры, акции и запреты. Отсюда Maker берёт факты для текстов и не выдумывает своих. Сверху — чего ещё не хватает: ответьте один раз, и ответ подставится во все материалы.</p></div></div>
         <div class="toolbar">
           <select class="sortsel fsel" id="fa-proj" data-projs="pick" onchange="renderFacts()"></select>
           <label class="tsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="fa-q" type="search" placeholder="Найти факт" oninput="renderFacts()"></label>
@@ -3139,10 +3139,10 @@
 
       <!-- ============ CONTENT: plan ============ -->
       <section id="v-plan" class="view">
-        <div class="phead"><div><h1>Контент-план</h1><p>Темы на месяц из стратегии: дата, рубрика, главная мысль, факты и фото. Клиент согласует темы — из согласованной одной кнопкой собираем пост, карусель, сторис или клип.</p></div><div class="sp"></div>
-          <button class="pbtn ghost" onclick="dlPlanDocx()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Word</button>
-          <button class="pbtn ghost" onclick="plExport()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Скачать для Excel</button>
-          <button class="pbtn ghost" onclick="plSendAll()">Отправить черновики клиенту</button></div>
+        <div class="phead"><div><h1>Контент-план</h1><p class="ph-why">О чём и когда выходят публикации в этом месяце. Темы собираются из стратегии, клиент согласует их одной ссылкой — и они сами появляются в «Публикациях» заготовками.</p></div><div class="sp"></div>
+          <button class="pbtn ghost" onclick="dlPlanDocx()" title="Документ для клиента"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Word</button>
+          <button class="pbtn ghost" onclick="plExport()" title="Таблица тем для Excel и Google Таблиц"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Excel</button>
+          <button class="pbtn" onclick="plSendAll()">Отправить черновики клиенту</button></div>
         <div id="pl-flow"></div>
         <div class="itabs"><button class="itab on" type="button" onclick="plTab(this,'list')">Список<span class="cnt" id="pl-cnt-list"></span></button><button class="itab" type="button" onclick="plTab(this,'cal')">Календарь</button></div>
         <div class="toolbar">
@@ -3404,7 +3404,7 @@
       <!-- ============ CHATS ============ -->
       <section id="v-chats" class="view">
         <div class="phead">
-          <div><h1>Чаты</h1></div>
+          <div><h1>Чаты</h1><p class="ph-why">Все разговоры с Maker: задачи, вопросы и что из них получилось. Новый разговор начинается на Главной.</p></div>
           <div class="sp"></div>
           <button class="showbtn" onclick="toast('Режим показа — демонстрация клиенту (имитировано)')"><svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg> Показ</button>
         </div>
@@ -3697,7 +3697,7 @@ function imPrice(){
 }
 function cloneProject(name){
   closeModal('newproj-modal');
-  toast('Стиль '+qn(name)+' клонирован — открываем новый проект (имитировано)');
+  toast('Стиль '+qn(name)+' клонирован — открываем копию (имитировано)');
 }
 
 /* ---------- design code: one model per project (colors, fonts, form, tone, photo manner) ---------- */
@@ -3868,8 +3868,8 @@ function pgFilter(st){
 renderPages();
 
 var SITES=[
-  {p:'СберТаргет',dom:'sbertarget.ru',ck:{'Домен':'ok','HTTPS':'ok','Метрика':'ok','Коллтрекинг':'ok'},btn:['Открыть проект','']},
-  {p:'Атвинта',dom:'atwinta.ru',ck:{'Домен':'ok','HTTPS':'ok','Метрика':'ok','Коллтрекинг':'off'},btn:['Открыть проект','']},
+  {p:'СберТаргет',dom:'sbertarget.ru',ck:{'Домен':'ok','HTTPS':'ok','Метрика':'ok','Коллтрекинг':'ok'},btn:['Открыть клиента','']},
+  {p:'Атвинта',dom:'atwinta.ru',ck:{'Домен':'ok','HTTPS':'ok','Метрика':'ok','Коллтрекинг':'off'},btn:['Открыть клиента','']},
   {p:'Вита',dom:'vita-clinic.ru · ждём DNS, до 24 ч',ck:{'Домен':'wait','HTTPS':'wait','Метрика':'off','Коллтрекинг':'off'},btn:['Проверить DNS','Проверяем записи DNS у vita-clinic.ru… пока не видны (имитировано)']},
   {p:'Таргет-сайт',dom:'target-7f2.maker.site · временный адрес',dim:true,ck:{'Свой домен':'off','HTTPS':'ok','Метрика':'off','Коллтрекинг':'off'},btn:['Подключить домен','Подключение домена — заглушка прототипа'],pri:true}
 ];
@@ -3940,7 +3940,7 @@ function resetShots(){
 }
 function renderPrjShots(short){
   var list=SHOTS.filter(function(sh){return serOf(sh).p===short;});
-  document.getElementById('prj-shots').innerHTML=list.length?list.map(shotHTML).join(''):'<p class="empty-hint" style="grid-column:1/-1">В этом проекте кадров пока нет — снимите серию на странице «Изображения».</p>';
+  document.getElementById('prj-shots').innerHTML=list.length?list.map(shotHTML).join(''):'<p class="empty-hint" style="grid-column:1/-1">У этого клиента кадров пока нет — снимите серию на странице «Изображения».</p>';
 }
 function rerenderShots(){
   renderShots();
@@ -4017,7 +4017,7 @@ function lbRender(){
   document.getElementById('lb-side').innerHTML=
     '<div><span class="st '+sh.st+'">'+SH_ST[sh.st]+'</span></div>'+note+
     (sh.pr?'<div class="lb-prompt"><span class="lb-lbl">Сюжет</span>'+sh.pr+'</div>':'')+
-    '<div>'+kv('Проект',x.p)+kv('Серия',x.t)+kv(own?'Размер':'Формат',sh.f)+kv('Стоимость',sh.cost)+kv('Дата',x.d)+'</div>'+
+    '<div>'+kv('Клиент',x.p)+kv('Серия',x.t)+kv(own?'Размер':'Формат',sh.f)+kv('Стоимость',sh.cost)+kv('Дата',x.d)+'</div>'+
     '<div class="lb-acts">'+acts+'</div>'+use;
 }
 /* banners */
@@ -4300,7 +4300,7 @@ function openFramePicker(){
   var list=SHOTS.filter(function(sh){return serOf(sh).p===pj&&['pub','redo','own'].indexOf(sh.st)>=0;});
   document.getElementById('fp-body').innerHTML='<p class="fp-hint">Принятые кадры клиента '+qn(pj)+'. Ролик начнётся с выбранного кадра и сохранит манеру бренда.</p>'+
     (list.length?'<div class="fp-grid">'+list.map(function(sh){return '<button class="fp-it'+(vfShot===sh.id?' on':'')+'" type="button" onclick="vfPick('+sh.id+')"><span class="fp-ph" style="background-image:url(\''+sh.img+'\')"></span><span class="fp-t">'+hesc(sh.t)+'</span></button>';}).join('')+'</div>'
-      :'<div class="img-empty" style="margin-bottom:16px">В этом проекте ещё нет принятых кадров. <a onclick="closeModal(\'frame-modal\');go(\'images\')">Снять серию</a></div>')+
+      :'<div class="img-empty" style="margin-bottom:16px">У этого клиента ещё нет принятых кадров. <a onclick="closeModal(\'frame-modal\');go(\'images\')">Снять серию</a></div>')+
     '<button class="npopt fp-none'+(vfShot===0?' on':'')+'" type="button" onclick="vfPick(0)"><span class="npopt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg></span><span class="npopt-tx"><b>Без опоры</b><span>Модель придумает первый кадр сама — ролик может уйти от бренда.</span></span></button>';
   openModal('frame-modal');
 }
@@ -4610,7 +4610,7 @@ function renderChatList(){
   var q=document.getElementById('cl-q').value.trim().toLowerCase(),pj=document.getElementById('cl-proj').value;
   var list=CHATS.filter(function(c){return (!pj||c.p===pj)&&(!q||c.t.toLowerCase().indexOf(q)>=0);}).sort(function(a,b){return b.ts-a.ts;});
   document.getElementById('cl-items').innerHTML=list.map(function(c){
-    return '<button class="cl-it'+(c.id===chCur?' on':'')+'" type="button" onclick="chatOpen(\''+c.id+'\')"><span class="clt">'+hesc(c.t)+'</span><span class="cls">'+(c.p||'Без проекта')+' · '+c.d+' · '+chCost(c.cost)+'</span></button>';
+    return '<button class="cl-it'+(c.id===chCur?' on':'')+'" type="button" onclick="chatOpen(\''+c.id+'\')"><span class="clt">'+hesc(c.t)+'</span><span class="cls">'+(c.p||'Без клиента')+' · '+c.d+' · '+chCost(c.cost)+'</span></button>';
   }).join('')||'<div class="cl-empty">'+(q||pj?'Ничего не нашли':'Разговоров пока нет')+'</div>';
 }
 var ACT={post:['Собрать пост в «Постах»','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg>'],banners:['Сделать баннеры','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h6M7 14h4"/></svg>'],
@@ -4626,7 +4626,7 @@ function msgHTML(c,m,i){
   }
   if(m.typing)return '<div class="chat-msg ai typing">печатает…</div>';
   var ctx=m.ctxSnap||c.ctx;
-  var basis=m.basis?'<p class="ai-basis">'+BASIS_IC+(!c.p?'Клиент не выбран — отвечаю в общем, без его данных':ctx.length?'Опираюсь на: '+ctx.join(', ').toLowerCase()+' · '+qn(c.p)+'':'Контекст проекта выключен — отвечаю в общем')+'</p>':'';
+  var basis=m.basis?'<p class="ai-basis">'+BASIS_IC+(!c.p?'Клиент не выбран — отвечаю в общем, без его данных':ctx.length?'Опираюсь на: '+ctx.join(', ').toLowerCase()+' · '+qn(c.p)+'':'Контекст клиента выключен — отвечаю в общем')+'</p>':'';
   var card='';
   if(m.shot){var sh=shotById(m.shot);if(sh)card='<div class="chat-card"><span class="cc-ph" style="background-image:url(\''+sh.img+'\')"></span><span class="cc-tx"><b>'+hesc(sh.t)+'</b><span class="st '+sh.st+'">'+SH_ST[sh.st]+'</span><button class="chat-link" type="button" onclick="go(\'images\');openShot('+sh.id+')">Открыть в Изображениях →</button></span></div>';}
   if(m.pick)return '<div class="chat-msg ai">'+m.h+(!c.p&&!c.general?'<div class="chat-acts">'+PROJECTS.map(function(p){return '<button class="mini" type="button" onclick="chatPick(\''+p.s+'\')">'+p.s+'</button>';}).join('')+'<button class="mini" type="button" onclick="openNewClient(null,chatPick)">+ Новый клиент</button><button class="mini" type="button" onclick="chatPick(\'\')">Ответь в общем</button></div>':'')+'</div>';
@@ -4640,11 +4640,11 @@ function renderChat(){
   document.getElementById('ch-title').textContent=c.t;
   document.getElementById('ch-meta').textContent=plural(c.msgs.filter(function(m){return m.r==='me';}).length,'вопрос','вопроса','вопросов')+' · '+chCost(c.cost)+' · публикации — только в разделах';
   var cps=document.getElementById('chat-proj');cps.closest('.cp-target').style.display=c.p?'':'none';if(c.p)cps.value=c.p;
-  if(!c.p)document.getElementById('chat-ctx').innerHTML='<span class="ctx-l">Клиент не выбран</span><span class="ctx-h">Назовите клиента или выберите проект — тогда отвечу с опорой на его стиль, голос и данные.</span>';
+  if(!c.p)document.getElementById('chat-ctx').innerHTML='<span class="ctx-l">Клиент не выбран</span><span class="ctx-h">Назовите клиента или выберите его — тогда отвечу с опорой на его стиль, голос и данные.</span>';
   else document.getElementById('chat-ctx').innerHTML='<span class="ctx-l">Знает о '+qn(c.p)+':</span>'+CTX_ALL.map(function(x){var on=c.ctx.indexOf(x)>=0;return '<button class="fmt-tg'+(on?' on':'')+'" type="button" aria-pressed="'+on+'" onclick="chatCtx(\''+x+'\')">'+x+'</button>';}).join('')+
     '<span class="ctx-h">Отвечает с опорой только на включённое. Выключите всё — получите ответ «в общем», без ваших данных.</span>';
   document.getElementById('chat-thread').innerHTML=c.msgs.length?c.msgs.map(function(m,i){return msgHTML(c,m,i);}).join('')
-    :'<div class="chat-msg sys">Новый разговор в проекте '+qn(c.p)+'. Спросите про рекламу, тексты и продвижение — или опишите кадр и нажмите «Снять кадр». Цифры, которых вы не называли, я не выдумываю: ставлю плашку вроде «[ваша скидка]».</div>';
+    :'<div class="chat-msg sys">Новый разговор по клиенту '+qn(c.p)+'. Спросите про рекламу, тексты и продвижение — или опишите кадр и нажмите «Снять кадр». Цифры, которых вы не называли, я не выдумываю: ставлю плашку вроде «[ваша скидка]».</div>';
 }
 function chatOpen(id){chCur=id;document.getElementById('chat-wrap').classList.add('open');renderChatList();renderChat();}
 function chatBack(){document.getElementById('chat-wrap').classList.remove('open');window.scrollTo({top:0,behavior:'instant'});}
@@ -4655,14 +4655,14 @@ function chatNew(){
 }
 function chatPick(p){
   var c=chById(chCur);if(!c)return;
-  if(p){c.p=p;c.general=false;c.msgs.push({r:'sys',x:'Проект чата — '+qn(p)+'. Отвечаю с опорой на его стиль, голос и данные.'});}else c.general=true;
+  if(p){c.p=p;c.general=false;c.msgs.push({r:'sys',x:'Клиент чата — '+qn(p)+'. Отвечаю с опорой на его стиль, голос и данные.'});}else c.general=true;
   var text=c.pend;c.pend='';renderChatList();renderChat();if(!text)return;
   spendGate(.82,'Ответ в чате',function(){
     c.msgs.push({r:'ai',typing:true});renderChat();
-    setTimeout(function(){c.msgs.pop();c.msgs.push(chatReply(c,text,false,[]));charge(c.p||'Без проекта','Чаты','Ответ в чате',.82);renderChatList();if(chCur===c.id){renderChat();document.getElementById('chat-thread').lastChild.scrollIntoView({behavior:'smooth',block:'nearest'});}},900);
+    setTimeout(function(){c.msgs.pop();c.msgs.push(chatReply(c,text,false,[]));charge(c.p||'Без клиента','Чаты','Ответ в чате',.82);renderChatList();if(chCur===c.id){renderChat();document.getElementById('chat-thread').lastChild.scrollIntoView({behavior:'smooth',block:'nearest'});}},900);
   });
 }
-function chatSetProj(v){var c=chById(chCur);if(!c||c.p===v)return;c.p=v;c.msgs.push({r:'sys',x:'Проект чата — «'+v+'». Дальше отвечаю с опорой на его данные.'});renderChatList();renderChat();}
+function chatSetProj(v){var c=chById(chCur);if(!c||c.p===v)return;c.p=v;c.msgs.push({r:'sys',x:'Клиент чата — «'+v+'». Дальше отвечаю с опорой на его данные.'});renderChatList();renderChat();}
 function chatCtx(x){var c=chById(chCur),k=c.ctx.indexOf(x);if(k>=0)c.ctx.splice(k,1);else c.ctx.push(x);renderChat();}
 function phFill(btn){
   var inp=document.createElement('input');inp.className='phx-in';inp.placeholder=btn.textContent.replace(/[\[\]]/g,'');var w0=btn.getBoundingClientRect().width;inp.style.width=w0+'px';inp.addEventListener('input',function(){inp.style.width=Math.max(w0,(inp.value.length+2)*0.6*parseFloat(getComputedStyle(inp).fontSize))+'px';});
@@ -4914,7 +4914,7 @@ function gateGo(){closeModal('gate-modal');var f=GATE_FN;GATE_FN=null;if(f)f();}
     if(c&&!c.p&&isShot){toast('Сначала выберите клиента — кадр снимаем в его манере');return;}
     if(c&&!c.p&&!c.general)return cS(isShot);
     var cost=isShot?4.64:.82;
-    spendGate(cost,isShot?'Кадр из чата':'Ответ в чате',function(){cS(isShot);charge(c?c.p||'Без проекта':'СберТаргет',isShot?'Изображения':'Чаты',isShot?'Кадр из чата':'Ответ в чате',cost);});
+    spendGate(cost,isShot?'Кадр из чата':'Ответ в чате',function(){cS(isShot);charge(c?c.p||'Без клиента':'СберТаргет',isShot?'Изображения':'Чаты',isShot?'Кадр из чата':'Ответ в чате',cost);});
   };
 })();
 
@@ -5010,7 +5010,7 @@ function cmCreate(){
   var t=document.getElementById('cm-text').value.trim(),pj=document.getElementById('cm-target').value,useMix=document.getElementById('cm-mix').getAttribute('aria-pressed')==='true';
   if(!t){var ta=document.getElementById('cm-text');ta.focus();toast('Напишите цель одной фразой — например, «40 продаж до 30 ноября»');return;}
   spendGate(1.73,'Разбор кампании',function(){
-    openBuildModal('Разбираем задачу',['Выделяем цель и срок','Подбираем аудитории','Ищем готовые материалы проекта','Считаем бюджет'],'Разбор готов — проверьте и запускайте.',function(){
+    openBuildModal('Разбираем задачу',['Выделяем цель и срок','Подбираем аудитории','Ищем готовые материалы клиента','Считаем бюджет'],'Разбор готов — проверьте и запускайте.',function(){
       var a=parseAsk(t),cpl=(function(){var s=agg(addDays(YDAY,-29),YDAY,pj);return s.ld?s.sp/s.ld:350;})(),mul=a.type==='продаж'?5:1;
       var mix={};
       if(useMix){
@@ -5065,7 +5065,7 @@ function renderCamp(){
     body='<div class="lb-note '+(blocked?'bad':'wait')+' bnote">'+(blocked?'Баннеры «'+hesc(bnById(c.mix.bn).n)+'» ещё не прошли модерацию — запустить кампанию можно после одобрения.':'Разобрали задачу — проверьте и запускайте. Кабинеты не подключены: после запуска скопируйте ссылки с метками и креативы в '+c.ch+', а расход вносите каждый день.')+'</div>'+
       '<div class="cp-grid"><div class="panel"><h3>Разбор задачи</h3><p class="psub">«'+hesc(c.ask||c.n)+'»</p><div class="plan-kv">'+
       [['Цель',c.goal.v+' '+c.goal.t],['Срок','до '+dfmt(c.to)+' · '+plural(Math.max(1,Math.round((dparse(c.to)-TODAY)/864e5)),'день','дня','дней')],['Аудитории',c.groups.join(', ')],['Канал',c.ch],['Бюджет',rub(c.budget)+' <span style="color:var(--ink-3);font-weight:400">· '+(c.mul>1?c.goal.v+' продаж × ~'+c.mul+' заявок на продажу × ':c.goal.v+' × ')+'цена заявки ~'+rub(c.cpl||c.budget/c.goal.v)+'</span>']].map(function(r){return '<div class="kv"><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>';}).join('')+
-      '</div></div><div class="panel"><h3>Состав</h3><p class="psub">Нашли в готовых материалах проекта. Чего нет — соберём.</p>'+mixHTML(c)+'</div></div>';
+      '</div></div><div class="panel"><h3>Состав</h3><p class="psub">Нашли в готовых материалах клиента. Чего нет — соберём.</p>'+mixHTML(c)+'</div></div>';
   }else{
     var a=campTotals(c),gv=goalVal(c,a),s=dparse(c.from),e=dparse(c.to),el=Math.min(1,Math.max(0,(YDAY-s)/(e-s))),need=c.goal.v*el,fc=campForecast(c);
     var daysLeft=Math.max(0,Math.round((e-YDAY)/864e5)),pace=daysLeft?(c.goal.v-gv)/daysLeft:0,cur=(function(){var l=agg(addDays(YDAY,-13),YDAY,null,c.id);return l.n?goalVal(c,l)/14:0;})();
@@ -5176,7 +5176,7 @@ function resultInsights(pj,R){
   CAMPS.forEach(function(c){
     if(c.st!=='pause'||(pj&&c.p!==pj))return;
     var a=campTotals(c),cpl=a.ld?a.sp/a.ld:0,others=agg(R.f,R.t,c.p),ocpl=others.ld?others.sp/others.ld:0;
-    if(cpl&&ocpl&&cpl<ocpl)out.push({key:'resume-'+c.id,t:''+qn(c.n)+' на паузе с '+dfmt(c.pausedAt)+', а заявка в ней была самой дешёвой',s:rub(cpl)+' против '+rub(ocpl)+' в среднем по проекту',a:'Возобновить',fn:"cmCur='"+c.id+"';cmPause();INS_DONE['resume-"+c.id+"']=1;renderResult()"});
+    if(cpl&&ocpl&&cpl<ocpl)out.push({key:'resume-'+c.id,t:''+qn(c.n)+' на паузе с '+dfmt(c.pausedAt)+', а заявка в ней была самой дешёвой',s:rub(cpl)+' против '+rub(ocpl)+' в среднем по клиенту',a:'Возобновить',fn:"cmCur='"+c.id+"';cmPause();INS_DONE['resume-"+c.id+"']=1;renderResult()"});
   });
   if(CRM.until<dkey(addDays(YDAY,-7)))out.push({key:'crm',w:1,t:'Выручка посчитана по '+dfmt(CRM.until)+' — дальше продаж мы не видим',s:'Загрузите свежую выгрузку оплат из CRM — сверим с заявками',a:'Сверить с CRM',fn:'crmOpen()'});
   return out.concat(campSignals(pj));
@@ -5392,7 +5392,7 @@ renderCamps();renderHomeSignals();
 function toneName(t){return (t.formal<34?'Дружеский':t.formal<67?'Нейтральный':'Официальный')+', '+(t.emo<34?'сдержанный':t.emo<67?'живой':'эмоциональный');}
 function renderPrjDesign(p){
   var d=DESIGN[p],c=d.col,el=document.getElementById('prj-design');if(!el||!d)return;
-  el.innerHTML='<h3>Стиль</h3><p class="psub">'+hesc(d.src)+' · версия '+d.v+'. Поправите — перекрасятся страницы, баннеры и презентации проекта.</p>'+
+  el.innerHTML='<h3>Стиль</h3><p class="psub">'+hesc(d.src)+' · версия '+d.v+'. Поправите — перекрасятся страницы, баннеры и презентации клиента.</p>'+
     '<div class="swrow" style="margin-bottom:18px">'+['primary','deep','accent','surface','ink'].map(function(k){return '<div class="sw"><i style="background:'+c[k]+'"></i><span>'+c[k]+'</span></div>';}).join('')+'</div>'+
     '<div class="kv"><span class="k">Шрифт заголовков</span><span class="v">'+d.font.h+'</span></div><div class="kv"><span class="k">Шрифт текста</span><span class="v">'+d.font.t+'</span></div>'+
     '<div class="kv"><span class="k">Скругление</span><span class="v">'+d.radius+' px</span></div><div class="kv"><span class="k">Тон</span><span class="v">'+toneName(d.tone)+'</span></div>'+
@@ -5516,7 +5516,7 @@ function stSaveAsk(){
   var imp=stImpact();
   document.getElementById('gt-title').textContent='Что изменится';
   document.getElementById('gt-body').innerHTML='<p style="color:var(--ink-2);font-size:14px;margin:0 0 8px">'+hesc(stDiff(DESIGN[STP],DRAFT))+'. Перекрасится всё, что собрано в этом стиле:</p>'+
-    (imp.it.length?'<ul class="imp-list">'+imp.it.map(function(x){return '<li><b>'+x[0]+'</b><span>'+x[1]+(x[2]?'<small>'+x[2]+'</small>':'')+'</span></li>';}).join('')+'</ul>':'<p class="cp-note">Материалов в проекте пока нет.</p>')+
+    (imp.it.length?'<ul class="imp-list">'+imp.it.map(function(x){return '<li><b>'+x[0]+'</b><span>'+x[1]+(x[2]?'<small>'+x[2]+'</small>':'')+'</span></li>';}).join('')+'</ul>':'<p class="cp-note">У клиента пока нет материалов.</p>')+
     '<p class="cp-note">Тон и манера фото применятся к новым текстам и кадрам — готовые кадры не переснимаем.</p><div class="gate-acts"><button class="pbtn ghost" onclick="closeModal(\'gate-modal\')">Отмена</button><button class="pbtn" onclick="stSave()">Сохранить версию '+(DESIGN[STP].v+1)+'</button></div>';
   openModal('gate-modal');
 }
@@ -5696,7 +5696,7 @@ function grFoot(g,s,u){
   var avg=grProjCpl(g.p);
   if(s.ld&&avg&&s.cpl>avg*1.8)return '<div class="gr-foot warn">Заявка в '+String(Math.round(s.cpl/avg*10)/10).replace('.',',')+' раза дороже средней — убрать?</div>';
   if(!u.pages.length&&!u.camps.length)return '<div class="gr-foot">Пока нигде не используется</div>';
-  return '<div class="gr-foot">'+(s.ld&&avg&&s.cpl<avg*.9?'Заявка дешевле средней по проекту':'В пределах средней цены заявки')+'</div>';
+  return '<div class="gr-foot">'+(s.ld&&avg&&s.cpl<avg*.9?'Заявка дешевле средней по клиенту':'В пределах средней цены заявки')+'</div>';
 }
 function renderGroups(){
   var q=document.getElementById('gr-q').value.trim().toLowerCase(),pj=document.getElementById('gr-proj').value,so=document.getElementById('gr-sort').value,f=addDays(YDAY,-29);
@@ -5725,7 +5725,7 @@ function openGroup(id){
     grField('Какими словами говорят','words',g.words)+grField('Оффер для них','offer',g.offer)+
     '<div class="bsec"><span class="lb-lbl">Где искать</span>'+grField('Гео','geo',g.geo)+grField('Возраст','age',g.age)+grField('Интересы','interests',g.interests)+grField('Ключевые фразы для Директа — по строке','keys',g.keys.join('\n'),1)+'</div>'+
     (acts?'<div class="lb-acts" style="margin-top:14px">'+acts+'</div>':'')+'</div>'+
-    '<div class="gm-side"><div class="panel"><h3>За 30 дней</h3><div class="kv"><span class="k">Расход</span><span class="v">'+rub(s.sp)+'</span></div><div class="kv"><span class="k">Заявки</span><span class="v">'+s.ld+'</span></div><div class="kv"><span class="k">Цена заявки</span><span class="v">'+(s.ld?rub(s.cpl):'—')+'</span></div><div class="kv"><span class="k">Средняя по проекту</span><span class="v">'+(avg?rub(avg):'—')+'</span></div><div class="kv"><span class="k">Доля расхода</span><span class="v">'+(s.sp?pctf(s.sp/tot):'—')+'</span></div><p class="cp-note">Заявки делим по меткам вариантов страниц (<code>?g='+g.slug+'</code>) и группам в кампаниях.</p></div>'+
+    '<div class="gm-side"><div class="panel"><h3>За 30 дней</h3><div class="kv"><span class="k">Расход</span><span class="v">'+rub(s.sp)+'</span></div><div class="kv"><span class="k">Заявки</span><span class="v">'+s.ld+'</span></div><div class="kv"><span class="k">Цена заявки</span><span class="v">'+(s.ld?rub(s.cpl):'—')+'</span></div><div class="kv"><span class="k">Средняя по клиенту</span><span class="v">'+(avg?rub(avg):'—')+'</span></div><div class="kv"><span class="k">Доля расхода</span><span class="v">'+(s.sp?pctf(s.sp/tot):'—')+'</span></div><p class="cp-note">Заявки делим по меткам вариантов страниц (<code>?g='+g.slug+'</code>) и группам в кампаниях.</p></div>'+
     '<div class="panel"><h3>Где используется</h3>'+(u.pages.length||u.camps.length?u.pages.map(function(p){return '<div class="use-row"><span>Страница '+hesc(qn(p.n))+'<small>вариант '+(p.url||'адрес после публикации')+'/?g='+g.slug+'</small></span><button class="mini" type="button" onclick="closeModal(\'grp-modal\');openPage(\''+esc(p.n)+'\')">Открыть</button></div>';}).join('')+u.camps.map(function(c){return '<div class="use-row"><span>Кампания '+hesc(qn(c.n))+'<small>'+c.ch+' · '+CM_ST[c.st].toLowerCase()+'</small></span><button class="mini" type="button" onclick="closeModal(\'grp-modal\');openCamp(\''+c.id+'\')">Открыть</button></div>';}).join(''):'<p class="cp-note" style="margin:0">Нигде. Выберите группу при создании кампании или включите варианты на странице.</p>')+'</div>'+
     '<div class="panel"><h3>Настройки таргета</h3><p class="psub">Кабинеты не подключены — скопируйте и вставьте вручную</p><span class="lb-lbl">VK Реклама</span><div class="tg-box">'+hesc(vk)+'</div><button class="mini" style="margin:8px 0 12px" type="button" onclick="toast(\'Настройки для VK скопированы\')">Скопировать для VK</button><span class="lb-lbl">Яндекс Директ · ключевые фразы</span><div class="tg-box">'+hesc(ya)+'</div><button class="mini" style="margin-top:8px" type="button" onclick="toast(\'Ключевые фразы скопированы\')">Скопировать фразы</button></div></div>';
   openModal('grp-modal');
@@ -5785,7 +5785,7 @@ function strategyHTML(c){
   var gs=GROUPS.filter(function(g){return g.p===c.p&&!g.sugg;}).slice(0,3).map(function(g){return g.n;}),d=DESIGN[c.p];
   return '<p>Набросок стратегии для '+qn(c.p)+' на квартал:</p><ol>'+
     '<li><b>Позиционирование:</b> '+PH('чем вы отличаетесь — одной фразой')+'.</li>'+
-    '<li><b>Аудитории:</b> '+(gs.length?gs.join(', '):PH('кому продаём'))+' — из аудиторий проекта.</li>'+
+    '<li><b>Аудитории:</b> '+(gs.length?gs.join(', '):PH('кому продаём'))+' — из аудиторий клиента.</li>'+
     '<li><b>Цель на квартал:</b> '+PH('сколько заявок или продаж')+'.</li>'+
     '<li><b>Каналы:</b> VK и Telegram — основа; баннеры в VK Рекламе — для охвата.</li>'+
     '<li><b>Рубрики:</b> польза, кейсы, закулисье, повод купить. 3 поста в неделю, сторис через день.</li>'+
@@ -6142,7 +6142,7 @@ function socSchedule(){
   var x=socCur();
   document.getElementById('gt-title').textContent='Когда опубликовать';
   var opts=[['Завтра','10:00'],['Завтра','19:00'],['Пятница','12:00'],['Суббота','11:00']];
-  document.getElementById('gt-body').innerHTML='<p style="color:var(--ink-2);font-size:14px;margin:0 0 12px">'+hesc(qn(x.t))+' · '+x.plats.map(function(p){return platName(x.type,p);}).join(', ')+'. Лучшее время по прошлым публикациям проекта — вечер буднего дня.</p><div class="chipset">'+opts.map(function(o,i){return '<button class="chip'+(i===1?' on':'')+'" type="button" onclick="chipPick(this)" data-st="'+o[0]+'|'+o[1]+'">'+o[0]+', '+o[1]+'</button>';}).join('')+'</div>'+
+  document.getElementById('gt-body').innerHTML='<p style="color:var(--ink-2);font-size:14px;margin:0 0 12px">'+hesc(qn(x.t))+' · '+x.plats.map(function(p){return platName(x.type,p);}).join(', ')+'. Лучшее время по прошлым публикациям клиента — вечер буднего дня.</p><div class="chipset">'+opts.map(function(o,i){return '<button class="chip'+(i===1?' on':'')+'" type="button" onclick="chipPick(this)" data-st="'+o[0]+'|'+o[1]+'">'+o[0]+', '+o[1]+'</button>';}).join('')+'</div>'+
     socSchedNote(x)+'<div class="gate-acts"><button class="pbtn ghost" onclick="closeModal(\'gate-modal\')">Отмена</button><button class="pbtn" onclick="socScheduleGo()">Запланировать</button></div>';
   openModal('gate-modal');
 }
@@ -6559,7 +6559,7 @@ function plCreate(){
   });
 }
 function plExport(){
-  var l=plList(),rows=[['Дата','Проект','Рубрика','Тема','Главная мысль','Факты','Статус','Собрано']].concat(l.map(function(x){return [x.d,x.p,x.rub,x.t,x.idea,x.facts.join('; '),PL_ST[x.st],plMade(x).map(function(z){return SOC_T[z.type][0];}).join(', ')];}));
+  var l=plList(),rows=[['Дата','Клиент','Рубрика','Тема','Главная мысль','Факты','Статус','Собрано']].concat(l.map(function(x){return [x.d,x.p,x.rub,x.t,x.idea,x.facts.join('; '),PL_ST[x.st],plMade(x).map(function(z){return SOC_T[z.type][0];}).join(', ')];}));
   if(!l.length){toast('В списке нет тем — нечего выгружать');return;}
   var csv='﻿'+rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(';');}).join('\r\n');
   var pj=document.getElementById('pl-proj').value,name='контент-план'+(pj?'-'+tagOf(pj):'')+'-'+plMonth()+'.csv';
@@ -6631,7 +6631,7 @@ var NS_TXT={
   'soc-story':['Сторис пока нет','Сторис — короткий повод вернуться: акция, опрос, закулисье. Опишите повод ниже.','Открыть контент-план',"go('plan')"],
   'soc-clip':['Клипов пока нет','Сначала соберём раскладку по сценам — это дёшево и правится. Рендер потом, по вашему «да».','Открыть контент-план',"go('plan')"],
   images:['Кадров пока нет','Снимем кадры в манере клиента или загрузите свои фото — из них берём картинки для постов, сторис и баннеров.','Загрузить свои фото','openUploadModal()'],
-  video:['Роликов пока нет','Ролик собирается из принятого кадра проекта — опишите его ниже.','',''],
+  video:['Роликов пока нет','Ролик собирается из принятого кадра клиента — опишите его ниже.','',''],
   banners:['Баннеров пока нет','Нейросеть пишет только текст, все 10 размеров собирает код в стиле клиента. Опишите, что рекламируем.','',''],
   campaigns:['Кампаний пока нет','Кампания связывает баннеры, страницу и бюджет — и считает цену заявки.','',''],
   result:['Результатов пока нет','Здесь появятся заявки и цена заявки, когда запустите первую кампанию.','Открыть кампании',"go('campaigns')"],
@@ -6753,7 +6753,7 @@ function renderStates(){
     '<h2 class="map-h">Роль «Клиент по ссылке»</h2><p class="cp-note" style="margin:0 2px 10px">Отдельный экран без кабинета: клиент открывает ссылку, видит присланное и отвечает. Состояния: есть что согласовать · всё решено · ссылка устарела.</p><div class="map-cl">'+
       PROJECTS.map(function(p){var n=cvPending(p.s).length;return '<button class="mini'+(n?' pri':'')+'" type="button" onclick="cvOpen(\''+esc(p.s)+'\')">'+hesc(p.s)+' · '+(n?plural(n,'материал','материала','материалов')+' на согласовании':'всё решено')+'</button>';}).join('')+
       (PROJECTS.length?'<button class="mini" type="button" onclick="cvOpen(\''+esc(PROJECTS[0].s)+'\',\'expired\')">Ссылка устарела</button>':'<span class="cp-note">Клиентов нет — экран клиента появится, когда будет кому отправить.</span>')+'</div>'+
-    '<p class="cp-note">Карточки внутри разделов (пост, тема, проект, презентация, кампания) открываются из «Активного» — у них есть свой адрес, его можно дать разработчику ссылкой.</p>';
+    '<p class="cp-note">Карточки внутри разделов (пост, тема, клиент, презентация, кампания) открываются из «Активного» — у них есть свой адрес, его можно дать разработчику ссылкой.</p>';
 }
 VIEW_RENDER.states=renderStates;
 
