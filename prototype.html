@@ -3125,7 +3125,6 @@
                 <button class="pbtn hc-send" type="button" onclick="hcSend()">Начать <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
               </div>
             </div>
-            <div class="hc-sugg" id="hc-sugg"></div>
           </div>
         </section>
 
@@ -6665,9 +6664,7 @@ var HC_CHIPS=[
   ['Клипы','Сделай клип на 30 секунд с субтитрами для ','<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>'],
   ['Презентация','Собери презентацию-отчёт клиенту за прошлый месяц для ','<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>'],
   ['Лендинг','Собери лендинг под акцию с формой заявки для ','<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>']];
-function hcChips(){
-  document.getElementById('hc-sugg').innerHTML='<span class="hc-sl">С чего начать:</span>'+HC_CHIPS.map(function(c,i){return '<button class="chip" type="button" onclick="hcChip('+i+',this)" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+c[2]+'</svg>'+c[0]+'</button>';}).join('');
-}
+function hcChips(){}   /* «С чего начать» на Главной убрали: задачу пишут текстом, разделы — в меню, подсказки — в колонке чата */
 function hcGreet(){}
 
 /* ---------- «Что делаем сегодня»: one list from real signals ---------- */
@@ -10635,7 +10632,7 @@ dockMark=function(def){
   b.querySelectorAll('.chat-msg.ai:not(.ag)').forEach(function(el){
     var a=el.getAttribute('data-ag')||def||'Maker';if(!PERSONA)a='Maker';el.classList.add('ag');
     var ty=el.classList.contains('typing')||el.classList.contains('ps-typing');
-    el.insertAdjacentHTML('afterbegin','<span class="ag-h">'+agAv(a)+'<span class="ag-nm"><b>'+hesc(agName(a))+(ty?' <em>печатает…</em>':'')+'</b>'+(agRole(a)?'<small>'+hesc(agRole(a))+'</small>':'')+'</span></span>');
+    el.insertAdjacentHTML('afterbegin','<span class="ag-h">'+agAv(a)+'<span class="ag-nm"><b>'+hesc(agName(a))+(ty&&!/печатает/.test(el.textContent)?' <em>печатает…</em>':'')+'</b>'+(agRole(a)?'<small>'+hesc(agRole(a))+'</small>':'')+'</span></span>');
   });
 };
 function personaSet(on){
