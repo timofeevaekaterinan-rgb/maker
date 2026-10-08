@@ -10,10 +10,23 @@
 | Что | Где |
 |---|---|
 | Лендинг (стартовая страница) | [landing.html](https://timofeevaekaterinan-rgb.github.io/maker/) |
-| Кабинет — текущая версия | [prototype.html](https://timofeevaekaterinan-rgb.github.io/maker/prototype.html) |
-| Кабинет — версия 1, до перестройки | [prototype-v1.html](https://timofeevaekaterinan-rgb.github.io/maker/prototype-v1.html) |
+| Кабинет — текущая версия: чат в колонке, создание через чат | [prototype.html](https://timofeevaekaterinan-rgb.github.io/maker/prototype.html) |
 | Видение оболочки | [vision.html](https://timofeevaekaterinan-rgb.github.io/maker/vision.html) |
 | Подбор шрифтов | [font-specimen.html](https://timofeevaekaterinan-rgb.github.io/maker/font-specimen.html) |
+
+## Архив версий кабинета
+
+Старые версии не удаляются: каждая лежит отдельным файлом и открывается по своей ссылке.
+
+| Версия | Что это | Ссылка |
+|---|---|---|
+| v5 | 7 окт — до чата в колонке: создание в выезжающих окнах справа | [prototype-v5.html](https://timofeevaekaterinan-rgb.github.io/maker/prototype-v5.html) |
+| v4 | 6 окт — до «Сборки пакета» | [prototype-v4.html](https://timofeevaekaterinan-rgb.github.io/maker/prototype-v4.html) |
+| v3 | 6 окт — до чата в «Постах» | [prototype-v3.html](https://timofeevaekaterinan-rgb.github.io/maker/prototype-v3.html) |
+| v2 | 5 окт — до упрощения (метка `do-uprosheniya`) | [prototype-v2.html](https://timofeevaekaterinan-rgb.github.io/maker/prototype-v2.html) |
+| v1 | 1 окт — до перестройки | [prototype-v1.html](https://timofeevaekaterinan-rgb.github.io/maker/prototype-v1.html) |
+
+Основная версия, какой она была до перехода на чат, закреплена git-меткой `do-chata`.
 
 ## Как смотреть кабинет
 
@@ -43,7 +56,7 @@
 ```
 landing.html         лендинг (на него ведёт index.html)
 prototype.html       кабинет — один файл: разметка, стили, логика
-prototype-v1.html    снимок кабинета до перестройки 1 окт 2026
+prototype-v1…v5.html архив версий кабинета (см. «Архив версий»)
 vision.html          видение оболочки
 font-specimen.html   подбор шрифтов
 img/                 фото и иллюстрации (intro/ — кадры заставки, shots/ — кадры клиентов)

@@ -1696,100 +1696,6 @@
   @media (max-width:1180px){.pk-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media (max-width:600px){.pk-grid,.pk-cards{grid-template-columns:minmax(0,1fr)}.pk-row{padding:12px}.pk-open{width:100%;justify-content:center}}
 
-  /* ---------- чат, закреплённый как меню ---------- */
-  .dock{display:none;flex-direction:column;background:var(--panel);border-right:1px solid var(--line);min-width:0;position:sticky;top:0;height:100vh;z-index:6}
-  .dock-hd{display:flex;align-items:center;gap:10px;padding:16px 14px 12px 16px;border-bottom:1px solid var(--line)}
-  .dock-logo{width:32px;height:32px;flex:none}.dock-logo svg{width:100%;height:100%;display:block}
-  .dock-tt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
-  .dock-tt b{font:700 15px/1.25 var(--head)}
-  .dock-tt small{font-size:12px;color:var(--ink-3)}
-  .dock-x{width:34px;height:34px;border-radius:10px;border:1px solid var(--line-2);background:#fff;color:var(--ink-2);display:grid;place-items:center;cursor:pointer;flex:none}
-  .dock-x:hover{border-color:var(--line-3);color:var(--ink)}
-  .dock-x svg{width:18px;height:18px}
-  .dock-body{flex:1;min-height:0;display:flex;flex-direction:column}
-  .dock .dock-ps{flex:1;min-height:0;border:0;border-radius:0;box-shadow:none;background:none}
-  .dock .ps-ch-hd{padding:10px 10px 8px}
-  .dock .ps-thread{padding:16px 16px 10px;gap:14px}
-  .dock .chat-msg.ai{background:transparent;padding:0;max-width:100%;border-radius:0}
-  .dock .chat-msg.ai.ps-typing,.dock .chat-msg.ai.typing{display:block;font-style:normal;color:var(--ink-3)}
-  .dock .chat-msg.ai.ps-typing i{display:none}
-  .dock .chat-msg.me{max-width:88%}
-  .dock .chat-msg.sys{font-size:11.5px}
-  .ag-h{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--ink);margin:0 0 6px}
-  .ag-h i{width:24px;height:24px;border-radius:7px;background:var(--blue-softer);color:var(--blue-ink);display:grid;place-items:center;font-style:normal;font-size:10.5px;font-weight:800;flex:none}
-  .ag-h em{font-style:normal;font-weight:500;color:var(--ink-3)}
-  .dock .chat-link{margin:8px 6px 0 0}
-  .dock .ps-quick{padding:6px 14px 2px}
-  .dock .ps-comp{margin:8px 12px 12px}
-  .dock-where{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:var(--ink-3);margin:0 0 6px;line-height:1.35}
-  .dock-where svg{width:14px;height:14px;flex:none;margin-top:1px}
-  .dock-where b{color:var(--ink-2);font-weight:600}
-  .dock-ag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);background:#fff;border-radius:20px;padding:4px 9px 4px 10px;font:inherit;font-size:12.5px;color:var(--ink-3);cursor:pointer;flex:none}
-  .dock-ag:hover{border-color:var(--line-3)}
-  .dock-ag i{width:20px;height:20px;border-radius:6px;background:var(--blue);color:#fff;display:grid;place-items:center;font-style:normal;font-size:9.5px;font-weight:800;flex:none}
-  .dock-ag b{color:var(--ink);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .dock-ag svg{width:13px;height:13px;flex:none}
-  .dock-ag em{font-style:normal;font-size:10.5px;font-weight:600;color:var(--blue-ink);background:var(--blue-softer);border-radius:10px;padding:1px 6px}
-  .dock-hello{margin:auto 4px;padding:18px;border:1.5px dashed var(--line-2);border-radius:16px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;color:var(--ink-2);line-height:1.5}
-  .dock-hello b{font:700 15px/1.3 var(--head);color:var(--ink)}
-  .dock-scrim{display:none}
-  .top-chat{margin-left:auto}
-  .top-bell.top-chat{width:auto;border-radius:20px;padding:0 14px 0 12px;display:inline-flex;align-items:center;gap:6px;background:var(--blue);border-color:var(--blue);color:#fff;font:600 13.5px var(--sans)}
-  .top-bell.top-chat:hover{background:var(--blue-ink);border-color:var(--blue-ink)}
-  .top-chat+.top-help{margin-left:8px}
-  .ps.ps-solo .ps-seg{display:none}
-  .ps.ps-solo .ps-main{grid-template-columns:minmax(0,1fr)}
-  .ps.ps-solo .ps-art{display:flex!important}
-  @media (min-width:1181px){
-    body .app.dock-on{grid-template-columns:252px 360px minmax(0,1fr)}
-    body .app.side-min.dock-on{grid-template-columns:76px 360px minmax(0,1fr)}
-    .app.dock-on .dock{display:flex}
-    .app.dock-on .top-chat{display:none}
-    .app.dock-on .top-chat+.top-help{margin-left:auto}
-    .app.dock-on .content,.app.dock-on .topbar{padding-left:24px;padding-right:24px}
-  }
-  @media (max-width:1180px){
-    .dock{display:flex;position:fixed;top:0;right:0;bottom:0;height:auto;width:min(420px,100vw);z-index:89;border-right:0;box-shadow:-24px 0 60px -30px rgba(20,26,38,.45);transform:translateX(104%);transition:transform .26s cubic-bezier(.2,.8,.2,1);visibility:hidden}
-    .app.dock-on .dock{transform:none;visibility:visible}
-    .app.dock-on .dock-scrim{display:block;position:fixed;inset:0;z-index:88;background:rgba(20,26,38,.36)}
-  }
-  /* создание в чате: окно «Создать» заменено сценарием в колонке чата */
-  .dcr-quick{display:flex;gap:6px;overflow-x:auto;padding:6px 12px 0;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
-  .dcr-quick::-webkit-scrollbar{display:none}
-  .dcr-quick .chip{flex:none;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:5px 10px;font-size:12.5px;border-radius:8px;line-height:1.3}
-  .dcr-quick .chip:last-child{margin-right:24px}
-  .dcr-ic{width:13px;height:13px;flex:none;color:var(--blue-ink)}
-  .dcr-quick .dcr-pl .dcr-ic{vertical-align:-2px;margin-right:5px}
-  .dcr-where{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3);margin:0 0 6px;line-height:1.35}
-  .dcr-where svg{width:14px;height:14px;flex:none}
-  .dcr-where b{color:var(--ink-2);font-weight:600}
-  .dcr-x{background:none;border:0;padding:0;font:500 12.5px var(--sans);color:var(--ink-3);cursor:pointer;flex:none}
-  .dcr-x:hover{color:var(--blue)}
-  .dcr-n{font:12px var(--mono);color:var(--ink-3)}
-  .dcr .ps-comp-row .sp{flex:1}
-  .dcr .ps-comp-row{gap:8px}
-  .dcr-hint{font-size:12.5px;color:var(--ink-3);margin-top:4px!important}
-  .dcr-hint b{color:var(--ink-2);font-weight:600}
-  .dcr-hint .mini{margin:6px 6px 0 0!important}
-  .dcr-att{margin:0 0 6px}
-  .dcr-act{font-size:12.5px;padding:4px 10px}
-  .cp-mic.dcr-mic{width:36px;height:36px}
-  .cp-mic.dcr-mic svg{width:17px;height:17px}
-  .cp-mic.dcr-mic.rec{width:auto;height:36px}
-  .dcr-card .dcr-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px 8px;padding:0 0 8px}
-  .dcr-k{font-size:12.5px;color:var(--ink-3)}
-  .dcr-ch{display:flex;flex-wrap:wrap;gap:4px}
-  .dcr-ch .chip{padding:3px 9px;font-size:12.5px;border-radius:7px}
-  .dcr-tgs{gap:4px 14px}
-  .dcr-tg{display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:2px 0;font:inherit;font-size:12.5px;color:var(--ink-2);cursor:pointer}
-  .dcr-tg i{width:15px;height:15px;border-radius:4px;border:1.5px solid var(--line-3);display:grid;place-items:center;flex:none}
-  .dcr-tg.on i{background:var(--blue);border-color:var(--blue)}
-  .dcr-tg.on i::after{content:'';width:7px;height:4px;border:solid #fff;border-width:0 0 2px 2px;transform:rotate(-45deg) translate(1px,-1px)}
-  .dcr-acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px}
-  .ps-thread .chat-msg.ai .dcr-acts .mini{margin-top:0}
-  .toast{z-index:100}
-  @media (max-width:480px){.crumb .cr-a,.crumb .cr-a+.sep{display:none}.topbar{gap:8px}}
-
   /* ---------- audit leftovers ---------- */
   .en-help{margin:14px 0 4px;background:var(--inset);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--ink-2)}
   .en-help summary{cursor:pointer;color:var(--blue);font-weight:600}
@@ -2451,20 +2357,20 @@
   .chat-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--line-2)}
 
   /* уточняющие вопросы в чате — как в Claude: по одному, с вариантами */
-  .chq{margin-top:8px;background:#fff;border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;font-size:inherit;box-shadow:0 1px 2px rgba(20,30,60,.04)}
-  .chq-hd{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-3);margin-bottom:4px}
+  .chq{margin-top:10px;background:#fff;border:1px solid var(--line-2);border-radius:14px;padding:14px 14px 12px;box-shadow:0 1px 2px rgba(20,30,60,.04)}
+  .chq-hd{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);margin-bottom:6px}
   .chq-dots{display:flex;gap:4px;margin-left:auto}.chq-dots i{width:6px;height:6px;border-radius:50%;background:var(--line-2)}.chq-dots i.on{background:var(--blue)}.chq-dots i.ok{background:var(--ok-ink)}
-  .chq-q{display:block;font-size:inherit;font-weight:600;line-height:1.45;margin:0 0 8px;color:var(--ink)}
-  .chq-opts{display:flex;flex-direction:column;gap:4px}
-  .chq-opt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--inset);border:1px solid transparent;border-radius:8px;padding:6px 10px;font-family:var(--sans);font-weight:400;line-height:1.4;font-size:inherit;color:var(--ink);cursor:pointer}
+  .chq-q{display:block;font-size:15px;font-weight:600;line-height:1.35;margin:0 0 10px;color:var(--ink)}
+  .chq-opts{display:flex;flex-direction:column;gap:6px}
+  .chq-opt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--inset);border:1px solid transparent;border-radius:10px;padding:9px 12px;font:500 14px/1.35 var(--sans);color:var(--ink);cursor:pointer}
   .chq-opt:hover,.chq-opt:focus-visible{border-color:var(--blue);background:var(--blue-softer);outline:none}
-  .chq-opt i{flex:none;width:18px;height:18px;border-radius:5px;background:#fff;border:1px solid var(--line-2);display:grid;place-items:center;font:600 10.5px var(--mono);font-style:normal;color:var(--ink-3)}
+  .chq-opt i{flex:none;width:22px;height:22px;border-radius:6px;background:#fff;border:1px solid var(--line-2);display:grid;place-items:center;font:600 12px var(--mono);font-style:normal;color:var(--ink-3)}
   .chq-opt small{margin-left:auto;font-size:11.5px;color:var(--ink-3)}
-  .chq-own{display:flex;gap:6px;margin-top:6px}
-  .chq-own input{flex:1;min-width:0;border:1px solid var(--line-2);border-radius:8px;padding:6px 10px;font:inherit;color:var(--ink);background:#fff}
+  .chq-own{display:flex;gap:6px;margin-top:8px}
+  .chq-own input{flex:1;min-width:0;border:1px solid var(--line-2);border-radius:10px;padding:9px 12px;font:14px var(--sans);color:var(--ink);background:#fff}
   .chq-own input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-softer)}
-  .chq-ft{display:flex;gap:12px;margin-top:6px}
-  .chq-ft button{background:none;border:0;padding:0;font:500 12.5px var(--sans);color:var(--ink-3);cursor:pointer}.chq-ft button:hover{color:var(--blue)}
+  .chq-ft{display:flex;gap:12px;margin-top:8px}
+  .chq-ft button{background:none;border:0;padding:0;font:500 13px var(--sans);color:var(--ink-3);cursor:pointer}.chq-ft button:hover{color:var(--blue)}
   .ch-ans{font-weight:600;color:var(--ink)}
   .ch-skip{color:var(--ink-3);font-style:italic}
   .chat-acts .mini{display:inline-flex;align-items:center;gap:6px;background:#fff}
@@ -5488,7 +5394,6 @@ var CHQ={
   'факт или цифра из базы':['Какую цифру или факт добавить?',[],1],
   'главная мысль поста':['Какая главная мысль поста?',[],0]};
 function chqPrep(c,m){
-  if(typeof CHQ_RX==='undefined'||!CHQ_RX)return;
   if(m.qs||m.r!=='ai'||!m.h||m.h.indexOf('class="phx"')<0)return;
   var q=[];m.h.replace(CHQ_RX,function(_,l){if(q.indexOf(l)<0)q.push(l);return _;});
   m.qs=q;m.ans=m.ans||{};m.qi=Object.keys(m.ans).length>=q.length?q.length:0;
@@ -5509,7 +5414,7 @@ function chqCard(c,m,i){
     '<div class="chq-ft">'+(m.qi?'<button type="button" onclick="chqBack('+i+')">← Назад</button>':'')+'<button type="button" onclick="chqAns('+i+',\'\')">Пропустить</button></div></div>';
 }
 function chqFill(m){
-  if(!m.qs||!CHQ_RX)return m.h;
+  if(!m.qs)return m.h;
   return m.h.replace(CHQ_RX,function(_,l,at,all){var v=m.ans[l];
     if(!v)return '<span class="ch-skip">'+hesc(l)+'</span>';
     var before=all.slice(0,at).replace(/<[^>]+>/g,'').replace(/\s+$/,''),opt=(CHQ[l]||[0,[]])[1].indexOf(v)>=0;
@@ -5537,7 +5442,7 @@ function chqAns(i,v){
   };
 })();
 /* первый разговор — уже с ответами, второй ждёт уточнений */
-(function(){var c=chById('c1'),m=c&&c.msgs[1];if(m&&m.r==='ai'){m.qs=null;m.ans={'ваша скидка':'15%','сумма в день':'1 000 ₽'};chqPrep(c,m);}var d=chById('c2'),q=d&&d.msgs[d.msgs.length-1];if(q){q.qs=null;chqPrep(d,q);}if(chCur)try{renderChat();}catch(e){}})();
+(function(){var c=chById('c1'),m=c&&c.msgs[1];if(m&&m.r==='ai'){m.qs=null;m.ans={'ваша скидка':'15%','сумма в день':'1 000 ₽'};chqPrep(c,m);}})();
 
 /* ---------- hover tooltip for charts ---------- */
 (function(){
@@ -10119,361 +10024,6 @@ function pkSend(t){
   HELP.pack={s:['Слева — разговор со всем клиентом сразу: ответы на пропуски, тон, новые материалы','Справа — весь пакет: что собрано, чего не хватает; карточка открывает превью','Всё уже лежит во вкладках клиента — «Открыть во вкладке» для точечной правки'],q:[['Откуда материалы берут данные?','Из памяти клиента: база фактов, аудитории, голос, стиль, стратегия. Пакет сначала раскладывает ваш бриф туда, потом собирает.'],['Изменю во вкладке — пакет узнает?','Да: пакет показывает те же материалы, а не копии.']]};
   var o=document.getElementById('hc-box');if(o&&!document.getElementById('pk-row'))o.insertAdjacentHTML('afterend','<div class="pk-row" id="pk-row"></div>');
   pkRow();
-})();
-
-/* ---------- Чат, закреплённый как меню: одна колонка между меню и экраном, на всех разделах ---------- */
-var DOCK={open:false,mode:'',ag:'auto',draft:'',last:''};
-var DK_AG=[['auto','Сам решит'],['Стратег','Стратег'],['Контент','Контент'],['Реклама','Реклама'],['Бренд','Бренд']];
-var DK_AG_V={strat:'Стратег',plan:'Контент',images:'Контент',video:'Контент',pages:'Контент',pres:'Контент',deck:'Контент',templates:'Контент','soc-post':'Контент','soc-car':'Контент','soc-story':'Контент','soc-clip':'Контент',
-  banners:'Реклама',campaigns:'Реклама',camp:'Реклама',result:'Реклама',groups:'Реклама',style:'Бренд',voice:'Бренд',facts:'Бренд'};
-var DK_INI={Maker:'M',Стратег:'Ст',Контент:'Кт',Реклама:'Рк',Бренд:'Бр'};
-var DK_Q={home:['Что сделать сегодня?','Чего не хватает?','Собрать пакет'],strat:['Собери стратегию','Чего не хватает?'],plan:['Контент-план на месяц','Чего не хватает?'],
-  banners:['Баннеры к акции','Что сделать сегодня?'],campaigns:['Как дела у рекламы?','Что сделать сегодня?'],result:['Окупается ли реклама?'],
-  style:['Чего не хватает?'],voice:['Чего не хватает?'],facts:['Чего не хватает?'],groups:['Кому продаём?','Чего не хватает?']};
-function dockNarrow(){return window.matchMedia('(max-width:1180px)').matches;}
-function dockLive(){return DOCK.open||dockNarrow();}
-function dockApp(){return document.querySelector('.app');}
-function dockAgNow(){return DOCK.ag==='auto'?(DK_AG_V[ROUTE.v]||'Maker'):DOCK.ag;}
-function dockChat(){var c=chById('dk');if(!c){c={id:'dk',t:'Чат в кабинете',p:CLIENT,d:'сегодня',ts:300,cost:0,ctx:CTX_ALL.slice(),msgs:[]};CHATS.push(c);}return c;}
-function dockWhere(){
-  var v=ROUTE.v,name=(NAVH[v]||[null,'Главная'])[1],lab=ROUTE.lab||'';
-  if(v==='soc-post'){var x=typeof psCur==='function'?psCur():null;lab=x?x.t:'новый пост';}
-  if(v==='pack'&&typeof PK!=='undefined'&&PK)lab=PK.p?'пакет '+PK.p:'новый пакет';
-  if(lab.length>38)lab=lab.slice(0,38).replace(/\s+\S*$/,'')+'…';
-  return '<div class="dock-where"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4v7a4 4 0 0 0 4 4h10"/><path d="M15 11l4 4-4 4"/></svg><span>пишете в <b>«'+hesc(name)+'»</b>'+(lab?' · справа — '+hesc(qn(lab)):'')+'</span></div>';
-}
-/* подписи «кто отвечает» у сообщений */
-function dockMark(def){
-  var b=document.getElementById('dock-body');if(!b)return;
-  b.querySelectorAll('.chat-msg.ai:not(.ag)').forEach(function(el){
-    var a=el.getAttribute('data-ag')||def||'Maker';el.classList.add('ag');
-    el.insertAdjacentHTML('afterbegin','<span class="ag-h"><i>'+(DK_INI[a]||a.charAt(0))+'</i>'+hesc(a)+(el.classList.contains('typing')||el.classList.contains('ps-typing')?' <em>печатает…</em>':'')+'</span>');
-  });
-}
-/* «Посты» и «Пакет»: их чат переезжает в колонку, справа остаётся результат */
-function dockAdopt(rootId,mode,label){
-  var r=document.getElementById(rootId),b=document.getElementById('dock-body'),ch=r&&r.querySelector(':scope > .ps-main > .ps-chat');if(!ch||!b)return;
-  b.innerHTML='';b.appendChild(ch);ch.classList.add('dock-ps');r.classList.add('ps-solo');DOCK.mode=mode;DOCK.lab=label;
-  var comp=ch.querySelector('.ps-comp');if(comp)comp.insertAdjacentHTML('afterbegin',dockWhere());
-  dockMark(label);
-  var th=ch.querySelector('.ps-thread');if(th)th.scrollTop=th.scrollHeight;
-}
-function dockRender(force){
-  var v=ROUTE.v,b=document.getElementById('dock-body');if(!b)return;
-  if(v==='soc-post'||v==='pack'){
-    if(!force&&DOCK.mode===v&&b.querySelector('.dock-ps'))return;
-    if(v==='soc-post')psRender();else pkRender();
-    if(DOCK.mode===v)return;
-  }
-  DOCK.mode='gen';var c=dockChat(),p=CLIENT;
-  var nf=p?FACTS.filter(function(f){return f.p===p;}).length:0;
-  var ctx='<div class="ps-ctx"><span>Клиент</span><a onclick="clientMenu({stopPropagation:function(){},currentTarget:document.querySelector(\'.side .acct\')})">'+(p?hesc(p):'все клиенты')+'</a>'+(p?'<a onclick="go(\'facts\')">'+plural(nf,'факт','факта','фактов')+'</a><a onclick="go(\'voice\')">голос</a>':'')+'</div>';
-  var q=(DK_Q[v]||['Что сделать сегодня?','Чего не хватает?']);
-  b.innerHTML='<section class="ps-chat dock-ps dock-gen">'+ctx+'<div class="ps-thread" id="dk-thread"></div>'+
-    '<div class="ps-quick">'+q.map(function(t){return '<button class="chip" type="button" onclick="dockSend(\''+esc(t)+'\')">'+hesc(t)+'</button>';}).join('')+'</div>'+
-    '<div class="ps-comp">'+dockWhere()+'<textarea id="dk-in" rows="2" placeholder="Напишите задачу — нужный агент подключится сам" oninput="DOCK.draft=this.value" onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();dockSend();}"></textarea>'+
-    '<div class="ps-comp-row"><button class="dock-ag" type="button" onclick="dockAgMenu(event)" aria-haspopup="menu"><span>Спросить:</span><i>'+(DK_INI[dockAgNow()]||'M')+'</i><b>'+dockAgNow()+'</b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></button><span class="sp"></span><button class="pbtn" type="button" onclick="dockSend()">Отправить</button></div></div></section>';
-  var inp=document.getElementById('dk-in');if(inp&&DOCK.draft)inp.value=DOCK.draft;
-  dockPaint();
-}
-function dockPaint(){
-  var th=document.getElementById('dk-thread');if(!th||DOCK.mode!=='gen')return;var c=dockChat();
-  th.innerHTML=c.msgs.length?c.msgs.map(function(m,i){var h=msgHTML(c,m,i).replace(/chatAct\(/g,'dockAct(').replace(/chatPick/g,'dockPick').replace(/(on(?:click|keydown|input)=")(chq|phFill)/g,"$1chCur='dk';$2");if(m.r!=='me'&&m.r!=='sys'&&m.ag)h=h.replace('<div class="chat-msg ai','<div data-ag="'+m.ag+'" class="chat-msg ai');return h;}).join('')
-    :'<div class="dock-hello"><b>Чат всегда рядом</b><span>Пишите здесь на любом экране — Maker поймёт, где вы, и подключит нужного агента: стратега, контент, рекламу или бренд. Результат появится справа, без переходов.</span></div>';
-  dockMark(dockAgNow());th.scrollTop=th.scrollHeight;
-}
-function dockAct(kind,i){chCur='dk';chatAct(kind,i);dockPaint();}
-function dockPick(p){chCur='dk';if(p)clientSet(p,false,true);chatPick(p);dockRender(true);}
-function dockAgMenu(e){
-  e.stopPropagation();var btn=e.currentTarget,was=document.getElementById('td-menu');tdMenuClose();if(was&&was.dataset.i==='ag')return;
-  var m=document.createElement('div');m.className='td-menu';m.id='td-menu';m.dataset.i='ag';m.setAttribute('role','menu');
-  m.innerHTML='<div class="rf-h" style="padding:8px 10px 4px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)">Кто отвечает</div>'+DK_AG.map(function(a){return '<button role="menuitemradio" aria-checked="'+(DOCK.ag===a[0])+'" type="button" data-a="'+a[0]+'">'+(a[0]==='auto'?'Сам решит — по экрану':a[1])+'</button>';}).join('');
-  m.addEventListener('click',function(ev){ev.stopPropagation();var b=ev.target.closest('[data-a]');if(!b)return;DOCK.ag=b.dataset.a;tdMenuClose();dockRender(true);});
-  document.body.appendChild(m);var r=btn.getBoundingClientRect();m.style.position='fixed';m.style.left=Math.max(8,r.left)+'px';m.style.top=Math.max(8,r.top-m.offsetHeight-6)+'px';
-  setTimeout(function(){document.addEventListener('click',tdMenuClose);},0);
-}
-/* передать задачу в раздел: открыть его окно создания с текстом */
-function dockHand(v){
-  if(dockNarrow())dockToggle(false);
-  if(ROUTE.v!==v)go(v);
-  setTimeout(function(){cpOpen(v);var x=CPD.ph[v],ta=x&&x.pn.querySelector('textarea');if(ta){ta.value=DOCK.last;ta.dispatchEvent(new Event('input'));}},60);
-}
-function dockSend(t,files){
-  var inp=document.getElementById('dk-in');t=(t!=null?t:(inp?inp.value:'')).trim();files=files||[];
-  if(!t&&!files.length){if(inp)inp.focus();return;}
-  DOCK.draft='';if(inp)inp.value='';DOCK.last=t;
-  var c=dockChat(),v=ROUTE.v,ag=dockAgNow(),l=t.toLowerCase(),name=(NAVH[v]||[null,'Главная'])[1];
-  if(c.p!==CLIENT){c.p=CLIENT;c.general=false;if(CLIENT)c.msgs.push({r:'sys',x:'Клиент — '+hesc(qn(CLIENT))});}
-  c.msgs.push({r:'me',x:t,att:files});c.d='сегодня';c.ts=400+(++chSeq);
-  var say=function(h){c.msgs.push({r:'ai',h:h,ag:ag});dockPaint();try{renderChatList();}catch(e){}};
-  dockPaint();
-  /* что сделать сегодня — из напоминаний */
-  if(/что сделать|с чего начать|какие дела|напомни/.test(l)){try{renderToday();}catch(e){}
-    var L=(typeof TD_LIST!=='undefined'?TD_LIST:[]).slice(0,3);
-    say(L.length?'<p>Сейчас важнее всего:</p><ol>'+L.map(function(x){return '<li>'+x.t+'</li>';}).join('')+'</ol>'+L.map(function(x){return '<button class="chat-link" type="button" onclick="'+x.fn.replace(/"/g,'&quot;')+'">'+x.a+': '+x.t.replace(/<[^>]+>/g,'').slice(0,34)+'… →</button>';}).join(' '):'<p>Срочного нет. Можно собрать контент-план на следующий месяц или пакет материалов для нового клиента.</p>');return;}
-  /* пропуски */
-  if(/не хватает|пропуск|чего нет/.test(l)){
-    if(!CLIENT){say('<p>Выберите клиента в меню слева — покажу, чего не хватает именно у него.</p>');return;}
-    var g=faGaps(CLIENT),ig=ikGaps(CLIENT);
-    say(g.length||ig.length?(g.length?'<p>В материалах '+hesc(qn(CLIENT))+' '+plural(g.length,'пропуск','пропуска','пропусков')+': '+g.slice(0,5).map(function(x){return '<span class="mk-ph">'+hesc(x.k)+'</span>';}).join(', ')+'. Ответьте один раз — подставим везде.</p>':'')+(ig.length?'<p>Для стратегии ещё нет: '+ig.map(function(x){return x[1].toLowerCase();}).join(', ')+'.</p>':'')+'<button class="chat-link" type="button" onclick="go(\'facts\')">Ответить в базе фактов →</button>'
-      :'<p>У '+hesc(qn(CLIENT))+' всё главное есть — пропусков нет.</p>');return;}
-  /* всё о клиенте разом — сборка пакета */
-  if(/пакет|всё о клиенте|все о клиенте|бриф/.test(l)||t.length>220){
-    say('<p>'+(t.length>220?'Похоже на бриф. ':'')+'Могу разложить это по вкладкам клиента и собрать материалы разом: стратегию, план, посты, баннеры, презентацию.</p>'+(t.length>220?'<button class="chat-link" type="button" onclick="dockPack()">Собрать пакет из этого →</button>':'<button class="chat-link" type="button" onclick="go(\'home\');PK_ON=true;pkRow();pkSendLabel();window.scrollTo({top:0})">Открыть сборку пакета →</button>'));return;}
-  /* ответ ассистента — тот же, что в «Чатах», плюс передача в раздел */
-  var gen=function(){
-    c.msgs.push({r:'ai',typing:true,ag:ag});dockPaint();
-    setTimeout(function(){c.msgs=c.msgs.filter(function(m){return !m.typing;});var m=chatReply(c,t,false,files);m.ag=ag;
-      if(CPD.ph[v]&&v!=='home'&&!m.pick&&!m.link)m.link=['Собрать в «'+name+'»',"dockHand('"+v+"')"];
-      c.msgs.push(m);if(!m.pick)charge(c.p||'Без клиента','Чаты','Ответ в чате',.82);dockPaint();try{renderChatList();}catch(e){}},900);
-  };
-  if(!c.p){var m0=chatReply(c,t,false,files);m0.ag=ag;c.msgs.push(m0);dockPaint();return;}
-  spendGate(.82,'Ответ в чате',gen);
-}
-function dockPack(){var t=DOCK.last;if(dockNarrow())dockToggle(false);PK_PICK=PK_PICK||{};pkStart(t,[]);}
-function dockToggle(open){
-  DOCK.open=open===undefined?!DOCK.open:!!open;
-  var a=dockApp();if(a)a.classList.toggle('dock-on',DOCK.open);
-  if(!dockNarrow())try{localStorage.setItem('mk-dock',DOCK.open?'1':'0');}catch(e){}
-  if(open===false&&!dockNarrow())toast('Чат скрыт — вернуть можно кнопкой «Чат» вверху справа',{t:'Вернуть',fn:function(){dockToggle(true);}});
-  var v=ROUTE.v;DOCK.mode='';
-  if(v==='soc-post')renderSoc('post');else if(v==='pack')pkRender();
-  dockRender(true);
-  setTimeout(function(){try{psFit();pkFit();}catch(e){}},260);
-  if(DOCK.open)setTimeout(function(){var i=document.querySelector('#dock-body textarea');if(i&&!dockNarrow())i.focus({preventScroll:true});},120);
-}
-(function(){
-  /* колонка в разметке: между меню и экраном */
-  var side=document.getElementById('side');
-  if(side&&!document.getElementById('dock')){
-    side.insertAdjacentHTML('afterend','<aside class="dock" id="dock" aria-label="Чат Maker"><div class="dock-hd"><span class="dock-logo"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mk-logo"/></svg></span><span class="dock-tt"><b>Чат Maker</b><small>агенты подключаются сами</small></span><button class="dock-x" type="button" onclick="dockToggle(false)" aria-label="Скрыть чат" title="Скрыть чат"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16M15 10l-2 2 2 2"/></svg></button></div><div class="dock-body" id="dock-body"></div></aside><div class="dock-scrim" onclick="dockToggle(false)"></div>');
-  }
-  var hb=document.getElementById('help-btn');
-  if(hb&&!document.getElementById('dock-btn'))hb.insertAdjacentHTML('beforebegin','<button class="top-bell top-chat" id="dock-btn" type="button" aria-label="Чат Maker" title="Чат Maker" onclick="dockToggle()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Чат</span></button>');
-  /* «Посты» и «Пакет» отдают чат в колонку */
-  var r1=psRender;psRender=function(){var res=r1.apply(this,arguments);if(dockLive()&&document.getElementById('v-soc-post').classList.contains('on'))dockAdopt('ps','soc-post','Контент');return res;};
-  var r2=pkRender;pkRender=function(){var res=r2.apply(this,arguments);if(dockLive()&&document.getElementById('v-pack').classList.contains('on')&&PK)dockAdopt('pk','pack','Maker');return res;};
-  /* сменили экран или клиента — колонка понимает, где вы */
-  var g0=go;go=function(){var res=g0.apply(this,arguments);dockRender();return res;};
-  var cs=clientSet;clientSet=function(){var res=cs.apply(this,arguments);dockRender(true);return res;};
-  var rc=renderChat;renderChat=function(){var res=rc.apply(this,arguments);if(chCur==='dk')dockPaint();return res;};
-  var rd=routeDetail;routeDetail=function(){var res=rd.apply(this,arguments);var w=document.querySelector('#dock-body .dock-where');if(w)w.outerHTML=dockWhere();return res;};
-  /* Главная: без пакета — задача уходит в чат рядом, без переходов */
-  var h0=hcSend;hcSend=function(){
-    if(typeof PK_ON!=='undefined'&&PK_ON)return h0.apply(this,arguments);
-    var ta=document.getElementById('hc-text'),text=ta.value.trim(),files=ATT.hc.slice();if(HC.rec)hcVoiceStop();
-    if(!text&&!files.length){ta.focus();toast('Напишите или скажите, что делаем — или возьмите подсказку');return;}
-    document.querySelectorAll('#hc-sugg .chip.on').forEach(function(c){c.classList.remove('on');c.setAttribute('aria-pressed','false');});
-    var p=HC.proj||hcDetect(text);HC.proj='';if(p&&p!==CLIENT)clientSet(p,false,true);
-    ta.value='';ATT.hc=[];attRender('hc');hcInput();
-    if(!DOCK.open||dockNarrow())dockToggle(true);
-    dockSend(text,files);
-  };
-  var lastN=null;window.addEventListener('resize',function(){var n=dockNarrow();if(lastN===null){lastN=n;return;}if(n!==lastN){lastN=n;if(n){DOCK.open=false;dockApp().classList.remove('dock-on');}else{var s='1';try{s=localStorage.getItem('mk-dock')||'1';}catch(e){}DOCK.open=s!=='0';dockApp().classList.toggle('dock-on',DOCK.open);}DOCK.mode='';var v=ROUTE.v;if(v==='soc-post')renderSoc('post');else if(v==='pack')pkRender();dockRender(true);}});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&DOCK.open&&dockNarrow()&&!document.querySelector('.modalbg.on'))dockToggle(false);});
-  HELP.home.q.push(['Где чат?','Колонка рядом с меню — на любом экране. Скрыть — кнопка в её шапке, вернуть — синяя кнопка «Чат» вверху справа.']);
-  setTimeout(function(){
-    var s='1';try{s=localStorage.getItem('mk-dock')||'1';}catch(e){}
-    DOCK.open=s!=='0'&&!dockNarrow();lastN=dockNarrow();var a=dockApp();if(a)a.classList.toggle('dock-on',DOCK.open);
-    var v=ROUTE.v;if(v==='soc-post')renderSoc('post');else if(v==='pack')pkRender();
-    dockRender(true);
-  },120);
-})();
-
-/* ---------- Создание в чате: «Новая страница» не открывает окно — сценарий идёт в колонке чата, справа — результат ---------- */
-/* окно создания остаётся «движком»: его поля и кнопку чат заполняет сам, поэтому сборка, цены и проверки — прежние */
-var DCR_ON={pages:1,images:1,video:1,banners:1,campaigns:1,groups:1,facts:1,strat:1,plan:1,'soc-car':1,'soc-story':1,'soc-clip':1,pres:1},DCR=null;
-/* hi — первая реплика одной строкой; run — что делаем после «Создать»; theme — тема из плана в поле; ph — пример в поле */
-var DCR_TXT={
-  pages:{hi:'Новая страница для {p} — о чём она?',run:'Собираю страницу',ph:'Например: чекап со скидкой до 30 ноября, с записью',theme:function(t){return t.t+' — страница по теме из контент-плана. '+t.idea.replace(/[.\s]+$/,'')+'.';}},
-  images:{hi:'Новые кадры для {p} — что снимаем?',run:'Снимаю кадры'},
-  video:{hi:'Новый ролик для {p} — что в кадре?',run:'Ставлю ролик в очередь'},
-  banners:{hi:'Новые баннеры для {p} — что рекламируем?',run:'Собираю баннеры',theme:function(t){return t.t+' — баннеры по теме из контент-плана. '+t.idea.replace(/[.\s]+$/,'')+'.';}},
-  campaigns:{hi:'Новая кампания для {p} — какая цель и к какому сроку?',run:'Разбираю задачу кампании'},
-  groups:{hi:'Кого {p} хочет привлечь? Можно всех сразу одним текстом — разделю на группы.',run:'Разбираю аудитории'},
-  facts:{hi:'Что добавить в базу фактов {p}? Вставьте текст с сайта, прайс или ответы клиента.',run:'Разбираю текст на факты'},
-  strat:{hi:'Расскажите о {p}: что продаёт, кому, чего хотим от соцсетей.',run:'Собираю стратегию',ph:'Например: кофейня у метро, хотим больше гостей по утрам'},
-  plan:{hi:'Контент-план для {p} — какие поводы и акции учесть?',run:'Собираю контент-план'},
-  'soc-car':{hi:'Новая карусель для {p} — о чём она?',run:'Собираю карусель'},
-  'soc-story':{hi:'Новые сторис для {p} — какой повод?',run:'Собираю сторис'},
-  'soc-clip':{hi:'Новый клип для {p} — о чём он?',run:'Готовлю раскадровку клипа'},
-  pres:{hi:'Новая презентация для {p} — для кого и о чём?',run:'Пишу план презентации'}};
-var DCR_CAL='<svg class="dcr-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>';
-var DCR_CLIP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/></svg>';
-function dcrPn(){return DCR&&CPD.ph[DCR.v]?CPD.ph[DCR.v].pn:null;}
-function dcrLab(el){var n=el.firstChild;while(n&&n.nodeType===3&&!n.textContent.trim())n=n.nextSibling;return n&&n.nodeType===3?n.textContent.replace(/[:\s]+$/,'').trim():'';}
-/* поля окна создания по порядку: выбор, переключатель, площадки/форматы, кнопка (например «Первый кадр»); «Ещё настройки» и вложения — не в карточке */
-function dcrCtl(){
-  var pn=dcrPn(),row=pn&&pn.querySelector('.cp-row'),out=[];if(!row)return out;
-  [].forEach.call(row.children,function(el){
-    if(el.matches('details,.cp-attach'))return;
-    var sel=el.querySelector('select');
-    if(sel){if(!sel.dataset.projs)out.push({t:'sel',el:sel,k:dcrLab(el)});return;}
-    if(el.classList.contains('cp-toggle')){var b=el.querySelector('.toggle');if(b)out.push({t:'tg',el:b,k:el.textContent.trim()});return;}
-    if(el.classList.contains('cp-fmts')){out.push({t:'fmt',el:el,k:dcrLab(el)});return;}
-    if(el.matches('button'))out.push({t:'btn',el:el,k:el.textContent.trim()});
-  });
-  return out;
-}
-/* подсказки над полем: темы плана, «С чего начать», «Показать на примере» */
-function dcrSugg(){
-  var pn=dcrPn(),X=DCR_TXT[DCR.v]||{},p=CLIENT,today=dkey(TODAY),out=[];
-  if(p&&X.theme)PLAN.filter(function(x){return x.p===p;}).sort(function(a,b){var fa=a.d>=today,fb=b.d>=today;return fa!==fb?(fa?-1:1):a.d.localeCompare(b.d);}).slice(0,3).forEach(function(t){out.push('<button class="chip dcr-pl" type="button" title="Тема из контент-плана · '+hesc(plDate(t.d))+'" onclick="dcrTheme(\''+t.id+'\')">'+DCR_CAL+hesc(t.t)+'</button>');});
-  if(p&&/^soc-/.test(DCR.v)){var n=PLAN.filter(function(x){return x.p===p&&!plMade(x).length;}).length;if(n)out.push('<button class="chip dcr-pl" type="button" title="Собрать из темы плана — так публикации держат линию стратегии" onclick="dcrPq()">'+DCR_CAL+'Темы из плана ждут сборки · '+n+'</button>');}
-  [].forEach.call(pn.querySelectorAll('.cp-starters .chip, .cp-row2 .ik-ex'),function(c,i){out.push('<button class="chip" type="button" onclick="dcrQuick('+i+')">'+hesc(c.textContent.trim())+'</button>');});
-  return out;
-}
-function dcrStart(v,text){
-  var pn=CPD.ph[v]&&CPD.ph[v].pn;if(!pn)return;
-  if(!DCR||DCR.v!==v)DCR={v:v,msgs:[{r:'hello'}],text:'',draft:'',edit:false};
-  var ta=pn.querySelector('textarea');
-  if(text==null&&ta&&ta.value.trim())text=ta.value;   /* шаблон или «С чего начать» положили текст в старое поле */
-  if(ta)ta.value='';
-  if(text)DCR.draft=text;
-  var f=pn.querySelector('.cp-attach input');if(f&&!f.dataset.dcr){f.dataset.dcr=1;f.addEventListener('change',function(){setTimeout(function(){if(DCR)dcrRender();},30);});}
-  if(!DOCK.open)dockToggle(true);else dockRender(true);
-  dcrFocus();
-}
-function dcrFocus(){setTimeout(function(){var i=document.getElementById('dcr-in');if(i){i.focus({preventScroll:true});i.setSelectionRange(i.value.length,i.value.length);}},80);}
-function dcrMsg(m){
-  var p=CLIENT,X=DCR_TXT[DCR.v]||{hi:'Что делаем для {p}?'};
-  if(m.r==='me')return '<div class="chat-msg me">'+hesc(m.x).replace(/\n/g,'<br>')+'</div>';
-  if(m.r==='ai')return '<div class="chat-msg ai">'+m.h+'</div>';
-  if(m.r==='hello'){
-    if(!p)return '<div class="chat-msg ai"><p>Для какого клиента? Всё делается в его стиле и с его фактами.</p><div class="ps-opts">'+PROJECTS.map(function(x){return '<button class="chip" type="button" onclick="dcrClient(\''+esc(x.s)+'\')">'+hesc(x.s)+'</button>';}).join('')+'<button class="chip" type="button" onclick="openNewClient(null,dcrClient)">+ Новый клиент</button></div></div>';
-    var hint=DCR.v==='strat'||DCR.v==='plan'?cpHint(DCR.v):'';   /* только то, что меняет путь: нет стратегии, стратегия дополнится */
-    return '<div class="chat-msg ai"><p>'+X.hi.replace('{p}',hesc(qn(p)))+'</p>'+(hint?'<p class="dcr-hint">'+hint+'</p>':'')+'</div>';
-  }
-  /* m.r==='set' — уточняем настройки карточкой, как уточняющие вопросы */
-  var intro=(m.more?'Добавила. ':m.ed?'Обновила. ':'')+'Сделаю так:';
-  var short=DCR.text.length<40?' остальное — из базы фактов, пропуски спрошу после.':'';
-  return '<div class="chat-msg ai"><p>'+intro+short+'</p>'+dcrCard()+'</div>';
-}
-function dcrCard(){
-  var pn=dcrPn(),go=pn.querySelector('.cp-row2 .pbtn:not(.ghost)'),lab=(go?go.textContent.trim():'Создать')+(go&&go.dataset.cost?' · '+go.dataset.cost:'');
-  var rows='',tg='';
-  dcrCtl().forEach(function(c,i){
-    var ch=function(on,label,arg){return '<button class="chip'+(on?' on':'')+'" type="button" aria-pressed="'+on+'" onclick="dcrSet('+i+','+arg+')">'+hesc(label)+'</button>';};
-    if(c.t==='sel')rows+='<div class="dcr-row"><span class="dcr-k">'+hesc(c.k)+'</span><div class="dcr-ch">'+[].map.call(c.el.options,function(o){return ch(c.el.value===o.value,o.text,'\''+esc(o.value)+'\'');}).join('')+'</div></div>';
-    else if(c.t==='fmt')rows+='<div class="dcr-row"><span class="dcr-k">'+hesc(c.k)+'</span><div class="dcr-ch">'+[].map.call(c.el.querySelectorAll('.fmt-tg'),function(b,j){return ch(b.classList.contains('on'),b.textContent.trim(),j);}).join('')+'</div></div>';
-    else if(c.t==='btn')rows+='<div class="dcr-row"><button class="chip dcr-act" type="button" onclick="dcrSet('+i+')">'+hesc(c.k)+' →</button></div>';
-    else{var on=c.el.getAttribute('aria-pressed')==='true';tg+='<button class="dcr-tg'+(on?' on':'')+'" type="button" aria-pressed="'+on+'" onclick="dcrSet('+i+','+(on?0:1)+')"><i></i>'+hesc(c.k)+'</button>';}
-  });
-  if(tg)rows+='<div class="dcr-row dcr-tgs">'+tg+'</div>';
-  return '<div class="chq dcr-card" role="group" aria-label="Настройки перед запуском">'+rows+
-    '<div class="dcr-acts"><button class="pbtn" type="button" onclick="dcrGo()">'+hesc(lab)+'</button><button class="mini" type="button" onclick="dcrEdit()">Изменить текст</button></div></div>';
-}
-function dcrRender(){
-  var b=document.getElementById('dock-body'),pn=dcrPn();if(!b||!pn)return;DOCK.mode='cr';
-  var p=CLIENT,T=CPD_T[DCR.v]||['Создать',''],X=DCR_TXT[DCR.v]||{},ta=pn.querySelector('textarea'),nf=p?FACTS.filter(function(f){return f.p===p;}).length:0;
-  var ctx='<div class="ps-ctx"><span>Клиент</span><a onclick="clientMenu({stopPropagation:function(){},currentTarget:document.querySelector(\'.side .acct\')})">'+(p?hesc(p):'не выбран')+'</a>'+(p?'<a onclick="go(\'facts\')">'+plural(nf,'факт','факта','фактов')+'</a><a onclick="go(\'voice\')">голос</a>':'')+'</div>';
-  var sugg=!DCR.text&&p?dcrSugg():[],quick=sugg.length?'<div class="dcr-quick" role="group" aria-label="Подсказки">'+sugg.join('')+'</div>':'';
-  var att=pn.querySelector('.cp-attach'),al=pn.querySelector('.att-list'),files=al&&al.children.length?'<div class="att-list dcr-att">'+al.innerHTML+'</div>':'';
-  var ph=DCR.edit?'Поправьте текст задачи':DCR.text?'Что добавить или поменять?':(X.ph||(CPD_SAY[DCR.v]?'Например: '+CPD_SAY[DCR.v]:ta.placeholder));
-  b.innerHTML='<section class="ps-chat dock-ps dock-gen dcr">'+ctx+'<div class="ps-thread" id="dcr-thread">'+DCR.msgs.map(dcrMsg).join('')+'</div>'+quick+
-    '<div class="ps-comp">'+files+
-    '<textarea id="dcr-in" rows="2" maxlength="3000" placeholder="'+hesc(ph)+'" oninput="DCR.draft=this.value;var n=document.getElementById(\'dcr-n\');n.textContent=this.value.length+\' / 3000\';n.hidden=this.value.length<2500" onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();dcrSend();}"></textarea>'+
-    '<div class="ps-comp-row"><button class="cp-mic dcr-mic" id="dcr-mic" type="button" aria-label="Надиктовать голосом" title="Надиктовать голосом" onclick="dcrVoice()">'+MIC+'</button>'+
-    (att?'<button class="cp-mic dcr-mic" type="button" aria-label="'+hesc(att.textContent.trim())+'" title="'+hesc(att.textContent.trim())+'" onclick="dcrAttach()">'+DCR_CLIP+'</button>':'')+
-    '<button class="dcr-x" type="button" onclick="dcrCancel()" title="'+hesc(T[0])+' — отменить">Отменить</button><span class="dcr-n" id="dcr-n"'+(DCR.draft.length<2500?' hidden':'')+'>'+DCR.draft.length+' / 3000</span><span class="sp"></span><button class="pbtn" type="button" onclick="dcrSend()">Отправить</button></div></div></section>';
-  var i=document.getElementById('dcr-in');if(i)i.value=DCR.draft;
-  dockMark(dockAgNow());
-  var th=document.getElementById('dcr-thread');if(th)th.scrollTop=th.scrollHeight;
-}
-function dcrSend(){
-  if(!DCR)return;var i=document.getElementById('dcr-in'),t=(i?i.value:'').trim();
-  if(!t){if(i)i.focus();toast('Напишите, что делаем, — или возьмите подсказку над полем');return;}
-  if(DCR.rec)dcrVoiceStop(true);
-  var had=!!DCR.text,ed=DCR.edit;DCR.draft='';DCR.edit=false;
-  DCR.msgs=DCR.msgs.filter(function(m){return m.r!=='set';});
-  DCR.msgs.push({r:'me',x:t});
-  DCR.text=had&&!ed?DCR.text+'\n'+t:t;
-  if(CLIENT)DCR.msgs.push({r:'set',more:had&&!ed,ed:ed});
-  else DCR.msgs.push({r:'ai',h:'<p>Выберите клиента выше — и продолжим.</p>'});
-  dcrRender();dcrFocus();
-}
-function dcrSet(i,v){
-  var c=dcrCtl()[i];if(!c)return;
-  if(c.t==='sel'){c.el.value=v;try{c.el.dispatchEvent(new Event('change'));}catch(e){}}
-  else if(c.t==='fmt'){var b=c.el.querySelectorAll('.fmt-tg')[v];if(b)b.click();}
-  else if(c.t==='btn'){c.el.click();return;}
-  else if((c.el.getAttribute('aria-pressed')==='true')!==!!v)c.el.click();
-  dcrRender();
-}
-function dcrEdit(){if(!DCR)return;DCR.edit=true;DCR.draft=DCR.text;dcrRender();dcrFocus();}
-function dcrTheme(id){var t=plById(id),X=DCR_TXT[DCR.v];if(!t||!X||!X.theme)return;DCR.draft=X.theme(t);dcrRender();dcrFocus();}
-/* стартер или «Показать на примере» кладут текст в поле окна — забираем его в поле чата */
-function dcrQuick(i){
-  var pn=dcrPn(),c=pn&&pn.querySelectorAll('.cp-starters .chip, .cp-row2 .ik-ex')[i];if(!c)return;c.click();
-  setTimeout(function(){if(!DCR||dcrPn()!==pn)return;var ta=pn.querySelector('textarea');if(ta&&ta.value.trim()){DCR.draft=ta.value;ta.value='';dcrRender();dcrFocus();}},60);
-}
-function dcrPq(){if(!DCR)return;var q=document.getElementById('pq-'+DCR.v.slice(4));if(dockNarrow())dockToggle(false);if(q)q.scrollIntoView({behavior:'smooth',block:'start'});}
-function dcrAttach(){var pn=dcrPn(),f=pn&&pn.querySelector('.cp-attach input');if(f)f.click();}
-function dcrClient(p){
-  if(!p||!DCR)return;
-  DCR.msgs=DCR.msgs.filter(function(m){return m.r==='hello'||m.r==='me';});
-  if(DCR.text)DCR.msgs.push({r:'set'});
-  clientSet(p,false,true);dcrFocus();
-}
-function dcrCancel(){if(DCR&&DCR.rec)dcrVoiceStop(true);DCR=null;DOCK.mode='';dockRender(true);}
-function dcrGo(){
-  var d=DCR,pn=dcrPn();if(!d||!pn)return;
-  var ta=pn.querySelector('textarea');ta.value=d.text;try{ta.dispatchEvent(new Event('input'));}catch(e){}
-  pn.querySelectorAll('select[data-projs]').forEach(function(sel){if(CLIENT&&[].some.call(sel.options,function(o){return o.value===CLIENT;}))sel.value=CLIENT;});
-  var b=pn.querySelector('.cp-row2 .pbtn:not(.ghost)');if(!b)return;
-  d.pending=true;b.click();var used=!d.pending;d.pending=false;
-  /* разделы без подтверждения оплаты: запуск виден по окну сборки, переходу или очищенному полю */
-  if(!used&&DCR===d&&(document.getElementById('build-modal').classList.contains('on')||ROUTE.v!==d.v||!ta.value.trim()))dcrCommit(d);
-  else if(!used&&DCR===d)ta.value='';
-}
-/* запуск подтверждён — разговор уходит в общий чат колонки, справа результат */
-function dcrCommit(d){
-  var X=DCR_TXT[d.v]||{run:'Делаю'},c=dockChat(),parts=[];
-  dcrCtl().forEach(function(k){
-    if(k.t==='sel')parts.push(k.k.toLowerCase()+' — '+(k.el.selectedOptions[0]||{text:k.el.value}).text.toLowerCase());
-    else if(k.t==='fmt'){var on=[].filter.call(k.el.querySelectorAll('.fmt-tg.on'),function(){return 1;}).map(function(b){return b.textContent.trim();});if(on.length)parts.push(k.k.toLowerCase()+' — '+on.join(', '));}
-    else if(k.t==='tg'&&k.el.getAttribute('aria-pressed')==='true')parts.push(k.k.charAt(0).toLowerCase()+k.k.slice(1));
-  });
-  if(c.p!==CLIENT){c.p=CLIENT;c.general=false;if(CLIENT)c.msgs.push({r:'sys',x:'Клиент — '+hesc(qn(CLIENT))});}
-  c.msgs.push({r:'me',x:d.text});
-  c.msgs.push({r:'ai',ag:dockAgNow(),h:'<p>'+X.run+' для '+hesc(qn(CLIENT))+(parts.length?': '+hesc(parts.join(', ')):'')+'. Результат — справа.</p>'});
-  c.d='сегодня';c.ts=400+(++chSeq);try{renderChatList();}catch(e){}
-  if(d.rec)dcrVoiceStop(true);
-  DCR=null;DOCK.mode='';
-  if(dockNarrow()&&DOCK.open)dockToggle(false);
-}
-/* голос — как в окне создания: пишем, что слышим; без распознавания подставляем пример */
-function dcrVoice(){
-  if(!DCR)return;if(DCR.rec){dcrVoiceStop();return;}
-  var SR=window.SpeechRecognition||window.webkitSpeechRecognition,base=DCR.draft?DCR.draft.replace(/\s*$/,' '):'';
-  DCR.rec={t0:Date.now(),real:false};
-  var tick=function(){var m=document.getElementById('dcr-mic');if(!m||!DCR||!DCR.rec)return;var sec=Math.floor((Date.now()-DCR.rec.t0)/1000);m.classList.add('rec');m.setAttribute('aria-label','Остановить запись');m.innerHTML='<i></i>'+Math.floor(sec/60)+':'+pad2(sec%60)+' · Стоп';};
-  tick();DCR.rec.iv=setInterval(tick,250);
-  if(SR){try{var r=new SR();r.lang='ru-RU';r.interimResults=true;r.continuous=true;
-    r.onresult=function(e){if(!DCR)return;var t='';for(var k=0;k<e.results.length;k++)t+=e.results[k][0].transcript;DCR.draft=base+t;var x=document.getElementById('dcr-in');if(x)x.value=DCR.draft;var n=document.getElementById('dcr-n');if(n)n.textContent=DCR.draft.length+' / 3000';if(DCR.rec)DCR.rec.real=true;};
-    r.onerror=function(){};r.start();DCR.rec.r=r;}catch(e){}}
-}
-function dcrVoiceStop(silent){
-  var d=DCR,rec=d&&d.rec;if(!rec)return;d.rec=null;clearInterval(rec.iv);if(rec.r)try{rec.r.stop();}catch(e){}
-  if(silent){var m=document.getElementById('dcr-mic');if(m){m.classList.remove('rec');m.innerHTML=MIC;}return;}
-  if(!rec.real){d.draft=(d.draft?d.draft.replace(/\s*$/,' '):'')+(CPD_SAY[d.v]||'');toast('Голос расшифрован — в прототипе подставили пример фразы');}
-  dcrRender();dcrFocus();
-}
-(function(){
-  /* кнопки создания, шаблоны, «С чего начать», пустые экраны — всё, что открывало окно, теперь ведёт в чат */
-  var co=cpOpen;cpOpen=function(v){if(DCR_ON[v]&&CPD.ph[v]){dcrStart(v);return;}return co.apply(this,arguments);};
-  var dh=dockHand;dockHand=function(v){if(DCR_ON[v]&&CPD.ph[v]){if(ROUTE.v!==v)go(v);DCR=null;dcrStart(v,DOCK.last);return;}return dh.apply(this,arguments);};
-  var dr=dockRender;dockRender=function(){
-    if(DCR&&ROUTE.v!==DCR.v){if(DCR.rec)dcrVoiceStop(true);DCR=null;}
-    if(DCR){dcrRender();return;}
-    if(DOCK.mode==='cr')DOCK.mode='';
-    return dr.apply(this,arguments);
-  };
-  var sg=spendGate;spendGate=function(c,n,fn){var d=DCR&&DCR.pending?DCR:null;if(d)d.pending=false;return sg.call(this,c,n,d?function(){dcrCommit(d);return fn.apply(this,arguments);}:fn);};
-  /* выбрали первый кадр, убрали вложение — карточка в чате обновляется */
-  var cm=closeModal;closeModal=function(){var r=cm.apply(this,arguments);if(DCR&&DOCK.mode==='cr')setTimeout(function(){if(DCR)dcrRender();},0);return r;};
-  document.addEventListener('click',function(e){if(DCR&&e.target.closest&&e.target.closest('.dcr-att button'))setTimeout(function(){if(DCR)dcrRender();},30);});
-  HELP.pages.s=['«Новая страница» — задача пишется в чате слева: опишите, что продаём, или возьмите тему из контент-плана','Чат спросит про цель и иллюстрации карточкой — и соберёт лендинг в стиле клиента','Справа — список и превью: заполните пропуски, «Принять» → «Опубликовать» или «Отправить клиенту»'];
 })();
 
 /* ---------- toast ---------- */
