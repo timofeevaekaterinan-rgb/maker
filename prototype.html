@@ -1940,6 +1940,27 @@
   .lb-use.ub button:hover .ub-bn em,.lb-use.ub button:hover .ub-tx em{filter:brightness(1.12)}
   @media (prefers-reduced-motion:reduce){.lb-use.ub button{transition:none}.lb-use.ub button:hover{transform:none}}
   @media (max-width:480px){.ub-pv{height:70px}.ub-hero{height:44px}.ub-post{height:56px}.ub-st{display:none}}
+  /* листалка в окне кадра и ролика — заметная */
+  .lb-nav{display:flex;align-items:center;gap:6px;margin-left:auto}
+  .lb-nb{width:38px;height:38px;border-radius:11px;border:1px solid var(--line-2);background:var(--panel);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:border-color .15s,background .15s,color .15s}
+  .lb-nb svg{width:18px;height:18px}
+  .lb-nb:hover{border-color:var(--blue);background:var(--blue-softer);color:var(--blue-ink)}
+  .lb-nb:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .lb-nav .lb-cnt{min-width:58px;text-align:center;font:500 13.5px var(--sans);color:var(--ink-3);margin:0}
+  .lb-nav .lb-cnt b{color:var(--ink);font-weight:700}
+  .modalx.lb-x{margin-left:10px;position:relative}
+  .modalx.lb-x::before{content:'';position:absolute;left:-9px;top:8px;bottom:8px;width:1px;background:var(--line-2)}
+  .lb-side-nb{position:absolute;top:50%;z-index:2;width:46px;height:46px;margin-top:-23px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 20px -6px rgba(0,0,0,.45);transition:transform .15s,background .15s}
+  .lb-side-nb svg{width:22px;height:22px}
+  .lb-side-nb.prev{left:16px}
+  .lb-side-nb.next{right:16px}
+  .lb-side-nb:hover{background:#fff;transform:scale(1.06)}
+  .lb-side-nb:focus-visible{outline:2px solid #fff;outline-offset:3px}
+  .lb-one .lb-nav,.lb-one .lb-side-nb{display:none}
+  .lb-one .modalx.lb-x{margin-left:auto}
+  .lb-one .modalx.lb-x::before{display:none}
+  @media (max-width:600px){.lb-nb{width:34px;height:34px}.lb-nav .lb-cnt{min-width:46px;font-size:12.5px}.lb-side-nb{width:38px;height:38px;margin-top:-19px}.lb-side-nb.prev{left:10px}.lb-side-nb.next{right:10px}}
+  @media (prefers-reduced-motion:reduce){.lb-side-nb,.lb-nb{transition:none}.lb-side-nb:hover{transform:none}}
   .toast{z-index:100}
   @media (max-width:480px){.crumb .cr-a,.crumb .cr-a+.sep{display:none}.topbar{gap:8px}}
 
@@ -4184,13 +4205,11 @@
   <div class="modalcard lb">
     <div class="modalhd">
       <h3 id="lb-title">Кадр</h3>
-      <span class="lb-cnt" id="lb-cnt"></span>
-      <button class="modalx" onclick="lbStep(-1)" aria-label="Предыдущий кадр"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
-      <button class="modalx" onclick="lbStep(1)" aria-label="Следующий кадр"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
-      <button class="modalx" onclick="closeModal('shot-modal')" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="lb-nav" role="group" aria-label="Листать"><button class="lb-nb" type="button" onclick="lbStep(-1)" aria-label="Предыдущий кадр" title="Предыдущий · ←"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button><span class="lb-cnt" id="lb-cnt"></span><button class="lb-nb" type="button" onclick="lbStep(1)" aria-label="Следующий кадр" title="Следующий · →"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+      <button class="modalx lb-x" onclick="closeModal('shot-modal')" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="lb-body">
-      <div class="lb-stage"><img id="lb-img" alt=""><span class="lb-mark" id="lb-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2.4 17.5A2 2 0 0 0 4.1 20.5h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Не прошёл приёмку</span></div>
+      <div class="lb-stage"><button class="lb-side-nb prev" type="button" onclick="lbStep(-1)" aria-label="Предыдущий кадр"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="lb-side-nb next" type="button" onclick="lbStep(1)" aria-label="Следующий кадр"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><img id="lb-img" alt=""><span class="lb-mark" id="lb-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2.4 17.5A2 2 0 0 0 4.1 20.5h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Не прошёл приёмку</span></div>
       <div class="lb-side" id="lb-side"></div>
     </div>
   </div>
@@ -4305,10 +4324,8 @@
   <div class="modalcard lb">
     <div class="modalhd">
       <h3 id="vp-title">Ролик</h3>
-      <span class="lb-cnt" id="vp-cnt"></span>
-      <button class="modalx" onclick="vdStep(-1)" aria-label="Предыдущий ролик"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
-      <button class="modalx" onclick="vdStep(1)" aria-label="Следующий ролик"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
-      <button class="modalx" onclick="closeModal('video-modal')" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="lb-nav" role="group" aria-label="Листать"><button class="lb-nb" type="button" onclick="vdStep(-1)" aria-label="Предыдущий ролик" title="Предыдущий · ←"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button><span class="lb-cnt" id="vp-cnt"></span><button class="lb-nb" type="button" onclick="vdStep(1)" aria-label="Следующий ролик" title="Следующий · →"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+      <button class="modalx lb-x" onclick="closeModal('video-modal')" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="lb-body">
       <div class="vstage" id="vp-stage"></div>
@@ -4726,7 +4743,7 @@ function lbRender(){
   if(!sh){closeModal('shot-modal');return;}
   var x=serOf(sh),bad=sh.st==='bad',own=sh.st==='own',id=sh.id;
   document.getElementById('lb-title').textContent=sh.t;
-  document.getElementById('lb-cnt').textContent=(lbIdx+1)+' / '+lbList.length;
+  document.getElementById('lb-cnt').innerHTML='<b>'+(lbIdx+1)+'</b> из '+lbList.length;document.getElementById('shot-modal').classList.toggle('lb-one',lbList.length<2);
   var img=document.getElementById('lb-img');img.src=sh.img;img.alt=sh.t;img.className=(bad?'blur':'')+(sh.alt?' alt':'');
   document.getElementById('lb-mark').classList.toggle('on',bad);
   var note=bad?'<div class="lb-note bad"><b>Не прошёл приёмку.</b> '+sh.why+' Переснимем бесплатно — неудачный кадр не оплачивается.</div>'
@@ -5059,7 +5076,7 @@ function vpRender(){
   if(!vpR||v.fm.indexOf(vpR)<0)vpR=v.fm[0];
   var sh=shotById(v.shot),proc=v.st==='proc';
   document.getElementById('vp-title').textContent=v.t;
-  document.getElementById('vp-cnt').textContent=(vpIdx+1)+' / '+vpList.length;
+  document.getElementById('vp-cnt').innerHTML='<b>'+(vpIdx+1)+'</b> из '+vpList.length;document.getElementById('video-modal').classList.toggle('lb-one',vpList.length<2);
   document.getElementById('vp-stage').innerHTML=
     '<div class="vfmt">'+v.fm.map(function(r){return '<button type="button" class="'+(r===vpR?'on':'')+'" onclick="vpFmt(\''+r+'\')">'+r+'</button>';}).join('')+'</div>'+
     '<div class="vframe anim r'+vpR.replace(':','')+' mv-'+v.mv+'" id="vp-frame" data-vid="'+v.id+'" style="--dur:'+v.dur+'s"><div class="vph" style="'+vdPoster(v)+'"></div>'+
