@@ -1901,6 +1901,45 @@
   .ctx-chips[hidden]{display:none}
   .ch-none{margin:auto;max-width:340px;text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center;color:var(--ink-2);font-size:14px;padding:40px 0}
   .ch-none b{font:700 16px/1.3 var(--head);color:var(--ink)}
+  /* «Использовать в» — мини-превью */
+  .lb-use.ub{gap:10px}
+  .lb-use.ub2{grid-template-columns:1fr 1fr}
+  .lb-use.ub button{padding:0;overflow:hidden;align-items:stretch;gap:0;text-align:left;border-radius:14px;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+  .lb-use.ub button:hover{transform:translateY(-2px);box-shadow:0 12px 26px -16px rgba(20,40,90,.5);border-color:var(--blue-brd);background:var(--panel);color:var(--ink)}
+  .lb-use.ub button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .ub-pv{display:block;height:84px;position:relative;overflow:hidden;background:var(--inset);border-bottom:1px solid var(--line)}
+  .ub-l{display:flex;flex-direction:column;gap:1px;padding:8px 10px 9px}
+  .ub-l b{font-size:13px;font-weight:700}
+  .ub-l small{font-size:11.5px;font-weight:500;color:var(--ink-3)}
+  .ub-bn{background-size:cover;background-position:center}
+  .ub-bn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,16,24,.82),rgba(12,16,24,.1))}
+  .ub-bn b,.ub-bn s,.ub-bn em,.ub-ad{position:absolute;z-index:1}
+  .ub-bn b{left:10px;top:26px;width:58%;height:6px;border-radius:3px;background:#fff}
+  .ub-bn s{left:10px;top:37px;width:38%;height:4px;border-radius:2px;background:rgba(255,255,255,.65)}
+  .ub-bn em{left:10px;bottom:11px;width:36px;height:12px;border-radius:6px}
+  .ub-ad{right:7px;top:6px;font:600 7.5px var(--sans);font-style:normal;color:rgba(255,255,255,.75)}
+  .ub-pg{background:#fff;padding:7px 8px}
+  .ub-bar{display:flex;gap:3px;margin-bottom:7px}
+  .ub-bar i{width:4px;height:4px;border-radius:50%;background:var(--line-3)}
+  .ub-hero{display:grid;grid-template-columns:1fr 1fr;gap:7px;height:56px}
+  .ub-tx{display:flex;flex-direction:column;justify-content:center;gap:4px}
+  .ub-tx b{height:6px;width:92%;border-radius:3px;background:var(--ink)}
+  .ub-tx s{height:4px;width:74%;border-radius:2px;background:var(--line-3)}
+  .ub-tx s.sh{width:52%}
+  .ub-tx em{width:28px;height:10px;border-radius:5px;margin-top:3px}
+  .ub-im{display:block;border-radius:6px;background-color:var(--line);background-size:cover;background-position:center}
+  .ub-cm{background:linear-gradient(180deg,var(--inset),#fff);padding:8px;display:flex;align-items:flex-end;gap:7px}
+  .ub-post{flex:1;min-width:0;height:68px;display:flex;flex-direction:column;gap:3px;background:#fff;border:1px solid var(--line);border-radius:7px;padding:4px}
+  .ub-hd{display:flex;align-items:center;gap:3px}
+  .ub-hd i{width:7px;height:7px;border-radius:50%}
+  .ub-hd b{width:26px;height:3px;border-radius:2px;background:var(--line-3)}
+  .ub-post .ub-im{flex:1;border-radius:4px}
+  .ub-st{width:34px;display:flex;flex-direction:column;align-items:center;gap:2px}
+  .ub-st svg{width:34px;height:40px}
+  .ub-st small{font-size:8px;font-weight:600;color:var(--ink-3)}
+  .lb-use.ub button:hover .ub-bn em,.lb-use.ub button:hover .ub-tx em{filter:brightness(1.12)}
+  @media (prefers-reduced-motion:reduce){.lb-use.ub button{transition:none}.lb-use.ub button:hover{transform:none}}
+  @media (max-width:480px){.ub-pv{height:70px}.ub-hero{height:44px}.ub-post{height:56px}.ub-st{display:none}}
   .toast{z-index:100}
   @media (max-width:480px){.crumb .cr-a,.crumb .cr-a+.sep{display:none}.topbar{gap:8px}}
 
@@ -4646,6 +4685,14 @@ function reshoot(id){
       sh.st='redo';rerenderShots();
     });
 }
+/* «Использовать в»: карточки с мини-превью — этот кадр уже внутри баннера, страницы, объявления */
+function useCards(img,p,list){
+  var col=(p&&DESIGN[p]&&DESIGN[p].col.primary)||'#2E6BE6',bg=img?"background-image:url('"+img+"')":'';
+  var PV={banners:'<span class="ub-pv ub-bn" style="'+bg+'"><i class="ub-ad">Реклама</i><b></b><s></s><em style="background:'+col+'"></em></span>',
+    pages:'<span class="ub-pv ub-pg"><span class="ub-bar"><i></i><i></i><i></i></span><span class="ub-hero"><span class="ub-tx"><b></b><s></s><s class="sh"></s><em style="background:'+col+'"></em></span><span class="ub-im" style="'+bg+'"></span></span></span>',
+    campaigns:'<span class="ub-pv ub-cm"><span class="ub-post"><span class="ub-hd"><i style="background:'+col+'"></i><b></b></span><span class="ub-im" style="'+bg+'"></span></span><span class="ub-st"><svg viewBox="0 0 34 40" fill="none" stroke="'+col+'" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 34l8-7 7 4 8-12 7-6"/></svg><small>заявки</small></span></span>'};
+  return '<div class="lb-use ub'+(list.length===2?' ub2':'')+'">'+list.map(function(x){return '<button type="button" onclick="'+x[3]+'">'+PV[x[0]]+'<span class="ub-l"><b>'+x[1]+'</b><small>'+x[2]+'</small></span></button>';}).join('')+'</div>';
+}
 function useIn(view,id){
   if(view==='banners'){closeModal('shot-modal');bnUseShot(shotById(id));return;}
   var sh=shotById(id),what={banners:'в основной баннер',pages:'в страницу — выберите блок',campaigns:'в креатив кампании'}[view];
@@ -4693,7 +4740,7 @@ function lbRender(){
   var ic={banners:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h6M7 14h4"/></svg>',
     pages:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
     campaigns:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l15-6v14L3 13z"/><path d="M7 13v5"/></svg>'};
-  var use=bad?'':'<div><span class="lb-lbl">Использовать в</span><div class="lb-use"><button type="button" onclick="useIn(\'banners\','+id+')">'+ic.banners+'Баннер</button><button type="button" onclick="useIn(\'pages\','+id+')">'+ic.pages+'Страницу</button><button type="button" onclick="useIn(\'campaigns\','+id+')">'+ic.campaigns+'Кампанию</button></div></div>';
+  var use=bad?'':'<div><span class="lb-lbl">Использовать в</span>'+useCards(sh.img,x&&x.p,[['banners','Баннер','10 размеров',"useIn('banners',"+id+")"],['pages','Страницу','лендинг',"useIn('pages',"+id+")"],['campaigns','Кампанию','в объявление',"useIn('campaigns',"+id+")"]])+'</div>';
   var kv=function(k,v){return '<div class="kv"><span class="k">'+k+'</span><span class="v">'+v+'</span></div>';};
   document.getElementById('lb-side').innerHTML=
     '<div><span class="st '+sh.st+'">'+SH_ST[sh.st]+'</span></div>'+note+
@@ -5027,7 +5074,7 @@ function vpRender(){
     :v.st==='pub'?'<button class="pbtn ghost" data-engine="video-mp4" onclick="vdDl('+v.id+')">Скачать все форматы MP4</button><button class="pbtn ghost" onclick="vdRedo('+v.id+')">Переснять</button>':'';
   var ic={campaigns:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l15-6v14L3 13z"/><path d="M7 13v5"/></svg>',
     pages:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>'};
-  var use=proc?'':'<div><span class="lb-lbl">Использовать в</span><div class="lb-use" style="grid-template-columns:1fr 1fr"><button type="button" onclick="vdUse(\'campaigns\','+v.id+')">'+ic.campaigns+'Кампанию</button><button type="button" onclick="vdUse(\'pages\','+v.id+')">'+ic.pages+'Страницу</button></div></div>';
+  var use=proc?'':'<div><span class="lb-lbl">Использовать в</span>'+useCards(sh?sh.img:'',v.p,[['campaigns','Кампанию','в объявление',"vdUse('campaigns',"+v.id+")"],['pages','Страницу','первый экран',"vdUse('pages',"+v.id+")"]])+'</div>';
   document.getElementById('vp-side').innerHTML='<div><span class="st '+v.st+'">'+VD_ST[v.st]+'</span></div>'+note+
     '<div class="lb-prompt"><span class="lb-lbl">Сюжет</span>'+hesc(v.pr)+'</div>'+first+
     '<div>'+kv('Клиент',v.p)+kv('Как снимали',VD_MODE[v.model]||v.model)+kv('Длительность',v.dur+' с')+kv('Форматы',v.fm.join(' · '))+kv('Стоимость',v.cost)+kv('Дата',v.d)+'</div>'+
