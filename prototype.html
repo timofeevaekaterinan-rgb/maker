@@ -1984,6 +1984,20 @@
   .fn-ss i{width:100%;border-radius:4px 4px 2px 2px;background:var(--blue-soft,#C9D8FB)}
   .fn-ss .pk i{background:var(--blue)}.fn-ss .lo i{background:#C9CFDB}
   .fn-ss small{font-size:10.5px;color:var(--ink-3)}
+  /* финансы: источник — CRM */
+  .fn-empty{display:none}
+  #v-fin.fn-off .fn-empty{display:block}
+  #v-fin.fn-off > :not(.phead):not(.fn-empty):not(.sys-box){display:none!important}
+  .crm-list{display:grid;gap:8px}
+  .crm-opt{display:flex;align-items:center;gap:12px;text-align:left;border:1.5px solid var(--line-2);border-radius:14px;padding:12px 14px;background:#fff;cursor:pointer;font:inherit;color:var(--ink)}
+  .crm-opt:hover{border-color:var(--blue);background:var(--blue-softer)}
+  .crm-opt i{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font:800 13px var(--head);font-style:normal;color:#fff;flex:none}
+  .crm-opt b{display:block;font-size:14px}
+  .crm-opt small{display:block;font-size:12.5px;color:var(--ink-3)}
+  .crm-map{display:grid;gap:10px;margin:4px 0 6px}
+  .crm-map label{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:10px;align-items:center;font-size:13.5px;color:var(--ink-2)}
+  .crm-map select,.crm-map input{border:1px solid var(--line-2);border-radius:10px;padding:8px 10px;font:inherit;color:var(--ink);background:#fff;min-width:0}
+  @media (max-width:520px){.crm-map label{grid-template-columns:1fr;gap:4px}}
   .toast{z-index:100}
   @media (max-width:480px){.crumb .cr-a,.crumb .cr-a+.sep{display:none}.topbar{gap:8px}}
 
@@ -3617,6 +3631,8 @@
       <!-- ============ FINANCE ============ -->
       <section id="v-fin" class="view">
         <div class="phead"><div><h1>Финансы и клиенты</h1></div><div class="sp"></div></div>
+        <div class="src-row" id="fn-src"></div>
+        <div class="fn-empty" id="fn-empty"><div class="ns-empty"><b>Подключите CRM</b><span>Оплаты клиентов, счета и сроки Maker возьмёт из вашей CRM — amoCRM, Битрикс24 или Мегаплана. Реклама и производство подтянутся из кампаний и журнала Maker. В CRM мы ничего не меняем — только читаем.</span><div class="lb-acts"><button class="pbtn" type="button" onclick="finConnect()">Подключить CRM</button><button class="pbtn ghost" type="button" onclick="finAuth('sheet')">Нет CRM — загрузить таблицу</button></div></div></div>
         <div class="step-h">Итог</div>
         <div class="sum-card" id="fn-sum"></div>
         <div id="fn-ins"></div>
@@ -8261,7 +8277,7 @@ function glossApply(){
   if(glossBusy)return;var view=document.querySelector('.view.on');if(!view)return;glossBusy=true;
   try{
     var seen={};view.querySelectorAll('abbr.gl').forEach(function(a){seen[a.dataset.k]=1;});
-    var w=document.createTreeWalker(view,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentNode;if(!p||p.closest('input,textarea,select,button,abbr,svg,script,style,h1,.mk,.cs,.ph9,.bn,.dd,.chip,.sl'))return NodeFilter.FILTER_REJECT;return n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}});
+    var w=document.createTreeWalker(view,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentNode;if(!p||p.closest('input,textarea,select,button,abbr,svg,script,style,h1,.mk,.cs,.ph9,.bn,.dd,.chip,.sl,.src-row,.crm-opt'))return NodeFilter.FILTER_REJECT;return n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}});
     var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
     nodes.forEach(function(n){
       for(var i=0;i<GLOSS.length;i++){var g=GLOSS[i],k=g[1];if(seen[k])continue;var ix=n.nodeValue.indexOf(g[0]);if(ix<0)continue;
@@ -11247,6 +11263,63 @@ function renderFin(){
     return r;};
   var vr=VIEW_RENDER.result;VIEW_RENDER.result=function(){var r=vr&&vr.apply(this,arguments);navRt();return r;};
   HELP.result.s=['«Публикации и ЦА» — как зашли посты, какие рубрики читают и кто реагирует','«Реклама» — окупается ли: заявки, цена заявки, выручка','«Дать больше тем» в публикациях сдвинет доли рубрик для следующего плана'];
+})();
+
+/* ---------- финансы из CRM: amoCRM / Битрикс24 / Мегаплан или таблица — только чтение ---------- */
+var CRMS={amo:['amoCRM','#2E6BE6','am','сделки, счета и оплаты'],b24:['Битрикс24','#2FC6F6','24','сделки, счета и оплаты'],mgp:['Мегаплан','#F26B3A','Мп','сделки и счета'],sheet:['Таблица','#1F9D6B','xls','Google Таблицы или Excel — если CRM нет']};
+FIN.src={id:'amo',acc:'sever.amocrm.ru',d:'сегодня, 09:00',pipe:'Клиенты агентства',paid:'Оплачено'};
+FIN.manual={d:'1 окт'};
+function finSrc(){
+  var el=document.getElementById('fn-src'),v=document.getElementById('v-fin');if(!el||!v)return;
+  v.classList.toggle('fn-off',!FIN.src);
+  if(!FIN.src){el.innerHTML='';return;}
+  var C=CRMS[FIN.src.id];
+  el.innerHTML='<span class="src-l">Откуда цифры:</span><span class="sck ok" title="Оплаты клиентов, счета и сроки — воронка «'+hesc(FIN.src.pipe||'')+'»">'+C[0]+(FIN.src.acc?' · '+hesc(FIN.src.acc):'')+' · '+FIN.src.d+'</span><span class="sck ok">Кампании — реклама</span><span class="sck ok">Журнал Maker — производство</span><span class="sck" title="Остаток на счёте, зарплаты и аренда">Касса и постоянные расходы — вручную, '+FIN.manual.d+'</span>'+
+    '<button class="mini" type="button" onclick="finSync()">Обновить</button><button class="mini" type="button" onclick="finManual()">Внести вручную</button><button class="mini" type="button" onclick="finConnect()">Сменить CRM</button>';
+}
+function finSync(){toast('Забираем свежие оплаты из '+CRMS[FIN.src.id][0]+'…');setTimeout(function(){FIN.src.d='сегодня, только что';renderFin();toast('Обновили: новых оплат нет');},900);}
+function finConnect(){
+  document.getElementById('gt-title').textContent='Откуда брать оплаты клиентов';
+  document.getElementById('gt-body').innerHTML='<p class="cn-p">Maker прочитает сделки, счета и оплаты — и посчитает деньги по клиентам и кассу вперёд. В CRM ничего не меняем.</p><div class="crm-list">'+
+    Object.keys(CRMS).map(function(k){var c=CRMS[k];return '<button class="crm-opt" type="button" onclick="finAuth(\''+k+'\')"><i style="background:'+c[1]+'">'+c[2]+'</i><span><b>'+c[0]+'</b><small>'+c[3]+'</small></span></button>';}).join('')+'</div>'+
+    '<div class="gate-acts"><button class="pbtn ghost" type="button" onclick="closeModal(\'gate-modal\')">Отмена</button></div>';
+  openModal('gate-modal');
+}
+function finAuth(k){
+  var C=CRMS[k],b=document.getElementById('gt-body');document.getElementById('gt-title').textContent='Подключить '+C[0];
+  if(!document.getElementById('gate-modal').classList.contains('on'))openModal('gate-modal');
+  if(k==='sheet'){b.innerHTML='<p class="cn-p">Загрузите таблицу: клиент, сумма в месяц, дата оплаты, статус оплаты. Шаблон — <a class="chat-link" onclick="toast(\'Шаблон таблицы скачан (в прототипе имитировано)\')">скачать</a>.</p><label class="cp-attach">Выбрать файл — XLSX или CSV<input type="file" accept=".xlsx,.xls,.csv" onchange="finMap(\'sheet\',this.files[0]&&this.files[0].name)"></label><div class="gate-acts"><button class="pbtn ghost" type="button" onclick="finConnect()">Назад</button></div>';return;}
+  b.innerHTML='<div class="cn-wait"><div class="au-spin" aria-hidden="true"></div><p role="status">Открываем '+C[0]+'… Войдите и разрешите Maker читать сделки и счета — вернём сюда сами.<br><small>в прототипе имитировано</small></p></div>';
+  setTimeout(function(){finMap(k);},1200);
+}
+function finMap(k,file){
+  var C=CRMS[k],b=document.getElementById('gt-body'),sel=function(id,o){return '<select id="'+id+'">'+o.map(function(x){return '<option>'+x+'</option>';}).join('')+'</select>';};
+  b.innerHTML='<p class="cn-p">'+(file?'Файл '+hesc(qn(file))+' прочитан.':C[0]+' разрешил доступ.')+' Проверьте, что откуда берём:</p><div class="crm-map">'+
+    (k==='sheet'?'<label>Лист с клиентами'+sel('cm-pipe',['Клиенты','Лист1'])+'</label>':'<label>Воронка с клиентами агентства'+sel('cm-pipe',['Клиенты агентства','Основная воронка','Продажи'])+'</label><label>Клиент заплатил, когда сделка на этапе'+sel('cm-paid',['Оплачено','Успешно реализовано','Счёт оплачен'])+'</label>')+
+    '<label>Сумма в месяц — поле'+sel('cm-sum',k==='sheet'?['Сумма в месяц','Сумма']:['Бюджет сделки','Гонорар','Сумма счёта'])+'</label><label>Дата оплаты — поле'+sel('cm-day',k==='sheet'?['Дата оплаты','День оплаты']:['Срок оплаты счёта','Дата оплаты'])+'</label></div>'+
+    '<p class="cp-note" style="margin:6px 0 0">Клиентов сопоставим по названию сделки — найдём «Вита», «СберТаргет», «Атвинта» и «Таргет-сайт».</p>'+
+    '<div class="gate-acts"><button class="pbtn ghost" type="button" onclick="finConnect()">Назад</button><button class="pbtn" type="button" onclick="finDone(\''+k+'\','+(file?'\''+esc(file)+'\'':'null')+')">Подключить</button></div>';
+}
+function finDone(k,file){
+  var g=function(id){var e=document.getElementById(id);return e?e.value:'';};
+  FIN.src={id:k,acc:k==='amo'?'sever.amocrm.ru':k==='b24'?'sever.bitrix24.ru':k==='mgp'?'sever.megaplan.ru':(file||'таблица'),d:'сегодня, только что',pipe:g('cm-pipe'),paid:g('cm-paid')};
+  closeModal('gate-modal');renderFin();toast(CRMS[k][0]+' подключён — оплаты клиентов и сроки теперь берём оттуда');
+}
+function finManual(){
+  document.getElementById('gt-title').textContent='Касса и постоянные расходы';
+  document.getElementById('gt-body').innerHTML='<p class="cn-p">Этого нет в CRM — внесите раз в месяц, остальное Maker посчитает сам.</p><div class="crm-map"><label>На счёте агентства сейчас, ₽<input id="fm-cash" inputmode="numeric" value="'+FIN.cash+'"></label><label>Зарплаты 5-го и 20-го, ₽ каждая<input id="fm-sal" inputmode="numeric" value="'+FIN.fixed[0][1]+'"></label><label>Аренда и сервисы 1-го, ₽<input id="fm-rent" inputmode="numeric" value="'+FIN.fixed[2][1]+'"></label></div>'+
+    '<div class="gate-acts"><button class="pbtn ghost" type="button" onclick="closeModal(\'gate-modal\')">Отмена</button><button class="pbtn" type="button" onclick="finManualGo()">Сохранить</button></div>';
+  openModal('gate-modal');
+}
+function finManualGo(){
+  var n=function(id){return +String(document.getElementById(id).value).replace(/\D/g,'')||0;};
+  FIN.cash=n('fm-cash');FIN.fixed[0][1]=FIN.fixed[1][1]=n('fm-sal');FIN.fixed[2][1]=n('fm-rent');FIN.manual.d='сегодня';
+  closeModal('gate-modal');renderFin();toast('Сохранили — касса пересчитана');
+}
+(function(){
+  var rf=renderFin;renderFin=function(){finSrc();if(!FIN.src)return;return rf.apply(this,arguments);};VIEW_RENDER.fin=renderFin;
+  var sa=stateApply;stateApply=function(){var r=sa.apply(this,arguments);if(STATE==='new'||STATE==='first')FIN.src=null;return r;};
+  HELP.fin.q=[['Откуда цифры?','Оплаты клиентов, счета и сроки — из вашей CRM (amoCRM, Битрикс24, Мегаплан) или таблицы. Реклама — из кампаний, производство — из журнала Maker. Касса и постоянные расходы вносятся вручную раз в месяц.'],['Maker что-то меняет в CRM?','Нет, только читает сделки и счета.'],['Где оплата Maker?','В профиле: аватар → «Оплата и документы».']];
 })();
 
 /* ---------- toast ---------- */
