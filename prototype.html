@@ -1736,6 +1736,9 @@
   .top-chat{margin-left:auto}
   .top-bell.top-chat{width:auto;border-radius:20px;padding:0 14px 0 12px;display:inline-flex;align-items:center;gap:6px;background:var(--blue);border-color:var(--blue);color:#fff;font:600 13.5px var(--sans)}
   .top-bell.top-chat:hover{background:var(--blue-ink);border-color:var(--blue-ink)}
+  .top-chat.dock-hint{animation:dockHint 2.4s ease-out infinite}
+  @keyframes dockHint{0%{box-shadow:0 0 0 0 rgba(46,107,230,.5)}70%,100%{box-shadow:0 0 0 12px rgba(46,107,230,0)}}
+  @media (prefers-reduced-motion:reduce){.top-chat.dock-hint{animation:none;box-shadow:0 0 0 4px rgba(46,107,230,.25)}}
   .top-chat+.top-help{margin-left:8px}
   .ps.ps-solo .ps-seg{display:none}
   .ps.ps-solo .ps-main{grid-template-columns:minmax(0,1fr)}
@@ -10234,7 +10237,8 @@ function dockPack(){var t=DOCK.last;if(dockNarrow())dockToggle(false);PK_PICK=PK
 function dockToggle(open){
   DOCK.open=open===undefined?!DOCK.open:!!open;
   var a=dockApp();if(a)a.classList.toggle('dock-on',DOCK.open);
-  if(!dockNarrow())try{localStorage.setItem('mk-dock',DOCK.open?'1':'0');}catch(e){}
+  if(!dockNarrow())DOCK.wide=DOCK.open;
+  if(DOCK.open){var hb=document.getElementById('dock-btn');if(hb)hb.classList.remove('dock-hint');}
   if(open===false&&!dockNarrow())toast('Чат скрыт — вернуть можно кнопкой «Чат» вверху справа',{t:'Вернуть',fn:function(){dockToggle(true);}});
   var v=ROUTE.v;DOCK.mode='';
   if(v==='soc-post')renderSoc('post');else if(v==='pack')pkRender();
@@ -10269,12 +10273,12 @@ function dockToggle(open){
     if(!DOCK.open||dockNarrow())dockToggle(true);
     dockSend(text,files);
   };
-  var lastN=null;window.addEventListener('resize',function(){var n=dockNarrow();if(lastN===null){lastN=n;return;}if(n!==lastN){lastN=n;if(n){DOCK.open=false;dockApp().classList.remove('dock-on');}else{var s='1';try{s=localStorage.getItem('mk-dock')||'1';}catch(e){}DOCK.open=s!=='0';dockApp().classList.toggle('dock-on',DOCK.open);}DOCK.mode='';var v=ROUTE.v;if(v==='soc-post')renderSoc('post');else if(v==='pack')pkRender();dockRender(true);}});
+  var lastN=null;window.addEventListener('resize',function(){var n=dockNarrow();if(lastN===null){lastN=n;return;}if(n!==lastN){lastN=n;if(n){DOCK.open=false;dockApp().classList.remove('dock-on');}else{DOCK.open=!!DOCK.wide;dockApp().classList.toggle('dock-on',DOCK.open);}DOCK.mode='';var v=ROUTE.v;if(v==='soc-post')renderSoc('post');else if(v==='pack')pkRender();dockRender(true);}});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&DOCK.open&&dockNarrow()&&!document.querySelector('.modalbg.on'))dockToggle(false);});
-  HELP.home.q.push(['Где чат?','Колонка рядом с меню — на любом экране. Скрыть — кнопка в её шапке, вернуть — синяя кнопка «Чат» вверху справа.']);
+  HELP.home.q.push(['Где чат?','Синяя кнопка «Чат» вверху справа — открывает колонку рядом с меню, она работает на любом экране. Скрыть — кнопка в её шапке.']);
   setTimeout(function(){
-    var s='1';try{s=localStorage.getItem('mk-dock')||'1';}catch(e){}
-    DOCK.open=s!=='0'&&!dockNarrow();lastN=dockNarrow();var a=dockApp();if(a)a.classList.toggle('dock-on',DOCK.open);
+    /* при входе чат не открываем — кнопка «Чат» подсвечена, пока его не откроют */
+    DOCK.open=false;DOCK.wide=false;lastN=dockNarrow();var hb=document.getElementById('dock-btn');if(hb)hb.classList.add('dock-hint');var a=dockApp();if(a)a.classList.toggle('dock-on',DOCK.open);
     var v=ROUTE.v;if(v==='soc-post')renderSoc('post');else if(v==='pack')pkRender();
     dockRender(true);
   },120);
