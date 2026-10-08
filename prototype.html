@@ -4183,7 +4183,7 @@
 
       <!-- ============ PACK ============ -->
       <section id="v-pack" class="view">
-        <div class="phead"><div><h1>Сборка пакета</h1></div></div>
+        <div class="phead"><div><h1>Стартовый набор</h1></div></div>
         <div id="pk"></div>
       </section>
 
@@ -10057,7 +10057,7 @@ function psFromPlan(id){
   
 })();
 
-/* ---------- Сборка пакета: всё о клиенте одним заходом → разложили по вкладкам → собрали материалы разом → управляем из одного чата ---------- */
+/* ---------- Стартовый набор: всё о клиенте одним заходом → разложили по вкладкам → собрали материалы разом → управляем из одного чата ---------- */
 var PK_ITEMS=[
   ['parse','Разобрать по вкладкам','аудитории, факты, голос, стиль',.41,'<path d="M4 6h16M4 12h10M4 18h7"/><path d="M17 15l3 3-3 3"/>'],
   ['strat','Стратегия','цель, аудитории, площадки, рубрики',.82,'<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'],
@@ -10075,10 +10075,10 @@ var PK_PICK={strat:1,plan:1,post:3,car:0,story:0,bn:1,page:0,deck:1},PK_ON=false
 var PACKS=[],PK=null,pkSeq=0;
 function pkCost(pk){var s=.41;Object.keys(pk).forEach(function(k){if(pk[k])s+=pkI(k)[3]*(k==='post'?pk[k]:1);});return Math.round(s*100)/100;}
 
-/* ---- Главная: переключатель «Собрать пакет» и галочки ---- */
+/* ---- Главная: переключатель «Стартовый набор» и галочки ---- */
 function pkRow(){
   var el=document.getElementById('pk-row');if(!el)return;
-  var head='<label class="pk-sw"><button class="toggle" type="button" aria-pressed="'+PK_ON+'" onclick="PK_ON=!PK_ON;pkRow();pkSendLabel()"></button><span><b>Собрать пакет материалов</b></span></label>';
+  var head='<label class="pk-sw"><button class="toggle" type="button" aria-pressed="'+PK_ON+'" onclick="PK_ON=!PK_ON;pkRow();pkSendLabel()"></button><span><b>Стартовый набор для клиента</b></span></label>';
   if(!PK_ON){el.innerHTML=head;el.classList.remove('on');return;}
   el.classList.add('on');
   var chips=PK_ITEMS.slice(1).map(function(it){var k=it[0],on=!!PK_PICK[k];
@@ -10093,7 +10093,7 @@ function pkToggle(k){setTimeout(pkSendLabel,0);
   pkRow();
 }
 function pkPosts(d){setTimeout(pkSendLabel,0);PK_PICK.post=Math.max(1,Math.min(8,PK_PICK.post+d));pkRow();}
-function pkSendLabel(){var b=document.querySelector('.hc-send');if(!b)return;var t=[].filter.call(b.childNodes,function(n){return n.nodeType===3;})[0];if(t)t.nodeValue=PK_ON?'Собрать пакет · до '+rub2(pkCost(PK_PICK))+' ':'Начать ';if(!PK_ON){b.removeAttribute('data-tip');delete b.dataset.cost;}}
+function pkSendLabel(){var b=document.querySelector('.hc-send');if(!b)return;var t=[].filter.call(b.childNodes,function(n){return n.nodeType===3;})[0];if(t)t.nodeValue=PK_ON?'Собрать стартовый набор · до '+rub2(pkCost(PK_PICK))+' ':'Начать ';if(!PK_ON){b.removeAttribute('data-tip');delete b.dataset.cost;}}
 function pkSample(){var p=CLIENT||(PROJECTS[0]&&PROJECTS[0].s)||'Кофейня Зерно';hcType(ikSample(p),CLIENT?CLIENT:'');}
 
 /* ---- старт: текст и файлы с Главной ---- */
@@ -10103,9 +10103,9 @@ function pkStart(text,files){
   PK={id:'k'+(++pkSeq),p:p&&projByShort(p)?p:'',text:text,files:files,pick:pick,items:[],chat:[],view:'all',pane:'chat',st:'new',rep:null,cost:pkCost(pick),await:''};PACKS.push(PK);
   var who=(files.length?plural(files.length,'файл','файла','файлов')+(text?' и текст':''):'текст');
   PK.chat.push({r:'me',x:(text?hesc(text.length>260?text.slice(0,260)+'…':text):'')+(files.length?'<div class="pk-att">'+files.map(function(f){return '<span>'+hesc(f.n)+'</span>';}).join('')+'</div>':'')});
-  PK.chat.push({r:'sys',x:'Пакет: '+PK_ITEMS.filter(function(it){return it[0]==='parse'||pick[it[0]];}).map(function(it){return it[0]==='post'?pick.post+' '+plural(pick.post,'пост','поста','постов').replace(/^\d+ /,''):it[1].toLowerCase();}).join(', ')+' · до '+rub2(PK.cost)});
+  PK.chat.push({r:'sys',x:'Стартовый набор: '+PK_ITEMS.filter(function(it){return it[0]==='parse'||pick[it[0]];}).map(function(it){return it[0]==='post'?pick.post+' '+plural(pick.post,'пост','поста','постов').replace(/^\d+ /,''):it[1].toLowerCase();}).join(', ')+' · до '+rub2(PK.cost)});
   PK.items=['parse'].concat(['strat','plan','post','car','story','bn','page','deck'].filter(function(k){return pick[k];})).map(function(k){return {k:k,st:'wait',refs:[],meta:''};});
-  go('pack');routeDetail(PK.id,'Пакет');
+  go('pack');routeDetail(PK.id,'Стартовый набор');
   if(!PK.p){pkAskClient(text);return;}
   pkGo();
 }
@@ -10122,7 +10122,7 @@ function pkGo(){
   var keys=['parse'].concat(['strat','plan','post','car','story','bn','page','deck'].filter(function(k){return PK.pick[k];}));
   PK.items=keys.map(function(k){return {k:k,st:'wait',refs:[],meta:''};});
   pkRender();
-  spendGate(PK.cost,'Пакет для '+qn(p),function(){
+  spendGate(PK.cost,'Стартовый набор для '+qn(p),function(){
     PK.chat.push({r:'ai',x:'<p>Начали. Сначала разложим присланное по вкладкам '+hesc(qn(p))+', потом соберём материалы — каждый из того, что уже лежит в памяти клиента. Готовое появляется справа сразу.</p>'});
     pkRender();pkStep(0);
   });
@@ -10130,7 +10130,7 @@ function pkGo(){
 function pkStep(i){
   var pk=PK;if(!pk||i>=pk.items.length){pkFinish(pk);return;}
   var it=pk.items[i];it.st='run';pkRender();
-  setTimeout(function(){try{pkBuild(pk,it);}catch(e){it.meta='не получилось — попробуйте ещё раз';}it.st='done';charge(pk.p,'Пакет',pkI(it.k)[1]+' · пакет '+qn(pk.p),pkI(it.k)[3]*(it.k==='post'?(it.refs.length||1):1));if(PK===pk)pkRender();pkStep(i+1);},it.k==='parse'?1300:850);
+  setTimeout(function(){try{pkBuild(pk,it);}catch(e){it.meta='не получилось — попробуйте ещё раз';}it.st='done';charge(pk.p,'Стартовый набор',pkI(it.k)[1]+' · стартовый набор '+qn(pk.p),pkI(it.k)[3]*(it.k==='post'?(it.refs.length||1):1));if(PK===pk)pkRender();pkStep(i+1);},it.k==='parse'?1300:850);
 }
 function pkText(pk){
   if(pk.text)return pk.text;
@@ -10173,7 +10173,7 @@ function pkBuild(pk,it){
   if(it.k==='bn'){
     var s=STRATS[p]||{},th1=PLAN.filter(function(x){return x.p===p;})[0],cta=/запис|чекап|приём|прием/i.test((s.goal||'')+t)?'Записаться':/заказ/i.test((s.goal||'')+t)?'Заказать':'Оставить заявку';
     var h1=(s.msgs&&s.msgs[0]&&!/^\[/.test(s.msgs[0])?s.msgs[0]:th1?th1.t:p).slice(0,48),sub=s.pos&&!/^\[/.test(s.pos)?s.pos.slice(0,80):'Подробности — по кнопке';
-    var x=bnNewSet(p,'Пакет · '+h1.slice(0,30),[{h:h1,s:sub,c:cta},{h:(th1?th1.t:h1).slice(0,48),s:factFor(p,['Цены и условия'],0).slice(0,80)||sub,c:cta},{h:'Успейте до конца месяца',s:h1,c:cta}],'');
+    var x=bnNewSet(p,'Стартовый набор · '+h1.slice(0,30),[{h:h1,s:sub,c:cta},{h:(th1?th1.t:h1).slice(0,48),s:factFor(p,['Цены и условия'],0).slice(0,80)||sub,c:cta},{h:'Успейте до конца месяца',s:h1,c:cta}],'');
     it.refs=[x.id];it.meta='3 варианта текста × 10 размеров · вставьте erid';return;
   }
   if(it.k==='page'){
@@ -10217,13 +10217,13 @@ function pkConflicts(p,r){
 function pkFinish(pk){
   if(!pk)return;pk.st='done';var p=pk.p,made=pk.items.filter(function(it){return it.k!=='parse';});
   var gaps=faGaps(p),ig=ikGaps(p).filter(function(g){return ['aud','goal','pos'].indexOf(g[0])>=0;});
-  var h='<p><b>Пакет готов.</b> Разложили присланное по вкладкам и собрали '+made.map(function(it){return it.k==='post'?plural(it.refs.length,'пост','поста','постов'):pkI(it.k)[1].toLowerCase();}).join(', ')+'. Всё — черновики: проверьте и отправьте клиенту одной ссылкой.</p>';
+  var h='<p><b>Стартовый набор готов.</b> Разложили присланное по вкладкам и собрали '+made.map(function(it){return it.k==='post'?plural(it.refs.length,'пост','поста','постов'):pkI(it.k)[1].toLowerCase();}).join(', ')+'. Всё — черновики: проверьте и отправьте клиенту одной ссылкой.</p>';
   if(pk.conf&&pk.conf.length)h+='<p><b>Есть расхождение:</b> в базе «'+hesc(pk.conf[0].a.t)+'», а в брифе «'+hesc(pk.conf[0].b)+'». Какую цену оставить?</p><div class="ps-opts"><button class="chip" type="button" onclick="pkConf(0,1)">Из брифа</button><button class="chip" type="button" onclick="pkConf(0,0)">Как в базе</button></div>';
   if(gaps.length){pk.await=gaps[0].k;h+='<p>Чего мы не знаем — '+plural(gaps.length,'пропуск','пропуска','пропусков')+'. Первый: <span class="mk-ph">'+hesc(gaps[0].k)+'</span> — встречается в '+gaps[0].w.join(', ')+'. Напишите ответ сюда — подставлю во все материалы сразу.</p>';}
   else h+='<p>Пропусков нет — во всех материалах только известные факты.</p>';
   if(ig.length)h+='<p class="pk-mute">Ещё не хватает для стратегии: '+ig.map(function(g){return g[1].toLowerCase();}).join(', ')+'.</p>';
   pk.chat.push({r:'ai',x:h});
-  ntfPush({p:p,k:'ready',t:'Пакет готов',s:qn(p)+' · '+plural(made.length,'материал','материала','материалов')+' — в вкладках клиента',fn:function(){PK=pk;go('pack');}});
+  ntfPush({p:p,k:'ready',t:'Стартовый набор готов',s:qn(p)+' · '+plural(made.length,'материал','материала','материалов')+' — в вкладках клиента',fn:function(){PK=pk;go('pack');}});
   try{renderToday();stateEval();}catch(e){}
   if(PK===pk)pkRender();
 }
@@ -10233,17 +10233,17 @@ function pkConf(i,useNew){var pk=PK,c=pk.conf[i];if(!c)return;if(useNew){c.a.t=c
 function pkRender(){
   var root=document.getElementById('pk');if(!root)return;
   var h1=document.querySelector('#v-pack .phead h1');
-  if(!PK){if(h1)h1.textContent='Сборка пакета';root.className='pk';root.innerHTML='<div class="ps-empty pk-none"><div class="ps-empty-in"><span class="ps-empty-ic">'+pkIc('parse')+'</span><b>Пакета пока нет</b><span>На Главной включите «Собрать пакет материалов», отдайте всё, что есть о клиенте, и отметьте, что подготовить.</span><button class="pbtn" type="button" onclick="go(\'home\');PK_ON=true;pkRow();pkSendLabel()">На Главную</button></div></div>';return;}
-  if(h1)h1.textContent='Пакет'+(PK.p?' · '+PK.p:'');
+  if(!PK){if(h1)h1.textContent='Стартовый набор';root.className='pk';root.innerHTML='<div class="ps-empty pk-none"><div class="ps-empty-in"><span class="ps-empty-ic">'+pkIc('parse')+'</span><b>Стартового набора пока нет</b><span>На Главной включите «Стартовый набор для клиента», отдайте всё, что есть о клиенте, и отметьте, что подготовить.</span><button class="pbtn" type="button" onclick="go(\'home\');PK_ON=true;pkRow();pkSendLabel()">На Главную</button></div></div>';return;}
+  if(h1)h1.textContent='Стартовый набор'+(PK.p?' · '+PK.p:'');
   root.className='ps pk pane-'+PK.pane;
   var others=PACKS.filter(function(x){return x!==PK;});
-  root.innerHTML='<div class="ps-seg" role="tablist"><button type="button" role="tab" aria-selected="'+(PK.pane==='chat')+'" onclick="PK.pane=\'chat\';pkRender()">Чат</button><button type="button" role="tab" aria-selected="'+(PK.pane==='art')+'" onclick="PK.pane=\'art\';pkRender()">Пакет</button></div>'+
-    '<div class="ps-main"><section class="ps-chat" aria-label="Чат по пакету"><div class="ps-ch-hd"><div class="pk-ch-t"><span class="ps-sw-k">'+(others.length?plural(PACKS.length,'пакет','пакета','пакетов')+' · ':'')+'управление всем клиентом</span><span class="ps-sw-t">'+(PK.p?hesc(PK.p):'Новый пакет')+'</span></div>'+
-      (others.length?'<button class="mini" type="button" onclick="PK=PACKS[(PACKS.indexOf(PK)+1)%PACKS.length];pkRender()">Другой пакет</button>':'')+'</div>'+
+  root.innerHTML='<div class="ps-seg" role="tablist"><button type="button" role="tab" aria-selected="'+(PK.pane==='chat')+'" onclick="PK.pane=\'chat\';pkRender()">Чат</button><button type="button" role="tab" aria-selected="'+(PK.pane==='art')+'" onclick="PK.pane=\'art\';pkRender()">Набор</button></div>'+
+    '<div class="ps-main"><section class="ps-chat" aria-label="Чат по набору"><div class="ps-ch-hd"><div class="pk-ch-t"><span class="ps-sw-k">'+(others.length?plural(PACKS.length,'набор','набора','наборов')+' · ':'')+'управление всем клиентом</span><span class="ps-sw-t">'+(PK.p?hesc(PK.p):'Новый набор')+'</span></div>'+
+      (others.length?'<button class="mini" type="button" onclick="PK=PACKS[(PACKS.indexOf(PK)+1)%PACKS.length];pkRender()">Другой набор</button>':'')+'</div>'+
       '<div class="ps-thread" id="pk-thread">'+PK.chat.map(psMsg).join('')+(PK.items.some(function(it){return it.st==='run';})?psMsg({r:'typing'}):'')+'</div>'+pkQuick()+
-      '<div class="ps-comp"><textarea id="pk-in" rows="2" placeholder="Что поменять во всём пакете? Например: посты теплее · добавь лендинг · цена 6 900 ₽ · отправь всё клиенту" oninput="PK.draft=this.value" onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();pkSend();}"></textarea>'+
+      '<div class="ps-comp"><textarea id="pk-in" rows="2" placeholder="Что поменять во всём наборе? Например: посты теплее · добавь лендинг · цена 6 900 ₽ · отправь всё клиенту" oninput="PK.draft=this.value" onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();pkSend();}"></textarea>'+
       '<div class="ps-comp-row"><span class="ps-cost"></span><button class="pbtn" type="button" onclick="pkSend()">Отправить</button></div></div></section>'+
-      '<section class="ps-art" aria-label="Пакет">'+pkArt()+'</section></div>';
+      '<section class="ps-art" aria-label="Стартовый набор">'+pkArt()+'</section></div>';
   var th=document.getElementById('pk-thread');if(th)th.scrollTop=th.scrollHeight;
   var inp=document.getElementById('pk-in');if(inp&&PK.draft)inp.value=PK.draft;
   pkFit();setTimeout(pkFit,30);
@@ -10262,7 +10262,7 @@ function pkRefs(k){var out=[];PK.items.forEach(function(it){if(it.k===k)out=out.
 function pkArt(){
   if(PK.view!=='all'){var it=PK.items.filter(function(x){return x.k===PK.view;})[0];if(it)return pkPrev(it);PK.view='all';}
   var done=PK.items.filter(function(it){return it.st==='done';}).length,n=PK.items.length;
-  var head='<div class="ps-a-hd"><div class="ps-a-tt"><div class="ps-a-l1"><b class="pk-h">'+(PK.st==='done'?'Пакет готов':PK.st==='run'?'Собираем…':'Ждём клиента')+'</b><span class="ps-a-meta">'+(n?done+' из '+n+' · до '+rub2(PK.cost):'')+'</span></div></div><span class="sp"></span>'+(PK.p&&PK.st==='done'?'<button class="mini" type="button" onclick="clientLink(\''+esc(PK.p)+'\')">Ссылка для клиента</button>':'')+'</div>'+
+  var head='<div class="ps-a-hd"><div class="ps-a-tt"><div class="ps-a-l1"><b class="pk-h">'+(PK.st==='done'?'Стартовый набор готов':PK.st==='run'?'Собираем…':'Ждём клиента')+'</b><span class="ps-a-meta">'+(n?done+' из '+n+' · до '+rub2(PK.cost):'')+'</span></div></div><span class="sp"></span>'+(PK.p&&PK.st==='done'?'<button class="mini" type="button" onclick="clientLink(\''+esc(PK.p)+'\')">Ссылка для клиента</button>':'')+'</div>'+
     (n?'<div class="pk-bar"><i style="width:'+Math.round(done/n*100)+'%"></i></div>':'');
   var cards=PK.items.map(function(it){
     var I=pkI(it.k),st=it.st==='done'?'<span class="st pub">Готово</span>':it.st==='run'?'<span class="st proc">Собираем</span>':'<span class="st draft">В очереди</span>';
@@ -10283,7 +10283,7 @@ function pkTab(it){
 }
 function pkPrev(it){
   var p=PK.p,I=pkI(it.k),body='';
-  var head='<div class="ps-a-hd"><button class="mini" type="button" onclick="PK.view=\'all\';pkRender()">← Весь пакет</button><b class="pk-h">'+I[1]+'</b><span class="sp"></span><button class="pbtn ghost pk-open" type="button" onclick="'+pkTab(it)+'">Открыть во вкладке →</button></div>';
+  var head='<div class="ps-a-hd"><button class="mini" type="button" onclick="PK.view=\'all\';pkRender()">← Весь набор</button><b class="pk-h">'+I[1]+'</b><span class="sp"></span><button class="pbtn ghost pk-open" type="button" onclick="'+pkTab(it)+'">Открыть во вкладке →</button></div>';
   if(it.k==='parse'){var rp=it.rep||{gNew:[],gUpd:[],facts:{},fN:0,voice:[],links:[]};
     var row=function(ic,t,s,fn){return '<div class="ik-row"><span class="td-ic">'+ic+'</span><span class="ik-tx"><b>'+t+'</b><span>'+s+'</span></span>'+(fn?'<button class="mini" type="button" onclick="'+fn+'">Открыть →</button>':'')+'</div>';};
     body='<div class="panel pk-rep">'+(rp.gNew.length||rp.gUpd.length?row(pkIc('strat'),'Аудитории',rp.gNew.concat(rp.gUpd).map(function(n){return hesc(qn(n));}).join(', '),"go('groups')"):'')+
@@ -10314,7 +10314,7 @@ function pkSend(t){
   if(PK.st==='run'){toast('Ещё собираем — подождите несколько секунд');return;}
   PK.chat.push({r:'me',x:hesc(t)});
   var l=t.toLowerCase(),p=PK.p,gaps=faGaps(p);
-  var reply=function(h,cost,lab,fn){var go2=function(){PK.chat.push({r:'typing'});pkRender();setTimeout(function(){PK.chat=PK.chat.filter(function(m){return m.r!=='typing';});var r=fn?fn():null;if(cost)charge(p,'Пакет',lab,cost);PK.chat.push({r:'ai',x:r||h});pkRender();},cost?800:350);};cost?spendGate(cost,lab,go2):go2();};
+  var reply=function(h,cost,lab,fn){var go2=function(){PK.chat.push({r:'typing'});pkRender();setTimeout(function(){PK.chat=PK.chat.filter(function(m){return m.r!=='typing';});var r=fn?fn():null;if(cost)charge(p,'Стартовый набор',lab,cost);PK.chat.push({r:'ai',x:r||h});pkRender();},cost?800:350);};cost?spendGate(cost,lab,go2):go2();};
   /* пропуски */
   if(/не хватает|пропуск/.test(l)){if(!gaps.length){reply('<p>Пропусков нет — во всех материалах только известные факты.</p>');return;}PK.await=gaps[0].k;reply('<p>'+plural(gaps.length,'пропуск','пропуска','пропусков')+': '+gaps.slice(0,5).map(function(g){return '<span class="mk-ph">'+hesc(g.k)+'</span>';}).join(', ')+'. Начнём с <span class="mk-ph">'+hesc(gaps[0].k)+'</span> — напишите ответ.</p>');return;}
   if(PK.await&&gaps.some(function(g){return g.k===PK.await;})&&t.length<120&&!/(тепл|короч|строж|добав|отправ|покаж|открой|сделай|\+)/.test(l)){var g=gaps.filter(function(x){return x.k===PK.await;})[0];reply(null,0,'',function(){return pkFillH(g,t.replace(/[.\s]+$/,''));});return;}
@@ -10322,25 +10322,25 @@ function pkSend(t){
   var tr=/тепл|прощ|дружел/.test(l)?['теплее',function(s,pl){return psWarm(s,pl);}]:/короч|сократ/.test(l)?['короче',psShort]:/строж|официал/.test(l)?['строже',psStrict]:null;
   var posts=SOC.filter(function(x){return x.p===p&&x.type==='post'&&(pkRefs('post').indexOf(x.id)>=0);});
   if(tr&&(/пост|текст|всё|все|везде/.test(l)||!/баннер|лендинг|страниц/.test(l))){
-    if(!posts.length){reply('<p>В пакете нет постов. Скажите «+ посты» — соберу из тем плана.</p>');return;}
-    reply(null,.41*posts.length,'Пакет: посты '+tr[0],function(){posts.forEach(function(x){psInit(x);x.plats.forEach(function(pl){x.text[pl]=tr[1](socText(x,pl),pl);});x.vers.push({text:psSnap(x),plats:x.plats.slice(),note:ikCap(tr[0])+' · из пакета'});x.chat.push({r:'sys',x:'Из пакета: сделали '+tr[0]+' во всех версиях → версия '+x.vers.length});});
+    if(!posts.length){reply('<p>В наборе нет постов. Скажите «+ посты» — соберу из тем плана.</p>');return;}
+    reply(null,.41*posts.length,'Стартовый набор: посты '+tr[0],function(){posts.forEach(function(x){psInit(x);x.plats.forEach(function(pl){x.text[pl]=tr[1](socText(x,pl),pl);});x.vers.push({text:psSnap(x),plats:x.plats.slice(),note:ikCap(tr[0])+' · из набора'});x.chat.push({r:'sys',x:'Из набора: сделали '+tr[0]+' во всех версиях → версия '+x.vers.length});});
       PK.view='post';PK.pane='art';return '<p>Сделали '+tr[0]+' — '+plural(posts.length,'пост','поста','постов')+', все площадки. В каждом посте это новая версия: прошлую можно вернуть в «Постах».</p>';});return;}
-  /* добавить материал в пакет */
+  /* добавить материал в набор */
   var KW=[['post',/пост/],['car',/карусел/],['story',/сторис/],['bn',/баннер/],['page',/лендинг|страниц/],['deck',/презентац|колод/],['plan',/план/],['strat',/стратеги/]];
   var want=KW.filter(function(k){return k[1].test(l);})[0];
   if(want&&/(добав|сделай|собери|ещё|еще|\+|нужн|давай)/.test(l)){
     var k=want[0],nn=(l.match(/(\d+)/)||[])[1],it={k:k,st:'run',refs:[],meta:''},old=PK.items.filter(function(x){return x.k===k;})[0];
-    if(old&&k!=='post'&&k!=='plan'){reply('<p>'+pkI(k)[1]+' уже есть в пакете — открыла справа.</p>',0,'',function(){PK.view=k;PK.pane='art';return null;});return;}
+    if(old&&k!=='post'&&k!=='plan'){reply('<p>'+pkI(k)[1]+' уже есть в наборе — открыла справа.</p>',0,'',function(){PK.view=k;PK.pane='art';return null;});return;}
     if(k==='post')PK.pick.post=Math.max(1,Math.min(8,+nn||2));
     (PK_NEED[k]||[]).forEach(function(d){if(!PK.items.some(function(x){return x.k===d;}))PK.items.push({k:d,st:'wait',refs:[],meta:''});});
     var cost=pkI(k)[3]*(k==='post'?PK.pick.post:1);
-    reply(null,cost,'Пакет: '+pkI(k)[1],function(){
+    reply(null,cost,'Стартовый набор: '+pkI(k)[1],function(){
       (PK_NEED[k]||[]).forEach(function(d){var di=PK.items.filter(function(x){return x.k===d&&x.st==='wait';})[0];if(di){pkBuild(PK,di);di.st='done';}});
       pkBuild(PK,it);it.st='done';if(old&&k==='post'){old.refs=old.refs.concat(it.refs);old.meta=plural(old.refs.length,'пост','поста','постов')+' · из тем плана';}else if(old){old.refs=it.refs;old.meta=it.meta;}else PK.items.push(it);
       PK.view=k;PK.pane='art';try{renderToday();}catch(e){}
-      return '<p>Добавили в пакет: '+(k==='post'?plural(it.refs.length,'пост','поста','постов'):pkI(k)[1].toLowerCase())+' — '+it.meta+'. Он уже лежит во вкладке.</p>';});return;}
+      return '<p>Добавили в набор: '+(k==='post'?plural(it.refs.length,'пост','поста','постов'):pkI(k)[1].toLowerCase())+' — '+it.meta+'. Он уже лежит во вкладке.</p>';});return;}
   /* показать */
-  if(want&&/(покаж|открой|где)/.test(l)){var has=PK.items.filter(function(x){return x.k===want[0];})[0];reply(has?'<p>Открыла справа.</p>':'<p>Этого в пакете нет — скажите «+ '+pkI(want[0])[1].toLowerCase()+'».</p>',0,'',function(){if(has){PK.view=want[0];PK.pane='art';}return null;});return;}
+  if(want&&/(покаж|открой|где)/.test(l)){var has=PK.items.filter(function(x){return x.k===want[0];})[0];reply(has?'<p>Открыла справа.</p>':'<p>Этого в наборе нет — скажите «+ '+pkI(want[0])[1].toLowerCase()+'».</p>',0,'',function(){if(has){PK.view=want[0];PK.pane='art';}return null;});return;}
   /* цель стратегии */
   var gm=t.match(/цель\s*[—:-]?\s*(.+)/i);
   if(gm&&STRATS[p]){reply(null,0,'',function(){STRATS[p].goal=goalClean(gm[1]);var n=gm[1].match(/(\d[\d\s]*)/);if(n&&STRATS[p].kpi[0])STRATS[p].kpi[0][1]=n[1].replace(/\s/g,'')+' в месяц';PK.view='strat';return '<p>Записали цель в стратегию: «'+hesc(STRATS[p].goal)+'». Новые темы, баннеры и презентация будут исходить из неё.</p>';});return;}
@@ -10354,7 +10354,7 @@ function pkSend(t){
     var g2=faGaps(p).length;
     return '<p>Отправили клиенту '+plural(n,'материал','материала','материалов')+' одной ссылкой — без регистрации.'+(g2?' На месте '+plural(g2,'пропуска','пропусков','пропусков')+' клиент увидит «уточняем».':'')+'</p><div class="ps-opts"><button class="chip" type="button" onclick="clientLink(\''+esc(p)+'\')">Ссылка для клиента</button><button class="chip" type="button" onclick="cvOpen(\''+esc(p)+'\')">Как видит клиент</button></div>';});return;}
   /* новый бриф или ещё материалы — разложить по вкладкам */
-  if(t.length>80){reply(null,.41,'Пакет: разбор материалов',function(){var r=ikParse(p,t),rp=ikApply(p,r,{text:t}),parts=[];
+  if(t.length>80){reply(null,.41,'Стартовый набор: разбор материалов',function(){var r=ikParse(p,t),rp=ikApply(p,r,{text:t}),parts=[];
     if(rp.gNew.length)parts.push(plural(rp.gNew.length,'новая аудитория','новые аудитории','новых аудиторий'));if(rp.gUpd.length)parts.push('дополнили '+plural(rp.gUpd.length,'аудиторию','аудитории','аудиторий'));if(rp.fN)parts.push(plural(rp.fN,'факт','факта','фактов'));if(rp.voice.length)parts.push('голос: '+rp.voice.join(', '));if(rp.strat.length)parts.push('стратегия: '+rp.strat.join(', '));
     var pi=PK.items.filter(function(x){return x.k==='parse';})[0];if(pi)pi.rep=rp;
     return '<p>'+(parts.length?'Разложили по вкладкам: '+parts.join(' · ')+'. Новые материалы будут брать это.':'Ничего определённого не нашли — расскажите, кто клиенты, сколько стоит, чего хотите.')+'</p>';});return;}
@@ -10373,8 +10373,8 @@ function pkSend(t){
     pkStart(text,files);
   };
   VIEW_RENDER.pack=pkRender;NS_ALWAYS.push('pack');
-  NAVH.pack=[null,'Сборка пакета'];CRUMB.pack=['Сборка пакета'];
-  HELP.pack={s:['Слева — разговор со всем клиентом сразу: ответы на пропуски, тон, новые материалы','Справа — весь пакет: что собрано, чего не хватает; карточка открывает превью','Всё уже лежит во вкладках клиента — «Открыть во вкладке» для точечной правки'],q:[['Откуда материалы берут данные?','Из памяти клиента: база фактов, аудитории, голос, стиль, стратегия. Пакет сначала раскладывает ваш бриф туда, потом собирает.'],['Изменю во вкладке — пакет узнает?','Да: пакет показывает те же материалы, а не копии.']]};
+  NAVH.pack=[null,'Стартовый набор'];CRUMB.pack=['Стартовый набор'];
+  HELP.pack={s:['Слева — разговор со всем клиентом сразу: ответы на пропуски, тон, новые материалы','Справа — весь набор: что собрано, чего не хватает; карточка открывает превью','Всё уже лежит во вкладках клиента — «Открыть во вкладке» для точечной правки'],q:[['Откуда материалы берут данные?','Из памяти клиента: база фактов, аудитории, голос, стиль, стратегия. Набор сначала раскладывает ваш бриф туда, потом собирает.'],['Изменю во вкладке — набор узнает?','Да: набор показывает те же материалы, а не копии.']]};
   var o=document.getElementById('hc-box');if(o&&!document.getElementById('pk-row'))o.insertAdjacentHTML('afterend','<div class="pk-row" id="pk-row"></div>');
   pkRow();
 })();
@@ -10385,7 +10385,7 @@ var DK_AG=[['auto','Сам решит'],['Стратег','Стратег'],['К
 var DK_AG_V={strat:'Стратег',plan:'Контент',images:'Контент',video:'Контент',pages:'Контент',pres:'Контент',deck:'Контент',templates:'Контент','soc-post':'Контент','soc-car':'Контент','soc-story':'Контент','soc-clip':'Контент',
   banners:'Реклама',campaigns:'Реклама',camp:'Реклама',result:'Реклама',groups:'Реклама',style:'Бренд',voice:'Бренд',facts:'Бренд'};
 var DK_INI={Maker:'M',Стратег:'Ст',Контент:'Кт',Реклама:'Рк',Бренд:'Бр'};
-var DK_Q={home:['Что сделать сегодня?','Чего не хватает?','Собрать пакет'],strat:['Собери стратегию','Чего не хватает?'],plan:['Контент-план на месяц','Чего не хватает?'],
+var DK_Q={home:['Что сделать сегодня?','Чего не хватает?','Стартовый набор'],strat:['Собери стратегию','Чего не хватает?'],plan:['Контент-план на месяц','Чего не хватает?'],
   banners:['Баннеры к акции','Что сделать сегодня?'],campaigns:['Как дела у рекламы?','Что сделать сегодня?'],result:['Окупается ли реклама?'],
   style:['Чего не хватает?'],voice:['Чего не хватает?'],facts:['Чего не хватает?'],groups:['Кому продаём?','Чего не хватает?']};
 function dockNarrow(){return window.matchMedia('(max-width:1180px)').matches;}
@@ -10396,7 +10396,7 @@ function dockChat(){var c=chById('dk');if(!c){c={id:'dk',t:'Чат в кабин
 function dockWhere(){
   var v=ROUTE.v,name=(NAVH[v]||[null,'Главная'])[1],lab=ROUTE.lab||'';
   if(v==='soc-post'){var x=typeof psCur==='function'?psCur():null;lab=x?x.t:'новый пост';}
-  if(v==='pack'&&typeof PK!=='undefined'&&PK)lab=PK.p?'пакет '+PK.p:'новый пакет';
+  if(v==='pack'&&typeof PK!=='undefined'&&PK)lab=PK.p?'стартовый набор '+PK.p:'новый набор';
   if(lab.length>38)lab=lab.slice(0,38).replace(/\s+\S*$/,'')+'…';
   return '<div class="dock-where"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4v7a4 4 0 0 0 4 4h10"/><path d="M15 11l4 4-4 4"/></svg><span>пишете в <b>«'+hesc(name)+'»</b>'+(lab?' · справа — '+hesc(qn(lab)):'')+'</span></div>';
 }
@@ -10468,7 +10468,7 @@ function dockSend(t,files){
   /* что сделать сегодня — из напоминаний */
   if(/что сделать|с чего начать|какие дела|напомни/.test(l)){try{renderToday();}catch(e){}
     var L=(typeof TD_LIST!=='undefined'?TD_LIST:[]).slice(0,3);
-    say(L.length?'<p>Сейчас важнее всего:</p><ol>'+L.map(function(x){return '<li>'+x.t+'</li>';}).join('')+'</ol>'+L.map(function(x){return '<button class="chat-link" type="button" onclick="'+x.fn.replace(/"/g,'&quot;')+'">'+x.a+': '+x.t.replace(/<[^>]+>/g,'').slice(0,34)+'… →</button>';}).join(' '):'<p>Срочного нет. Можно собрать контент-план на следующий месяц или пакет материалов для нового клиента.</p>');return;}
+    say(L.length?'<p>Сейчас важнее всего:</p><ol>'+L.map(function(x){return '<li>'+x.t+'</li>';}).join('')+'</ol>'+L.map(function(x){return '<button class="chat-link" type="button" onclick="'+x.fn.replace(/"/g,'&quot;')+'">'+x.a+': '+x.t.replace(/<[^>]+>/g,'').slice(0,34)+'… →</button>';}).join(' '):'<p>Срочного нет. Можно собрать контент-план на следующий месяц или стартовый набор для нового клиента.</p>');return;}
   /* пропуски */
   if(/не хватает|пропуск|чего нет/.test(l)){
     if(!CLIENT){say('<p>Выберите клиента в меню слева — покажу, чего не хватает именно у него.</p>');return;}
@@ -10476,8 +10476,8 @@ function dockSend(t,files){
     say(g.length||ig.length?(g.length?'<p>В материалах '+hesc(qn(CLIENT))+' '+plural(g.length,'пропуск','пропуска','пропусков')+': '+g.slice(0,5).map(function(x){return '<span class="mk-ph">'+hesc(x.k)+'</span>';}).join(', ')+'. Ответьте один раз — подставим везде.</p>':'')+(ig.length?'<p>Для стратегии ещё нет: '+ig.map(function(x){return x[1].toLowerCase();}).join(', ')+'.</p>':'')+'<button class="chat-link" type="button" onclick="go(\'facts\')">Ответить в базе фактов →</button>'
       :'<p>У '+hesc(qn(CLIENT))+' всё главное есть — пропусков нет.</p>');return;}
   /* всё о клиенте разом — сборка пакета */
-  if(/пакет|всё о клиенте|все о клиенте|бриф/.test(l)||t.length>220){
-    say('<p>'+(t.length>220?'Похоже на бриф. ':'')+'Могу разложить это по вкладкам клиента и собрать материалы разом: стратегию, план, посты, баннеры, презентацию.</p>'+(t.length>220?'<button class="chat-link" type="button" onclick="dockPack()">Собрать пакет из этого →</button>':'<button class="chat-link" type="button" onclick="go(\'home\');PK_ON=true;pkRow();pkSendLabel();window.scrollTo({top:0})">Открыть сборку пакета →</button>'));return;}
+  if((STATE==='new'||STATE==='first')&&(/пакет|набор|всё о клиенте|все о клиенте|бриф/.test(l)||t.length>220)){
+    say('<p>'+(t.length>220?'Похоже на бриф. ':'')+'Могу разложить это по вкладкам клиента и собрать материалы разом: стратегию, план, посты, баннеры, презентацию.</p>'+(t.length>220?'<button class="chat-link" type="button" onclick="dockPack()">Собрать стартовый набор из этого →</button>':'<button class="chat-link" type="button" onclick="go(\'home\');PK_ON=true;pkRow();pkSendLabel();window.scrollTo({top:0})">Открыть стартовый набор →</button>'));return;}
   /* ответ ассистента — тот же, что в «Чатах», плюс передача в раздел */
   var gen=function(){
     c.msgs.push({r:'ai',typing:true,ag:ag});dockPaint();
@@ -11080,11 +11080,11 @@ function chTabs(){
   var n=INBOX.filter(function(x){return x.st==='new'&&x.tag!=='spam'&&(!CLIENT||x.p===CLIENT);}).length;
   document.querySelectorAll('.ch-tabs .itab[data-v="inbox"] .cnt').forEach(function(c){c.textContent=n||'';});
 }
-function pkOpen(id){var k=PACKS.filter(function(x){return x.id===id;})[0];if(!k)return;PK=k;go('pack');routeDetail(id,'Пакет'+(k.p?' · '+k.p:''));}
+function pkOpen(id){var k=PACKS.filter(function(x){return x.id===id;})[0];if(!k)return;PK=k;go('pack');routeDetail(id,'Стартовый набор'+(k.p?' · '+k.p:''));}
 renderChatList=function(){
   var q=document.getElementById('cl-q').value.trim().toLowerCase(),pj=document.getElementById('cl-proj').value;
   var rows=CHATS.filter(function(c){return (!pj||c.p===pj)&&(!q||c.t.toLowerCase().indexOf(q)>=0);}).map(function(c){return {ts:c.ts,h:'<button class="cl-it'+(c.id===chCur?' on':'')+'" type="button" onclick="chatOpen(\''+c.id+'\')"><span class="clt">'+hesc(c.t)+'</span><span class="cls">'+(c.p||'Без клиента')+' · '+c.d+' · '+chCost(c.cost)+'</span></button>'};});
-  PACKS.forEach(function(k){var t='Пакет материалов'+(k.p?' · '+k.p:'');if((pj&&k.p!==pj)||(q&&t.toLowerCase().indexOf(q)<0))return;
+  PACKS.forEach(function(k){var t='Стартовый набор'+(k.p?' · '+k.p:'');if((pj&&k.p!==pj)||(q&&t.toLowerCase().indexOf(q)<0))return;
     var n=k.items.filter(function(it){return it.k!=='parse';}).length;
     rows.push({ts:k.ts||0,h:'<button class="cl-it cl-pk'+(PK===k&&ROUTE.v==='pack'?' on':'')+'" type="button" onclick="pkOpen(\''+k.id+'\')"><span class="clt">'+PK_IC+hesc(t)+'</span><span class="cls">'+(k.st==='done'?plural(n,'материал','материала','материалов'):k.st==='run'?'собираем…':'ждёт клиента')+' · '+(k.d||'сегодня')+' · до '+rub2(k.cost)+'</span></button>'});});
   rows.sort(function(a,b){return b.ts-a.ts;});
@@ -11092,16 +11092,16 @@ renderChatList=function(){
 };
 (function(){
   /* вкладки «С Maker» / «Из соцсетей» в шапке раздела */
-  /* пакет — это разговор в «Чатах» */
+  /* стартовый набор — это разговор в «Чатах» */
   var ps=pkStart;pkStart=function(){var r=ps.apply(this,arguments);if(PK&&!PK.ts){PK.ts=400+(++chSeq);PK.d='сегодня';}return r;};
   NAVMAP.pack='chats';
-  NAVH.pack=[null,'Чаты','chats'];CRUMB.pack=['Чаты','Пакет'];
+  NAVH.pack=[null,'Чаты','chats'];CRUMB.pack=['Чаты','Стартовый набор'];
   var ib=ibBadge;ibBadge=function(){var r=ib.apply(this,arguments);chTabs();return r;};
   var ri=renderInbox;renderInbox=function(){var r=ri.apply(this,arguments);chTabs();return r;};VIEW_RENDER.inbox=renderInbox;
   var vc=VIEW_RENDER.chats;VIEW_RENDER.chats=function(){var r=vc&&vc.apply(this,arguments);try{renderChatList();}catch(e){}chTabs();return r;};
-  HELP.chats={s:['Здесь ваши разговоры с Maker и пакеты материалов: всё, что собрано, открывается в своих разделах','Новый разговор — кнопкой «Новый чат» или прямо в колонке чата на любом экране','Сообщения от людей из соцсетей клиентов — в отдельном разделе «Входящие»'],q:[['Где пакеты?','Здесь, в «Чатах»: пакет — это разговор, после которого материалы разложились по вкладкам клиента.']]};
+  HELP.chats={s:['Здесь ваши разговоры с Maker и стартовые наборы: всё, что собрано, открывается в своих разделах','Новый разговор — кнопкой «Новый чат» или прямо в колонке чата на любом экране','Сообщения от людей из соцсетей клиентов — в отдельном разделе «Входящие»'],q:[['Где стартовые наборы?','Здесь, в «Чатах»: стартовый набор — это разговор, после которого материалы разложились по вкладкам клиента.']]};
   HELP.pack=HELP.chats;
-  HELP_WHY.chats='Ваши разговоры с Maker: задачи, вопросы и пакеты материалов. Сообщения от людей из соцсетей — во «Входящих».';
+  HELP_WHY.chats='Ваши разговоры с Maker: задачи, вопросы и стартовые наборы. Сообщения от людей из соцсетей — во «Входящих».';
   HELP_WHY.pack=HELP_WHY.chats;
   setTimeout(function(){PACKS.forEach(function(k){if(!k.ts)k.ts=400+(++chSeq);});chTabs();},0);
 })();
@@ -11327,6 +11327,53 @@ function finManualGo(){
   var rf=renderFin;renderFin=function(){finSrc();if(!FIN.src)return;return rf.apply(this,arguments);};VIEW_RENDER.fin=renderFin;
   var sa=stateApply;stateApply=function(){var r=sa.apply(this,arguments);if(STATE==='new'||STATE==='first'){FIN.conn={};FIN.src=null;}return r;};
   HELP.fin.q=[['Откуда цифры?','Оплаты клиентов, счета и сроки — из вашей CRM (amoCRM, Битрикс24, Мегаплан) или таблицы. Реклама — из кампаний, производство — из журнала Maker. Касса и постоянные расходы вносятся вручную раз в месяц.'],['Maker что-то меняет в CRM?','Нет, только читает сделки и счета.'],['Где оплата Maker?','В профиле: аватар → «Оплата и документы».']];
+})();
+
+/* ---------- стартовый набор — только для новых пользователей ---------- */
+(function(){
+  var isNew=function(){return STATE==='new'||STATE==='first';};
+  var pr=pkRow;pkRow=function(){var el=document.getElementById('pk-row');if(!isNew()){PK_ON=false;if(el){el.innerHTML='';el.classList.remove('on');el.hidden=true;}return;}if(el)el.hidden=false;return pr.apply(this,arguments);};
+  if(!isNew())DK_Q.home=['Что сделать сегодня?','Чего не хватает?'];else DK_Q.home=['Что сделать сегодня?','Чего не хватает?','Стартовый набор'];
+  setTimeout(function(){try{pkRow();pkSendLabel();}catch(e){}},0);
+})();
+
+/* ---------- чат как ассистент: «собери пост» в «Фото и видео» — перебрасывает в «Посты» и начинает там ---------- */
+var RT_MAP=[['soc-car',/^карусел/],['soc-story',/^сторис|^stories/],['soc-clip',/^клип|^reels|^шортс/],['soc-post',/^пост/],['banners',/^баннер|^креатив/],['pages',/^лендинг|^страниц|^сайт/],['pres',/^презентац|^колод|^отч[её]т/],
+  ['video',/^ролик|^видео/],['images',/^фото|^кадр|^картинк|^изображен|^серию/],['plan',/^контент-план|^план/],['strat',/^стратеги/],['campaigns',/^кампани|^рекламу/],['groups',/^аудитори/],['facts',/^факт/]];
+var RT_VERB=/(?:^|\s)(собер\S*|сдела\S*|созда\S*|напиш\S*|сним\S*|подготов\S*|сгенер\S*|нарису\S*|запуст\S*|нуж[ео]н\S*|составь|состав\S*)\s+(?:мне\s+|нам\s+|ещё\s+|еще\s+|новы\S*\s+|нов\S*\s+|\d+\s+|пару\s+|для\s+\S+\s+)*([а-яёa-z-]+)/i;
+function routeIntent(t){var m=String(t||'').toLowerCase().match(RT_VERB);if(!m)return null;var w=m[2];if(/^ролик/.test(w)&&/клип|reels|шортс/.test(t.toLowerCase()))return 'soc-clip';for(var i=0;i<RT_MAP.length;i++)if(RT_MAP[i][1].test(w))return RT_MAP[i][0];return null;}
+function rtName(v){var h=NAVH[v];return h?h[1]:v;}
+/* перейти и начать там: в «Постах» — свой чат, в остальных — сценарий создания в колонке */
+function routeGo(v,text){
+  if(v==='soc-post'){go('soc-post');psNew();PS.draft=text;psRender();var i=document.getElementById('ps-in');if(i){i.value=text;i.focus();}return;}
+  go(v);
+  if(DCR_ON[v]&&CPD.ph[v]){DCR=null;dcrStart(v,text);setTimeout(function(){if(DCR&&DCR.v===v&&DCR.draft)dcrSend();},120);}
+}
+function routeNote(from,v,text){
+  var c=dockChat(),ag=DK_AG_V[v]||'Maker',same=from===v;
+  c.msgs.push({r:'me',x:text});
+  c.msgs.push({r:'ai',ag:ag,h:'<p>'+(same?'Начинаю здесь, в «'+hesc(rtName(v))+'».':'Это делается в «'+hesc(rtName(v))+'» — перехожу и начинаю там.')+(v==='soc-post'?' Тему вписала — проверьте и отправьте.':'')+'</p>'});
+  c.d='сегодня';c.ts=400+(++chSeq);try{renderChatList();}catch(e){}
+}
+(function(){
+  /* общий чат колонки */
+  var ds=dockSend;dockSend=function(t,files){
+    var inp=document.getElementById('dk-in'),tx=(t!=null?t:(inp?inp.value:'')).trim(),v=routeIntent(tx);
+    if(v&&!(files&&files.length)&&(v==='soc-post'||DCR_ON[v])){if(inp)inp.value='';DOCK.draft='';var from=ROUTE.v;routeNote(from,v,tx);if(DOCK.mode==='gen')dockPaint();setTimeout(function(){routeGo(v,tx);},350);return;}
+    return ds.apply(this,arguments);
+  };
+  /* сценарий создания: просьба про другой раздел — туда */
+  var dc=dcrSend;dcrSend=function(){
+    var i=document.getElementById('dcr-in'),tx=(i?i.value:'').trim(),v=routeIntent(tx);
+    if(DCR&&v&&v!==DCR.v&&(v==='soc-post'||DCR_ON[v])){var from=DCR.v;if(DCR.rec)dcrVoiceStop(true);DCR=null;routeNote(from,v,tx);routeGo(v,tx);return;}
+    return dc.apply(this,arguments);
+  };
+  /* чат поста: карусели, сторис и правки — здесь; баннеры, страницы, презентации и прочее — в свой раздел */
+  var pss=psSend;psSend=function(t){
+    var i=document.getElementById('ps-in'),tx=(t!=null?t:(i?i.value:'')).trim(),v=routeIntent(tx);
+    if(v&&!/^soc-/.test(v)&&DCR_ON[v]){if(i)i.value='';PS.draft='';routeNote('soc-post',v,tx);routeGo(v,tx);return;}
+    return pss.apply(this,arguments);
+  };
 })();
 
 /* ---------- toast ---------- */
