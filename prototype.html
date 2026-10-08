@@ -9670,8 +9670,6 @@ function psChat(x){
   var hd='<div class="ps-ch-hd"><button class="ps-sw" type="button" aria-expanded="'+PS.sw+'" onclick="psSw(event)"><span class="ps-sw-k">Все посты · '+L.length+(W.length?' <em>+'+W.length+' из плана</em>':'')+'</span><span class="ps-sw-t">'+(x?hesc(x.t):'Новый пост')+'</span>'+PS_CHEV+'</button>'+
     '<button class="ps-new" type="button" title="Новый пост" aria-label="Новый пост" onclick="psNew()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>'+(PS.sw?psPop():'')+'</div>';
   var p=x?x.p:CLIENT,ctx='';
-  if(p){var nf=FACTS.filter(function(f){return f.p===p;}).length,th=x&&x.th&&plById(x.th);
-    ctx='<div class="ps-ctx"><span>Опираемся на</span><a onclick="go(\'voice\')">голос '+psVoice(p)+'</a>'+(th?'<a onclick="pqOpen(\''+th.id+'\')">тему плана</a>':'')+'<a onclick="go(\'facts\')">'+plural(nf,'факт','факта','фактов')+'</a></div>';}
   var msgs=x?x.chat:psGreet().concat(PS.newChat);
   var thread='<div class="ps-thread" id="ps-thread">'+msgs.map(psMsg).join('')+'</div>';
   return hd+ctx+thread+psQuick(x)+
@@ -10115,7 +10113,6 @@ function pkRender(){
   root.innerHTML='<div class="ps-seg" role="tablist"><button type="button" role="tab" aria-selected="'+(PK.pane==='chat')+'" onclick="PK.pane=\'chat\';pkRender()">Чат</button><button type="button" role="tab" aria-selected="'+(PK.pane==='art')+'" onclick="PK.pane=\'art\';pkRender()">Пакет</button></div>'+
     '<div class="ps-main"><section class="ps-chat" aria-label="Чат по пакету"><div class="ps-ch-hd"><div class="pk-ch-t"><span class="ps-sw-k">'+(others.length?plural(PACKS.length,'пакет','пакета','пакетов')+' · ':'')+'управление всем клиентом</span><span class="ps-sw-t">'+(PK.p?hesc(PK.p):'Новый пакет')+'</span></div>'+
       (others.length?'<button class="mini" type="button" onclick="PK=PACKS[(PACKS.indexOf(PK)+1)%PACKS.length];pkRender()">Другой пакет</button>':'')+'</div>'+
-      (PK.p?'<div class="ps-ctx"><span>Память клиента</span><a onclick="go(\'facts\')">'+plural(FACTS.filter(function(f){return f.p===PK.p;}).length,'факт','факта','фактов')+'</a><a onclick="go(\'groups\')">'+plural(GROUPS.filter(function(g){return g.p===PK.p&&!g.sugg;}).length,'аудитория','аудитории','аудиторий')+'</a><a onclick="go(\'voice\')">голос</a><a onclick="go(\'style\')">стиль</a></div>':'')+
       '<div class="ps-thread" id="pk-thread">'+PK.chat.map(psMsg).join('')+(PK.items.some(function(it){return it.st==='run';})?psMsg({r:'typing'}):'')+'</div>'+pkQuick()+
       '<div class="ps-comp"><textarea id="pk-in" rows="2" placeholder="Что поменять во всём пакете? Например: посты теплее · добавь лендинг · цена 6 900 ₽ · отправь всё клиенту" oninput="PK.draft=this.value" onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();pkSend();}"></textarea>'+
       '<div class="ps-comp-row"><span class="ps-cost"></span><button class="pbtn" type="button" onclick="pkSend()">Отправить</button></div></div></section>'+
@@ -10301,7 +10298,7 @@ function dockRender(force){
   }
   DOCK.mode='gen';var c=dockChat(),p=CLIENT;
   var nf=p?FACTS.filter(function(f){return f.p===p;}).length:0;
-  var ctx='<div class="ps-ctx"><span>Клиент</span><a onclick="clientMenu({stopPropagation:function(){},currentTarget:document.querySelector(\'.side .acct\')})">'+(p?hesc(p):'все клиенты')+'</a>'+(p?'<a onclick="go(\'facts\')">'+plural(nf,'факт','факта','фактов')+'</a><a onclick="go(\'voice\')">голос</a>':'')+'</div>';
+  var ctx='';   /* без строки «Клиент · факты · голос» — чат легче */
   var q=(DK_Q[v]||['Что сделать сегодня?','Чего не хватает?']);
   b.innerHTML='<section class="ps-chat dock-ps dock-gen">'+ctx+'<div class="ps-thread" id="dk-thread"></div>'+
     '<div class="ps-quick">'+q.map(function(t){return '<button class="chip" type="button" onclick="dockSend(\''+esc(t)+'\')">'+hesc(t)+'</button>';}).join('')+'</div>'+
@@ -10501,7 +10498,7 @@ function dcrCard(){
 function dcrRender(){
   var b=document.getElementById('dock-body'),pn=dcrPn();if(!b||!pn)return;DOCK.mode='cr';
   var p=CLIENT,T=CPD_T[DCR.v]||['Создать',''],X=DCR_TXT[DCR.v]||{},ta=pn.querySelector('textarea'),nf=p?FACTS.filter(function(f){return f.p===p;}).length:0;
-  var ctx='<div class="ps-ctx"><span>Клиент</span><a onclick="clientMenu({stopPropagation:function(){},currentTarget:document.querySelector(\'.side .acct\')})">'+(p?hesc(p):'не выбран')+'</a>'+(p?'<a onclick="go(\'facts\')">'+plural(nf,'факт','факта','фактов')+'</a><a onclick="go(\'voice\')">голос</a>':'')+'</div>';
+  var ctx='';   /* без строки «Клиент · факты · голос» — чат легче */
   var sugg=!DCR.text&&p?dcrSugg():[],quick=sugg.length?'<div class="dcr-quick" role="group" aria-label="Подсказки">'+sugg.join('')+'</div>':'';
   var att=pn.querySelector('.cp-attach'),al=pn.querySelector('.att-list'),files=al&&al.children.length?'<div class="att-list dcr-att">'+al.innerHTML+'</div>':'';
   var ph=DCR.edit?'Поправьте текст задачи':DCR.text?'Что добавить или поменять?':(X.ph||(CPD_SAY[DCR.v]?'Например: '+CPD_SAY[DCR.v]:ta.placeholder));
