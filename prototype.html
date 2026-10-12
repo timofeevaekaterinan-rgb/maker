@@ -2310,6 +2310,7 @@
   .ph-why{color:var(--ink-2);font-size:14px;margin:4px 0 2px;max-width:620px;line-height:1.5}
   .step-h{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:22px 2px 10px}
   .toolbar+.step-h{margin-top:6px}
+  .sum-card[hidden]{display:none!important}
   .sum-card{display:flex;gap:18px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin-bottom:12px;box-shadow:0 1px 2px rgba(26,34,48,.03)}
   .sum-card .sum-tx{flex:1;min-width:0;font-size:17px;line-height:1.55;color:var(--ink)}
   .sum-card .sum-tx b{font-weight:700;white-space:nowrap}
@@ -3588,9 +3589,7 @@
           <label class="cp-target">Период: <select class="sortsel fsel" id="rs-per" onchange="renderResult()"><option value="1" selected>1 месяц</option><option value="3">3 месяца</option><option value="6">Полгода</option><option value="12">Год</option></select></label>
           <span class="rs-cmp" id="rs-cmp"></span>
         </div>
-
-        <div class="step-h">Итог</div>
-        <div class="sum-card" id="rs-sum"></div>
+        <div class="sum-card" id="rs-sum" hidden></div>
         <div id="rs-ins"></div>
         <div class="step-h">Главные цифры</div>
         <div class="kpis" id="rs-kpis"></div>
@@ -3638,8 +3637,7 @@
       <section id="v-fin" class="view">
         <div class="phead"><div><h1>Финансы и клиенты</h1></div><div class="sp"></div><div class="lb-acts fn-acts" id="fn-src"></div></div>
         <div class="fn-empty" id="fn-empty"><div class="ns-empty"><b>Подключите CRM</b><span>Оплаты клиентов, счета и сроки Maker возьмёт из вашей CRM — amoCRM, Битрикс24 или Мегаплана. Реклама и производство подтянутся из кампаний и журнала Maker. В CRM мы ничего не меняем — только читаем.</span><div class="lb-acts"><button class="pbtn" type="button" onclick="finConnect()">Подключить CRM</button><button class="pbtn ghost" type="button" onclick="finAuth('sheet')">Нет CRM — загрузить таблицу</button></div></div></div>
-        <div class="step-h">Итог</div>
-        <div class="sum-card" id="fn-sum"></div>
+        <div class="sum-card" id="fn-sum" hidden></div>
         <div id="fn-ins"></div>
         <div class="step-h">Главные цифры · октябрь</div>
         <div class="kpis" id="fn-kpis"></div>
@@ -3657,8 +3655,7 @@
           <div class="sp"></div>
         </div>
         <div class="itabs"><button class="itab" type="button" onclick="go('profile');pfTab(document.querySelectorAll('#v-profile .itab')[0],'me')">Профиль</button><button class="itab" type="button" onclick="go('profile');pfTab(document.querySelectorAll('#v-profile .itab')[1],'sec')">Вход и безопасность</button><button class="itab" type="button" onclick="go('profile');pfTab(document.querySelectorAll('#v-profile .itab')[2],'ntf')">Уведомления</button><button class="itab" type="button" onclick="go('profile');pfTab(document.querySelectorAll('#v-profile .itab')[3],'team')">Команда и доступы</button><button class="itab on" type="button">Оплата и документы</button></div>
-        <div class="step-h">Итог</div>
-        <div class="sum-card" id="bl-sum"></div>
+        <div class="sum-card" id="bl-sum" hidden></div>
         <div class="grid2 bl-top">
           <div class="panel" id="bl-balance"></div>
           <div class="panel" id="bl-cost"></div>
@@ -7293,7 +7290,7 @@ function strSummary(p,s,gs){
     'Говорим '+(gs.length?'с '+plural(gs.length,'аудиторией','аудиториями','аудиториями'):'пока без выбранных аудиторий')+' в '+ch.join(' и ').replace(/ и (?=.* и )/g,', ')+(st?' (и сторис)':'')+'; больше всего — '+rub.join(', ')+'.'+
     (gaps?' <span class="sum-gap">'+plural(gaps,'пропуск','пропуска','пропусков')+'</span>':'');
   var vd=s.st==='ok'?['ok','Согласована — собирайте план']:s.st==='check'?['wait','Ждёт ответа клиента']:['','Черновик — отправьте клиенту'];
-  return '<div class="step-h" style="margin-top:18px">Коротко</div><div class="sum-card"><div class="sum-tx">'+tx+'</div><span class="verdict '+vd[0]+'">'+vd[1]+'</span></div>'+strNextHTML(p,s,gaps)+'<div class="step-h">Подробно</div>';
+  return '<div style="margin-top:18px">'+strNextHTML(p,s,gaps)+'</div>';   /* сводки «Коротко» нет — она дублировала поля ниже */
 }
 function renderStrat(){
   var p=strProj(),s=STRATS[p],el=document.getElementById('str-body');
@@ -10825,8 +10822,8 @@ function rsSocRender(){
   if(!L.length){el.innerHTML='<div class="ns-empty"><b>Публикаций за этот период нет</b><span>Как только посты выйдут в подключённых соцсетях клиента, здесь появятся охваты, реакции и что заходит лучше.</span></div>';return;}
   if(!pj){
     var cls=PROJECTS.map(function(pr){var q=sstCalc(L.filter(function(x){return x.p===pr.s;}));return {p:pr.s,o:q};}).filter(function(c){return c.o.n;});
-    el.innerHTML='<div class="step-h">Итог</div><div class="sum-card"><div class="sum-tx">За '+per+' вышло <b>'+plural(o.n,'публикация','публикации','публикаций')+'</b> у '+plural(cls.length,'клиента','клиентов','клиентов')+': охват <b>'+sp3(o.reach)+'</b>, <b>'+plural(o.re,'реакция','реакции','реакций')+'</b>. Рубрики у каждого клиента свои — выберите клиента, чтобы увидеть, что заходит.</div></div>'+
-      '<div class="panel"><h3>По клиентам</h3>'+cls.map(function(c){return '<div class="sst-cl"><span><b>'+hesc(c.p)+'</b><small>'+plural(c.o.n,'публикация','публикации','публикаций')+' · охват '+sp3(c.o.reach)+(c.o.best?' · лучше всего '+qn(c.o.best.k):'')+'</small></span><button class="mini" type="button" onclick="clientSet(\''+esc(c.p)+'\');go(\'result\');rsTab(\'soc\')">Открыть</button></div>';}).join('')+'</div>';
+    el.innerHTML=
+      '<div class="panel"><h3>По клиентам</h3><p class="psub">Рубрики у каждого клиента свои — откройте клиента, чтобы увидеть, что заходит.</p>'+cls.map(function(c){return '<div class="sst-cl"><span><b>'+hesc(c.p)+'</b><small>'+plural(c.o.n,'публикация','публикации','публикаций')+' · охват '+sp3(c.o.reach)+(c.o.best?' · лучше всего '+qn(c.o.best.k):'')+'</small></span><button class="mini" type="button" onclick="clientSet(\''+esc(c.p)+'\');go(\'result\');rsTab(\'soc\')">Открыть</button></div>';}).join('')+'</div>';
     return;
   }
   var S=STRATS[pj],tuned=S&&S.tuned,strong=o.best&&o.worst&&o.x>=1.3;
@@ -10839,7 +10836,7 @@ function rsSocRender(){
   if(o.top[0])ins.push({key:'sst-top-'+pj,t:'Лучший пост — '+qn(o.top[0].t),s:plural(o.top[0].re,'реакция','реакции','реакций')+' при охвате '+sp3(o.top[0].reach)+' · '+platName('post',o.top[0].pl)+'. Соберём ещё темы в этом духе',a:'Ещё как этот',fn:"sstMore('"+esc(pj)+"')"});
   var K=[['Публикаций',sp3(o.n),deltaHTML(o.n,P&&P.n,'up',hp),''],['Охват',sp3(o.reach),deltaHTML(o.reach,P&&P.reach,'up',hp),'сколько людей увидели'],['Реакции',sp3(o.re),deltaHTML(o.re,P&&P.re,'up',hp),Math.round(o.er)+' на 1 000 охвата'],['Комментарии',sp3(o.cm),deltaHTML(o.cm,P&&P.cm,'up',hp),''],['Сохранения',sp3(o.sv),deltaHTML(o.sv,P&&P.sv,'up',hp),'значит, пост полезен']];
   var mx=Math.max.apply(null,o.rs.map(function(r){return r.er;}))||1;
-  el.innerHTML='<div class="step-h">Итог</div><div class="sum-card"><div class="sum-tx">'+sum+'</div><span class="verdict '+vd[0]+'">'+vd[1]+'</span></div>'+
+  el.innerHTML=
     (ins.length?'<div class="step-h">Что стоит сделать</div><div class="ins-list">'+ins.map(insHTML).join('')+'</div>':'')+
     '<div class="step-h">Главные цифры</div><div class="kpis">'+K.map(function(k){return '<div class="kpi"><div class="kl">'+k[0]+'</div><div class="kv2">'+k[1]+'</div>'+k[2]+'<div class="kn">'+k[3]+'</div></div>';}).join('')+'</div>'+
     '<div class="grid2 rs-block"><div class="panel"><h3>Рубрики</h3><p class="psub">реакций на 1 000 охвата</p>'+o.rs.map(function(r){var b=o.best&&r.k===o.best.k&&strong,w=o.worst&&r.k===o.worst.k&&strong;return '<div class="sst-row'+(b?' best':w?' worst':'')+'"><span><b>'+hesc(r.k)+'</b>'+(b?'<span class="sst-tag">лучше всех</span>':w?'<span class="sst-tag">слабее всех</span>':'')+'<small>'+plural(r.n,'пост','поста','постов')+' · охват '+sp3(r.reach)+'</small></span><span class="sst-bar"><i style="width:'+Math.round(r.er/mx*100)+'%"></i></span><span class="sst-v">'+Math.round(r.er)+'</span></div>';}).join('')+'</div>'+
