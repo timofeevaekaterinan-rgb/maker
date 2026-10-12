@@ -6,3 +6,10 @@ transcript*.txt
 !promo/maker-promo.mp4
 promo/*.wav
 *.mov
+
+tutorials/node_modules/
+tutorials/build/
+tutorials/out/
+tutorials/frames/
+tutorials/voice-samples/
+tutorials/.venv/

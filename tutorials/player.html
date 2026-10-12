@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Maker · обучающий ролик</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap">
+<style>
+  html,body{margin:0;background:#0B1220;overflow:hidden}
+  #stage{position:relative;overflow:hidden;background:#EEF2FB;font-family:Onest,system-ui,sans-serif}
+  .layer{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform,opacity}
+  .layer img{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .layer svg.spot{position:absolute;inset:0;width:100%;height:100%}
+  #cursor{position:absolute;left:0;top:0;pointer-events:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));z-index:5}
+  #ripple{position:absolute;border-radius:50%;border:3px solid #2E6BE6;background:rgba(46,107,230,.18);pointer-events:none;z-index:4}
+  #cap{position:absolute;left:50%;transform:translateX(-50%);z-index:6;color:#fff;background:rgba(15,23,42,.86);border-radius:20px;text-align:center;font-weight:600;line-height:1.32;letter-spacing:-.005em;box-shadow:0 12px 40px -12px rgba(0,0,0,.5);transition:none}
+  #bar{position:absolute;left:0;bottom:0;height:6px;background:#2E6BE6;z-index:7}
+  #card{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;justify-content:center;color:#fff;background:radial-gradient(120% 120% at 15% 10%,#4C88FF 0%,#2E6BE6 38%,#1238B8 100%)}
+  #card .bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.12;filter:blur(6px) saturate(.6)}
+  #card .in{position:relative}
+  #card .logo{display:flex;align-items:center;gap:.4em;font-weight:800;letter-spacing:-.02em}
+  #card .logo i{display:inline-grid;grid-template-columns:1fr 1fr;gap:.12em;width:1.1em;height:1.1em}
+  #card .logo i b{background:#fff;border-radius:.12em;opacity:.95}
+  #card .logo i b:nth-child(2){opacity:.6}#card .logo i b:nth-child(3){opacity:.75}
+  #card .grp{font-weight:600;opacity:.8}
+  #card h1{margin:.15em 0 .25em;font-weight:800;letter-spacing:-.03em;line-height:1.02}
+  #card p{margin:0;font-weight:500;opacity:.92;line-height:1.35}
+  #card .site{position:absolute;font-weight:600;opacity:.75}
+</style></head><body>
+<div id="stage">
+  <div class="layer" id="L0"><img><svg class="spot"></svg></div>
+  <div class="layer" id="L1"><img><svg class="spot"></svg></div>
+  <div id="ripple"></div>
+  <svg id="cursor" viewBox="0 0 24 24"><path d="M5 2.5l13.5 12.2-6.1.5 3.6 7.1-2.6 1.3-3.6-7.1L5 21z" fill="#fff" stroke="#111827" stroke-width="1.4" stroke-linejoin="round"/></svg>
+  <div id="cap"></div>
+  <div id="bar"></div>
+  <div id="card"><div class="bg"></div><div class="in"><div class="logo"><i><b></b><b></b><b></b><b></b></i>maker</div><div class="grp"></div><h1></h1><p></p></div><div class="site">trymaker.ru</div></div>
+</div>
+<script>
+const Q=new URLSearchParams(location.search),ID=Q.get('id'),FMT=Q.get('fmt')||'16x9';
+let M,TL,W,H,K,V=FMT==='9x16';
+const $=s=>document.querySelector(s);
+async function ready(){
+  TL=await (await fetch(`build/${ID}/${FMT}/timeline.json?${Date.now()}`)).json();M=TL.meta;W=M.w;H=M.h;K=V?W/1080:W/1920;
+  const st=$('#stage');st.style.width=W+'px';st.style.height=H+'px';
+  // размеры под формат
+  const cap=$('#cap');cap.style.fontSize=(V?46:36)+'px';cap.style.padding=V?'26px 34px':'20px 30px';cap.style.maxWidth=(V?W*0.88:W*0.74)+'px';cap.style.bottom=(V?H*0.12:H*0.07)+'px';
+  const c=$('#card');c.style.padding=V?'0 90px':'0 160px';
+  c.querySelector('.logo').style.fontSize=(V?64:52)+'px';c.querySelector('.grp').style.fontSize=(V?40:30)+'px';c.querySelector('.grp').style.marginTop=(V?70:44)+'px';
+  c.querySelector('h1').style.fontSize=(V?132:120)+'px';c.querySelector('p').style.fontSize=(V?46:38)+'px';c.querySelector('p').style.maxWidth=(V?W:W*0.62)+'px';
+  const s=c.querySelector('.site');s.style.fontSize=(V?34:26)+'px';s.style.left=V?'90px':'160px';s.style.bottom=V?'120px':'70px';
+  $('#cursor').style.width=$('#cursor').style.height=(V?78:44)+'px';
+  c.querySelector('.bg').style.backgroundImage=`url(build/${ID}/${FMT}/${M.steps[0].img})`;
+  await Promise.all(M.steps.map(x=>new Promise(r=>{const i=new Image();i.onload=r;i.onerror=r;i.src=`build/${ID}/${FMT}/${x.img}`;})));
+  await document.fonts.ready;return TL.total;
+}
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2,lerp=(a,b,t)=>a+(b-a)*t;
+function pt(st){if(!st||!st.rect)return {x:W*0.62,y:H*0.55};const r=st.rect;return {x:r.x+Math.min(r.w*0.5,r.w-10*K),y:r.y+Math.min(r.h*0.55,r.h-6*K)};}
+function spot(svg,st,a){
+  if(!st.rect||a<=0){svg.innerHTML='';return;}
+  const p=10*K*(V?2.2:1),r=st.rect,x=r.x-p,y=r.y-p,w=r.w+2*p,h=r.h+2*p,rd=14*K*(V?2:1);
+  const hole=`M${x+rd},${y}h${w-2*rd}a${rd},${rd} 0 0 1 ${rd},${rd}v${h-2*rd}a${rd},${rd} 0 0 1 -${rd},${rd}h-${w-2*rd}a${rd},${rd} 0 0 1 -${rd},-${rd}v-${h-2*rd}a${rd},${rd} 0 0 1 ${rd},-${rd}z`;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.innerHTML=`<path d="M0,0H${W}V${H}H0Z ${hole}" fill="rgba(15,23,42,${0.32*a})" fill-rule="evenodd"/><path d="${hole}" fill="none" stroke="#2E6BE6" stroke-width="${(V?7:4)*K}" opacity="${a}"/>`;
+}
+function zoomOf(st,u){const r=st.rect;const z=1+0.055*ease(clamp(u,0,1));const o=r?{x:clamp(r.x+r.w/2,W*0.2,W*0.8),y:clamp(r.y+r.h/2,H*0.2,H*0.8)}:{x:W/2,y:H/2};return {z,o};}
+function caption(seg,t){
+  const parts=seg.parts||[];if(!parts.length)return '';
+  const tt=t-seg.vs;let acc=0;for(const p of parts){acc+=p.d;if(tt<acc)return p.t;}return parts[parts.length-1].t;
+}
+function render(t){
+  const segs=TL.segs;let i=segs.findIndex(s=>t>=s.start&&t<s.start+s.dur);if(i<0)i=t<0?0:segs.length-1;const s=segs[i];const u=(t-s.start)/s.dur;
+  const card=$('#card'),cap=$('#cap');
+  $('#bar').style.width=(W*clamp(t/TL.total,0,1))+'px';
+  if(s.type==='intro'||s.type==='outro'){
+    card.style.display='flex';
+    const fadeIn=s.type==='outro'?clamp((t-s.start)/0.45,0,1):1,fadeOut=s.type==='intro'?1-clamp((t-(s.start+s.dur-0.45))/0.45,0,1):1;
+    card.style.opacity=Math.min(fadeIn,fadeOut);
+    card.querySelector('.grp').textContent=s.type==='intro'?'Обучение · '+M.group:'Обучение Maker';
+    card.querySelector('h1').textContent=s.type==='intro'?M.title:(M.next?'Дальше — '+M.next:'Готово');
+    card.querySelector('p').textContent=s.type==='intro'?M.intro.replace(/^[^.]*\.\s*/,''):'Каждый раздел — отдельный короткий ролик.';
+    const st=M.steps[0];
+    if(s.type==='intro'){showLayer(0,st,0,1);hideLayer(1);}
+    cap.style.display='none';$('#cursor').style.display='none';$('#ripple').style.display='none';
+    if(fadeIn<1||fadeOut<1){/* под карточкой — экран */}
+    if(s.type==='intro'&&fadeOut<1){cap.style.display='none';}
+    return;
+  }
+  card.style.display='none';
+  const st=M.steps[s.k],prev=M.steps[s.k-1];
+  // смена экрана: перекрёстное затухание 0,4 с
+  const x=clamp((t-s.start)/0.4,0,1);
+  showLayer(s.k%2,st,u,1);
+  if(prev&&x<1){showLayer((s.k+1)%2,prev,1,1-x);document.getElementById('L'+((s.k+1)%2)).style.zIndex=2;document.getElementById('L'+(s.k%2)).style.zIndex=1;}
+  else{hideLayer((s.k+1)%2);document.getElementById('L'+(s.k%2)).style.zIndex=2;}
+  // курсор: от прошлой цели к текущей
+  const a=pt(prev||null),b=pt(st),m=ease(clamp((t-s.start-0.25)/0.9,0,1));
+  const zz=zoomOf(st,u),cx=lerp(a.x,b.x,m),cy=lerp(a.y,b.y,m);
+  const sx=zz.o.x+(cx-zz.o.x)*zz.z,sy=zz.o.y+(cy-zz.o.y)*zz.z;
+  const cur=$('#cursor');cur.style.display=st.rect?'block':'none';cur.style.transform=`translate(${sx-6*K}px,${sy-4*K}px)`;
+  const rp=$('#ripple'),ct=t-s.start-1.25;
+  if(st.click&&st.rect&&ct>0&&ct<0.6){const R=(V?90:52)*K*ease(ct/0.6);rp.style.display='block';rp.style.width=rp.style.height=2*R+'px';rp.style.left=(sx-R)+'px';rp.style.top=(sy-R)+'px';rp.style.opacity=1-ct/0.6;}else rp.style.display='none';
+  const txt=caption(s,t);cap.style.display=txt?'block':'none';cap.textContent=txt;
+}
+function showLayer(n,st,u,op){
+  const L=document.getElementById('L'+n),img=L.querySelector('img'),src=`build/${ID}/${FMT}/${st.img}`;
+  if(img.getAttribute('src')!==src)img.setAttribute('src',src);
+  const zz=zoomOf(st,u);L.style.display='block';L.style.opacity=op;L.style.transformOrigin=`${zz.o.x}px ${zz.o.y}px`;L.style.transform=`scale(${zz.z})`;
+  spot(L.querySelector('svg'),st,clamp((u*(TLsegDur(st))-0.3)/0.4,0,1));
+}
+function TLsegDur(st){const s=TL.segs.find(x=>x.type==='step'&&M.steps[x.k]===st);return s?s.dur:1;}
+function hideLayer(n){document.getElementById('L'+n).style.display='none';}
+if(!Q.has('capture')){ready().then(T=>{const t0=performance.now(),tq=Q.get('t');if(tq!==null){render(+tq);return;}(function loop(){render(((performance.now()-t0)/1000)%T);requestAnimationFrame(loop);})();});}
+</script></body></html>
