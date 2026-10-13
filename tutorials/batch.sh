@@ -11,7 +11,7 @@ caffeinate -i -w $$ &
 for id in "$@"; do
   # сервер прототипа должен отвечать, иначе ждём, а не гоним пустые сборки
   until curl -s -o /dev/null http://localhost:$MK_PORT/prototype.html; do echo "жду сервер :$MK_PORT"; sleep 60; done
-  [ -f build/$id/voice/voice.json ] || node voice.js $id
+  node voice.js $id   # переозвучит только фразы, у которых поменялся текст
   [ -f build/$id/9x16/meta.json ] || node capture.js $id all
   node make.js $id all 2>&1 | grep -v кадр
   sleep ${PAUSE:-90}  # щадим ноут: пауза между роликами
