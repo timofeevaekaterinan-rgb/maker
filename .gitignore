@@ -15,3 +15,5 @@ tutorials/out/
 tutorials/frames/
 tutorials/.venv/
 tutorials/upload/
+deck/preview/
+deck/*.pdf
