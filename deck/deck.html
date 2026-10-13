@@ -90,6 +90,12 @@ a{color:inherit;text-decoration:none}
 .contacts span{font:500 21px/1.3 var(--sans);color:var(--ink-dk)}
 .contacts b{font:600 26px/1.3 var(--sans);color:#fff}
 .contacts a{color:var(--cyan);border-bottom:2px solid rgba(63,220,235,.45)}
+/* в PDF тени с размытием превращаются в серые прямоугольники (Просмотр на Mac) — в печати их нет, вместо них рамка */
+@media print{
+  .frame,.call,.card,.step .frame{box-shadow:none!important}
+  .call{outline:1px solid rgba(255,255,255,.12)}
+  .card{border:1px solid var(--line)}
+}
 .card{position:absolute;background:#fff;border-radius:28px;color:var(--ink)}
 </style></head><body>
 
