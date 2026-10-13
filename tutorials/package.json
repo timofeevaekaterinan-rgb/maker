@@ -1,15 +1,11 @@
 {
-  "name": "tutorials",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "name": "maker-tutorials",
+  "private": true,
+  "description": "Обучающие ролики Maker: съёмка прототипа, озвучка, сборка mp4",
   "type": "commonjs",
+  "scripts": {
+    "all": "./batch.sh overview home chats inbox images posts banners pages pres templates strat plan campaigns res-posts res-ads fin style voice facts groups profile"
+  },
   "dependencies": {
     "puppeteer-core": "^23.11.1"
   }

@@ -13,6 +13,7 @@
 | Кабинет — текущая версия: чат в колонке, создание через чат | [prototype.html](https://timofeevaekaterinan-rgb.github.io/maker/prototype.html) |
 | Видение оболочки | [vision.html](https://timofeevaekaterinan-rgb.github.io/maker/vision.html) |
 | Подбор шрифтов | [font-specimen.html](https://timofeevaekaterinan-rgb.github.io/maker/font-specimen.html) |
+| Обучающие ролики (21 шт., 16:9 и 9:16) | Яндекс Диск, папка «Maker — обучающие ролики»; как пересобрать — [tutorials/](tutorials/README.md) |
 
 ## Архив версий кабинета
 
@@ -62,6 +63,9 @@ vision.html          видение оболочки
 font-specimen.html   подбор шрифтов
 img/                 фото и иллюстрации (intro/ — кадры заставки, shots/ — кадры клиентов)
 export/              скриншоты проверок вёрстки
+docs/backend/         всё для подключения бэкенда
+promo/               промо-ролик и рилсы
+tutorials/           обучающие ролики: сценарии и сборка (видео — на Яндекс Диске)
 CLAUDE.md            правила UI
 ```
 
