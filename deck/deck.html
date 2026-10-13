@@ -1,247 +1,275 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8">
 <title>Maker — презентация</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
 <style>
-/* Слайд 1920×1080: синие слайды-«обложки» из градиента меню + белые слайды со скриншотами; стекло — карточки из знака maker */
+/* Система по редизайну: 4 фона (белый · голубой · тёмно-синий · волны), одна сетка 120px полей,
+   заголовок всегда на одной высоте, одна рамка скриншота, одна выноска, один подвал. */
 :root{
-  --blue:#2E6BE6; --blue-hi:#4C88FF; --blue-deep:#1238B8; --side-a:#2C6BF2; --side-b:#1747CF;
-  --ink:#141A2A; --ink-2:#59627A; --ink-3:#8E97AC; --bg:#F5F8FC; --line:#E3E9F3;
-  --warn-bg:#FDF1E7; --warn-ink:#9A5A22; --ok-bg:#E9F4EC; --ok-ink:#2E6B45;
+  --navy:#0A1733; --navy-2:#13234A; --blue:#1766F2; --blue-2:#0F52D6; --cyan:#3FDCEB;
+  --sky:#EAF3FE; --white:#FFFFFF; --ink:#0B1630; --ink-2:#5D6C8A; --ink-dk:#B6C3DC;
+  --line:#D6E2F3; --ph-bg:#FDF1E7; --ph-ink:#9A5A22;
   --head:"Geologica","Inter",system-ui,sans-serif; --sans:"Inter",system-ui,sans-serif;
 }
 @page{size:1920px 1080px;margin:0}
 *{box-sizing:border-box}
-html,body{margin:0;background:#0B1220}
+html,body{margin:0;background:#06102A}
 body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}
-.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:#fff;page-break-after:always;break-after:page;display:flex}
-.slide:last-child{page-break-after:auto;break-after:auto}
-@media screen{.slide{margin:0 auto 24px}}
-h1,h2,h3,.big{font-family:var(--head);letter-spacing:-.035em;margin:0;text-wrap:balance}
 p{margin:0}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--white);break-after:page;page-break-after:always}
+.slide:last-child{break-after:auto;page-break-after:auto}
+@media screen{.slide{margin:0 auto 24px}}
+.sky{background:var(--sky)} .navy{background:var(--navy);color:#fff}
+.wave{background:var(--navy) url(bg-wave.jpg) center/cover no-repeat}
 
-/* --- синие слайды --- */
-.blue{background:radial-gradient(120% 130% at 12% 8%,var(--blue-hi) 0%,var(--side-a) 34%,var(--side-b) 70%,var(--blue-deep) 100%);color:#fff}
-.glass{position:absolute;pointer-events:none}
-.glass i{position:absolute;border-radius:9%;transform:skewY(18deg);border:1.5px solid rgba(255,255,255,.34);background:linear-gradient(160deg,rgba(255,255,255,.30),rgba(255,255,255,.06));box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
-.blue .glass i{backdrop-filter:blur(2px)}
+/* сетка: текст слева 120…800, визуал справа 880…1800 */
+.txt{position:absolute;left:120px;top:96px;width:680px;display:flex;flex-direction:column}
+.eyebrow{font:700 20px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.eyebrow::after{content:"";display:block;width:52px;height:5px;border-radius:3px;background:currentColor;margin-top:14px}
+.navy .eyebrow,.dk .eyebrow{color:var(--cyan)}
+h1,h2{font-family:var(--head);font-weight:800;letter-spacing:-.035em;line-height:1.04;margin:52px 0 0;font-size:76px;text-wrap:balance}
+h1{font-size:92px}
+h2 em,h1 em{font-style:normal;color:var(--blue)}
+.navy h2 em,.dk h2 em{color:var(--cyan)}
+.lead{font-size:28px;line-height:1.45;color:var(--ink-2);margin-top:36px;max-width:28ch}
+.navy .lead,.dk .lead{color:var(--ink-dk)}
 
-/* --- общая разметка --- */
-.pad{padding:96px 120px 120px;display:flex;flex-direction:column;width:100%}
-.eyebrow{font:600 22px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
-.blue .eyebrow{color:rgba(255,255,255,.72)}
-.h{font-size:76px;line-height:1.02;font-weight:800;margin-top:26px}
-.h em{font-style:normal;color:var(--blue)}
-.blue .h em{color:#BFD3FF}
-.lead{font-size:32px;line-height:1.4;color:var(--ink-2);margin-top:28px;max-width:30ch}
-.blue .lead{color:rgba(255,255,255,.86)}
-.foot{position:absolute;left:120px;right:120px;bottom:52px;display:flex;align-items:center;gap:14px;font:600 20px/1 var(--sans);color:var(--ink-3)}
+/* рамка скриншота — одна на всю презентацию */
+.frame{position:absolute;background:#fff;padding:14px;border-radius:28px;border:1px solid var(--line);box-shadow:0 2px 6px rgba(10,23,51,.05),0 40px 90px -36px rgba(10,23,51,.45)}
+.frame img{display:block;width:100%;height:100%;object-fit:cover;object-position:0 0;border-radius:16px}
+.navy .frame,.wave .frame{border-color:rgba(255,255,255,.4);box-shadow:0 50px 110px -30px rgba(0,8,30,.7)}
+.frame.ph{padding:10px;border-radius:44px}
+.frame.ph img{border-radius:34px}
+
+/* выноска — одна: на светлом тёмная, на тёмном белая */
+.call{position:absolute;display:flex;align-items:center;gap:18px;background:var(--navy);color:#fff;border-radius:20px;padding:26px 34px;font:700 28px/1.25 var(--head);letter-spacing:-.02em;box-shadow:0 24px 60px -28px rgba(10,23,51,.6)}
+.call::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--cyan);flex:none}
+.navy .call,.dk .call{background:#fff;color:var(--ink)}
+.navy .call::before,.dk .call::before{background:var(--blue)}
+
+/* подвал — один */
+.foot{position:absolute;left:120px;right:120px;bottom:52px;display:flex;align-items:center;font:600 20px/1 var(--sans);color:var(--ink-2)}
 .foot .sp{flex:1}
-.blue .foot{color:rgba(255,255,255,.6)}
-.logo{display:flex;align-items:center;gap:.45em;font:800 1em/1 var(--head);letter-spacing:-.035em;color:var(--ink)}
-.logo svg{width:1.45em;height:1.45em;flex:none}
-.blue .logo{color:#fff}
-.num{font-variant-numeric:tabular-nums}
+.navy .foot,.dk .foot{color:var(--ink-dk)}
+.logo{display:flex;align-items:center;gap:12px;font:800 24px/1 var(--head);letter-spacing:-.035em;color:var(--ink)}
+.logo svg{width:36px;height:36px}
+.navy .logo,.dk .logo{color:#fff}
 
-/* --- скриншоты --- */
-.shot{position:absolute;border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 2px 6px rgba(20,26,42,.06),0 40px 90px -30px rgba(20,40,110,.38);border:1px solid rgba(20,40,110,.10)}
-.shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:0 0}
-.blue .shot{border:1px solid rgba(255,255,255,.35);box-shadow:0 50px 120px -30px rgba(5,15,60,.6)}
-.phone{position:absolute;width:330px;height:714px;border-radius:52px;padding:12px;background:#0E1424;box-shadow:0 50px 110px -30px rgba(5,15,60,.6),inset 0 0 0 2px #2A3350}
-.phone img{width:100%;height:100%;object-fit:cover;object-position:0 0;border-radius:41px;display:block}
-.tint{position:absolute;inset:auto 0 0 0;height:22%;background:linear-gradient(to top,#fff,rgba(255,255,255,0))}
-
-/* --- элементы --- */
-.ph{display:inline-block;font-weight:600;color:var(--warn-ink);background:var(--warn-bg);border:2px dashed rgba(154,90,34,.6);border-radius:12px;padding:2px 16px}
-.chain{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:64px}
-.step{display:flex;flex-direction:column;gap:18px}
-.step .card{height:330px;border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 70px -36px rgba(20,40,110,.4);background:#fff}
-.step .card img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,18% 0)}
-.step b{font:800 34px/1.1 var(--head);letter-spacing:-.03em;display:flex;align-items:center;gap:14px}
-.step b span{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--blue);color:#fff;font-size:22px}
-.step p{font-size:24px;line-height:1.4;color:var(--ink-2)}
-.arrow{color:var(--blue);font-weight:800}
-
-.pains{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:72px}
-.pain{border-top:3px solid var(--ink);padding-top:28px}
-.pain b{display:block;font:800 40px/1.1 var(--head);letter-spacing:-.03em}
-.pain p{font-size:26px;line-height:1.4;color:var(--ink-2);margin-top:14px}
-
-.ag{display:grid;grid-template-columns:1fr 1fr;gap:30px 24px;margin-top:56px}
-.ag div{display:flex;align-items:center;gap:22px}
-.ag i{width:64px;height:64px;border-radius:20px;flex:none;position:relative;display:block}
-.ag i::before,.ag i::after{content:"";position:absolute;top:24px;width:9px;height:12px;border-radius:5px;background:#fff}
-.ag i::before{left:19px}.ag i::after{right:19px}
-.ag b{font:800 34px/1.1 var(--head);letter-spacing:-.03em}
-.ag span{font-size:24px;color:var(--ink-2);display:block;margin-top:4px}
-
-.list{display:flex;flex-direction:column;gap:26px;margin-top:64px}
-.list div{display:flex;gap:24px;align-items:baseline;font:600 38px/1.25 var(--head);letter-spacing:-.025em}
-.list div::before{content:"";width:18px;height:18px;border-radius:6px;background:#fff;flex:none;transform:translateY(-4px) skewY(18deg)}
+/* мелкие компоненты */
+.cols{position:absolute;left:120px;right:120px;top:470px;display:grid;grid-template-columns:repeat(3,1fr);gap:56px}
+.col{border-top:5px solid var(--blue);padding-top:30px}
+.col .n{font:700 22px/1 var(--sans);color:var(--blue)}
+.col b{display:block;font:800 36px/1.15 var(--head);letter-spacing:-.025em;margin-top:22px}
+.col p{font-size:24px;line-height:1.45;color:var(--ink-2);margin-top:16px}
+.chain{position:absolute;left:120px;right:120px;top:350px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.step .frame{position:relative;height:280px;padding:10px;border-radius:22px}
+.step .frame img{border-radius:12px;object-position:var(--pos,20% 4%)}
+.step b{display:flex;align-items:center;gap:16px;font:800 32px/1.1 var(--head);letter-spacing:-.025em;margin-top:30px}
+.step b span{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:var(--blue);color:#fff;font-size:22px}
+.step p{font-size:23px;line-height:1.45;color:var(--ink-2);margin-top:14px}
+.chips{display:flex;gap:14px;margin-top:44px;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:14px 24px;font:600 22px/1 var(--sans)}
+.chip i{width:12px;height:12px;border-radius:50%;background:var(--blue)}
+.ph{display:inline-block;font-weight:600;color:var(--ph-ink);background:var(--ph-bg);border:2px dashed rgba(154,90,34,.6);border-radius:10px;padding:0 12px}
+.stat{display:flex;align-items:center;gap:30px;margin-top:48px}
+.stat .num{font:800 96px/1 var(--head);letter-spacing:-.04em;color:var(--blue)}
+.stat p{font:600 26px/1.35 var(--sans);max-width:16ch}
+.agents{display:grid;grid-template-columns:1fr 1fr;gap:30px 28px;margin-top:52px}
+.agents div{display:flex;align-items:center;gap:18px}
+.agents i{position:relative;width:58px;height:58px;border-radius:18px;flex:none;background:var(--c)}
+.agents i::before,.agents i::after{content:"";position:absolute;top:21px;width:8px;height:12px;border-radius:5px;background:#fff}
+.agents i::before{left:18px}.agents i::after{right:18px}
+.agents b{display:block;font:800 30px/1.1 var(--head);letter-spacing:-.02em}
+.agents span{display:block;font-size:21px;color:var(--ink-2);margin-top:4px}
+.list{display:flex;flex-direction:column;gap:28px;margin-top:52px}
+.list div{display:flex;gap:22px;align-items:center;font:600 30px/1.3 var(--sans)}
+.list div::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--cyan);flex:none}
+.btn{display:inline-flex;align-self:flex-start;background:var(--blue);color:#fff;border-radius:18px;padding:24px 40px;font:700 30px/1 var(--head);letter-spacing:-.02em;margin-top:60px}
+.card{position:absolute;background:#fff;border-radius:28px;color:var(--ink)}
 </style></head><body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <linearGradient id="mkBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4C88FF"/><stop offset="1" stop-color="#1747CF"/></linearGradient>
-  <linearGradient id="mkC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/></linearGradient>
-  <symbol id="mk" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="url(#mkBg)"/><g transform="skewY(18)"><rect x="48" y="-0.6" width="36" height="39" rx="6.5" fill="#fff" opacity=".45"/><rect x="30.5" y="14" width="36" height="39" rx="6.5" fill="#fff" opacity=".7"/><rect x="13" y="28.5" width="36" height="39" rx="6.5" fill="url(#mkC)"/></g></symbol>
-  <symbol id="mkw" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#fff" opacity=".16"/><rect x=".75" y=".75" width="98.5" height="98.5" rx="21.5" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/><g transform="skewY(18)"><rect x="48" y="-0.6" width="36" height="39" rx="6.5" fill="#fff" opacity=".4"/><rect x="30.5" y="14" width="36" height="39" rx="6.5" fill="#fff" opacity=".65"/><rect x="13" y="28.5" width="36" height="39" rx="6.5" fill="#fff"/></g></symbol>
+  <linearGradient id="mkBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3D84FF"/><stop offset="1" stop-color="#0F52D6"/></linearGradient>
+  <symbol id="mk" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="url(#mkBg)"/><g transform="skewY(18)"><rect x="48" y="-0.6" width="36" height="39" rx="6.5" fill="#fff" opacity=".42"/><rect x="30.5" y="14" width="36" height="39" rx="6.5" fill="#fff" opacity=".68"/><rect x="13" y="28.5" width="36" height="39" rx="6.5" fill="#fff"/></g></symbol>
 </defs></svg>
 
-<!-- 1. Обложка -->
-<section class="slide blue">
-  <div class="glass" style="right:-60px;top:-120px;width:900px;height:900px"><i style="left:420px;top:40px;width:380px;height:420px"></i><i style="left:230px;top:200px;width:380px;height:420px"></i><i style="left:40px;top:360px;width:380px;height:420px"></i></div>
-  <div class="pad" style="justify-content:center">
-    <div class="logo" style="font-size:56px"><svg><use href="#mkw"/></svg>maker</div>
-    <h1 class="h" style="font-size:112px;margin-top:72px;max-width:12ch">Соцсети и реклама для бизнеса <em>в одном окне</em></h1>
-    <p class="lead" style="font-size:36px;max-width:26ch">Рассказываете о бизнесе своими словами — Maker делает остальное.</p>
+<!-- 01 — обложка: белая колонка + волны -->
+<section class="slide">
+  <div class="wave" style="position:absolute;left:820px;top:0;right:0;bottom:0"></div>
+  <div style="position:absolute;left:0;top:0;bottom:0;width:14px;background:var(--blue)"></div>
+  <div class="txt" style="top:84px">
+    <div class="logo" style="font-size:34px"><svg style="width:52px;height:52px"><use href="#mk"/></svg>maker</div>
+    <h1 style="margin-top:150px">Соцсети и реклама для бизнеса <em>в одном окне</em></h1>
+    <p class="lead" style="margin-top:44px">Рассказываете о бизнесе своими словами. Maker собирает стратегию, контент и рекламу.</p>
   </div>
-  <div class="shot" style="left:1110px;top:560px;width:1000px;height:625px;transform:rotate(-4deg)"><img src="shots/home.jpg" alt="Главная Maker"></div>
-  <div class="phone" style="left:1480px;top:150px;transform:rotate(5deg)"><img src="shots/m-post.jpg" alt="Пост в Maker на телефоне"></div>
-  <div class="foot"><span>trymaker.ru</span><span class="sp"></span><span>B2B-сервис для малого бизнеса</span></div>
+  <div class="frame" style="left:930px;top:170px;width:880px;height:560px"><img src="shots/home.jpg" alt="Главная Maker"></div>
+  <div class="call" style="left:1430px;top:690px;width:360px">B2B-сервис для малого бизнеса</div>
+  <div class="foot" style="right:auto"><span style="color:var(--blue);font-size:24px">trymaker.ru</span></div>
 </section>
 
-<!-- 2. Проблема -->
+<!-- 02 — проблема: белый -->
 <section class="slide">
-  <div class="pad">
+  <div class="txt" style="width:880px">
     <div class="eyebrow">Проблема</div>
-    <h2 class="h" style="max-width:20ch">Бизнесу нужны заявки из соцсетей. А дальше начинается</h2>
-    <div class="pains">
-      <div class="pain"><b>Разобраться самому</b><p>Таргет, контент-план, рубрики и десять размеров баннеров под каждую площадку.</p></div>
-      <div class="pain"><b>Нанять агентство</b><p>Дорого, и непонятно, за что платишь и что работает.</p></div>
-      <div class="pain"><b>Делать между делом</b><p>Некогда. Соцсети ведутся рывками, реклама запускается «когда будет время».</p></div>
-    </div>
-    <p class="big" style="font:800 56px/1.15 var(--head);letter-spacing:-.03em;margin-top:auto;max-width:28ch">Итог — три поста в год и «реклама у нас <span style="color:var(--blue)">не работает</span>».</p>
+    <h2>Бизнесу нужны заявки из соцсетей. Дальше начинается <em>рутина</em></h2>
   </div>
-  <div class="foot"><div class="logo" style="font-size:22px"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="num">02</span></div>
+  <p class="lead" style="position:absolute;left:1180px;top:196px;max-width:22ch;margin:0">Маркетинг распадается на отдельные задачи, сервисы и подрядчиков.</p>
+  <div class="cols">
+    <div class="col"><div class="n">01</div><b>Разобраться самому</b><p>Таргет, контент-план, рубрики и десятки размеров для каждой площадки.</p></div>
+    <div class="col"><div class="n">02</div><b>Нанять агентство</b><p>Дорого, при этом непонятно, за что платишь и что действительно работает.</p></div>
+    <div class="col"><div class="n">03</div><b>Делать между делом</b><p>Соцсети ведутся рывками, реклама запускается, когда появляется время.</p></div>
+  </div>
+  <div class="call" style="left:120px;right:120px;top:800px">Итог: три поста в год и «реклама у нас не работает».</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span>02</span></div>
 </section>
 
-<!-- 3. Решение -->
-<section class="slide" style="background:var(--bg)">
-  <div class="pad" style="width:760px;flex:none">
+<!-- 03 — решение: тёмно-синий -->
+<section class="slide navy">
+  <div class="txt">
     <div class="eyebrow">Решение</div>
-    <h2 class="h">Пишете задачу — <em>Maker делает остальное</em></h2>
-    <p class="lead">Своими словами, как коллеге: текстом, голосом, файлом или ссылкой. Maker сам понимает, что нужно: стратегия, пост, баннер или лендинг.</p>
+    <h2>Пишете задачу. <em>Maker делает остальное</em></h2>
+    <p class="lead">Текстом, голосом, файлом или ссылкой. Maker понимает, что нужно: стратегия, пост, баннер или лендинг.</p>
   </div>
-  <div class="shot" style="left:860px;top:150px;width:1180px;height:738px"><img src="shots/home.jpg" alt="Главная: окно задачи и напоминания"></div>
-  <div class="foot"><div class="logo" style="font-size:22px"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="num">03</span></div>
+  <div class="call" style="left:120px;top:770px">Одна задача вместо брифа</div>
+  <div class="card" style="left:880px;top:96px;width:920px;height:820px;background:var(--sky)">
+    <div class="frame" style="left:40px;top:40px;width:840px;height:525px"><img src="shots/home.jpg" alt="Окно задачи на Главной"></div>
+    <p style="position:absolute;left:56px;top:620px;font:800 36px/1.15 var(--head);letter-spacing:-.025em">Начните с того, что уже есть</p>
+    <p style="position:absolute;left:56px;top:680px;font-size:25px;line-height:1.45;color:var(--ink-2);max-width:34ch">Ссылка на сайт, короткое описание или готовый пример.</p>
+  </div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span>03</span></div>
 </section>
 
-<!-- 4. Цепочка -->
-<section class="slide">
-  <div class="pad">
+<!-- 04 — цепочка: голубой -->
+<section class="slide sky">
+  <div class="txt" style="width:1700px">
     <div class="eyebrow">Как это работает</div>
-    <h2 class="h" style="max-width:22ch">Одна цепочка вместо десятка сервисов</h2>
-    <div class="chain">
-      <div class="step"><div class="card" style="--pos:22% 6%"><img src="shots/strat.jpg" alt=""></div><b><span>1</span>Стратегия</b><p>Цель, аудитории, площадки и рубрики — из вашего рассказа.</p></div>
-      <div class="step"><div class="card" style="--pos:22% 8%"><img src="shots/plan.jpg" alt=""></div><b><span>2</span>Контент-план</b><p>Темы на месяц по рубрикам стратегии.</p></div>
-      <div class="step"><div class="card" style="--pos:24% 8%"><img src="shots/posts.jpg" alt=""></div><b><span>3</span>Публикации</b><p>Посты, карусели, сторис и клипы под каждую площадку.</p></div>
-      <div class="step"><div class="card" style="--pos:24% 10%"><img src="shots/result.jpg" alt=""></div><b><span>4</span>Результаты</b><p>Что зашло — и что сделать дальше.</p></div>
-    </div>
+    <h2>Одна цепочка вместо десятка сервисов</h2>
   </div>
-  <div class="foot"><div class="logo" style="font-size:22px"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="num">04</span></div>
+  <div class="chain">
+    <div class="step"><div class="frame" style="--pos:20% 6%"><img src="shots/strat.jpg" alt=""></div><b><span>1</span>Стратегия</b><p>Цель, аудитории, площадки и рубрики.</p></div>
+    <div class="step"><div class="frame" style="--pos:20% 8%"><img src="shots/plan.jpg" alt=""></div><b><span>2</span>Контент-план</b><p>Темы на месяц по рубрикам стратегии.</p></div>
+    <div class="step"><div class="frame" style="--pos:22% 8%"><img src="shots/posts.jpg" alt=""></div><b><span>3</span>Публикации</b><p>Посты, сторис и клипы под площадки.</p></div>
+    <div class="step"><div class="frame" style="--pos:22% 10%"><img src="shots/result.jpg" alt=""></div><b><span>4</span>Результаты</b><p>Что сработало и что делать дальше.</p></div>
+  </div>
+  <div class="call" style="left:120px;right:120px;top:800px">Стратегия задаёт логику. Каждый следующий шаг использует её автоматически.</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span>04</span></div>
 </section>
 
-<!-- 5. Публикации -->
-<section class="slide" style="background:var(--bg)">
-  <div class="pad" style="width:720px;flex:none">
-    <div class="eyebrow">Публикации</div>
-    <h2 class="h">Пост под каждую площадку. <em>Правки — словами</em></h2>
-    <p class="lead">«Короче», «теплее», «добавь цену» — и новая версия готова. Прошлую всегда можно вернуть.</p>
-  </div>
-  <div class="shot" style="left:780px;top:170px;width:1060px;height:663px"><img src="shots/posts.jpg" alt="Студия поста: чат и пост"></div>
-  <div class="phone" style="left:1560px;top:300px"><img src="shots/m-post.jpg" alt="Пост на телефоне"></div>
-  <div class="foot"><div class="logo" style="font-size:22px"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="num">05</span></div>
-</section>
-
-<!-- 6. Визуал -->
+<!-- 05 — публикации: белый -->
 <section class="slide">
-  <div class="pad" style="width:700px;flex:none">
-    <div class="eyebrow">Фото, видео и баннеры</div>
-    <h2 class="h">Картинки в вашем стиле — <em>без фотосессий</em></h2>
-    <p class="lead">Один основной баннер — и сразу все размеры для ВКонтакте и Директа, с маркировкой рекламы.</p>
+  <div class="txt">
+    <div class="eyebrow">Публикации</div>
+    <h2>Пост под каждую площадку. <em>Правки — словами</em></h2>
+    <p class="lead">«Короче», «теплее», «добавь цену» — и новая версия готова. Прошлую всегда можно вернуть.</p>
+    <div class="chips"><span class="chip"><i></i>ВКонтакте</span><span class="chip"><i style="background:var(--cyan)"></i>Телеграм</span><span class="chip"><i style="background:var(--navy)"></i>TenChat</span></div>
   </div>
-  <div class="shot" style="left:760px;top:110px;width:900px;height:563px"><img src="shots/images.jpg" alt="Фото и видео клиента"></div>
-  <div class="shot" style="left:1060px;top:430px;width:860px;height:538px"><img src="shots/banners.jpg" alt="Баннеры во всех размерах"></div>
-  <div class="foot"><div class="logo" style="font-size:22px"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="num">06</span></div>
+  <div class="frame" style="left:880px;top:120px;width:860px;height:538px"><img src="shots/posts.jpg" alt="Студия поста"></div>
+  <div class="frame ph" style="left:1480px;top:300px;width:310px;height:640px"><img src="shots/m-post.jpg" alt="Пост на телефоне"></div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span>05</span></div>
 </section>
 
-<!-- 7. Входящие -->
-<section class="slide" style="background:var(--bg)">
-  <div class="pad" style="width:720px;flex:none">
+<!-- 06 — фото и баннеры: голубой -->
+<section class="slide sky">
+  <div class="txt">
+    <div class="eyebrow">Фото, видео и баннеры</div>
+    <h2>Контент в вашем стиле <em>без фотосессий</em></h2>
+    <p class="lead">Один основной баннер — и готовы все размеры для площадок и рекламы, с маркировкой.</p>
+  </div>
+  <div class="frame" style="left:880px;top:96px;width:760px;height:475px"><img src="shots/images.jpg" alt="Фото и видео"></div>
+  <div class="frame" style="left:1040px;top:430px;width:760px;height:475px"><img src="shots/banners.jpg" alt="Баннеры во всех размерах"></div>
+  <div class="call" style="left:120px;top:770px">Все размеры сразу</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span>06</span></div>
+</section>
+
+<!-- 07 — входящие: тёмно-синий -->
+<section class="slide navy">
+  <div class="txt">
     <div class="eyebrow">Входящие</div>
-    <h2 class="h">Отзывы и комментарии — <em>в одном месте</em></h2>
+    <h2>Отзывы и комментарии <em>в одном месте</em></h2>
     <p class="lead">Яндекс Карты, 2ГИС, ВКонтакте и Телеграм. Ответ уже набросан вашим голосом и с вашими фактами.</p>
   </div>
-  <div class="shot" style="left:800px;top:150px;width:1180px;height:738px"><img src="shots/inbox.jpg" alt="Входящие: отзыв и готовый ответ"></div>
-  <div class="foot"><div class="logo" style="font-size:22px"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="num">07</span></div>
+  <div class="call" style="left:120px;top:770px">Один голос бренда во всех каналах</div>
+  <div class="frame" style="left:880px;top:150px;width:920px;height:575px"><img src="shots/inbox.jpg" alt="Входящие"></div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span>07</span></div>
 </section>
 
-<!-- 8. Результаты -->
+<!-- 08 — результаты: белый -->
 <section class="slide">
-  <div class="pad" style="width:720px;flex:none">
+  <div class="txt">
     <div class="eyebrow">Результаты</div>
-    <h2 class="h">Видно, что зашло. <em>И что делать дальше</em></h2>
-    <p class="lead">«Польза» заходит в 2,4 раза лучше — дайте ей больше тем. Одна кнопка, и следующий план это учтёт.</p>
+    <h2>Видно, что зашло. <em>И что делать дальше</em></h2>
+    <p class="lead">Maker собирает результаты и предлагает следующий шаг по реакции аудитории.</p>
+    <div class="stat"><span class="num">2,4×</span><p>«Польза» заходит лучше остальных рубрик</p></div>
   </div>
-  <div class="shot" style="left:800px;top:150px;width:1180px;height:738px"><img src="shots/result.jpg" alt="Результаты публикаций"></div>
-  <div class="foot"><div class="logo" style="font-size:22px"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="num">08</span></div>
+  <div class="frame" style="left:880px;top:150px;width:920px;height:575px"><img src="shots/result.jpg" alt="Результаты публикаций"></div>
+  <div class="call" style="left:1180px;top:690px;width:620px">Одна кнопка — и следующий план учитывает результат</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span>08</span></div>
 </section>
 
-<!-- 9. Принцип -->
-<section class="slide blue">
-  <div class="glass" style="right:-160px;bottom:-330px;width:700px;height:700px"><i style="left:300px;top:40px;width:260px;height:290px"></i><i style="left:170px;top:150px;width:260px;height:290px"></i><i style="left:40px;top:260px;width:260px;height:290px"></i></div>
-  <div class="pad" style="width:860px;flex:none;justify-content:center">
-    <div class="eyebrow">Главный принцип</div>
-    <h2 class="h" style="font-size:104px">Ничего не выдумываем</h2>
-    <p class="lead">Чего Maker не знает — цену, адрес, акцию, — он не сочиняет, а спрашивает. Ответили один раз — ответ встаёт во все материалы.</p>
-    <p style="margin-top:44px;font:600 34px/1.6 var(--sans)">Чекап за <span class="ph">[цена чекапа]</span> — анализы и разбор за одно утро.</p>
+<!-- 09 — принцип: волны + белая карточка -->
+<section class="slide wave dk">
+  <div class="card" style="left:72px;top:72px;width:760px;height:1040px"></div>
+  <div class="txt" style="color:var(--ink)">
+    <div class="eyebrow" style="color:var(--blue)">Главный принцип</div>
+    <h2 style="font-size:84px">Ничего не выдумываем</h2>
+    <p class="lead" style="color:var(--ink-2)">Если Maker не знает цену, адрес или условия акции, он спрашивает. Ответ сохраняется и попадает во все материалы.</p>
+    <p style="margin-top:56px;background:var(--sky);border-radius:20px;padding:30px 34px;font:600 28px/1.6 var(--sans)">Чекап за <span class="ph">[цена чекапа]</span> — анализы и разбор за одно утро</p>
   </div>
-  <div class="shot" style="left:980px;top:170px;width:1060px;height:663px"><img src="shots/facts.jpg" alt="База фактов: чего не хватает"></div>
-  <div class="foot"><div class="logo" style="font-size:22px"><svg><use href="#mkw"/></svg>maker</div><span class="sp"></span><span class="num">09</span></div>
+  <div class="frame" style="left:910px;top:170px;width:890px;height:556px"><img src="shots/facts.jpg" alt="База фактов"></div>
+  <div class="call" style="left:1380px;top:690px;width:420px">Факты подтверждает человек</div>
+  <div class="foot" style="left:120px;right:120px"><div class="logo" style="color:var(--ink)"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span style="color:#fff">09</span></div>
 </section>
 
-<!-- 10. Агенты -->
-<section class="slide" style="background:var(--bg)">
-  <div class="pad" style="width:760px;flex:none">
+<!-- 10 — агенты: голубой -->
+<section class="slide sky">
+  <div class="txt">
     <div class="eyebrow">Команда агентов</div>
-    <h2 class="h">За каждым шагом — <em>свой агент</em></h2>
-    <div class="ag">
-      <div><i style="background:#2E6BE6"></i><p><b>Мика</b><span>координатор</span></p></div>
-      <div><i style="background:#7A5AF8"></i><p><b>Тим</b><span>стратег</span></p></div>
-      <div><i style="background:#F07B2E"></i><p><b>Ася</b><span>контент-редактор</span></p></div>
-      <div><i style="background:#1F9D6B"></i><p><b>Лев</b><span>специалист по рекламе</span></p></div>
-      <div><i style="background:#D9467A"></i><p><b>Нора</b><span>бренд-менеджер</span></p></div>
+    <h2>За каждым шагом — <em>свой специалист</em></h2>
+    <div class="agents">
+      <div><i style="--c:#1766F2"></i><p><b>Мика</b><span>координатор</span></p></div>
+      <div><i style="--c:#7A5AF8"></i><p><b>Тим</b><span>стратег</span></p></div>
+      <div><i style="--c:#F07B2E"></i><p><b>Ася</b><span>контент-редактор</span></p></div>
+      <div><i style="--c:#1F9D6B"></i><p><b>Лев</b><span>реклама</span></p></div>
+      <div><i style="--c:#D9467A"></i><p><b>Нора</b><span>бренд-менеджер</span></p></div>
     </div>
   </div>
-  <div class="shot" style="left:860px;top:150px;width:1180px;height:738px"><img src="shots/agents.jpg" alt="Чат с выбором агента"></div>
-  <div class="foot"><div class="logo" style="font-size:22px"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="num">10</span></div>
+  <div class="frame" style="left:880px;top:150px;width:920px;height:575px"><img src="shots/agents.jpg" alt="Чат с выбором агента"></div>
+  <div class="call" style="left:1180px;top:690px;width:620px">Координатор собирает работу агентов в понятный результат</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span>10</span></div>
 </section>
 
-<!-- 11. Опция для маркетолога -->
-<section class="slide">
-  <div class="pad" style="width:720px;flex:none">
+<!-- 11 — опция: тёмно-синий -->
+<section class="slide navy">
+  <div class="txt">
     <div class="eyebrow">Опция</div>
-    <h2 class="h">Работаете с маркетологом или <em>агентством</em>?</h2>
-    <p class="lead">Он подключается к Maker и ведёт здесь всех своих клиентов — с финансами по каждому прямо из CRM.</p>
+    <h2>Работаете с маркетологом или <em>агентством</em>?</h2>
+    <p class="lead">Специалист подключается к Maker и ведёт здесь всех клиентов. Финансы по каждому — прямо из CRM.</p>
   </div>
-  <div class="shot" style="left:800px;top:150px;width:1180px;height:738px"><img src="shots/fin.jpg" alt="Финансы и клиенты"></div>
-  <div class="foot"><div class="logo" style="font-size:22px"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="num">11</span></div>
+  <div class="card" style="left:880px;top:96px;width:920px;height:820px">
+    <div class="frame" style="left:40px;top:40px;width:840px;height:525px"><img src="shots/fin.jpg" alt="Финансы и клиенты"></div>
+    <p style="position:absolute;left:56px;top:620px;font:800 36px/1.15 var(--head);letter-spacing:-.025em">Все клиенты и деньги на одном экране</p>
+    <p style="position:absolute;left:56px;top:680px;font-size:25px;line-height:1.45;color:var(--ink-2);max-width:40ch">Подходит для своей команды, маркетолога и агентства.</p>
+  </div>
+  <div class="call" style="left:120px;top:770px">Один кабинет для всех клиентов</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span>11</span></div>
 </section>
 
-<!-- 12. Что уже есть -->
-<section class="slide blue">
-  <div class="glass" style="right:-40px;top:-80px;width:900px;height:900px"><i style="left:420px;top:40px;width:380px;height:420px"></i><i style="left:230px;top:200px;width:380px;height:420px"></i><i style="left:40px;top:360px;width:380px;height:420px"></i></div>
-  <div class="pad" style="justify-content:center">
+<!-- 12 — финал: тёмно-синий + волны -->
+<section class="slide navy">
+  <div class="wave" style="position:absolute;left:1010px;top:0;right:0;bottom:0"></div>
+  <div class="txt" style="width:820px">
     <div class="eyebrow">Что уже готово</div>
-    <h2 class="h" style="font-size:100px;max-width:14ch">Сервис можно потрогать уже сейчас</h2>
+    <h2 style="font-size:84px">Сервис можно потрогать <em>уже сейчас</em></h2>
     <div class="list">
       <div>Кликабельный прототип всего сервиса</div>
       <div>Документация для подключения бэкенда</div>
       <div>21 обучающий ролик по разделам</div>
     </div>
+    <span class="btn">trymaker.ru</span>
   </div>
-  <div class="phone" style="left:1440px;top:190px;transform:rotate(-4deg)"><img src="shots/m-home.jpg" alt="Главная на телефоне"></div>
-  <div class="foot"><div class="logo" style="font-size:28px"><svg><use href="#mkw"/></svg>maker</div><span class="sp"></span><span style="font-size:28px;color:#fff">trymaker.ru</span></div>
+  <div class="frame ph" style="left:1300px;top:110px;width:400px;height:820px"><img src="shots/m-home.jpg" alt="Главная на телефоне"></div>
+  <div class="call dkc" style="left:1110px;top:700px;background:#fff;color:var(--ink)">20 разделов в кабинете</div>
+  <div class="foot" style="right:auto"><div class="logo"><svg><use href="#mk"/></svg>maker</div></div>
 </section>
 
 </body></html>
