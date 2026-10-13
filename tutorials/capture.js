@@ -19,7 +19,7 @@ if (!V) { console.error('нет ролика', id); process.exit(1); }
     await p.evaluateOnNewDocument(() => {
       try { localStorage.clear(); localStorage.setItem('mk-intro', '1'); localStorage.setItem('mk-tips', '1'); localStorage.setItem('mk-auth', 'in'); localStorage.setItem('mk-state', 'active'); } catch (e) {}
     });
-    await p.goto('http://localhost:8934/prototype.html?tut=' + Date.now() + '#/home', { waitUntil: 'networkidle0' });
+    await p.goto('http://localhost:' + (process.env.MK_PORT || 8934) + '/prototype.html?tut=' + Date.now() + '#/home', { waitUntil: 'load', timeout: 120000 }); await new Promise(r => setTimeout(r, 1500));
     await new Promise(r => setTimeout(r, 1800));
     // без демо-плашки, подсказок и тостов; хелперы для сценариев
     await p.addStyleTag({ content: '#demo-flag,.demo-flag,.tip,.toast{display:none!important}' });
@@ -30,7 +30,7 @@ if (!V) { console.error('нет ролика', id); process.exit(1); }
       try { tipsEnd(); } catch (e) {}
       if (c) clientSet(c, false, true);
     }, V.client || '');
-    const meta = { id, fmt, w: Math.round(F.w * F.dsf), h: Math.round(F.h * F.dsf), title: V.title, group: V.group, next: V.next || '', intro: V.intro, steps: [] };
+    const meta = { id, fmt, w: Math.round(F.w * F.dsf), h: Math.round(F.h * F.dsf), title: V.title, group: V.group, next: V.next || '', outro: V.outro || '', intro: V.intro, steps: [] };
     for (let i = 0; i < V.steps.length; i++) {
       const S = V.steps[i];
       if (S.do) { try { await p.evaluate(S.do); } catch (e) { console.error('step', i, 'do:', e.message); } }

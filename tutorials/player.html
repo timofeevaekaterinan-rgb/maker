@@ -72,9 +72,9 @@ function render(t){
     card.style.display='flex';
     const fadeIn=s.type==='outro'?clamp((t-s.start)/0.45,0,1):1,fadeOut=s.type==='intro'?1-clamp((t-(s.start+s.dur-0.45))/0.45,0,1):1;
     card.style.opacity=Math.min(fadeIn,fadeOut);
-    card.querySelector('.grp').textContent=s.type==='intro'?'Обучение · '+M.group:'Обучение Maker';
-    card.querySelector('h1').textContent=s.type==='intro'?M.title:(M.next?'Дальше — '+M.next:'Готово');
-    card.querySelector('p').textContent=s.type==='intro'?M.intro.replace(/^[^.]*\.\s*/,''):'Каждый раздел — отдельный короткий ролик.';
+    card.querySelector('.grp').textContent=M.outro?(s.type==='intro'?'Презентация продукта':'maker'):(s.type==='intro'?'Обучение · '+M.group:'Обучение Maker');
+    card.querySelector('h1').textContent=s.type==='intro'?M.title:(M.next?'Дальше — '+M.next:(M.outro||'Готово'));
+    card.querySelector('p').textContent=s.type==='intro'?M.intro.replace(/^[^.]*\.\s*/,''):(M.outro?'trymaker.ru':'Каждый раздел — отдельный короткий ролик.');
     const st=M.steps[0];
     if(s.type==='intro'){showLayer(0,st,0,1);hideLayer(1);}
     cap.style.display='none';$('#cursor').style.display='none';$('#ripple').style.display='none';

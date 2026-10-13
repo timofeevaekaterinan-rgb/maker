@@ -41,7 +41,7 @@ function timeline(meta) {
     const p = await b.newPage();
     p.on('pageerror', e => console.error('PAGE ERROR', e.message));
     await p.setViewport({ width: meta.w, height: meta.h, deviceScaleFactor: 1 });
-    await p.goto(`http://localhost:8934/tutorials/player.html?id=${id}&fmt=${fmt}&capture`, { waitUntil: 'networkidle0' });
+    await p.goto(`http://localhost:${process.env.MK_PORT || 8934}/tutorials/player.html?id=${id}&fmt=${fmt}&capture`, { waitUntil: 'networkidle0' });
     await p.evaluate(() => ready());
     const n = Math.ceil(TL.total * fps);
     for (let f = 0; f < n; f++) {
@@ -59,7 +59,7 @@ function timeline(meta) {
     const mix = vo.map((_, i) => `[v${i}]`).join('') + `amix=inputs=${vo.length}:normalize=0[vv]`;
     const mus = hasMusic ? `;[${vo.length}:a]volume=0.07,afade=t=in:d=1,afade=t=out:st=${(TL.total - 1.5).toFixed(2)}:d=1.5[mm];[vv][mm]amix=inputs=2:normalize=0,atrim=0:${TL.total.toFixed(2)}[a]` : `;[vv]atrim=0:${TL.total.toFixed(2)}[a]`;
     execSync(`ffmpeg -y -loglevel error ${ins} ${hasMusic ? `-stream_loop -1 -i ${music}` : ''} -filter_complex "${dl};${mix}${mus}" -map "[a]" -ar 48000 build/${id}/${fmt}/audio.wav`);
-    execSync(`ffmpeg -y -loglevel error -framerate ${fps} -i ${fr}/f%05d.jpg -i build/${id}/${fmt}/audio.wav -c:v libx264 -preset medium -crf 21 -pix_fmt yuv420p -c:a aac -b:a 160k -shortest -movflags +faststart out/${id}-${fmt}.mp4`);
+    execSync(`ffmpeg -y -loglevel error -framerate ${fps} -i ${fr}/f%05d.jpg -i build/${id}/${fmt}/audio.wav -threads 2 -c:v libx264 -preset medium -crf 21 -pix_fmt yuv420p -c:a aac -b:a 160k -shortest -movflags +faststart out/${id}-${fmt}.mp4`);
     fs.rmSync(fr, { recursive: true, force: true });
     console.log('готово', `out/${id}-${fmt}.mp4`, TL.total.toFixed(1) + ' с');
   }
