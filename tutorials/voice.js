@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const V = require('./steps.js')[process.argv[2]];
 const dir = `build/${process.argv[2]}/voice`;
-const VOICE = 'ru-RU-SvetlanaNeural', RATE = '+5%';
+const VOICE = V.voice || 'ru-RU-SvetlanaNeural', RATE = V.rate || '+5%';  // у ролика можно задать свой голос и скорость речи
 fs.mkdirSync(dir, { recursive: true });
 const lines = [V.intro].concat(V.steps.map(s => s.say)).concat(V.next ? ['Дальше — ' + V.next + '.'] : []);
 const sleep = ms => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
@@ -15,8 +15,9 @@ lines.forEach((t, i) => {
   const STRESS = x => x.replace(/(нейро)(се)/gi, '$1 $2').replace(/(пром)п(т)/gi, '$1$2').replace(/(^|[^а-яё])(М|м)енеджер/g, (m, a, b) => a + (b === 'М' ? 'Мэ' : 'мэ') + 'неджер');
   const say = STRESS(t).replace(/[«»]/g, '').replace(/(^|\s)к Maker/g, '$1к Мейкеру').replace(/Maker/g, 'Мейкер').replace(/\bVK\b/g, 'ВКонтакте').replace(/Telegram/g, 'Телеграм').replace(/TenChat/g, 'ТенЧат').replace(/\berid\b/gi, 'ерид').replace(/\bVPN\b/g, 'ВиПиЭн').replace(/(^|[^А-Яа-яЁё])КП(?![А-Яа-яЁё])/g, '$1КаПэ').replace(/\bHR\b/g, 'эйч-ар');
   // уже озвучено тем же текстом — не трогаем (перезапуск после сбоя докачивает только недостающее)
-  const done = fs.existsSync(base + '.wav') && fs.existsSync(base + '.txt') && fs.readFileSync(base + '.txt', 'utf8') === say;
-  if (!done) fs.writeFileSync(base + '.txt', say);
+  const key = VOICE + '|' + RATE + '|' + say;
+  const done = fs.existsSync(base + '.wav') && fs.existsSync(base + '.key') && fs.readFileSync(base + '.key', 'utf8') === key;
+  if (!done) { fs.writeFileSync(base + '.txt', say); fs.writeFileSync(base + '.key', key); }
   // сервис иногда отвечает 403 — повторяем с растущей паузой
   for (let k = 0; !done; k++) {
     try { execSync(`./.venv/bin/edge-tts --voice ${VOICE} --rate=${RATE} -f "${base}.txt" --write-media "${base}.mp3"`, { stdio: 'ignore' }); if (fs.statSync(base + '.mp3').size > 1000) break; } catch (e) {}

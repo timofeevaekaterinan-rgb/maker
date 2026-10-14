@@ -7,6 +7,7 @@ const { execSync } = require('child_process');
 const [, , id, which = 'all', FPS = '25'] = process.argv;
 const fps = +FPS;
 const voice = JSON.parse(fs.readFileSync(`build/${id}/voice/voice.json`));
+const PACE = (require('./steps.js')[id] || {}).pace || 1;  // темп: паузы между фразами и экранами
 
 function parts(text, d) {
   // субтитр — по фразам, не длиннее ~85 знаков; время — пропорционально длине
@@ -18,14 +19,14 @@ function parts(text, d) {
 function timeline(meta) {
   const segs = []; let t = 0;
   const v0 = voice[0];
-  segs.push({ type: 'intro', start: 0, dur: Math.max(3.2, v0.dur + 1.3), vs: 0.5, v: v0.file, parts: [] }); t = segs[0].dur;
+  segs.push({ type: 'intro', start: 0, dur: Math.max(3.2 * PACE, v0.dur + 1.3 * PACE), vs: 0.5 * PACE, v: v0.file, parts: [] }); t = segs[0].dur;
   meta.steps.forEach((s, k) => {
-    const v = voice[k + 1], dur = Math.max(3, v.dur + 1.7);
-    segs.push({ type: 'step', k, start: t, dur, vs: t + 0.7, v: v.file, parts: parts(s.say, v.dur) }); t += dur;
+    const v = voice[k + 1], dur = Math.max(3 * PACE, v.dur + 1.7 * PACE);
+    segs.push({ type: 'step', k, start: t, dur, vs: t + 0.7 * PACE, v: v.file, parts: parts(s.say, v.dur) }); t += dur;
   });
   const vl = voice[meta.steps.length + 1];
-  const od = vl ? Math.max(3, vl.dur + 1.6) : 3;
-  segs.push({ type: 'outro', start: t, dur: od, vs: t + 0.5, v: vl ? vl.file : null, parts: [] }); t += od;
+  const od = vl ? Math.max(3 * PACE, vl.dur + 1.6 * PACE) : 3 * PACE;
+  segs.push({ type: 'outro', start: t, dur: od, vs: t + 0.5 * PACE, v: vl ? vl.file : null, parts: [] }); t += od;
   return { meta, segs, total: t };
 }
 
