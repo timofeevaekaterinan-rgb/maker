@@ -11335,9 +11335,9 @@ function finManualGo(){
 })();
 
 /* ---------- чат как ассистент: «собери пост» в «Фото и видео» — перебрасывает в «Посты» и начинает там ---------- */
-var RT_MAP=[['soc-car',/^карусел/],['soc-story',/^сторис|^stories/],['soc-clip',/^клип|^reels|^шортс/],['soc-post',/^пост/],['banners',/^баннер|^креатив/],['pages',/^лендинг|^страниц|^сайт/],['pres',/^презентац|^колод|^отч[её]т/],
+var RT_MAP=[['soc-car',/^карусел/],['soc-story',/^сторис|^stories/],['soc-clip',/^клип|^reels|^шортс/],['soc-post',/^пост/],['banners',/^баннер|^креатив/],['pages',/^лендинг|^страниц|^сайт/],['pres',/^презентац|^колод|^отч[её]т|^кп$|^кпшк|^коммерческ/],
   ['video',/^ролик|^видео/],['images',/^фото|^кадр|^картинк|^изображен|^серию/],['plan',/^контент-план|^план/],['strat',/^стратеги/],['campaigns',/^кампани|^рекламу/],['groups',/^аудитори/],['facts',/^факт/]];
-var RT_VERB=/(?:^|\s)(собер\S*|сдела\S*|созда\S*|напиш\S*|сним\S*|подготов\S*|сгенер\S*|нарису\S*|запуст\S*|нуж[ео]н\S*|составь|состав\S*)\s+(?:мне\s+|нам\s+|ещё\s+|еще\s+|новы\S*\s+|нов\S*\s+|\d+\s+|пару\s+|для\s+\S+\s+)*([а-яёa-z-]+)/i;
+var RT_VERB=/(?:^|\s)(собер\S*|сдела\S*|созда\S*|напиш\S*|сним\S*|подготов\S*|сгенер\S*|нарису\S*|запуст\S*|нуж[ео]?н\S*|составь|состав\S*)\s+(?:мне\s+|нам\s+|ещё\s+|еще\s+|новы\S*\s+|нов\S*\s+|\d+\s+|пару\s+|для\s+\S+\s+)*([а-яёa-z-]+)/i;
 function routeIntent(t){var m=String(t||'').toLowerCase().match(RT_VERB);if(!m)return null;var w=m[2];if(/^ролик/.test(w)&&/клип|reels|шортс/.test(t.toLowerCase()))return 'soc-clip';for(var i=0;i<RT_MAP.length;i++)if(RT_MAP[i][1].test(w))return RT_MAP[i][0];return null;}
 function rtName(v){var h=NAVH[v];return h?h[1]:v;}
 /* перейти и начать там: в «Постах» — свой чат, в остальных — сценарий создания в колонке */
@@ -11373,6 +11373,14 @@ function routeNote(from,v,text){
   };
 })();
 
+/* КП из чата (14 окт): «сделай КП / коммерческое предложение» → «Презентации», тип «Питч клиенту» */
+(function(){
+  var KP=/(^|[^а-яё])(кп|кпшк\S*|коммерческ\S*\s+предложени\S*)([^а-яё]|$)/i;
+  var rg=routeGo;routeGo=function(v,text){
+    if(v==='pres'&&KP.test(String(text||''))){var sel=document.getElementById('dk-type');if(sel){sel.value='Питч клиенту';try{sel.dispatchEvent(new Event('change',{bubbles:true}));}catch(e){}}}
+    return rg.apply(this,arguments);
+  };
+})();
 /* ---------- toast ---------- */
 var toastT=null;
 function toast(msg,act){
