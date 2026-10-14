@@ -11,7 +11,7 @@ const sleep = ms => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0,
 const out = [];
 lines.forEach((t, i) => {
   const base = `${dir}/i${String(i).padStart(2, '0')}`;
-  const say = t.replace(/[«»]/g, '').replace(/(^|\s)к Maker/g, '$1к Мейкеру').replace(/Maker/g, 'Мейкер').replace(/\bVK\b/g, 'ВКонтакте').replace(/Telegram/g, 'Телеграм').replace(/TenChat/g, 'ТенЧат');
+  const say = t.replace(/[«»]/g, '').replace(/(^|\s)к Maker/g, '$1к Мейкеру').replace(/Maker/g, 'Мейкер').replace(/\bVK\b/g, 'ВКонтакте').replace(/Telegram/g, 'Телеграм').replace(/TenChat/g, 'ТенЧат').replace(/\berid\b/gi, 'ерид').replace(/\bVPN\b/g, 'ВиПиЭн').replace(/(^|[^А-Яа-яЁё])КП(?![А-Яа-яЁё])/g, '$1КаПэ').replace(/\bHR\b/g, 'эйч-ар');
   // уже озвучено тем же текстом — не трогаем (перезапуск после сбоя докачивает только недостающее)
   const done = fs.existsSync(base + '.wav') && fs.existsSync(base + '.txt') && fs.readFileSync(base + '.txt', 'utf8') === say;
   if (!done) fs.writeFileSync(base + '.txt', say);

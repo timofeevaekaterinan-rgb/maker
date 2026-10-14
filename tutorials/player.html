@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><title>Maker · обучающий ролик</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Geologica:wght@600;700;800&display=swap">
 <style>
   html,body{margin:0;background:#0B1220;overflow:hidden}
   #stage{position:relative;overflow:hidden;background:#EEF2FB;font-family:Onest,system-ui,sans-serif}
@@ -10,6 +10,8 @@
   #cursor{position:absolute;left:0;top:0;pointer-events:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));z-index:5}
   #ripple{position:absolute;border-radius:50%;border:3px solid #2E6BE6;background:rgba(46,107,230,.18);pointer-events:none;z-index:4}
   #cap{position:absolute;left:50%;transform:translateX(-50%);z-index:6;color:#fff;background:rgba(15,23,42,.86);border-radius:20px;text-align:center;font-weight:600;line-height:1.32;letter-spacing:-.005em;box-shadow:0 12px 40px -12px rgba(0,0,0,.5);transition:none}
+  #tag{position:absolute;left:50%;z-index:6;display:none;align-items:center;white-space:nowrap;background:#0A1733;color:#fff;font-family:Geologica,Onest,sans-serif;font-weight:700;letter-spacing:-.01em;border-radius:999px;box-shadow:0 18px 50px -18px rgba(0,8,30,.6)}
+  #tag::before{content:"";border-radius:50%;background:#3FDCEB;flex:none}
   #bar{position:absolute;left:0;bottom:0;height:6px;background:#2E6BE6;z-index:7}
   #card{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;justify-content:center;color:#fff;background:radial-gradient(120% 120% at 15% 10%,#4C88FF 0%,#2E6BE6 38%,#1238B8 100%)}
   #card .bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.12;filter:blur(6px) saturate(.6)}
@@ -28,6 +30,7 @@
   <div class="layer" id="L1"><img><svg class="spot"></svg></div>
   <div id="ripple"></div>
   <svg id="cursor" viewBox="0 0 24 24"><path d="M5 2.5l13.5 12.2-6.1.5 3.6 7.1-2.6 1.3-3.6-7.1L5 21z" fill="#fff" stroke="#111827" stroke-width="1.4" stroke-linejoin="round"/></svg>
+  <div id="tag"></div>
   <div id="cap"></div>
   <div id="bar"></div>
   <div id="card"><div class="bg"></div><div class="in"><div class="logo"><i><b></b><b></b><b></b><b></b></i>maker</div><div class="grp"></div><h1></h1><p></p></div><div class="site">trymaker.ru</div></div>
@@ -45,6 +48,8 @@ async function ready(){
   c.querySelector('.logo').style.fontSize=(V?64:52)+'px';c.querySelector('.grp').style.fontSize=(V?40:30)+'px';c.querySelector('.grp').style.marginTop=(V?70:44)+'px';
   c.querySelector('h1').style.fontSize=(V?132:120)+'px';c.querySelector('p').style.fontSize=(V?46:38)+'px';c.querySelector('p').style.maxWidth=(V?W:W*0.62)+'px';
   const s=c.querySelector('.site');s.style.fontSize=(V?34:26)+'px';s.style.left=V?'90px':'160px';s.style.bottom=V?'120px':'70px';
+  const tg=$('#tag');tg.style.fontSize=(V?40:30)*(V?W/1080:W/1920)+'px';tg.style.padding=V?'20px 34px':'14px 26px';tg.style.gap=V?'16px':'12px';tg.style.top=(V?H*0.05:H*0.045)+'px';
+  const dyn=document.createElement('style');dyn.textContent='#tag::before{width:'+(V?16:12)+'px;height:'+(V?16:12)+'px}';document.head.appendChild(dyn);
   $('#cursor').style.width=$('#cursor').style.height=(V?78:44)+'px';
   c.querySelector('.bg').style.backgroundImage=`url(build/${ID}/${FMT}/${M.steps[0].img})`;
   await Promise.all(M.steps.map(x=>new Promise(r=>{const i=new Image();i.onload=r;i.onerror=r;i.src=`build/${ID}/${FMT}/${x.img}`;})));
@@ -77,7 +82,7 @@ function render(t){
     card.querySelector('p').textContent=s.type==='intro'?M.intro.replace(/^[^.]*\.\s*/,''):(M.outro?'trymaker.ru':'Каждый раздел — отдельный короткий ролик.');
     const st=M.steps[0];
     if(s.type==='intro'){showLayer(0,st,0,1);hideLayer(1);}
-    cap.style.display='none';$('#cursor').style.display='none';$('#ripple').style.display='none';
+    $('#tag').style.display='none';cap.style.display='none';$('#cursor').style.display='none';$('#ripple').style.display='none';
     if(fadeIn<1||fadeOut<1){/* под карточкой — экран */}
     if(s.type==='intro'&&fadeOut<1){cap.style.display='none';}
     return;
@@ -96,6 +101,8 @@ function render(t){
   const cur=$('#cursor');cur.style.display=st.rect?'block':'none';cur.style.transform=`translate(${sx-6*K}px,${sy-4*K}px)`;
   const rp=$('#ripple'),ct=t-s.start-1.25;
   if(st.click&&st.rect&&ct>0&&ct<0.6){const R=(V?90:52)*K*ease(ct/0.6);rp.style.display='block';rp.style.width=rp.style.height=2*R+'px';rp.style.left=(sx-R)+'px';rp.style.top=(sy-R)+'px';rp.style.opacity=1-ct/0.6;}else rp.style.display='none';
+  // плашка-акцент шага: выезжает сверху за 0,35 с
+  const tg=$('#tag'),lt=t-s.start;if(st.label){tg.style.display='flex';tg.textContent=st.label;const a=clamp((lt-0.15)/0.35,0,1);tg.style.opacity=a;tg.style.transform=`translate(-50%,${(1-ease(a))*-14}px)`;}else tg.style.display='none';
   const txt=caption(s,t);cap.style.display=txt?'block':'none';cap.textContent=txt;
 }
 function showLayer(n,st,u,op){

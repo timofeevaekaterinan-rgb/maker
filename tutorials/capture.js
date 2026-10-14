@@ -60,7 +60,7 @@ if (!V) { console.error('нет ролика', id); process.exit(1); }
       const file = `s${String(i).padStart(2, '0')}.jpg`;
       await p.screenshot({ path: `${dir}/${file}`, type: 'jpeg', quality: 90 });
       const k = F.dsf;
-      meta.steps.push({ img: file, say: S.say, click: !!S.click, rect: rect && { x: rect.x * k, y: rect.y * k, w: rect.w * k, h: rect.h * k } });
+      meta.steps.push({ img: file, say: S.say, label: S.label || '', click: !!S.click, rect: rect && { x: rect.x * k, y: rect.y * k, w: rect.w * k, h: rect.h * k } });
       console.log(fmt, 'шаг', i, rect ? 'ok' : '—');
     }
     fs.writeFileSync(`${dir}/meta.json`, JSON.stringify(meta, null, 1));
