@@ -2004,6 +2004,46 @@
   .crm-opt.on,.crm-list .crm-opt.on:hover{border-color:var(--blue);background:var(--blue-softer)}
   .crm-on{font-style:normal;font-size:11.5px;font-weight:600;color:#1E7A4A;background:#E6F4EC;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:1px}
   .fn-acts{flex-wrap:wrap}
+  /* документы: КП в Word (14 окт) */
+  .dc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+  .dccard{display:flex;flex-direction:column;justify-content:flex-start;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:8px;cursor:pointer;font:inherit;color:inherit;box-shadow:var(--shadow)}
+  .dccard:hover{border-color:var(--blue-brd)}
+  .dc-cov{position:relative;height:150px;border-radius:12px;background:var(--inset);display:grid;place-items:center;overflow:hidden}
+  .dc-sheet{width:96px;height:128px;background:#fff;border-radius:6px;box-shadow:0 8px 24px -10px rgba(26,34,48,.35);padding:12px 10px;display:flex;flex-direction:column;gap:6px}
+  .dc-sheet i{display:block;height:5px;border-radius:3px;background:var(--line-2)}
+  .dc-sheet i.h{height:8px;width:70%;background:var(--blue)}
+  .dc-sheet .lh{height:14px;border-radius:3px;background:var(--blue-soft);margin:-4px -2px 2px}
+  .dc-w{position:absolute;right:10px;bottom:10px;width:30px;height:30px;border-radius:8px;background:#2B579A;color:#fff;font:800 15px/30px var(--head);text-align:center}
+  .dccard .pb{padding:12px 8px 6px;display:flex;flex-direction:column;gap:4px;flex:1}
+  .dccard .pn{font-weight:600}
+  .dccard .pm{font-size:12.5px;color:var(--ink-2)}
+  .dccard .dl{margin-top:auto;padding-top:8px;font-size:12.5px;color:var(--ink-3)}
+  .dc-wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start}
+  .dc-paper{background:#fff;border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);max-width:760px;width:100%;margin:0 auto;aspect-ratio:210/297;display:flex;flex-direction:column;overflow:hidden}
+  .dc-band{background:var(--inset);border-bottom:1px dashed var(--line-3);color:var(--ink-3);font-size:12px;padding:10px 28px;display:flex;gap:8px;align-items:center}
+  .dc-band.ft{border-bottom:0;border-top:1px dashed var(--line-3);margin-top:auto}
+  .dc-band b{color:var(--ink-2)}
+  .dc-in{padding:34px 48px;overflow:auto;font-size:13.5px;line-height:1.55;color:var(--ink)}
+  .dc-in h2{font-size:22px;margin:0 0 4px}
+  .dc-in .to{color:var(--ink-2);margin-bottom:18px}
+  .dc-in h4{font-size:14.5px;margin:16px 0 6px}
+  .dc-in ul{margin:0;padding-left:18px}
+  .dc-side{display:flex;flex-direction:column;gap:14px}
+  .dc-side .panel{padding:18px}
+  .dc-side h3{margin:0 0 8px;font-size:15px}
+  .dc-side p{margin:0 0 10px;font-size:13px;color:var(--ink-2)}
+  .dc-file{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line-2);border-radius:12px;margin-bottom:10px}
+  .dc-file .dc-w{position:static;flex:none;width:28px;height:28px;font-size:13px;line-height:28px}
+  .dc-file span{display:flex;flex-direction:column;min-width:0;font-size:13px}
+  .dc-file span b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dc-file span small{color:var(--ink-3)}
+  .dc-gap{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+  .dc-gap label{font-size:12.5px;color:var(--ink-2)}
+  .dc-gap div{display:flex;gap:6px}
+  .dc-gap input{flex:1;min-width:0;border:1px dashed rgba(154,90,34,.6);background:var(--warn-bg);border-radius:10px;padding:8px 10px;font:inherit;font-size:13px}
+  .dc-up{position:relative;overflow:hidden}
+  .dc-up input{position:absolute;inset:0;opacity:0;cursor:pointer}
+  @media (max-width:1100px){.dc-wrap{grid-template-columns:minmax(0,1fr)}}
   .toast{z-index:100}
   @media (max-width:480px){.crumb .cr-a,.crumb .cr-a+.sep{display:none}.topbar{gap:8px}}
 
@@ -3150,7 +3190,7 @@
         <a data-view="soc-post" onclick="go('soc-post')"><span class="ct">Посты, сторис, клипы</span></a>
         <a data-view="banners" onclick="go('banners')"><span class="ct">Баннеры</span></a>
         <a data-view="pages" onclick="go('pages')"><span class="ct">Сайты и страницы</span></a>
-        <a data-view="pres" onclick="go('pres')"><span class="ct">Презентации</span></a>
+        <a data-view="pres" onclick="go('pres')"><span class="ct">Презентации</span></a> <a data-view="docs" onclick="go('docs')"><span class="ct">Документы</span></a>
         <a data-view="templates" onclick="go('templates')"><span class="ct">Шаблоны</span></a>
       </nav>
     </div>
@@ -4172,7 +4212,21 @@
         </div>
       </section>
 
-      <!-- ============ DECK (single) ============ -->
+      <!-- ============ DOCS: КП в Word ============ -->
+<section id="v-docs" class="view">
+  <div class="phead"><div><h1>Документы</h1></div><div class="sp"></div><button class="pbtn" type="button" onclick="cpOpen('docs')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новое КП</button></div>
+  <div class="cards dc-grid" id="dc-grid"></div>
+  <div class="create-panel">
+    <textarea id="dc-text" placeholder="Кому и что предлагаем. Например: КП для сети кофеен — сайт с заказом навынос, запуск до зимы…" maxlength="3000" oninput="document.getElementById('dc-count').textContent=this.value.length+' / 3000'"></textarea>
+    <div class="cp-row">
+      <label class="cp-target">Клиент: <select class="cp-sel" id="dc-target" data-projs="pick"></select></label>
+      <label class="cp-target">Формат: <select class="cp-sel" id="dc-fmt"><option>Документ Word</option><option>Презентация</option></select></label>
+    </div>
+    <div class="cp-row2"><span class="cp-count" id="dc-count">0 / 3000</span><span class="sp"></span><button class="pbtn" type="button" onclick="dcCreate()">Собрать КП · ~0,31 ₽</button></div>
+  </div>
+</section>
+<section id="v-doc" class="view"><div id="dc-head"></div><div id="dc-body"></div></section>
+<!-- ============ DECK (single) ============ -->
       <section id="v-deck" class="view">
         <div id="dk-head"></div>
         <div id="dk-body"></div>
@@ -11335,7 +11389,7 @@ function finManualGo(){
 })();
 
 /* ---------- чат как ассистент: «собери пост» в «Фото и видео» — перебрасывает в «Посты» и начинает там ---------- */
-var RT_MAP=[['soc-car',/^карусел/],['soc-story',/^сторис|^stories/],['soc-clip',/^клип|^reels|^шортс/],['soc-post',/^пост/],['banners',/^баннер|^креатив/],['pages',/^лендинг|^страниц|^сайт/],['pres',/^презентац|^колод|^отч[её]т|^кп$|^кпшк|^коммерческ/],
+var RT_MAP=[['soc-car',/^карусел/],['soc-story',/^сторис|^stories/],['soc-clip',/^клип|^reels|^шортс/],['soc-post',/^пост/],['banners',/^баннер|^креатив/],['pages',/^лендинг|^страниц|^сайт/],['docs',/^кп$|^кпшк|^коммерческ|^документ/],['pres',/^презентац|^колод|^отч[её]т/],
   ['video',/^ролик|^видео/],['images',/^фото|^кадр|^картинк|^изображен|^серию/],['plan',/^контент-план|^план/],['strat',/^стратеги/],['campaigns',/^кампани|^рекламу/],['groups',/^аудитори/],['facts',/^факт/]];
 var RT_VERB=/(?:^|\s)(собер\S*|сдела\S*|созда\S*|напиш\S*|сним\S*|подготов\S*|сгенер\S*|нарису\S*|запуст\S*|нуж[ео]?н\S*|составь|состав\S*)\s+(?:мне\s+|нам\s+|ещё\s+|еще\s+|новы\S*\s+|нов\S*\s+|\d+\s+|пару\s+|для\s+\S+\s+)*([а-яёa-z-]+)/i;
 function routeIntent(t){var m=String(t||'').toLowerCase().match(RT_VERB);if(!m)return null;var w=m[2];if(/^ролик/.test(w)&&/клип|reels|шортс/.test(t.toLowerCase()))return 'soc-clip';for(var i=0;i<RT_MAP.length;i++)if(RT_MAP[i][1].test(w))return RT_MAP[i][0];return null;}
@@ -11377,9 +11431,139 @@ function routeNote(from,v,text){
 (function(){
   var KP=/(^|[^а-яё])(кп|кпшк\S*|коммерческ\S*\s+предложени\S*)([^а-яё]|$)/i;
   var rg=routeGo;routeGo=function(v,text){
-    if(v==='pres'&&KP.test(String(text||''))){var sel=document.getElementById('dk-type');if(sel){sel.value='Питч клиенту';try{sel.dispatchEvent(new Event('change',{bubbles:true}));}catch(e){}}}
+    if(v==='docs'){var f=document.getElementById('dc-fmt');if(f)f.value='Документ Word';}
     return rg.apply(this,arguments);
   };
+})();
+/* ---------- Документы: КП в Word, на бланке компании (14 окт) ---------- */
+var DOCS=[
+  {id:'doc1',p:'Атвинта',t:'КП: сайт для сети кофеен «Ростер»',to:'сети кофеен «Ростер»',st:'pub',d:'9 окт',ts:5,lh:null,secs:[
+    ['Задача',['Заказы навынос через сайт, а не только агрегаторы','Единый вид 6 кофеен','Запуск до зимнего меню']],
+    ['Как мы это видим','Тёплые фото зала и витрины, меню с ценами на главной, заказ в два шага'],
+    ['Что входит',['Дизайн и вёрстка 8 страниц','Меню с онлайн-заказом','Метрика и коллтрекинг','Поддержка 3 месяца']],
+    ['Срок','6 недель от брифа до запуска, с промежуточной сдачей каждые две недели'],
+    ['Стоимость','480 000 ₽ под ключ. Оплата в три этапа: 30% / 40% / 30%'],
+    ['Почему мы',['12 сайтов для ресторанов и кофеен','Средняя конверсия в заказ — 4,2%','Свой стиль: правки не ломают вёрстку']],
+    ['Следующий шаг','Созвон на 30 минут, бриф и смета — за 2 дня'],
+    ['Контакты','[имя, должность, телефон]']]},
+  {id:'doc2',p:'Вита',t:'КП: корпоративный чекап для сотрудников',to:'[название компании]',st:'draft',d:'12 окт',ts:7,lh:null,secs:[
+    ['Задача','Проверить здоровье сотрудников без потери рабочего дня'],
+    ['Что предлагаем','Чекап «Базовый» за одно утро: анализы, УЗИ, ЭКГ и разбор с терапевтом'],
+    ['Что входит',['Анализы, УЗИ и ЭКГ','Разбор результатов с терапевтом','Результаты — в тот же день']],
+    ['Где и когда','Сеть из трёх клиник в спальных районах. По будням с 8:00 до 20:00, в субботу до 16:00'],
+    ['Стоимость','6 900 ₽ за сотрудника. Скидка для компаний — [условия для компаний]'],
+    ['Следующий шаг','[дата созвона или визита]'],
+    ['Контакты','[имя, должность, телефон]']]}
+];
+var DC_ST={draft:'Черновик',pub:'Готов'},dcCur=null;
+function dcById(id){return DOCS.filter(function(d){return d.id===id;})[0];}
+function dcGaps(d){var out=[];String(d.to).replace(/\[([^\]]+)\]/g,function(m,g){out.push(g);});d.secs.forEach(function(x){(Array.isArray(x[1])?x[1]:[x[1]]).forEach(function(t){String(t).replace(/\[([^\]]+)\]/g,function(m,g){if(out.indexOf(g)<0)out.push(g);});});});return out;}
+function dcPh(t){return hesc(t).replace(/\[([^\]]+)\]/g,'<span class="phx">[$1]</span>');}
+function dcCard(d){
+  return '<button class="dccard" type="button" onclick="openDoc(\''+d.id+'\')"><div class="dc-cov"><span class="dc-sheet">'+(d.lh?'<span class="lh"></span>':'')+'<i class="h"></i><i></i><i></i><i style="width:80%"></i><i></i><i style="width:60%"></i></span><span class="dc-w">W</span><span class="st '+d.st+' badge-st">'+DC_ST[d.st]+'</span></div><div class="pb"><div class="pn">'+hesc(d.t)+'</div><div class="pm">КП · '+hesc(d.p)+' · '+d.d+'</div><div class="dl">'+(d.lh?'На бланке '+qn(d.lh.name):'Без бланка — можно загрузить свой')+'</div></div></button>';
+}
+function renderDocs(){
+  var g=document.getElementById('dc-grid');if(!g)return;
+  var list=DOCS.filter(function(d){return !CLIENT||d.p===CLIENT;}).sort(function(a,b){return b.ts-a.ts;});
+  g.innerHTML=list.length?list.map(dcCard).join(''):'<div class="ns-empty" style="grid-column:1/-1"><b>Документов пока нет</b><span>Опишите, кому и что предлагаете, — соберём КП в Word. Шапку и подвал можно взять с вашего бланка.</span><div class="lb-acts"><button class="pbtn" type="button" onclick="cpOpen(\'docs\')">Новое КП</button></div></div>';
+}
+function dcBody(d){
+  return '<h2>Коммерческое предложение</h2><div class="to">для '+dcPh(d.to)+(d.p?' · от '+hesc(d.p):'')+'</div>'+d.secs.map(function(x){
+    return '<h4>'+hesc(x[0])+'</h4>'+(Array.isArray(x[1])?'<ul>'+x[1].map(function(t){return '<li>'+dcPh(t)+'</li>';}).join('')+'</ul>':'<p style="margin:0">'+dcPh(x[1])+'</p>');
+  }).join('');
+}
+function openDoc(id){dcCur=id;var d=dcById(id);if(!d){go('docs');return;}go('doc',d.t);routeDetail(id,d.t);renderDoc();}
+function renderDoc(){
+  var d=dcById(dcCur);if(!d)return;var gaps=dcGaps(d);
+  document.getElementById('dc-head').innerHTML='<div class="phead"><div><h1>'+hesc(d.t)+'</h1><div class="pm" style="color:var(--ink-2);font-size:13px;margin-top:4px">КП · '+hesc(d.p)+' · '+d.d+' <span class="st '+d.st+'">'+DC_ST[d.st]+'</span></div></div><div class="sp"></div><button class="pbtn ghost" type="button" onclick="dcCopy()">Скопировать текст</button><button class="pbtn" type="button" onclick="dcDownload()">Скачать Word</button><button class="pbtn ghost del-btn" type="button" onclick="delDoc(\''+d.id+'\')">Удалить</button></div>';
+  var lh=d.lh?'<div class="dc-file"><span class="dc-w">W</span><span><b>'+hesc(d.lh.name)+'</b><small>'+Math.max(1,Math.round(d.lh.size/1024))+' КБ · шапка и подвал из вашего файла</small></span></div><div style="display:flex;gap:8px"><label class="mini dc-up">Заменить<input type="file" accept=".docx" onchange="dcLh(this)"></label><button class="mini" type="button" onclick="dcLhOff()">Убрать</button></div>'
+    :'<p>Загрузите ваш бланк в Word (.docx) — логотип, шапка, подвал и реквизиты перейдут в КП, текст встанет внутрь.</p><label class="pbtn ghost dc-up" style="width:100%;justify-content:center">Загрузить бланк .docx<input type="file" accept=".docx" onchange="dcLh(this)"></label>';
+  var gp=gaps.length?'<div class="panel"><h3>Пропуски · '+gaps.length+'</h3><p>Чего Maker не знает — не выдумывает. Впишите, и ответ встанет в документ.</p>'+gaps.map(function(g,i){return '<div class="dc-gap"><label>'+hesc(g)+'</label><div><input id="dc-g'+i+'" placeholder="Ответ"><button class="mini pri" type="button" onclick="dcFill('+i+')">Подставить</button></div></div>';}).join('')+'</div>':'<div class="panel"><h3>Пропусков нет</h3><p>Всё, что нужно, есть в документе — можно скачивать.</p></div>';
+  document.getElementById('dc-body').innerHTML='<div class="dc-wrap"><div class="dc-paper">'+(d.lh?'<div class="dc-band"><b>Шапка бланка</b> — из '+hesc(d.lh.name)+'</div>':'')+'<div class="dc-in">'+dcBody(d)+'</div>'+(d.lh?'<div class="dc-band ft"><b>Подвал бланка</b> — реквизиты и контакты из вашего файла</div>':'')+'</div><div class="dc-side"><div class="panel"><h3>Бланк компании</h3>'+lh+'</div>'+gp+'</div></div>';
+}
+function dcFill(i){
+  var d=dcById(dcCur),g=dcGaps(d)[i],v=(document.getElementById('dc-g'+i).value||'').trim();if(!v){toast('Впишите ответ');return;}
+  var rp=function(t){return String(t).split('['+g+']').join(v);};
+  d.secs=d.secs.map(function(x){return [x[0],Array.isArray(x[1])?x[1].map(rp):rp(x[1])];});d.to=rp(d.to);
+  renderDoc();renderDocs();toast('Подставили в документ');
+}
+function dcLh(inp){
+  var f=inp.files&&inp.files[0];if(!f)return;
+  if(!/\.docx$/i.test(f.name)){toast('Нужен файл Word в формате .docx');return;}
+  var d=dcById(dcCur);f.arrayBuffer().then(function(buf){d.lh={name:f.name,size:f.size,buf:buf};renderDoc();renderDocs();toast('Бланк загружен — КП скачается на нём');});
+}
+function dcLhOff(){var d=dcById(dcCur);d.lh=null;renderDoc();renderDocs();toast('Бланк убран');}
+function dcText(d){return 'Коммерческое предложение\nдля '+d.to+'\n\n'+d.secs.map(function(x){return x[0]+'\n'+(Array.isArray(x[1])?x[1].map(function(t){return '• '+t;}).join('\n'):x[1]);}).join('\n\n');}
+function dcCopy(){var t=dcText(dcById(dcCur));try{navigator.clipboard.writeText(t).then(function(){toast('Текст КП скопирован');},function(){toast('Не получилось скопировать');});}catch(e){toast('Не получилось скопировать');}}
+/* абзацы КП в WordprocessingML; на бланке шрифт и стили берутся из файла клиента */
+function dcParas(d,own){
+  var run=function(t,o){o=o||{};return '<w:r><w:rPr>'+(own?'':'<w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/>')+(o.b?'<w:b/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+(o.s?'<w:sz w:val="'+o.s+'"/>':(own?'':'<w:sz w:val="22"/>'))+'</w:rPr><w:t xml:space="preserve">'+xmlEsc(t)+'</w:t></w:r>';};
+  var P=function(inner,after,before,ind){return '<w:p><w:pPr>'+(ind?'<w:ind w:left="400" w:hanging="260"/>':'')+'<w:spacing w:before="'+(before||0)+'" w:after="'+(after||120)+'"/></w:pPr>'+inner+'</w:p>';};
+  var out=P(run('Коммерческое предложение',{b:1,s:36}),60)+P(run('для '+d.to+(d.p?' · от '+d.p:''),{c:'59627A'}),240);
+  d.secs.forEach(function(x){out+=P(run(x[0],{b:1,s:26}),100,220);(Array.isArray(x[1])?x[1]:[x[1]]).forEach(function(t){out+=Array.isArray(x[1])?P(run('• '+t),60,0,1):P(run(t),120);});});
+  return out;
+}
+/* чтение .docx клиента: ZIP с deflate — распаковываем встроенным DecompressionStream */
+function dcUnzip(buf){
+  var dv=new DataView(buf),u=new Uint8Array(buf),e=-1;
+  for(var i=u.length-22;i>=Math.max(0,u.length-66000);i--){if(dv.getUint32(i,true)===0x06054b50){e=i;break;}}
+  if(e<0)return Promise.reject(new Error('not zip'));
+  var n=dv.getUint16(e+10,true),off=dv.getUint32(e+16,true),dec=new TextDecoder(),jobs=[];
+  for(var k=0;k<n;k++){
+    var m=dv.getUint16(off+10,true),cs=dv.getUint32(off+20,true),nl=dv.getUint16(off+28,true),xl=dv.getUint16(off+30,true),cl=dv.getUint16(off+32,true),lo=dv.getUint32(off+42,true);
+    var name=dec.decode(u.subarray(off+46,off+46+nl));off+=46+nl+xl+cl;
+    var ds=lo+30+dv.getUint16(lo+26,true)+dv.getUint16(lo+28,true),raw=u.slice(ds,ds+cs);
+    if(/\/$/.test(name))continue;
+    jobs.push(m===0?Promise.resolve({name:name,data:raw}):(function(nm,r){return new Response(new Blob([r]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer().then(function(b){return {name:nm,data:new Uint8Array(b)};});})(name,raw));
+  }
+  return Promise.all(jobs);
+}
+function dcDocxLh(d){
+  return dcUnzip(d.lh.buf).then(function(files){
+    var doc=files.filter(function(f){return f.name==='word/document.xml';})[0];if(!doc)throw new Error('no document');
+    var x=new TextDecoder().decode(doc.data),b0=x.indexOf('<w:body>'),b1=x.lastIndexOf('</w:body>');if(b0<0||b1<0)throw new Error('no body');
+    var body=x.slice(b0+8,b1),sp=body.lastIndexOf('<w:sectPr'),sect=sp>=0?body.slice(sp):'';
+    doc.data=x.slice(0,b0+8)+dcParas(d,true)+sect+x.slice(b1);
+    return zipStore(files);
+  });
+}
+function dcDownload(){
+  var d=dcById(dcCur),name='КП — '+fileSafe(d.to.replace(/[\[\]]/g,''))+'.docx';
+  var plain=function(){var blocks=[{h:1,t:'Коммерческое предложение'},{small:'для '+d.to+(d.p?' · от '+d.p:'')}];d.secs.forEach(function(x){blocks.push({h:2,t:x[0]});(Array.isArray(x[1])?x[1]:[x[1]]).forEach(function(t){blocks.push(Array.isArray(x[1])?{li:t}:{p:t});});});return docxBlob(blocks);};
+  if(!d.lh){saveFile(name,plain(),'КП скачано');return;}
+  if(typeof DecompressionStream==='undefined'){saveFile(name,plain(),'Браузер не умеет читать бланк — скачали без него');return;}
+  dcDocxLh(d).then(function(z){saveFile(name,z,'КП скачано на вашем бланке');},function(){toast('Не получилось прочитать бланк — проверьте, что это .docx. Скачиваем без него');saveFile(name,plain());});
+}
+function delDoc(id){var d=dcById(id);if(!d)return;delAsk('Удалить '+qn(d.t)+'?',['Скачанные файлы у вас останутся.'],function(){var rec=delRun([{arr:DOCS,pred:function(x){return x.id===id;}}]);go('docs');delDone('КП удалено',rec,function(){renderDocs();});});}
+/* сборка КП из задачи: только то, что знаем из текста и базы фактов; остальное — пропуски */
+function dcCreate(){
+  var txt=document.getElementById('dc-text').value.trim(),pj=document.getElementById('dc-target').value||CLIENT,fmt=document.getElementById('dc-fmt').value;
+  if(!txt){toast('Напишите, кому и что предлагаем');document.getElementById('dc-text').focus();return;}
+  if(fmt==='Презентация'){var t=document.getElementById('dk-text'),ty=document.getElementById('dk-type'),tg=document.getElementById('dk-target');if(t)t.value=txt;if(ty)ty.value='Питч клиенту';if(tg&&pj)tg.value=pj;document.getElementById('dc-text').value='';go('pres');dkCreate();return;}
+  var clean=txt.replace(/^\s*(сделай|собери|подготовь|нужн\S*|напиши)\s+/i,'').replace(/^(кп|кпшк\S*|коммерческое предложение)\s*/i,'');
+  var m=clean.match(/^для\s+([^:—\-,.]+)[:—\-,.]?\s*(.*)$/i),to=m?m[1].trim():'[кому]',what=(m?m[2]:clean).trim()||'[что предлагаем]';
+  what=what.charAt(0).toUpperCase()+what.slice(1).replace(/[.\s]+$/,'');
+  var fx=(typeof FACTS!=='undefined'?FACTS:[]).filter(function(f){return f.p===pj;}),price=fx.filter(function(f){return /₽/.test(f.t);})[0],about=fx.filter(function(f){return f.cat==='О компании';})[0];
+  var d={id:'doc'+Date.now(),p:pj||'Без клиента',t:'КП: '+what.slice(0,48),to:to,st:'draft',d:'сегодня',ts:100+DOCS.length,lh:null,secs:[
+    ['Задача',what],['Что предлагаем','[решение коротко]'],['Что входит',['[что входит в работу]']],['Срок','[срок]'],
+    ['Стоимость',price?price.t:'[стоимость]'],['Почему мы',about?about.t:'[почему мы]'],['Следующий шаг','[следующий шаг]'],['Контакты','[имя, должность, телефон]']]};
+  spendGate(0.31,'КП в Word',function(){
+    openBuildModal('Собираем КП',['Разбираем задачу','Берём факты из базы'+(pj?' '+qn(pj):''),'Раскладываем по разделам КП'],'КП готово — проверьте пропуски и скачайте в Word.',function(){
+      DOCS.push(d);document.getElementById('dc-text').value='';document.getElementById('dc-count').textContent='0 / 3000';try{charge(0.31,'КП в Word',pj);}catch(e){}renderDocs();openDoc(d.id);
+    });
+  });
+}
+(function(){
+  NAVH.docs=[NAVH.pres[0],'Документы'];NAVH.doc=[NAVH.pres[0],'Документы','docs'];NAVMAP.doc='docs';
+  try{CPD_T.docs=['Новое КП','Коммерческое предложение в Word — можно на вашем бланке'];}catch(e){}
+  DCR_ON.docs=1;DCR_TXT.docs={hi:'Новое КП для {p} — кому и что предлагаем?',run:'Собираю КП'};
+  try{NS_TXT.docs=['Документов пока нет','Опишите, кому и что предлагаете, — соберём КП в Word. Шапку и подвал можно взять с вашего бланка.'];}catch(e){}
+  try{MAP_ROWS.push(['docs','Документы']);}catch(e){}
+  try{HELP_WHY.docs='Коммерческие предложения в Word: текст пишет Maker, факты — из базы, оформление — с вашего бланка.';HELP_WHY.doc=HELP_WHY.docs;}catch(e){}
+  try{HELP.docs=HELP.docs||HELP.pres;HELP.doc=HELP.docs;}catch(e){}
+  var g=go;go=function(v){var r=g.apply(this,arguments);if(v==='docs')renderDocs();return r;};
+  var ra=routeApply;routeApply=function(r,back){if(r&&r.v==='doc'){if(r.id&&dcById(r.id))openDoc(r.id);else go('docs');return;}return ra.apply(this,arguments);};
+  var cs=clientScope;clientScope=function(){var r=cs.apply(this,arguments);try{renderDocs();}catch(e){}return r;};
 })();
 /* ---------- toast ---------- */
 var toastT=null;
