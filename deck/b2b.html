@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<title>Maker для компаний</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="deck.css">
+<style>
+/* Дополнение для презентации «для компаний»: плитки законов на тёмном, роли, отделы */
+.law{position:absolute;left:880px;right:120px;top:150px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.law .tile{min-height:330px}
+.law .k{font:700 18px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.law b{font:800 34px/1.12 var(--head);letter-spacing:-.025em;color:var(--ink)}
+.law p{font-size:22px;line-height:1.45;color:var(--ink-2)}
+.roles{display:flex;flex-direction:column;gap:22px;margin-top:48px}
+.roles div{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:baseline;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.roles b{font:800 30px/1.1 var(--head);letter-spacing:-.02em}
+.roles span{font-size:23px;line-height:1.4;color:var(--ink-2)}
+.dep{position:absolute;left:120px;right:120px;top:330px;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.dep .tile{min-height:420px}
+.dep b{font:800 34px/1.1 var(--head);letter-spacing:-.025em;color:var(--ink)}
+.dep p{font-size:23px;line-height:1.45;color:var(--ink-2)}
+.dep .ic{width:64px;height:64px;border-radius:18px;background:var(--sky);display:grid;place-items:center;margin-bottom:6px}
+.dep .ic svg{width:32px;height:32px}
+.hx{position:absolute;left:120px;right:120px;top:330px;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.hx .tile{min-height:380px}
+.hx b{font:800 34px/1.1 var(--head);letter-spacing:-.025em;color:var(--ink)}
+.hx p{font-size:23px;line-height:1.45;color:var(--ink-2)}
+.hx .n{font:800 56px/1 var(--head);color:var(--blue);letter-spacing:-.04em}
+</style></head><body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="mkBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3D84FF"/><stop offset="1" stop-color="#0F52D6"/></linearGradient>
+  <symbol id="mk" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="url(#mkBg)"/><g transform="skewY(18)"><rect x="48" y="-0.6" width="36" height="39" rx="6.5" fill="#fff" opacity=".42"/><rect x="30.5" y="14" width="36" height="39" rx="6.5" fill="#fff" opacity=".68"/><rect x="13" y="28.5" width="36" height="39" rx="6.5" fill="#fff"/></g></symbol>
+</defs></svg>
+
+<!-- 01 — обложка -->
+<section class="slide">
+  <div class="wave" style="position:absolute;left:820px;top:0;right:0;bottom:0"></div>
+  <div style="position:absolute;left:0;top:0;bottom:0;width:14px;background:var(--blue)"></div>
+  <div class="txt" style="top:84px">
+    <div class="logo" style="font-size:34px"><svg style="width:52px;height:52px"><use href="#mk"/></svg>maker</div>
+    <h1 style="margin-top:150px;font-size:88px">Нейросети для команды <em>в рублях и по закону</em></h1>
+    <p class="lead" style="margin-top:44px">Сотрудники делают контент, рекламу и презентации в одном сервисе. Компания управляет брендом, доступами и расходами</p>
+  </div>
+  <div class="frame" style="left:930px;top:170px;width:880px;height:560px"><img src="shots/home.jpg" alt="Главная Maker"></div>
+  <div class="call" style="left:1470px;top:690px">Maker для компаний</div>
+  <div class="foot" style="right:auto"><a href="https://trymaker.ru" style="color:var(--blue);font-size:24px">trymaker.ru</a></div>
+</section>
+
+<!-- 02 — проблема -->
+<section class="slide">
+  <div class="txt" style="width:1000px">
+    <div class="eyebrow">Проблема</div>
+    <h2>Нейросети уже в работе. <em>Компания этого не видит</em></h2>
+  </div>
+  <p class="lead" style="position:absolute;left:1180px;top:196px;max-width:22ch;margin:0">Каждый находит свой сервис, свою подписку и свой способ оплаты</p>
+  <div class="cols" style="top:540px">
+    <div class="col"><div class="n">01</div><b>Зарубежные сервисы</b><p>Оплата иностранной картой, VPN и непонятно, где окажутся данные</p></div>
+    <div class="col"><div class="n">02</div><b>Разнобой</b><p>Каждый пишет по-своему, и бренд размывается от отдела к отделу</p></div>
+    <div class="col"><div class="n">03</div><b>Риски</b><p>Персональные данные в чужих чатах и реклама без маркировки</p></div>
+  </div>
+  <div class="call" style="left:120px;right:120px;top:800px">Итог: расходы не видны, а отвечает за всё компания</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="pg"></span></div>
+</section>
+
+<!-- 03 — решение -->
+<section class="slide navy">
+  <div class="txt">
+    <div class="eyebrow">Решение</div>
+    <h2>Топовые нейросети в одном окне. <em>Оплата в рублях</em></h2>
+    <p class="lead">Текст, изображения и видео. Модель под задачу Maker подбирает сам — сотруднику не нужно разбираться</p>
+  </div>
+  <div class="call" style="left:120px;top:770px;width:660px">Счёт и закрывающие документы для бухгалтерии</div>
+  <div class="card" style="left:880px;top:96px;width:920px;height:820px;background:var(--sky)">
+    <div class="frame" style="left:40px;top:40px;width:840px;height:525px"><img src="shots/home.jpg" alt="Окно задачи"></div>
+    <p style="position:absolute;left:56px;top:620px;font:800 36px/1.15 var(--head);letter-spacing:-.025em">Один сервис вместо десятка подписок</p>
+    <p style="position:absolute;left:56px;top:680px;font-size:25px;line-height:1.45;color:var(--ink-2);max-width:38ch">Без иностранных карт и VPN. Сотрудник пишет задачу своими словами</p>
+  </div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="pg"></span></div>
+</section>
+
+<!-- 04 — харнес -->
+<section class="slide sky">
+  <div class="txt" style="width:1700px">
+    <div class="eyebrow">Что внутри</div>
+    <h2>Не просто нейросеть — <em>наш харнес и опыт</em></h2>
+  </div>
+  <div class="hx">
+    <div class="tile"><span class="n">01</span><b>Агенты по ролям</b><p>Стратег, контент-редактор, специалист по рекламе и бренд-менеджер. Задачу берёт тот, кто в ней разбирается</p></div>
+    <div class="tile"><span class="n">02</span><b>Правила бренда</b><p>Стиль, голос и запреты компании подставляются в каждый ответ автоматически</p></div>
+    <div class="tile"><span class="n">03</span><b>Проверка фактов</b><p>Цены, сроки и обещания — только из базы компании. Чего нет, Maker уточняет, а не придумывает</p></div>
+    <div class="tile"><span class="n">04</span><b>Готовые сценарии</b><p>Стратегия, контент-план, посты, баннеры, коммерческие предложения и отчёты</p></div>
+  </div>
+  <div class="call" style="left:120px;right:120px;top:846px">Сотрудник пишет задачу — харнес превращает её в результат по стандартам компании</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="pg"></span></div>
+</section>
+
+<!-- 05 — законы -->
+<section class="slide navy">
+  <div class="txt">
+    <div class="eyebrow">Законы</div>
+    <h2>Требования закона <em>учтены заранее</em></h2>
+    <p class="lead">Юридическую сторону мы закладываем в сам сервис, чтобы не держать её в голове у каждого сотрудника</p>
+  </div>
+  <div class="law">
+    <div class="tile"><span class="k">152-ФЗ</span><b>Персональные данные</b><p>Согласие на обработку персональных данных — при входе в сервис</p></div>
+    <div class="tile"><span class="k">38-ФЗ «О рекламе»</span><b>Маркировка рекламы</b><p>Рекламодатель и erid в каждом баннере. Без erid отправка не пройдёт</p></div>
+    <div class="tile"><span class="k">Площадки</span><b>Ограничения в РФ</b><p>Сервисы с ограничениями в России помечены честно и стоят отдельно</p></div>
+    <div class="tile"><span class="k">Достоверность</span><b>Без выдуманных обещаний</b><p>Цены, сроки и акции берутся только из подтверждённых фактов компании</p></div>
+  </div>
+  <div class="call" style="left:120px;top:846px;width:680px">Работая с нами, можно быть уверенными: закон учтён</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="pg"></span></div>
+</section>
+
+<!-- 06 — бренд -->
+<section class="slide">
+  <div class="txt">
+    <div class="eyebrow">Бренд</div>
+    <h2>Сколько бы людей ни писало — <em>бренд один</em></h2>
+    <p class="lead">Стиль, голос и факты компании хранятся в Maker. Каждый сотрудник работает по одним правилам</p>
+  </div>
+  <div class="frame" style="left:880px;top:96px;width:760px;height:475px"><img src="shots/style.jpg" alt="Стиль компании"></div>
+  <div class="frame" style="left:1040px;top:430px;width:760px;height:475px"><img src="shots/voice.jpg" alt="Голос компании"></div>
+  <div class="call" style="left:120px;top:770px">Так говорим — так не говорим</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="pg"></span></div>
+</section>
+
+<!-- 07 — команда и доступы -->
+<section class="slide sky">
+  <div class="txt">
+    <div class="eyebrow">Команда и доступы</div>
+    <h2>Каждый видит и делает <em>только своё</em></h2>
+    <div class="roles">
+      <div><b>Владелец</b><span>Всё, включая оплату и участников</span></div>
+      <div><b>Редактор</b><span>Создаёт и правит материалы</span></div>
+      <div><b>Просмотр</b><span>Смотрит материалы и отчёты</span></div>
+      <div style="border-bottom:0"><b>Бухгалтер</b><span>Счета, оплата и закрывающие документы</span></div>
+    </div>
+  </div>
+  <div class="frame" style="left:880px;top:150px;width:920px;height:575px"><img src="shots/team.jpg" alt="Команда и доступы"></div>
+  <div class="call" style="left:1180px;top:690px;width:620px">Руководитель согласует материалы по ссылке, без регистрации</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="pg"></span></div>
+</section>
+
+<!-- 08 — расходы -->
+<section class="slide navy">
+  <div class="txt">
+    <div class="eyebrow">Расходы</div>
+    <h2>Каждый рубль <em>на виду</em></h2>
+    <p class="lead">Без подписки — платите только за сделанное. Баланс, лимиты и журнал расходов в одном месте</p>
+  </div>
+  <div class="call" style="left:120px;top:770px">Акты, счета и УПД — в профиле</div>
+  <div class="card" style="left:880px;top:96px;width:920px;height:820px">
+    <div class="frame" style="left:40px;top:40px;width:840px;height:525px"><img src="shots/billing.jpg" alt="Оплата и документы"></div>
+    <p style="position:absolute;left:56px;top:620px;font:800 36px/1.15 var(--head);letter-spacing:-.025em">Дорогие действия подтверждаются отдельно</p>
+    <p style="position:absolute;left:56px;top:680px;font-size:25px;line-height:1.45;color:var(--ink-2);max-width:40ch">Лимит задаёте вы. Неудачный кадр переснимаем бесплатно</p>
+  </div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="pg"></span></div>
+</section>
+
+<!-- 09 — отделы -->
+<section class="slide">
+  <div class="txt" style="width:1700px">
+    <div class="eyebrow">Для кого</div>
+    <h2>Одна платформа <em>для разных отделов</em></h2>
+  </div>
+  <div class="dep">
+    <div class="tile"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1766F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg></span><b>Маркетинг</b><p>Стратегия, контент-план, посты, баннеры и рекламные кампании</p></div>
+    <div class="tile"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1766F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><b>Продажи</b><p>Коммерческие предложения, презентации и лендинги под продукт</p></div>
+    <div class="tile"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1766F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M19 20c-.3-1.8-1-3.2-2-4.2"/></svg></span><b>HR</b><p>Страницы вакансий и посты о команде в едином стиле компании</p></div>
+    <div class="tile"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1766F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z"/></svg></span><b>Сервис</b><p>Ответы на отзывы с карт и комментарии в соцсетях — голосом компании</p></div>
+  </div>
+  <div class="call" style="left:120px;right:120px;top:846px">Стиль и факты загружаются один раз — дальше работают во всех отделах</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="pg"></span></div>
+</section>
+
+<!-- 10 — как начать -->
+<section class="slide sky">
+  <div class="txt" style="width:1700px">
+    <div class="eyebrow">Как начать</div>
+    <h2>Три шага до работы <em>всей команды</em></h2>
+  </div>
+  <div class="cols" style="top:400px">
+    <div class="col"><div class="n">01</div><b>Подключаем команду</b><p>Приглашаете сотрудников и даёте каждому свою роль</p></div>
+    <div class="col"><div class="n">02</div><b>Загружаем бренд</b><p>Брендбук, сайт или просто рассказ о компании — Maker раскладывает сам на стиль, голос и факты</p></div>
+    <div class="col"><div class="n">03</div><b>Команда работает</b><p>Сотрудники создают материалы, вы видите расходы и результат</p></div>
+  </div>
+  <div class="call" style="left:120px;right:120px;top:846px">Бренд загружается один раз — новые сотрудники сразу работают по правилам</div>
+  <div class="foot"><div class="logo"><svg><use href="#mk"/></svg>maker</div><span class="sp"></span><span class="pg"></span></div>
+</section>
+
+<!-- 11 — финал -->
+<section class="slide navy">
+  <div class="wave" style="position:absolute;left:1010px;top:0;right:0;bottom:0"></div>
+  <div class="txt" style="width:820px">
+    <div class="eyebrow">Контакты</div>
+    <h2 style="font-size:84px">Подключим вашу команду <em>к Maker</em></h2>
+    <div class="list">
+      <div>Топовые нейросети с оплатой в рублях</div>
+      <div>Харнес и опыт Атвинты внутри</div>
+      <div>Требования закона учтены</div>
+    </div>
+    <a class="btn" href="https://trymaker.ru" style="margin-top:48px">trymaker.ru</a>
+    <div class="contacts">
+      <span>Генеральный директор</span><b>Илья Горбаров · <a href="https://t.me/gorbarov">@gorbarov</a></b>
+      <span>Компания</span><b>Атвинта · <a href="https://atwinta.ru/">atwinta.ru</a></b>
+    </div>
+  </div>
+  <div class="frame ph" style="left:1300px;top:110px;width:400px;height:820px"><img src="shots/m-home.jpg" alt="Maker на телефоне"></div>
+  <div class="foot" style="right:auto"><div class="logo"><svg><use href="#mk"/></svg>maker</div></div>
+</section>
+
+</body></html>

@@ -17,3 +17,4 @@ tutorials/.venv/
 tutorials/upload/
 deck/preview/
 deck/*.pdf
+deck/preview-b2b/

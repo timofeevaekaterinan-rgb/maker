@@ -16,6 +16,11 @@ const SHOTS = [
   ['agents', 1440, 900, 2, 'Вита', "go('images');dockToggle(true);setTimeout(function(){dockAgMenu({stopPropagation(){},currentTarget:document.querySelector('.dock-ag')})},300)"],
   ['fin', 1440, 900, 2, '', "go('fin')"],
   ['m-home', 390, 844, 3, 'Вита', "go('home')"],
+  ['team', 1440, 900, 2, 'Вита', "go('profile');pfTab(document.querySelectorAll('#v-profile .itab')[3],'team')"],
+  ['billing', 1440, 900, 2, 'Вита', "go('billing')"],
+  ['style', 1440, 900, 2, 'Вита', "go('style')"],
+  ['voice', 1440, 900, 2, 'Вита', "go('voice')"],
+  ['templates', 1440, 900, 2, 'Вита', "go('templates')"],
   ['m-post', 390, 844, 3, 'Вита', "go('soc-post');if(typeof psPane==='function')psPane('art')"],
 ];
 (async () => {
@@ -23,7 +28,9 @@ const SHOTS = [
   await new Promise(r => setTimeout(r, 1500));
   const b = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--hide-scrollbars', '--force-color-profile=srgb'] });
   try {
+    const only = process.argv.slice(2);  // node shots.js team billing — переснять только эти
     for (const [name, w, h, dsf, client, act, scrollTo] of SHOTS) {
+      if (only.length && !only.includes(name)) continue;
       const p = await b.newPage();
       const mob = w < 600;
       await p.setViewport({ width: w, height: h, deviceScaleFactor: dsf, isMobile: mob, hasTouch: mob });
