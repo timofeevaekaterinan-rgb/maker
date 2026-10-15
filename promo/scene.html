@@ -349,7 +349,7 @@ function drawLogo(t){
   const pop=eBack(seg(lt,0,.4)), up=eInOut(seg(lt,.45,.85));
   $('logo-m').style.transform=`translateY(${-120*up}px) scale(${pop*(1-.15*up)})`;
   $('logo-m').style.opacity=clamp(lt/.1);
-  const url='trymaker.ru',n=Math.round(clamp((lt-.6)/.7)*url.length);
+  const url='getmaker.ru',n=Math.round(clamp((lt-.6)/.7)*url.length);
   const blink=Math.floor(lt/.25)%2===0||(lt>.6&&lt<1.3);
   $('logo-url').innerHTML=lt>.55?url.slice(0,n)+`<span class="caret" style="opacity:${blink?1:0}"></span>`:'';
   const cp=eExpo(seg(lt,1.5,1.9));
