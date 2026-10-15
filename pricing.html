@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maker · Тарифы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Тарифы: спокойный синий герой с балансом, оплата шагами, цены по группам с прикидкой месяца, команды и вопросы. Язык лендинга и страницы «Примеры». Одна светлая тема, как у лендинга. */
+:root{
+  color-scheme:light;
+  --ink:#0B1230;--ink-2:#4E5B85;--ink-3:#8592B8;
+  --blue:#1F5BFF;--blue-2:#0A44E0;--sky:#2F72FF;
+  --navy:#040C2E;--bg:#EEF2FB;--bg-2:#F5F7FD;--line:#E1E7F5;--white:#FFFFFF;
+  --ok:#2E6B45;--ok-bg:#E9F4EC;--warn:#9A5A22;--warn-bg:#FDF1E7;
+  --shadow:0 24px 60px -18px rgba(23,64,190,.28);
+  --r:22px;--wrap:1300px;
+  --head:Geologica,Inter,system-ui,sans-serif;--sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;--hand:Caveat,cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:clip}
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:10px}
+h1,h2,h3,h4,.brand,.num{font-family:var(--head)}
+.wrap{max-width:calc(var(--wrap) + 48px);margin:0 auto;padding-inline:24px;position:relative}
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-2)}
+.h2{font-size:54px;line-height:1.08;font-weight:700;letter-spacing:-.025em;margin-top:16px;text-wrap:balance}
+.lead{font-size:20px;line-height:1.5;color:var(--ink-2);margin-top:14px;max-width:620px}
+
+/* кнопки — как на лендинге */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;height:62px;padding:0 30px;border-radius:999px;font-weight:600;font-size:17px;white-space:nowrap;transition:transform .2s ease,box-shadow .2s ease}
+.btn svg{width:20px;height:20px;flex:none}
+.btn:active{transform:scale(.97)}
+.btn-white{background:var(--white);color:var(--ink);box-shadow:0 10px 30px -10px rgba(0,0,0,.35)}
+.btn-white svg{color:var(--blue)}
+.btn-ghost{color:var(--white);border:1.5px solid rgba(255,255,255,.32);background:rgba(255,255,255,.04)}
+.btn-ghost .play{width:24px;height:24px;border-radius:50%;background:var(--white);color:var(--navy);display:grid;place-items:center}
+.btn-ghost .play svg{width:11px;height:11px;margin-left:2px}
+.btn-blue{background:linear-gradient(180deg,#2A66FF,#0E48E6);color:var(--white);box-shadow:0 18px 40px -14px rgba(16,72,230,.7),inset 0 1px 0 rgba(255,255,255,.25)}
+
+/* ================= ГЕРОЙ ================= */
+.top{position:relative;overflow:hidden;color:var(--white);
+  background:radial-gradient(40% 80% at 80% 30%,rgba(50,110,240,.45),transparent 70%),linear-gradient(180deg,#040C2E 0%,#071A5C 100%)}
+.top::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-1px;height:48px;background:var(--bg);border-radius:50% 50% 0 0/100% 100% 0 0}
+.nav{position:relative;z-index:5;display:flex;align-items:center;height:104px;gap:44px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:31px;letter-spacing:-.03em;color:var(--white)}
+.brand svg{width:46px;height:46px}
+.nav ul{list-style:none;display:flex;gap:30px;margin-left:12px}
+.nav ul a{color:rgba(255,255,255,.82);font-size:17px;font-weight:500}
+.nav ul a[aria-current]{color:var(--white);position:relative}
+.nav ul a[aria-current]::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:2px;border-radius:2px;background:var(--sky)}
+.nav .act{margin-left:auto;display:flex;align-items:center;gap:32px}
+.nav .act>a:first-child{font-size:17px;font-weight:500}
+.nav .btn{height:58px;padding:0 26px;font-size:16px}
+.burger{display:none;width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.1);place-items:center}
+.burger svg{width:22px;height:22px}
+
+.hero{position:relative;z-index:4;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);gap:56px;align-items:center;padding-block:28px 96px}
+.crumbs{display:flex;gap:10px;font-size:15px;color:rgba(255,255,255,.6)}
+.crumbs a:hover{color:var(--white)}
+.crumbs [aria-current]{color:var(--white)}
+.hero h1{font-size:52px;line-height:1.08;letter-spacing:-.035em;font-weight:800;margin-top:18px;text-wrap:balance}
+.hero h1 em{font-style:normal;color:#6E9DFF}
+.hero p{font-size:19px;line-height:1.5;color:rgba(255,255,255,.8);margin-top:18px;max-width:520px}
+.hero .btn{margin-top:28px;height:56px;font-size:16px}
+/* спокойная иллюстрация: одна задача и ряд форматов, без движения */
+.idea{border-radius:24px;padding:18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
+.task{border-radius:16px;padding:16px 18px;background:var(--white);color:var(--ink)}
+.task small{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.hero .task p{font-size:16px;line-height:1.45;font-weight:600;margin-top:8px;color:var(--ink);max-width:none}
+
+/* баланс в герое: карточка кабинета + кнопка с ценой */
+.bm-top{display:flex;align-items:baseline;gap:12px;margin-top:10px;flex-wrap:wrap}
+.bm-top b{font-family:var(--head);font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1.1;font-variant-numeric:tabular-nums}
+.bm-top span{font-size:14px;color:var(--ink-3)}
+.bm-bar{height:10px;border-radius:99px;background:#E6ECF8;margin-top:14px;overflow:hidden}
+.bm-bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#3B7BFF,#0A44E0)}
+.bm-sub{font-size:14px;line-height:1.45;color:var(--ink-2);margin-top:12px}
+.act-demo{display:flex;align-items:center;gap:16px;margin-top:16px;padding:4px;flex-wrap:wrap}
+.fake-btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 24px;border-radius:999px;font-weight:600;font-size:15px;color:var(--white);background:linear-gradient(180deg,#2A66FF,#0E48E6);box-shadow:0 14px 30px -12px rgba(16,72,230,.8),inset 0 1px 0 rgba(255,255,255,.25)}
+.fake-btn svg{width:18px;height:18px}
+.tip{position:relative;padding:11px 14px;border-radius:12px;background:var(--white);color:var(--ink);font-size:14px;box-shadow:0 14px 30px -14px rgba(0,10,60,.6)}
+.tip::before{content:"";position:absolute;left:-6px;top:50%;width:12px;height:12px;background:var(--white);transform:translateY(-50%) rotate(45deg);border-radius:2px}
+.tip b{color:var(--blue);font-family:var(--head)}
+
+/* общие заголовки секций */
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+.head .lead{max-width:440px;margin:0 0 6px}
+.ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:#E3EBFF;color:var(--blue);flex:none}
+.ic svg{width:22px;height:22px}
+
+/* ================= КАК УСТРОЕНА ОПЛАТА ================= */
+.how{padding-block:20px 110px}
+.flow{list-style:none;position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:52px}
+.flow::before{content:"";position:absolute;top:31px;left:32px;right:calc((100% - 54px)/4 - 32px);border-top:2px dashed #C3D2F6}
+.flow li{position:relative;padding-right:12px}
+.flow .num{width:64px;height:64px;border-radius:20px;display:grid;place-items:center;font-size:24px;font-weight:700;color:var(--white);background:linear-gradient(160deg,#3B7BFF,#0A44E0);box-shadow:0 10px 22px -8px rgba(10,68,224,.6),inset 0 1px 0 rgba(255,255,255,.35);position:relative;z-index:1}
+.flow h3{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-top:22px}
+.flow p{font-size:15px;line-height:1.5;color:var(--ink-3);margin-top:8px;max-width:34ch}
+.extras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:56px}
+.ex{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;padding:20px 22px;border-radius:18px;background:var(--white);border:1px solid var(--line)}
+.ex b{display:block;font-family:var(--head);font-size:17px;font-weight:700}
+.ex span{display:block;font-size:14px;line-height:1.45;color:var(--ink-3);margin-top:4px}
+
+/* ================= ЦЕНЫ ================= */
+.prices{padding-block:96px 110px;background:var(--bg-2);border-radius:40px 40px 0 0}
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:44px}
+.pc{display:flex;flex-direction:column;border-radius:var(--r);background:var(--white);border:1px solid #fff;box-shadow:0 20px 44px -28px rgba(23,64,190,.4);padding:24px 26px 12px;min-width:0}
+.pc header{display:flex;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.pc h3{font-size:22px;font-weight:700;letter-spacing:-.015em}
+.pc ul{list-style:none}
+.pc li{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:15px 0;border-bottom:1px dashed var(--line)}
+.pc li:last-child{border-bottom:0}
+.pc li span{font-size:16px;line-height:1.4;color:var(--ink-2);min-width:0}
+.pc li b{font-family:var(--head);font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums}
+.pc .note{margin-top:auto;margin-bottom:12px;padding:12px 14px;border-radius:12px;background:var(--bg-2);font-size:14px;line-height:1.45;color:var(--ink-3)}
+
+/* калькулятор месяца */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);margin-top:18px;border-radius:24px;overflow:hidden;background:var(--white);border:1px solid #fff;box-shadow:var(--shadow)}
+.calc-in{padding:34px 38px 38px}
+.calc-in h3{font-size:28px;font-weight:700;letter-spacing:-.02em}
+.calc-in>p{font-size:16px;color:var(--ink-3);margin-top:6px}
+.rg{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;align-items:center;margin-top:24px}
+.rg span{font-size:16px;font-weight:600}
+.rg output{font-family:var(--head);font-size:20px;font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums}
+.rg input{grid-column:1/-1;width:100%;height:24px;accent-color:var(--blue);cursor:pointer}
+.calc-out{display:flex;flex-direction:column;padding:34px 38px 38px;color:var(--white);background:radial-gradient(80% 70% at 90% 10%,rgba(60,120,255,.55),transparent 70%),linear-gradient(160deg,#0A2FB5 0%,#071A5C 100%)}
+.calc-out small{font-size:13px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.calc-out>b{font-family:var(--head);font-size:52px;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-top:10px;font-variant-numeric:tabular-nums}
+.calc-out ul{list-style:none;margin:20px 0 28px}
+.calc-out li{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-top:1px solid rgba(255,255,255,.14);font-size:15px;color:rgba(255,255,255,.82);font-variant-numeric:tabular-nums}
+.calc-out li b{font-weight:600;color:var(--white);white-space:nowrap}
+.calc-out .btn{margin-top:auto;height:56px;font-size:16px}
+
+/* ================= ДЛЯ КОМАНД + ВОПРОСЫ ================= */
+.teams{padding-block:100px 40px;background:var(--bg-2)}
+.tgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:40px}
+.tc{display:flex;flex-direction:column;gap:12px;padding:30px 32px 32px;border-radius:var(--r);background:var(--white);border:1px solid #fff;box-shadow:0 20px 44px -28px rgba(23,64,190,.4);min-width:0}
+.tc h3{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-top:8px}
+.tc>p{font-size:16px;line-height:1.55;color:var(--ink-2);max-width:52ch}
+.ck{list-style:none;display:flex;flex-direction:column;gap:10px;margin:6px 0 10px}
+.ck li{position:relative;padding-left:30px;font-size:15px;line-height:1.45}
+.ck li::before{content:"";position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:50%;background:var(--ok-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.5L14 7.5' fill='none' stroke='%232E6B45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/20px no-repeat}
+.tc .more{margin-top:auto;display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:600;color:var(--blue)}
+.tc .more svg{width:16px;height:16px}
+.qa{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:40px;margin-top:90px}
+.qh h3{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.qh p{font-size:16px;line-height:1.5;color:var(--ink-3);margin-top:12px}
+.ql{display:flex;flex-direction:column;gap:10px}
+.ql details{border-radius:18px;background:var(--white);border:1px solid var(--line)}
+.ql details[open]{border-color:#C9D8FB;box-shadow:0 16px 36px -24px rgba(23,64,190,.45)}
+.ql summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;font-family:var(--head);font-size:18px;font-weight:600;cursor:pointer}
+.ql summary::-webkit-details-marker{display:none}
+.ql summary i{position:relative;width:32px;height:32px;border-radius:50%;background:#E3EBFF;flex:none;transition:transform .2s ease}
+.ql summary i::before,.ql summary i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;border-radius:2px;background:var(--blue);transform:translate(-50%,-50%)}
+.ql summary i::after{transform:translate(-50%,-50%) rotate(90deg)}
+.ql details[open] summary i{transform:rotate(45deg)}
+.ql details p{padding:0 22px 20px;font-size:16px;line-height:1.55;color:var(--ink-2);max-width:62ch}
+
+/* ================= CTA + подвал (как на лендинге) ================= */
+.cta-sec{background:var(--bg-2);padding-block:60px 0}
+.cta-box{position:relative;overflow:hidden;border-radius:24px;padding:46px 48px;min-height:320px;color:var(--white);background:radial-gradient(70% 120% at 85% 30%,#2E6BFF,transparent 60%),linear-gradient(110deg,#0A2FB5 0%,#0B3BD9 45%,#1550F0 100%);box-shadow:0 30px 70px -30px rgba(10,50,200,.7)}
+.cta-box .eyebrow{color:var(--white)}
+.cta-box h2{font-size:48px;font-weight:800;letter-spacing:-.03em;margin-top:14px;max-width:620px;text-wrap:balance}
+.cta-box p{font-size:20px;line-height:1.5;opacity:.9;margin-top:12px;max-width:520px}
+.cta-box .row{display:flex;gap:14px;margin-top:28px;position:relative;z-index:2;flex-wrap:wrap}
+.cta-box .art{position:absolute;right:120px;top:50%;width:300px;height:300px;transform:translateY(-44%) scale(.86)}
+.cta-box .art span{position:absolute;width:148px;height:196px;border-radius:26px;transform:skewY(18deg);background:linear-gradient(160deg,rgba(255,255,255,.95),rgba(200,218,255,.55));border:1px solid rgba(255,255,255,.9);box-shadow:-20px 30px 50px -10px rgba(0,20,120,.5)}
+.cta-box .art span:nth-child(1){left:144px;top:-10px;opacity:.55}
+.cta-box .art span:nth-child(2){left:72px;top:30px;opacity:.75}
+.cta-box .art span:nth-child(3){left:0;top:70px}
+footer{background:linear-gradient(180deg,var(--bg-2),#E8EDF9);padding-block:60px 50px}
+.foot{display:grid;grid-template-columns:270px 1px 1fr 1px 300px;gap:0 46px}
+.foot .vr{background:var(--line)}
+.foot .brand{color:var(--ink);font-size:34px}
+.foot .about p{font-size:15px;line-height:1.5;color:var(--ink-3);margin-top:18px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.cols h5{font-size:15px;font-weight:700}
+.cols a{display:block;font-size:15px;color:var(--ink-3);margin-top:12px}
+.soc{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:20px}
+.soc div{display:flex;gap:12px}
+.soc a{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:#DCE5FC;color:var(--blue)}
+.soc a svg{width:22px;height:22px}
+.soc small{font-size:14px;color:var(--ink-3)}
+
+
+/* ================= АДАПТИВ — те же точки, что у лендинга ================= */
+@media (max-width:1360px){
+  .hero h1{font-size:48px}
+}
+@media (max-width:1200px){
+  .nav ul{gap:22px;margin-left:0}
+  .hero{grid-template-columns:minmax(0,1fr);gap:32px;padding-bottom:80px}
+  .idea{max-width:620px}
+  .h2{font-size:46px}
+  .head{flex-direction:column;align-items:flex-start;gap:6px}
+  .flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 24px}
+  .flow::before{display:none}
+  .calc{grid-template-columns:minmax(0,1fr)}
+  .qa{grid-template-columns:minmax(0,1fr);gap:24px;margin-top:70px}
+  .cta-box .art{right:30px;opacity:.7}
+}
+@media (max-width:900px){
+  .nav ul,.nav .act>a:first-child{display:none}
+  .burger{display:grid}
+  .nav .act{gap:12px}
+  .nav .btn{height:48px;padding:0 20px;font-size:15px}
+  .extras{grid-template-columns:minmax(0,1fr);gap:12px}
+  .prices{padding-top:70px;border-radius:30px 30px 0 0}
+  .pgrid,.tgrid{grid-template-columns:minmax(0,1fr)}
+  .foot{grid-template-columns:minmax(0,1fr);row-gap:32px}
+  .foot .vr{display:none}
+  .soc{align-items:flex-start}
+}
+@media (max-width:640px){
+  .wrap{padding-inline:16px}
+  .nav{height:78px}
+  .brand{font-size:26px}
+  .brand svg{width:38px;height:38px}
+  .nav .btn{display:none}
+  .hero{padding-block:16px 64px;gap:24px}
+  .hero h1{font-size:34px;margin-top:14px}
+  .hero p{font-size:16px;margin-top:14px}
+  .hero .btn{width:100%;margin-top:22px}
+  .idea{padding:10px;border-radius:18px}
+  .task{padding:14px}
+  .bm-top b{font-size:32px}
+  .bm-sub{font-size:13px}
+  .act-demo{gap:12px;margin-top:12px}
+  .fake-btn{height:44px;padding:0 18px;font-size:14px}
+  .tip{font-size:13px;padding:9px 12px}
+  .h2 br{display:none}
+  .eyebrow{font-size:12px;letter-spacing:.24em}
+  .h2{font-size:32px}
+  .lead{font-size:16px}
+  .how{padding-bottom:70px}
+  .flow{grid-template-columns:minmax(0,1fr);gap:22px;margin-top:30px}
+  .flow li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:4px 14px;padding:0}
+  .flow .num{grid-row:span 2;width:48px;height:48px;border-radius:15px;font-size:20px}
+  .flow h3{font-size:18px;margin-top:2px}
+  .flow p{margin-top:0;font-size:14px}
+  .extras{margin-top:32px}
+  .ex{padding:16px}
+  .prices{padding-block:56px 70px}
+  .pgrid{gap:14px;margin-top:28px}
+  .pc{padding:18px 18px 6px}
+  .pc h3{font-size:19px}
+  .pc li{padding:13px 0;gap:14px}
+  .pc li span{font-size:14px}
+  .pc li b{font-size:18px}
+  .calc{margin-top:14px;border-radius:20px}
+  .calc-in,.calc-out{padding:22px 18px 24px}
+  .calc-in h3{font-size:22px}
+  .calc-in>p{font-size:14px}
+  .rg{margin-top:18px}
+  .rg span{font-size:15px}
+  .calc-out>b{font-size:38px}
+  .calc-out .btn{width:100%}
+  .teams{padding-top:60px}
+  .tgrid{gap:14px;margin-top:28px}
+  .tc{padding:22px 20px 24px}
+  .tc h3{font-size:21px}
+  .tc>p{font-size:15px}
+  .qa{margin-top:50px}
+  .qh h3{font-size:26px}
+  .ql summary{font-size:16px;padding:16px 16px 16px 18px}
+  .ql details p{padding:0 18px 16px;font-size:15px}
+  .cta-box{min-height:0;padding:28px 22px}
+  .cta-box h2{font-size:30px}
+  .cta-box p{font-size:16px}
+  .cta-box .row{flex-direction:column}
+  .cta-box .row .btn{width:100%;height:56px}
+  .cta-box .art{opacity:.25;right:-140px}
+  .cols{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <linearGradient id="mkBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F6FFF"/><stop offset="1" stop-color="#0A55E6"/></linearGradient>
+  <linearGradient id="mkF" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#F4F8FF"/><stop offset="1" stop-color="#BFD3FF"/></linearGradient>
+  <linearGradient id="mkM" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".62"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".34"/></linearGradient>
+  <linearGradient id="mkB" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".46"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".2"/></linearGradient>
+  <symbol id="mk-logo" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="url(#mkBg)"/><g transform="skewY(18)"><rect x="48" y="-0.6" width="36" height="39" rx="6.5" fill="url(#mkB)"/><rect x="30.5" y="14" width="36" height="39" rx="6.5" fill="url(#mkM)"/><rect x="13" y="28.5" width="36" height="39" rx="6.5" fill="url(#mkF)"/></g></symbol>
+  <symbol id="i-arr" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 12 12"><path d="M2 1.2v9.6L10.4 6z" fill="currentColor"/></symbol>
+</defs></svg>
+
+<!-- ================= ГЕРОЙ ================= -->
+<header class="top">
+  <div class="wrap">
+    <nav class="nav" aria-label="Главное меню">
+      <a class="brand" href="#"><svg viewBox="0 0 100 100"><use href="#mk-logo"/></svg>maker</a>
+      <ul>
+        <li><a href="#">Возможности</a></li>
+        <li><a href="#">Нейросети</a></li>
+        <li><a href="examples.html">Примеры</a></li>
+        <li><a href="#" aria-current="page">Тарифы</a></li>
+        <li><a href="#">Для кого</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+      <div class="act">
+        <a href="#">Войти</a>
+        <a class="btn btn-white" href="#">Попробовать бесплатно<svg><use href="#i-arr"/></svg></a>
+        <button class="burger" type="button" aria-label="Меню"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="htx">
+        <nav class="crumbs" aria-label="Где вы"><a href="landing.html">Главная</a><span aria-hidden="true">/</span><span aria-current="page">Тарифы</span></nav>
+        <h1>Платите только <em>за сделанное</em></h1>
+        <p>Пополняете баланс в рублях и видите цену каждого действия до того, как его запустить.</p>
+        <a class="btn btn-white" href="#">Попробовать бесплатно<svg><use href="#i-arr"/></svg></a>
+      </div>
+      <div class="idea bal" aria-label="Как это выглядит в кабинете: баланс и цена на кнопке">
+        <div class="task">
+          <small>Баланс · Агентство «Север»</small>
+          <div class="bm-top"><b>1 240,50 ₽</b><span>из 1 500 ₽ с пополнения 1 окт</span></div>
+          <div class="bm-bar" role="img" aria-label="Осталось 83 %"><i style="width:83%"></i></div>
+          <div class="bm-sub">Хватит примерно на 300 текстов постов или 130 кадров в стиле бренда</div>
+        </div>
+        <div class="act-demo">
+          <span class="fake-btn">Собрать баннеры<svg><use href="#i-arr"/></svg></span>
+          <span class="tip">Спишется <b>до 2 ₽</b> с баланса</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<!-- ================= КАК УСТРОЕНА ОПЛАТА ================= -->
+<section class="how">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Как устроена оплата</div><h2 class="h2">Баланс в рублях&nbsp;— <br>и никаких сюрпризов</h2></div>
+      <p class="lead">Деньги списываются за готовый результат: пост, кадр, баннер, презентацию. Цену видно заранее.</p>
+    </div>
+    <ol class="flow">
+      <li><span class="num">1</span><h3>Пополняете баланс</h3><p>Картой или счётом для юрлица. Деньги лежат в рублях и тратятся только на сделанное.</p></li>
+      <li><span class="num">2</span><h3>Видите цену до запуска</h3><p>Наведите на кнопку — Maker покажет «до N ₽». Больше этой суммы не спишем.</p></li>
+      <li><span class="num">3</span><h3>Дорогое — с вашим «да»</h3><p>Действия дороже порога, например ролик, Maker выполнит только после подтверждения.</p></li>
+      <li><span class="num">4</span><h3>Всё видно в журнале</h3><p>Что сделано, для какого клиента, когда и сколько стоило. Выгрузка в Excel.</p></li>
+    </ol>
+    <div class="extras">
+      <div class="ex"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i><div><b>Месячный лимит</b><span>Задайте, сколько можно потратить за месяц. Дошли до лимита — Maker остановится и спросит.</span></div></div>
+      <div class="ex"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 21V7M12 7H8a2.5 2.5 0 1 1 0-5c3 0 4 5 4 5zM12 7h4a2.5 2.5 0 1 0 0-5c-3 0-4 5-4 5z"/></svg></i><div><b>Начать — бесплатно</b><span>Первые материалы можно создать без привязки карты.</span></div></div>
+      <div class="ex"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10A8 8 0 0 0 6 6L4 8M4 14a8 8 0 0 0 14 4l2-2"/></svg></i><div><b>Неудачный кадр — переснимем</b><span>Maker сам проверяет кадр. Пересъёмка уже входит в цену.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЦЕНЫ ================= -->
+<section class="prices">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Цены</div><h2 class="h2">Сколько стоят действия</h2></div>
+      <p class="lead">Ориентиры по реальным заказам в Maker. Точную сумму покажет кнопка перед запуском — она зависит от модели и объёма.</p>
+    </div>
+    <div class="pgrid">
+      <article class="pc">
+        <header><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></i><h3>Тексты</h3></header>
+        <ul>
+          <li><span>Сообщение в чате с Maker</span><b>до 1 ₽</b></li>
+          <li><span>Текст поста</span><b>2–6 ₽</b></li>
+          <li><span>Коммерческое предложение</span><b>до 2 ₽</b></li>
+        </ul>
+      </article>
+      <article class="pc">
+        <header><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="M21 15l-5-5L5 21"/></svg></i><h3>Картинки и видео</h3></header>
+        <ul>
+          <li><span>Кадр: фото или иллюстрация в стиле бренда</span><b>6–12 ₽</b></li>
+          <li><span>Набор постов с картинками под площадки</span><b>13–36 ₽</b></li>
+          <li><span>Видеоролик</span><b>около 63 ₽</b></li>
+        </ul>
+      </article>
+      <article class="pc">
+        <header><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h6M7 14h4"/></svg></i><h3>Реклама и продажи</h3></header>
+        <ul>
+          <li><span>Баннер: текст и все размеры, без нового кадра</span><b>до 2 ₽</b></li>
+          <li><span>Лендинг, без новых кадров</span><b>от 2 ₽</b></li>
+          <li><span>Презентация, без новых кадров</span><b>до 3 ₽</b></li>
+        </ul>
+      </article>
+      <article class="pc">
+        <header><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a6 6 0 0 0 0 18c1.1 0 1.5-.6 1.5-1.3 0-.4-.2-.7-.4-1-.2-.3-.4-.6-.4-1 0-.8.7-1.4 1.5-1.4H16a4 4 0 0 0 4-4 8 8 0 0 0-8-8z"/></svg></i><h3>Бренд</h3></header>
+        <ul>
+          <li><span>Снять стиль бренда с сайта</span><b>до 1 ₽</b></li>
+          <li><span>Разобрать бриф на факты, аудитории и голос</span><b>до 1 ₽</b></li>
+        </ul>
+        <p class="note">Делается один раз — дальше Maker держит стиль во всех материалах.</p>
+      </article>
+    </div>
+
+    <!-- прикинуть месяц -->
+    <div class="calc" id="calc">
+      <div class="calc-in">
+        <h3>Прикиньте месяц</h3>
+        <p>Сдвиньте ползунки под свой объём — посчитаем по ориентирам выше.</p>
+        <label class="rg"><span>Постов с текстом</span><output id="o-post">12</output><input id="r-post" type="range" min="0" max="40" value="12" aria-label="Постов в месяц"></label>
+        <label class="rg"><span>Кадров в стиле бренда</span><output id="o-shot">8</output><input id="r-shot" type="range" min="0" max="40" value="8" aria-label="Кадров в месяц"></label>
+        <label class="rg"><span>Комплектов баннеров</span><output id="o-bn">2</output><input id="r-bn" type="range" min="0" max="10" value="2" aria-label="Комплектов баннеров в месяц"></label>
+        <label class="rg"><span>Видеороликов</span><output id="o-vd">1</output><input id="r-vd" type="range" min="0" max="8" value="1" aria-label="Роликов в месяц"></label>
+      </div>
+      <div class="calc-out" aria-live="polite">
+        <small>Примерно в месяц</small>
+        <b id="c-sum">160–295 ₽</b>
+        <ul id="c-rows"></ul>
+        <a class="btn btn-white" href="#">Попробовать бесплатно<svg><use href="#i-arr"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ДЛЯ КОМАНД ================= -->
+<section class="teams">
+  <div class="wrap">
+    <div class="eyebrow">Для команд и компаний</div>
+    <h2 class="h2">Один кабинет&nbsp;— расходы <br>по каждому клиенту</h2>
+    <div class="tgrid">
+      <article class="tc">
+        <i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.4 3.4-5 6.5-5s5.7 1.6 6.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2c2.8.2 4.8 1.8 5.5 4.8"/></svg></i>
+        <h3>Маркетологам и агентствам</h3>
+        <p>Все клиенты в одном кабинете. Расходы видны по каждому клиенту отдельно — понятно, что и кому перевыставить. Выгрузка для клиента в Excel.</p>
+        <ul class="ck"><li>Расходы по клиентам за месяц</li><li>Отчёт для перевыставления</li><li>Ссылка клиенту на согласование</li></ul>
+        <a class="more" href="examples.html">Как агентство ведёт клиента<svg><use href="#i-arr"/></svg></a>
+      </article>
+      <article class="tc">
+        <i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></i>
+        <h3>Компаниям</h3>
+        <p>Оплата по счёту от юрлица и закрывающие документы для бухгалтерии. У сотрудников — свои роли и доступы.</p>
+        <ul class="ck"><li>Счёт, акт и УПД каждый месяц</li><li>Роли: владелец, редактор, бухгалтер</li><li>Лимит расходов на месяц</li></ul>
+        <a class="more" href="#">Обсудить подключение<svg><use href="#i-arr"/></svg></a>
+      </article>
+    </div>
+    <div class="qa">
+      <div class="qh"><h3>Вопросы про оплату</h3><p>Не нашли ответ — напишите в чат поддержки в кабинете.</p></div>
+      <div class="ql">
+      <details><summary>Что будет, если Maker ошибся с оценкой?<i></i></summary><p>Спишем не больше суммы, которую показала кнопка перед запуском. Если вышло дешевле — спишем меньше.</p></details>
+      <details><summary>Что случится, когда деньги закончатся?<i></i></summary><p>Генерация встанет на паузу. Черновики, правки, согласования и выгрузка продолжат работать — ничего не пропадёт.</p></details>
+      <details><summary>Можно платить по счёту?<i></i></summary><p>Да. Выставим счёт на юрлицо, деньги придут на баланс за 1–2 рабочих дня. Акты и УПД — в кабинете.</p></details>
+      <details><summary>Где остальные вопросы?<i></i></summary><p>В справке кабинета — кнопка «?» в шапке — и в разделе FAQ на главной.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= CTA ================= -->
+<section class="cta-sec">
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="eyebrow">Начните прямо сейчас</div>
+      <h2>Попробуйте Maker бесплатно</h2>
+      <p>Создайте первые материалы и убедитесь, как это просто и удобно.</p>
+      <div class="row">
+        <a class="btn btn-white" href="#">Начать бесплатно<svg><use href="#i-arr"/></svg></a>
+        <a class="btn btn-ghost" href="#"><span class="play"><svg><use href="#i-play"/></svg></span>Смотреть видео</a>
+      </div>
+      <div class="art" aria-hidden="true"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div class="about"><a class="brand" href="#"><svg viewBox="0 0 100 100"><use href="#mk-logo"/></svg>maker</a><p>Создавайте контент,<br>который работает.</p></div>
+    <span class="vr"></span>
+    <div class="cols">
+      <div><h5>Продукт</h5><a href="#">Возможности</a><a href="#">Нейросети</a><a href="examples.html">Примеры</a><a href="#">Тарифы</a></div>
+      <div><h5>Компания</h5><a href="#">О нас</a><a href="#">Блог</a><a href="#">Контакты</a></div>
+      <div><h5>Ресурсы</h5><a href="#">Помощь</a><a href="#">FAQ</a><a href="#">Условия</a><a href="#">Конфиденциальность</a></div>
+    </div>
+    <span class="vr"></span>
+    <div class="soc">
+      <div>
+        <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.7 4.3 2.9 11.2c-1.2.5-1.2 1.2-.2 1.5l4.6 1.4 1.8 5.4c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.1c.3-1.2-.5-1.8-1.6-1.4Z"/></svg></a>
+        <a href="#" aria-label="ВКонтакте"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7h3.2c.1 4.6 2.1 6.5 3.7 6.9V7h3v4c1.6-.2 3.3-2 3.9-4h3c-.5 2.5-2.4 4.3-3.6 5 1.3.6 3.4 2.2 4.2 5h-3.3c-.7-2-2.3-3.5-4.2-3.7V17h-.4C7.2 17 3.2 13.4 3 7Z"/></svg></a>
+      </div>
+      <small>© 2026 Maker. Все права защищены.</small>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+/* прикидка месяца по ориентирам цен */
+(function(){
+  var items=[
+    {id:'post',name:'Тексты постов',lo:2,hi:6},
+    {id:'shot',name:'Кадры',lo:6,hi:12},
+    {id:'bn',name:'Баннеры',lo:1,hi:2},
+    {id:'vd',name:'Ролики',lo:55,hi:70}
+  ];
+  var sum=document.getElementById('c-sum'),rows=document.getElementById('c-rows');
+  function rub(n){return Math.round(n).toLocaleString('ru-RU')+'\u00a0₽';}
+  function upd(){
+    var lo=0,hi=0,html='';
+    items.forEach(function(it){
+      var r=document.getElementById('r-'+it.id),n=+r.value;
+      document.getElementById('o-'+it.id).textContent=n;
+      lo+=n*it.lo;hi+=n*it.hi;
+      if(n) html+='<li><span>'+it.name+' × '+n+'</span><b>'+(it.hi>it.lo?Math.round(n*it.lo).toLocaleString('ru-RU')+'–'+rub(n*it.hi):rub(n*it.lo))+'</b></li>';
+    });
+    sum.textContent=hi?rub(lo).replace('\u00a0₽','')+'–'+rub(hi):'0 ₽';
+    rows.innerHTML=html||'<li><span>Сдвиньте ползунки слева</span></li>';
+  }
+  items.forEach(function(it){document.getElementById('r-'+it.id).addEventListener('input',upd);});
+  upd();
+})();
+</script>
+
+</html>
